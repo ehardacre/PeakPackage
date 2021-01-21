@@ -33,6 +33,6 @@ let package = Package(
             dependencies: ["ElegantCalendar", "ElegantPages", "Introspect", "Pages", "SwiftUICharts"]),
         .testTarget(
             name: "PeakPackageTests",
-            dependencies: ["PeakPackage", "ElegantCalendar", "ElegantPages", "Introspect", "Pages", "SwiftUICharts"]),
+            dependencies: ["PeakPackage"]),
     ]
 )
