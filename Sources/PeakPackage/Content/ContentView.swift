@@ -47,8 +47,6 @@ struct ContentView: View {
         UITableViewCell.appearance().backgroundColor = .clear
         UIListContentView.appearance().backgroundColor = .clear
         
-        defaults.currentContent = self
-        
     }
     
     var body: some View {

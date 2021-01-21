@@ -28,6 +28,9 @@ enum JsonKeys : String{
     //get the message shown on the dashboard
     case dashboard_key = "dashboard_message"
     case dashboard_analytics_key = "dashboard_analytics_site_url"
+    //notification values
+    case add_notification_key = "device_id"
+    case add_notification_cat_key = "notification_category"
     
     //MARK: PEAK CLIENTS
     //keys for recieving calls from the app
@@ -49,9 +52,6 @@ enum JsonKeys : String{
     case appt_value = "appointment_reason"
     case appt_date = "appointment_date"
     case appt_dur = "appointment_duration"
-    //the key for getting the notification token
-    case notification_key = "notification_key"
-    case notification_token = "notification_token"
     //the key for getting the dynamic form
     case form_key = "dynamicform_key"
     case form_type_key = "dynamicform_type_key"
@@ -92,8 +92,7 @@ enum JsonFormat {
     //takes the kanban id
     case getAnalyticsId(id: String)
     //store notification token
-    //TODO: may not be needed anymore
-    case setNotificationToken(id: String, token: String)
+    case setNotificationToken(token: String, category: String)
     
     
     //MARK: PEAK CLIENTS
@@ -146,8 +145,9 @@ enum JsonFormat {
                 JsonKeys.twofactor_contact.rawValue: contact]
         case.getDashboardMessage:
             retVal = [JsonKeys.dashboard_key.rawValue: "true"]
-        case .setNotificationToken(let id, let token):
-            retVal = [ JsonKeys.notification_key.rawValue: id, JsonKeys.notification_token.rawValue: token]
+        case .setNotificationToken(let token, let category):
+            retVal = [JsonKeys.add_notification_key.rawValue: token,
+                      JsonKeys.add_notification_cat_key.rawValue: category]
         //analytics
         case .getAnalyticsId(let id):
             retVal = [JsonKeys.analyticsId_key.rawValue: id]

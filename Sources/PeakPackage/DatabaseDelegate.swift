@@ -23,7 +23,7 @@ struct DatabaseDelegate {
     
     
     //URL for apphook used for wordpress requests
-    static private let str_url : String?
+    static private var str_url : String? = nil
     
     static func setURL(_ url: String){
         str_url = url
@@ -47,7 +47,7 @@ struct DatabaseDelegate {
         }
         
         //convert string to URL. Doesn't need error handling because it's constant
-        guard let url = URL(string: self.str_url) else {
+        guard let url = URL(string: self.str_url!) else {
             printr("The URL was unable to be cast into a correct URL. Please make sure that you provided a valid URL to the Database Delegate", tag: printTags.error)
             return
         }

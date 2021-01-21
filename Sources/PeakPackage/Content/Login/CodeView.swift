@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 //MARK: Code View
 
@@ -107,18 +106,14 @@ struct CodeView: View {
             defaults.franchiseId(value: self.franchise.franchiseId)
             defaults.franchiseName(value: self.franchise.franchiseTitle)
             defaults.setFranchiseURL(self.franchise.franchiseURL)
-            if defaults.getNotificationToken() != nil {
-                Firebase.Auth.auth().signIn(withEmail: defaults.getEncodedEmail(), password: "PeakClient", completion: { data, error in
-                    if error != nil {
-                        Firebase.Auth.auth().createUser(withEmail: defaults.getEncodedEmail() , password: "PeakClient", completion: { data, error in
-                                Firebase.Messaging.messaging().subscribe(toTopic: "PeakClients")
-                                let id = defaults.franchiseId() ?? "0"
-                                Firebase.Analytics.setUserProperty(id, forName: "KanbanID")
-                                Firebase.Messaging.messaging().subscribe(toTopic: "nhance"+defaults.franchiseId()!)
-                                Firebase.Messaging.messaging().subscribe(toTopic: defaults.getTopics())
-                            })
-                    }
+            if defaults.getNotificationToken() != nil{
+                let json = JsonFormat.setNotificationToken(token: defaults.getNotificationToken()!, category: "nhance"+defaults.franchiseId()!).format()
+                printr(json)
+                DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: { rex in
+                    printr("Registered for Notifcations")
                 })
+            }else{
+                printr("Notification Token Nil")
             }
             //go to content
             self.viewRouter.goTo(page: LoginPages.content)

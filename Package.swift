@@ -5,6 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "PeakPackage",
+    platforms: [
+        // Only add support for iOS 13 and up.
+        .iOS(.v14)
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -14,11 +18,11 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/ThasianX/ElegantCalendar", from: "4.2.0"),
-        .package(url: "https://github.com/ThasianX/ElegantPages", from: "1.4.2"),
-        .package(url: "https://github.com/siteline/SwiftUI-Introspect.git", from: "0.1.2"),
-        .package(url: "https://github.com/nachonavarro/Pages", from: "0.1.5"),
-        .package(url: "https://github.com/AppPear/ChartView", from: "1.5.4")
+        .package(name: "ElegantCalendar", url: "https://github.com/ThasianX/ElegantCalendar", from: "4.2.0"),
+        .package(name: "ElegantPages", url: "https://github.com/ThasianX/ElegantPages", from: "1.4.2"),
+        .package(name: "Introspect", url: "https://github.com/siteline/SwiftUI-Introspect.git", from: "0.1.2"),
+        .package(name: "Pages", url: "https://github.com/nachonavarro/Pages", from: "0.1.5"),
+        .package(name: "SwiftUICharts", url: "https://github.com/AppPear/ChartView", from: "1.5.4")
             
     ],
     targets: [
@@ -26,9 +30,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "PeakPackage",
-            dependencies: []),
+            dependencies: ["ElegantCalendar", "ElegantPages", "Introspect", "Pages", "SwiftUICharts"]),
         .testTarget(
             name: "PeakPackageTests",
-            dependencies: ["PeakPackage"]),
+            dependencies: ["PeakPackage", "ElegantCalendar", "ElegantPages", "Introspect", "Pages", "SwiftUICharts"]),
     ]
 )

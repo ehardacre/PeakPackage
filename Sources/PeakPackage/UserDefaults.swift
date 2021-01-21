@@ -113,7 +113,7 @@ struct defaults {
         #Set Application Type
      set's the type for the app. can be used to determine which client the app is for
      */
-    static func setApplicationType(_ type : ApplicationType){application = ApplicationType}
+    static func setApplicationType(_ type : ApplicationType){application = type}
     
     static func setFranchiseURL(_ url: String){UserDefaults.standard.set(url, forKey: url_key)}
     
