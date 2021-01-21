@@ -8,9 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct SceneConstruct : Scene{
+public struct SceneConstruct : Scene{
     
-    @SceneBuilder var body: some Scene{
+    @SceneBuilder public var body: some Scene{
         WindowGroup{
             ContentView().environmentObject(ViewRouter())
         }
