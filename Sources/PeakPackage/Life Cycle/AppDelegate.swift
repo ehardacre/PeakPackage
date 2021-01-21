@@ -11,7 +11,6 @@ import SwiftUI
 import UserNotifications
 import AVFoundation
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate{
 
 
