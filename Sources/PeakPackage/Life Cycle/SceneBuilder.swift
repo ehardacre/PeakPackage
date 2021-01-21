@@ -12,7 +12,7 @@ public struct SceneConstruct : Scene{
     
     @SceneBuilder public var body: some Scene{
         WindowGroup{
-            ContentView().environmentObject(ViewRouter())
+            MotherView().environmentObject(ViewRouter())
         }
     }
     
