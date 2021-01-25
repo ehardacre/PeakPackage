@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-enum ApplicationType {
+public enum ApplicationType {
     case PeakClients
     case NHanceConnect
 }
@@ -24,7 +24,7 @@ struct defaults {
     
     //MARK: Stored Values for All
     
-    private static var application = ApplicationType.PeakClients
+    private static var application : ApplicationType? = nil
     //these are the print logs stored for viewing by admin for debugging
     private static var logs = [String]()
     private static var loaded = false
@@ -33,6 +33,9 @@ struct defaults {
     //admin variables
     static let admin_id = "1"
     static var admin = false
+    //The image assets needed for the app
+    static var banner : UIImage = UIImage(named: "banner")
+    static var logo : UIImage = UIImage(named: "logo")
     
     //MARK: Stored Values for Peak Clients
     
@@ -50,6 +53,13 @@ struct defaults {
     static var woocommerce = false
     
     //MARK: Getters
+    
+    static func getApplicationType() throws -> ApplicationType {
+        if self.application == nil {
+            throw IncompleteSetupError.applicationType
+        }
+        return self.application!
+    }
     
     /**
      # Get Logs
@@ -113,7 +123,18 @@ struct defaults {
         #Set Application Type
      set's the type for the app. can be used to determine which client the app is for
      */
-    static func setApplicationType(_ type : ApplicationType){application = type}
+    static func setApplicationType(_ type : ApplicationType){
+        application = type
+        setDBURL()
+    }
+    private static func setDBURL(){
+        switch application{
+        case .PeakClients:
+            DatabaseDelegate.setURL("https://clients.peakstudios.com/apphook/")
+        case .NHanceConnect:
+            DatabaseDelegate.setURL("https://www.nhance.com/peak-studios-api/")
+        }
+    }
     
     static func setFranchiseURL(_ url: String){UserDefaults.standard.set(url, forKey: url_key)}
     

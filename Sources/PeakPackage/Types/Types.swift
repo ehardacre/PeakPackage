@@ -58,3 +58,7 @@ enum InternalError: String, Error {
     case unknownError = "There was an unknown error: "
 }
 
+enum IncompleteSetupError: String, Error {
+    case applicationType = "Please set the application type before calling SceneConstruct"
+}
+

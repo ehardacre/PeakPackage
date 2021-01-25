@@ -10,9 +10,13 @@ import SwiftUI
 
 public struct SceneConstruct : Scene{
     
+    @State var blank : Bool = false
+    
     @SceneBuilder public var body: some Scene{
         WindowGroup{
-            MotherView().environmentObject(ViewRouter())
+            if !blank {
+                MotherView().environmentObject(ViewRouter())
+            }
         }
     }
     

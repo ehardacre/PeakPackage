@@ -82,7 +82,7 @@ struct OrderCardView: View {
                         .cornerRadius(10)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke((self.id == self.selectionManager.id) ? Color.blue : Color.neutral, lineWidth: (self.id == self.selectionManager.id) ? 3 : 1))
+                                .stroke((self.id == self.selectionManager.id) ? Color.blue : Color.mid, lineWidth: (self.id == self.selectionManager.id) ? 3 : 1))
                         //OVERLAY end
                         )
                 .onTapGesture(count: 2, perform: {
