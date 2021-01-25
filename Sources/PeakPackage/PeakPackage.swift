@@ -17,7 +17,12 @@ public struct PeakApp {
      constructs the scene based on the app type
      make sure you call the setAppType function before running
      */
-    public static func constructScene() -> some Scene{
+    public static func constructScene(type: ApplicationType?) -> some Scene{
+        
+        if type != nil{
+            defaults.setApplicationType(type!)
+        }
+        
         do {
             
             _ = try defaults.getApplicationType()
