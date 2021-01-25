@@ -133,6 +133,8 @@ struct defaults {
             DatabaseDelegate.setURL("https://clients.peakstudios.com/apphook/")
         case .NHanceConnect:
             DatabaseDelegate.setURL("https://www.nhance.com/peak-studios-api/")
+        default:
+            return
         }
     }
     
