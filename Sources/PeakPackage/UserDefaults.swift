@@ -58,6 +58,10 @@ struct defaults {
       UIImage(named: name, in: Bundle.module, compatibleWith: nil)
     }
     
+    public static func SourceColor(named name: String) -> Color? {
+        Color(name, bundle: Bundle.module)
+    }
+    
     static func getApplicationType() throws -> ApplicationType {
         if self.application == nil {
             throw IncompleteSetupError.applicationType

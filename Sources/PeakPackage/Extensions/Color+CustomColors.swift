@@ -35,11 +35,11 @@ extension Color {
 
 extension Color {
     
-    static var b_or_w = Color("base")
-    static var main = Color("main")
-    static var darkAccent = Color("dark")
-    static var lightAccent = Color("light")
-    static var mid = Color("mid")
+    static var b_or_w = defaults.SourceColor(named: "base")
+    static var main = defaults.SourceColor(named: "main")
+    static var darkAccent = defaults.SourceColor(named: "dark")
+    static var lightAccent = defaults.SourceColor(named: "light")
+    static var mid = defaults.SourceColor(named: "mid")
     
     static var b_or_wUI = UIColor(b_or_w)
     static var mainUI = UIColor(main)
