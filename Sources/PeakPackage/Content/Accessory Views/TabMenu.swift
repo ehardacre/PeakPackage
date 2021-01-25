@@ -83,6 +83,6 @@ extension Image {
         return self
             .renderingMode(.original)
             .resizable()
-            .frame(width:60.0, height: 60.0).overlay(Circle().background(Color.lightAccent))
+            .frame(width:60.0, height: 60.0).background(Circle().foregroundColor(Color.lightAccent))
     }
 }
