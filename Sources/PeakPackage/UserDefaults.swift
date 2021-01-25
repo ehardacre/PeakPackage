@@ -34,8 +34,8 @@ struct defaults {
     static let admin_id = "1"
     static var admin = false
     //The image assets needed for the app
-    static var banner : UIImage = UIImage(named: "banner")!
-    static var logo : UIImage = UIImage(named: "logo")!
+    static var banner : UIImage = SourceImage(named: "banner")!
+    static var logo : UIImage = SourceImage(named: "logo")!
     
     //MARK: Stored Values for Peak Clients
     
@@ -53,6 +53,10 @@ struct defaults {
     static var woocommerce = false
     
     //MARK: Getters
+    
+    public static func SourceImage(named name: String) -> UIImage? {
+      UIImage(named: name, in: Bundle.module, compatibleWith: nil)
+    }
     
     static func getApplicationType() throws -> ApplicationType {
         if self.application == nil {
