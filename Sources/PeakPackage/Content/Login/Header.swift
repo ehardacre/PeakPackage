@@ -25,18 +25,18 @@ struct Header: View {
                 Button(action: {
                     self.viewRouter.back()
                 }){
-                    Image("back").resizable().frame(width: 20, height: 20).padding([.top,.leading])
+                    Image(systemName: "chevron.left").resizable().frame(width: 20, height: 20).padding([.top,.leading])
                 }
             }else{
                 Button(action: {
                     //no need for action, this is for spacing
                 }){
-                    Image("back").resizable().frame(width: 20, height: 20).padding([.top,.leading])
+                    Image(systemName: "chevron.left").resizable().frame(width: 20, height: 20).padding([.top,.leading])
                 }.hidden()
             }
             Spacer()
             //logo
-            Image("nhanceLogo_full").resizable().frame(width: 200,height: 100)
+            Image(uiImage: defaults.banner).resizable().frame(width: 200,height: 100)
                 .padding(.top, 40).padding(.trailing,40).background(Color.clear)
             Spacer()
         }

@@ -24,7 +24,7 @@ struct TabMenu : View {
             
             //Dashboard button
             Button(action: { self.tab = tabs.dashboard }){
-                Image("nhance_thumb").tabCenter_style()
+                Image(uiImage: defaults.logo).tabCenter_style()
             }.tabCenter_style()
             
             Spacer(minLength: 0)
