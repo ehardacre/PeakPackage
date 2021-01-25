@@ -35,7 +35,7 @@ struct defaults {
     static var admin = false
     //The image assets needed for the app
     static var banner : UIImage = UIImage(named: "banner")!
-    //static var logo : UIImage = UIImage(named: "button")!
+    static var logo : UIImage = UIImage(named: "logo")!
     
     //MARK: Stored Values for Peak Clients
     
