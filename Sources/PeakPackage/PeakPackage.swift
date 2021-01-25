@@ -4,17 +4,19 @@ import UIKit
 
 public struct ColorScheme{
     
-    @State var main : Color? = nil
-    @State var darkAccent : Color? = nil
-    @State var lightAccent : Color? = nil
-    @State var mid : Color? = nil
+    @State var main : Color?
+    @State var darkAccent : Color?
+    @State var lightAccent : Color?
+    @State var mid : Color?
+    
+    
     
 }
 
 public struct ImageSet{
     
-    @State var logo : UIImage? = nil
-    @State var banner : UIImage? = nil
+    @State var logo : UIImage?
+    @State var banner : UIImage?
     
 }
 
