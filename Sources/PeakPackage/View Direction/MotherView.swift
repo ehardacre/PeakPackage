@@ -9,18 +9,20 @@
 import SwiftUI
 
 //MARK: Mother View
-struct MotherView: View{
+public struct MotherView: View{
     
     @EnvironmentObject var viewRouter: ViewRouter
     
     //show the action sheet to confirm franchise
     @State var showActionView = false
+    @State var content : ContentView
     
-    var body: some View {
+    public var body: some View {
         VStack {
             if viewRouter.currentPage == LoginPages.content{
                 //go to main content
-                ContentView()
+                //ContentView()
+                content
                     .environmentObject(AnalyticsManager())
                     .environmentObject(NotificationManager())
                     .environmentObject(DashboardMessageManager())

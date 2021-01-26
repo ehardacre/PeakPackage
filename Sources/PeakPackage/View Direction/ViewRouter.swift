@@ -13,7 +13,7 @@ import SwiftUI
  # Pages
  describes the page types that the View Router Manages
  */
-enum LoginPages {
+public enum LoginPages {
     case standardLogin
     case content
     case noPage
@@ -24,7 +24,7 @@ enum LoginPages {
  # View Router
  The view router extends observable object and is used to track which page is being shown mainly in the login sequence
  */
-class ViewRouter: ObservableObject {
+public class ViewRouter: ObservableObject {
     
     //the current and previous page that the app is on
     @Published var currentPage : LoginPages = LoginPages.noPage
@@ -32,7 +32,7 @@ class ViewRouter: ObservableObject {
     
     
     //Initializer for a view router
-    init(){
+    public init(){
         //get whether the user has signed in before
         let signIn = defaults.signedIn()
         if signIn {

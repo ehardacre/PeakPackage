@@ -22,7 +22,7 @@ enum tabs : Int{
  #Content View
  Content view holds all of the main content for the app
  */
-struct ContentView: View {
+public struct ContentView: View {
     
     //tab for switching tabs
     @State var tab : tabs = tabs.dashboard
@@ -37,7 +37,7 @@ struct ContentView: View {
     @EnvironmentObject var notificationManager : NotificationManager
     @EnvironmentObject var messageManager : DashboardMessageManager
     
-    init() {
+    public init() {
         
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none
@@ -49,7 +49,7 @@ struct ContentView: View {
         
     }
     
-    var body: some View {
+    public var body: some View {
         
         VStack(spacing: 0){
             
