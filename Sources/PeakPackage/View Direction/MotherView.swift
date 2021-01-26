@@ -17,6 +17,10 @@ public struct MotherView: View{
     @State var showActionView = false
     @State var content : ContentView
     
+    public init(content : ContentView){
+        self.content = content
+    }
+    
     public var body: some View {
         VStack {
             if viewRouter.currentPage == LoginPages.content{
