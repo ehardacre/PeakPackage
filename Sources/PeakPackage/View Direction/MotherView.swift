@@ -15,10 +15,8 @@ public struct MotherView: View{
     
     //show the action sheet to confirm franchise
     @State var showActionView = false
-    @State var content : ContentView
-    
-    public init(){}
-    
+    @State var content : ContentView? = nil
+
     public init(content: ContentView){
         self.content = content
     }
