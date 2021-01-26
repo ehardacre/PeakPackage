@@ -15,8 +15,6 @@ public struct ColorsForApp{
         self.lightAccent = lightAccent
         self.mid = mid
     }
-    
-    
 }
 
 public struct ImageSet{
@@ -49,10 +47,12 @@ public struct PeakApp {
     public static func constructScene(type: ApplicationType?, colorScheme : ColorsForApp? = nil, imageSet : ImageSet? = nil) -> some Scene{
         
         if colorScheme != nil {
+            printr("setting color scheme")
             setColorScheme(main: colorScheme?.main, darkAccent: colorScheme?.darkAccent, lightAccent: colorScheme?.lightAccent, mid: colorScheme?.mid)
         }
         
         if imageSet != nil {
+            printr("setting image set")
             setImageSet(logo: imageSet?.logo, banner: imageSet?.banner)
         }
         
@@ -84,9 +84,7 @@ public struct PeakApp {
         sets the color scheme for the app
      */
     public static func setColorScheme(main: Color? = nil, darkAccent: Color? = nil, lightAccent: Color? = nil, mid: Color? = nil){
-        
         Color.setColorScheme(main, darkAccent, lightAccent, mid)
-        
     }
     
     /**
