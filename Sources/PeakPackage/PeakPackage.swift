@@ -2,36 +2,36 @@
 import SwiftUI
 import UIKit
 
-public struct PeakApp {
+public struct ColorsForApp{
     
-    public struct ColorsForApp{
-        
-        @State public var main : Color?
-        @State public var darkAccent : Color?
-        @State public var lightAccent : Color?
-        @State public var mid : Color?
-        
-        public init(main: Color? = nil, darkAccent : Color? = nil, lightAccent : Color? = nil, mid : Color? = nil){
-            self.main = main
-            self.darkAccent = darkAccent
-            self.lightAccent = lightAccent
-            self.mid = mid
-        }
-        
-        
+    @State public var main : Color?
+    @State public var darkAccent : Color?
+    @State public var lightAccent : Color?
+    @State public var mid : Color?
+    
+    public init(main: Color? = nil, darkAccent : Color? = nil, lightAccent : Color? = nil, mid : Color? = nil){
+        self.main = main
+        self.darkAccent = darkAccent
+        self.lightAccent = lightAccent
+        self.mid = mid
     }
+    
+    
+}
 
-    public struct ImageSet{
-        
-        @State public var logo : UIImage?
-        @State public var banner : UIImage?
-        
-        public init(logo : UIImage? = nil, banner : UIImage? = nil){
-            self.logo = logo
-            self.banner = banner
-        }
-        
+public struct ImageSet{
+    
+    @State public var logo : UIImage?
+    @State public var banner : UIImage?
+    
+    public init(logo : UIImage? = nil, banner : UIImage? = nil){
+        self.logo = logo
+        self.banner = banner
     }
+    
+}
+
+public struct PeakApp {
     
     /**
     #GET App Delegate
