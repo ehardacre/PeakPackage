@@ -15,7 +15,7 @@ public struct SceneConstruct : Scene{
     @SceneBuilder public var body: some Scene{
         WindowGroup{
             if motherView != nil{
-                motherView
+                motherView!.environmentObject(ViewRouter())
             }
         }
     }
