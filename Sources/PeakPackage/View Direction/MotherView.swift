@@ -17,7 +17,9 @@ public struct MotherView: View{
     @State var showActionView = false
     @State var content : ContentView
     
-    public init(content : ContentView){
+    public init(){}
+    
+    public init(content: ContentView){
         self.content = content
     }
     
