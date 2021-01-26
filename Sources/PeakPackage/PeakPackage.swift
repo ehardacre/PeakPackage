@@ -6,30 +6,30 @@ public struct PeakApp {
     
     public struct ColorsForApp{
         
-        @State var main : Color?
-        @State var darkAccent : Color?
-        @State var lightAccent : Color?
-        @State var mid : Color?
+        @State public var main : Color?
+        @State public var darkAccent : Color?
+        @State public var lightAccent : Color?
+        @State public var mid : Color?
         
-        init(main: Color? = nil, darkAccent : Color? = nil, lightAccent : Color? = nil, mid : Color? = nil){
-            self.main = main
-            self.darkAccent = darkAccent
-            self.lightAccent = lightAccent
-            self.mid = mid
-        }
+//        init(main: Color? = nil, darkAccent : Color? = nil, lightAccent : Color? = nil, mid : Color? = nil){
+//            self.main = main
+//            self.darkAccent = darkAccent
+//            self.lightAccent = lightAccent
+//            self.mid = mid
+//        }
         
         
     }
 
     public struct ImageSet{
         
-        @State var logo : UIImage?
-        @State var banner : UIImage?
+        @State public var logo : UIImage?
+        @State public var banner : UIImage?
         
-        init(logo : UIImage? = nil, banner : UIImage? = nil){
-            self.logo = logo
-            self.banner = banner
-        }
+//        init(logo : UIImage? = nil, banner : UIImage? = nil){
+//            self.logo = logo
+//            self.banner = banner
+//        }
         
     }
     
