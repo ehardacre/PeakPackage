@@ -4,7 +4,7 @@ import UIKit
 
 public struct PeakApp {
     
-    public struct ColorScheme{
+    public struct ColorsForApp{
         
         @State var main : Color?
         @State var darkAccent : Color?
@@ -46,7 +46,7 @@ public struct PeakApp {
      constructs the scene based on the app type
      make sure you call the setAppType function before running
      */
-    public static func constructScene(type: ApplicationType?, colorScheme : ColorScheme? = nil, imageSet : ImageSet? = nil) -> some Scene{
+    public static func constructScene(type: ApplicationType?, colorScheme : ColorsForApp? = nil, imageSet : ImageSet? = nil) -> some Scene{
         
         if colorScheme != nil {
             setColorScheme(main: colorScheme?.main, darkAccent: colorScheme?.darkAccent, lightAccent: colorScheme?.lightAccent, mid: colorScheme?.mid)
