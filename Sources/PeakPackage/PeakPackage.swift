@@ -11,12 +11,12 @@ public struct PeakApp {
         @State public var lightAccent : Color?
         @State public var mid : Color?
         
-//        init(main: Color? = nil, darkAccent : Color? = nil, lightAccent : Color? = nil, mid : Color? = nil){
-//            self.main = main
-//            self.darkAccent = darkAccent
-//            self.lightAccent = lightAccent
-//            self.mid = mid
-//        }
+        public init(main: Color? = nil, darkAccent : Color? = nil, lightAccent : Color? = nil, mid : Color? = nil){
+            self.main = main
+            self.darkAccent = darkAccent
+            self.lightAccent = lightAccent
+            self.mid = mid
+        }
         
         
     }
@@ -26,10 +26,10 @@ public struct PeakApp {
         @State public var logo : UIImage?
         @State public var banner : UIImage?
         
-//        init(logo : UIImage? = nil, banner : UIImage? = nil){
-//            self.logo = logo
-//            self.banner = banner
-//        }
+        public init(logo : UIImage? = nil, banner : UIImage? = nil){
+            self.logo = logo
+            self.banner = banner
+        }
         
     }
     
