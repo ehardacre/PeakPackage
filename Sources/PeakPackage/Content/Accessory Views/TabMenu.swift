@@ -10,26 +10,28 @@ import Foundation
 import SwiftUI
 
 ///Specific tab menu for the content of the Peak Clients app
-struct TabMenu : View {
+public struct TabMenu : View {
     
     @Binding var tab : tabs
+    @Binding var availableTabs : [tabs]
     var notificationCount : Int
     
-    var body : some View{
+    public var body : some View{
         HStack{
-            
-            tabButton(imageName: "chart.bar.fill", globalTab: $tab, myTab: tabs.analytics)
-            
-            Spacer(minLength: 0)
             
             //Dashboard button
             Button(action: { self.tab = tabs.dashboard }){
                 Image(uiImage: defaults.logo).tabCenter_style()
             }.tabCenter_style()
             
-            Spacer(minLength: 0)
+            ForEach(availableTabs, id: \.rawValue){ t in
+                Spacer(minLength: 0)
+                tabButton(imageName: "chart.bar.fill", globalTab: $tab, myTab: t)
+            }
             
-            tabButton(imageName: "rectangle.stack.person.crop.fill", globalTab: $tab, myTab: tabs.leads, notificationCount: notificationCount)
+//            Spacer(minLength: 0)
+//
+//            tabButton(imageName: "rectangle.stack.person.crop.fill", globalTab: $tab, myTab: tabs.leads, notificationCount: notificationCount)
             
             
         //HSTACK end
@@ -39,7 +41,7 @@ struct TabMenu : View {
 }
 
 ///a button for the tab bar
-struct tabButton : View {
+public struct tabButton : View {
     
     var imageName : String
     // the tab selected
@@ -48,7 +50,7 @@ struct tabButton : View {
     var myTab : tabs
     var notificationCount : Int = 0
 
-    var body: some View {
+    public var body: some View {
         Button(action: { self.globalTab = myTab }){
             Image(systemName: imageName).tab_style().overlay(NotificationNumLabel(number: notificationCount))
         }

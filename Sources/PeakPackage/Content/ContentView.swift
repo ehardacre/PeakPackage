@@ -12,10 +12,13 @@ import Pages
 //MARK: Content View
 
 ///the tabs values for the bottom menu
-enum tabs : Int{
+public enum tabs : Int{
     case analytics = 0
     case leads = 1
     case dashboard = 2
+    case calendar = 3
+    case ratings = 4
+    case tasks = 5
 }
 
 /**
@@ -23,6 +26,8 @@ enum tabs : Int{
  Content view holds all of the main content for the app
  */
 public struct ContentView: View {
+    
+    @State var availableTabs : [tabs]
     
     //tab for switching tabs
     @State var tab : tabs = tabs.dashboard
@@ -37,8 +42,9 @@ public struct ContentView: View {
     @EnvironmentObject var notificationManager : NotificationManager
     @EnvironmentObject var messageManager : DashboardMessageManager
     
-    public init() {
+    public init(tabMenuOptions : [tabs]? = [tabs.analytics, tabs.dashboard, tabs.leads]) {
         
+        _availableTabs = State(initialValue: tabMenuOptions!)
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none
         
@@ -79,7 +85,7 @@ public struct ContentView: View {
             //ZSTACK end
             }.padding(.bottom,-35)
             
-            TabMenu(tab: self.$tab, notificationCount: notificationManager.newNotifications).shadow(color: Color.darkAccent.opacity(0.1), radius: 4, y: -4).frame(maxHeight: 70)
+            TabMenu(tab: self.$tab, availableTabs: self.$availableTabs, notificationCount: notificationManager.newNotifications).shadow(color: Color.darkAccent.opacity(0.1), radius: 4, y: -4).frame(maxHeight: 70)
                 .onAppear{
                     
                     analyticsManager.loadAnalytics()
