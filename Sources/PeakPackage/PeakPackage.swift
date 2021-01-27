@@ -52,34 +52,26 @@ public struct PeakApp {
         return SceneConstruct(content: content)
         
     }
-    
-//    /**
-//    #SET App Type
-//     set's the type of the app such as Peak Clients, or N-Hance Connect
-//     */
-//    public static func setAppType(_ type : ApplicationType){
-//        defaults.setApplicationType(type)
-//    }
-//
-//    /**
-//     #SET Color Scheme
-//        sets the color scheme for the app
-//     */
-//    public static func setColorScheme(main: Color? = nil, darkAccent: Color? = nil, lightAccent: Color? = nil, mid: Color? = nil){
-//        Color.setColorScheme(main, darkAccent, lightAccent, mid)
-//    }
-//
-//    /**
-//    #SET Image Set
-//     the banner and logo image for the app
-//     */
-//    public static func setImageSet(logo: UIImage? = nil, banner: UIImage? = nil){
-//        if logo != nil{
-//            defaults.logo = logo!
-//        }
-//        if banner != nil{
-//            defaults.banner = banner!
-//        }
-//    }
+
+    /**
+     #SET Color Scheme
+        sets the color scheme for the app
+     */
+    public static func setColorScheme(main: Color? = nil, darkAccent: Color? = nil, lightAccent: Color? = nil, mid: Color? = nil){
+        Color.setColorScheme(main, darkAccent, lightAccent, mid)
+    }
+
+    /**
+    #SET Image Set
+     the banner and logo image for the app
+     */
+    public static func setImageSet(logo: UIImage? = nil, banner: UIImage? = nil){
+        if logo != nil{
+            defaults.logo = logo!
+        }
+        if banner != nil{
+            defaults.banner = banner!
+        }
+    }
     
 }

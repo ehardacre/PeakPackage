@@ -35,19 +35,19 @@ extension Color {
 
 extension Color {
     
-    static var b_or_w = defaults.SourceColor(named: "base")!
-    static var main = defaults.SourceColor(named: "main")!
-    static var darkAccent = defaults.SourceColor(named: "dark")!
-    static var lightAccent = defaults.SourceColor(named: "light")!
-    static var mid = defaults.SourceColor(named: "mid")!
+    public static var b_or_w = defaults.SourceColor(named: "base")!
+    public static var main = defaults.SourceColor(named: "main")!
+    public static var darkAccent = defaults.SourceColor(named: "dark")!
+    public static var lightAccent = defaults.SourceColor(named: "light")!
+    public static var mid = defaults.SourceColor(named: "mid")!
     
-    static var b_or_wUI = UIColor(b_or_w)
-    static var mainUI = UIColor(main)
-    static var darkAccentUI = UIColor(darkAccent)
-    static var lightAccentUI = UIColor(lightAccent)
-    static var midUI = UIColor(mid)
+    public static var b_or_wUI = UIColor(b_or_w)
+    public static var mainUI = UIColor(main)
+    public static var darkAccentUI = UIColor(darkAccent)
+    public static var lightAccentUI = UIColor(lightAccent)
+    public static var midUI = UIColor(mid)
     
-    static func setColorScheme(_ main: Color?, _ darkAccent: Color?, _ lightAccent: Color?, _ mid: Color?){
+    public static func setColorScheme(_ main: Color?, _ darkAccent: Color?, _ lightAccent: Color?, _ mid: Color?){
         
         if main != nil {
             self.main = main!
@@ -68,8 +68,6 @@ extension Color {
             self.mid = mid!
             self.midUI = UIColor(mid!)
         }
-        
-        
         
     }
     
