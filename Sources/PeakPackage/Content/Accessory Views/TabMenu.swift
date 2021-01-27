@@ -16,17 +16,23 @@ public struct TabMenu : View {
     @Binding var availableTabs : [tabs]
     var notificationCount : Int
     
+    let images : [tabs : String] =
+        [ tabs.analytics : "chart.bar.fill", tabs.calendar : "calendar", tabs.leads : "rectangle.stack.person.crop.fill", tabs.ratings : "star.lefthalf.fill", tabs.tasks : "list.dash"]
+    
     public var body : some View{
         HStack{
             
-            //Dashboard button
-            Button(action: { self.tab = tabs.dashboard }){
-                Image(uiImage: defaults.logo).tabCenter_style()
-            }.tabCenter_style()
-            
             ForEach(availableTabs, id: \.rawValue){ t in
-                Spacer(minLength: 0)
-                tabButton(imageName: "chart.bar.fill", globalTab: $tab, myTab: t)
+                if t == tabs.dashboard{
+                    //Dashboard button
+                    Button(action: { self.tab = tabs.dashboard }){
+                        Image(uiImage: defaults.logo).tabCenter_style()
+                    }.tabCenter_style()
+                }else{
+                    Spacer(minLength: 0)
+                    tabButton(imageName: images[t]!, globalTab: $tab, myTab: t)
+                    Spacer(minLength: 0)
+                }
             }
             
 //            Spacer(minLength: 0)
