@@ -10,13 +10,11 @@ import SwiftUI
 
 public struct SceneConstruct : Scene{
     
-    @State var motherView : MotherView = MotherView(content: ContentView())
+    @State var content : AnyView
     
     @SceneBuilder public var body: some Scene{
         WindowGroup{
-            if motherView != nil{
-                motherView.environmentObject(ViewRouter())
-            }
+            MotherView(content: content).environmentObject(ViewRouter())
         }
     }
     

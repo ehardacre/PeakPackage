@@ -15,17 +15,12 @@ public struct MotherView: View{
     
     //show the action sheet to confirm franchise
     @State var showActionView = false
-    @State var content : ContentView? = nil
-
-    public init(content: ContentView){
-        self.content = content
-    }
+    @State var content : AnyView
     
     public var body: some View {
         VStack {
             if viewRouter.currentPage == LoginPages.content{
                 //go to main content
-                //ContentView()
                 content
                     .environmentObject(AnalyticsManager())
                     .environmentObject(NotificationManager())
