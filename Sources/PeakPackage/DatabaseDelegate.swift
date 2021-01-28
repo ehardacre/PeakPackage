@@ -101,6 +101,12 @@ struct DatabaseDelegate {
         var rex : Any?
         //switch for the return type to determine which type to cast as
         switch type {
+        case returnType.formtype:
+            rex = try? JSONDecoder().decode([Form_Type].self, from: data)
+        case returnType.form:
+            rex = try? JSONDecoder().decode([Form_Element].self, from: data)
+        case returnType.taskList:
+            rex = try? JSONDecoder().decode([Task].self, from: data)
         case returnType.franchiseList:
             rex = try? JSONDecoder().decode([Franchise].self, from: data)
         case returnType.user:
