@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import ElegantCalendar
 import Introspect
 
 //MARK: Call Calendar View
