@@ -4,8 +4,8 @@ import SwiftUI
 
 extension Image {
 
-    static var uTurnLeft: Image = {
-        guard let image = UIImage(named: "uturn.left") else {
+    public static var uTurnLeft: Image = {
+        guard let image = UIImage(systemName:"arrow.uturn.left") else {
             fatalError("Error: `ElegantCalendar.xcassets` doesn't exist. Refer to the `README.md` installation on how to resolve this.")
         }
         return Image(uiImage: image)
