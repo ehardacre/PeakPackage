@@ -25,6 +25,8 @@ public struct MotherView: View{
                     .environmentObject(AnalyticsManager())
                     .environmentObject(NotificationManager())
                     .environmentObject(DashboardMessageManager())
+                    .environmentObject(TaskManager())
+                    .environmentObject(AppointmentManager())
             }else if viewRouter.currentPage == LoginPages.standardLogin{
                 //go to standard login
                 LoginView(viewRouter: viewRouter)

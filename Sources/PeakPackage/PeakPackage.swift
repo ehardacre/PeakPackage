@@ -54,6 +54,15 @@ public struct PeakApp {
         return SceneConstruct(content: content)
         
     }
+    
+    /**
+     #SET login style
+     sets the login style, whether the users name needs to be collected
+     */
+    
+    public static func loginWithUsername(){
+        defaults.loginWithUsername = true
+    }
 
     /**
      #SET Color Scheme

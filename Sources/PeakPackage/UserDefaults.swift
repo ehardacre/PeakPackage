@@ -36,6 +36,7 @@ struct defaults {
     //The image assets needed for the app
     static var banner : UIImage = SourceImage(named: "banner")!
     static var logo : UIImage = SourceImage(named: "logo")!
+    static var loginWithUsername = false
     
     //MARK: Stored Values for Peak Clients
     
@@ -96,6 +97,8 @@ struct defaults {
     }
     
     static func franchiseURL() -> String?{return UserDefaults.standard.string(forKey: url_key)}
+    
+    static func getUsername() -> String?{return UserDefaults.standard.string(forKey: username_key)}
     
     /**
     #Get Encoded Email

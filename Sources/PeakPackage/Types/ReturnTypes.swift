@@ -94,6 +94,62 @@ struct DashboardMessage: Codable{
 //an order from woocommerce has the same fields as Lead
 typealias Order = Lead
 
+//MARK: AutoServeForms
+
+enum AutoServeType{
+   
+    case textInput(placeHolder: String)
+    case title(_ title: String, subtitle: String = "")
+    case datePicker(start: Date, end: Date)
+    case incrementPicker(min: Int, max: Int, interval: Int, units: String)
+    case datetimePicker(start: Date, end: Date)
+    case imagePicker
+    case multichoice(choices: [String])
+    case submitButton
+    
+}
+
+class Form_Type : Codable {
+    var name : String
+    var id : String
+}
+
+class Form_Element : Codable, Identifiable {
+    
+    var title : String?
+    var subtitle : String?
+    var placeholder : String?
+    var start : String?
+    var end : String?
+    var choices : String?
+    var image : String?
+    
+    var optional : String
+    
+    func convertToHashable() -> AutoServeType_hash {
+        
+        if title != nil && subtitle != nil {
+            return AutoServeType_hash(type: .title(title!, subtitle: subtitle!))
+        }
+        else if placeholder != nil {
+            return AutoServeType_hash(type: .textInput(placeHolder: placeholder!))
+        }
+        else if start != nil && end != nil {
+            return AutoServeType_hash(type: .datePicker(start: Date.fromDatabaseFormat(start!), end: Date.fromDatabaseFormat(end!)))
+        }
+        else if choices != nil {
+            let choiceList = choices!.components(separatedBy: ",")
+            return AutoServeType_hash(type: .multichoice(choices: choiceList))
+        }
+        else if image != nil {
+            return AutoServeType_hash(type: .imagePicker)
+        }
+        
+        return AutoServeType_hash(type: .title("Error", subtitle: "This form type is not supported yet. Please reach out to the Peak Studios team to let us know"))
+        
+    }
+}
+
 /**
  # Return Type
  This enum keeps track of the different return types from the database so that they can be easily referenced

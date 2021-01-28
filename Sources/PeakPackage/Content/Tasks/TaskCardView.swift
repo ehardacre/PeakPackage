@@ -1,22 +1,36 @@
 //
-//  OrderView.swift
-//  Peak Client App
+//  TaskCardView.swift
+//  Peak Client
 //
-//  Created by Ethan Hardacre  on 12/11/20.
-//  Copyright © 2020 Ethan Hardacre . All rights reserved.
+//  Created by Ethan Hardacre on 6/10/20.
+//  Copyright © 2020 Peak Studios. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 
-struct OrderCardView: View {
+//MARK: Task Card View
+
+class SelectionManager: ObservableObject {
+    @Published var id : UUID?
+}
+
+struct TaskCardView: View {
     
     //needs an id as an identifier for list
     var id = UUID()
     @ObservedObject var selectionManager : SelectionManager
-    @ObservedObject var notificationMan : NotificationManager
     
-    var order : Order
+    
+    var task : Task
+    
+    //the type of the task is passed as an argument
+    var type : TaskType
+    
+    //Information
+    var date : String
+    var content : String
+    @State var statusIndex = 0
+    let statusOptions = ["Open", "In Progress", "Complete"]
     
     //height of the row
     var height : CGFloat = 105
@@ -34,12 +48,17 @@ struct OrderCardView: View {
                     HStack{
                         ZStack{
                             //determines the image that is placed on the left side of the card
-                            if order.notification_state == orderType.pending.rawValue {
-                                Rectangle().fill(Color.darkAccent).frame(width: 50.0)
-                                Image(systemName: "clock").imageScale(.large).foregroundColor(.mid)
-                            } else { //processing
-                                Rectangle().fill(Color.lightAccent).frame(width: 50.0)
-                                Image(systemName: "cube.box").imageScale(.large).foregroundColor(.mid)
+                            if self.type.origin == TaskOrigin.complementary {
+                                Rectangle().fill(Color.mid).frame(width: 50.0)
+                                Image("bolt").resizable().frame(width:40,height:40).foregroundColor(Color.darkAccent)
+                            } else {
+                                if self.type.status == TaskStatus.complete {
+                                    Rectangle().fill(Color.darkAccent).frame(width: 50.0)
+                                    Image("done").resizable().frame(width:40,height:40).opacity(0.5).foregroundColor(Color.lightAccent)
+                                }else if self.type.status == TaskStatus.open {
+                                    Rectangle().fill(Color.mid).frame(width: 50.0)
+                                    Image("add").resizable().frame(width:40,height:40).opacity(0.5).foregroundColor(Color.black)
+                                }
                             }
                             
                         //ZSTACK end
@@ -48,23 +67,20 @@ struct OrderCardView: View {
                         //displaying the content on the card
                             VStack(alignment: .leading) {
                                 
-                                Text(order.notification_key)
-                                        .font(.headline)
-                                        .foregroundColor(.darkAccent)
-//                                Text(order.notification_value)
-//                                        .font(.caption)
-//                                        .foregroundColor(.secondary)
-//                                        .truncationMode(.tail)
-//                                        .lineLimit(1)
-                                HStack{
-                                    Text(formatDate(order.notification_date))
+                                    Text(self.type.origin == TaskOrigin.userRequested ? "Requested" : self.type.origin.rawValue)
                                         .font(.headline)
                                         .foregroundColor(.secondary)
-                                    Spacer()
-                                    Text(formatTime(order.notification_date))
-                                        .font(.headline)
+                                    Text(self.date)
+                                        .font(.title)
+                                        .fontWeight(.black)
+                                        .foregroundColor(.primary)
+                                        .lineLimit(3)
+                                    Text(self.content.uppercased())
+                                        .font(.caption)
                                         .foregroundColor(.secondary)
-                                }
+                                        .truncationMode(.tail)
+                                        .lineLimit(1)
+                                    
                                 
                             //VSTACK end
                             }
@@ -96,37 +112,10 @@ struct OrderCardView: View {
                 
             }
             .sheet(isPresented: self.$showMoreInfo, content: {
-               // OrderInfoSheet(order: order, notificationMan: notificationMan)
+                TaskDetails(task: self.task).onDisappear{
+                    self.selectionManager.id = nil
+                }
             })
         }
     
     }
-
-extension OrderCardView {
-    func formatDate(_ str_date: String) -> String{
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-ddHH:mm:ss"
-        var date = dateFormatter.date(from:str_date)!
-        
-        date = date.toLocalTime()
-        
-        var dateString = date.dayOfWeekWithMonthAndDay
-        
-    
-        return dateString
-    }
-    
-    func formatTime(_ str_date: String) -> String{
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-ddHH:mm:ss"
-        var date = dateFormatter.date(from:str_date)!
-        
-        date = date.toLocalTime()
-        
-        var dateString = date.timeOnlyWithPadding
-        
-    
-        return dateString
-    }
-}

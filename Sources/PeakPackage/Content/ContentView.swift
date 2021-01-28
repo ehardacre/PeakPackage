@@ -41,6 +41,8 @@ public struct ContentView: View {
     @EnvironmentObject var analyticsManager : AnalyticsManager
     @EnvironmentObject var notificationManager : NotificationManager
     @EnvironmentObject var messageManager : DashboardMessageManager
+    @EnvironmentObject var taskManager : TaskManager
+    @EnvironmentObject var appointmentManager : AppointmentManager
     
     public init(tabMenuOptions : [tabs]? = [tabs.analytics, tabs.dashboard, tabs.leads]) {
         
@@ -75,7 +77,14 @@ public struct ContentView: View {
                         //ProfileView()
                         NotificationsView(notificationMan: notificationManager)
                         
+                        
                     }else if tab == tabs.calendar{
+
+                        CallCalendarView(ascVisits: appointmentManager.appointments, content: self)
+
+                    }else if tab == tabs.tasks{
+                        
+                        TaskContent()
 
                     }else if tab == tabs.dashboard{
 
