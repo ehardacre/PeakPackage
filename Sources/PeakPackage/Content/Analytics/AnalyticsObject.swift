@@ -192,7 +192,7 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             var value = 0
             if count < (rows ?? []).count {
                 let row = rows![count]
-                value = Int(row[1]) ?? 0
+                value = Int(row[2]) ?? 0
             }
             graph.append((label,value))
             count += 1
@@ -213,7 +213,7 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             var date = "0\(count + 1)"
             if count < (rows ?? []).count {
                 let row = rows![count]
-                value = Int(row[1]) ?? 0
+                value = Int(row[2]) ?? 0
                 date = row[0]
             }
             
@@ -239,7 +239,7 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             var month = "0\(count)"
             if count < (rows ?? []).count {
                 let row = rows![count]
-                value = Int(row[1]) ?? 0
+                value = Int(row[2]) ?? 0
                 month = row[0]
             }
             
@@ -306,5 +306,6 @@ struct GA_TotalsForAllResults_PPC : Codable {
     var gasessions : String
     
 }
+
 
 

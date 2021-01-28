@@ -74,6 +74,8 @@ public struct ContentView: View {
                         //this one's pretty easy so we don't need an extension
                         //ProfileView()
                         NotificationsView(notificationMan: notificationManager)
+                        
+                    }else if tab == tabs.calendar{
 
                     }else if tab == tabs.dashboard{
 

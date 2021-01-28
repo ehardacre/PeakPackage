@@ -76,17 +76,17 @@ class AnalyticsManager : ObservableObject {
         
         
 //        let json = JsonFormat.getAnalyticsId(id: defaults.franchiseId()!).format()
-//        
+//
 //        DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
 //            id in
-//            
+//
 //            //there were some issues with white space on the ID
 //            let parsedId = (id as! String).trimmingCharacters(in: .whitespacesAndNewlines)
-//            
+//
 //            //perform analytics request is slightly different than perform request
 //            DatabaseDelegate.performAnalyticsRequest(with: parsedId, completion: {
 //                rex in
-//                
+//
 //                let analytics = rex as! [Analytics]
 //                //separate into different analytics types
 //                self.separateAnalytics(analytics: analytics)
@@ -138,26 +138,62 @@ class AnalyticsManager : ObservableObject {
     }
     
     func subtitleForWeek() -> String{
+        let date = Date().addingTimeInterval(-86400)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        return isFirstofWeek() ? "Monday - Sunday" : "Monday - \(formatter.string(from: date))"
+    }
+    
+    func subnoteForWeek() -> String{
+        return isFirstofWeek() ? "Not enough data has been collected this week, so this is last week's analytics." : ""
+    }
+    
+    func isFirstofWeek() -> Bool{
         let date = Date()
         let dayOfWeek = Calendar.current.component(.weekday, from: date)
-        
-        return dayOfWeek == 1 ? "Not enough data has been collected this week, so this is last week's analytics." : ""
+        return dayOfWeek == 1
     }
     
     func subtitleForMonth() -> String{
         let date = Date()
+        let prev_date = Date().addingTimeInterval(-86400)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM"
+        let formatter2 = DateFormatter()
+        formatter2.dateFormat = "MMM d"
+        let formatter3 = DateFormatter()
+        formatter3.dateFormat = "MMM"
+        return isFirstofMonth() ? formatter.string(from: prev_date) : formatter3.string(from: date) + " 1 - " + formatter2.string(from: prev_date)
+    }
+    
+    func subnoteForMonth() -> String{
+        return isFirstofMonth() ? "Not enough data has been collected this month, so this is last month's analytics." : ""
+    }
+    
+    func isFirstofMonth() -> Bool {
+        let date = Date()
         let dayOfMonth = Calendar.current.component(.day, from: date)
-        
-        return dayOfMonth == 1 ? "Not enough data has been collected this month, so this is last month's analytics." : ""
+        return dayOfMonth == 1
     }
     
     func subtitleForYear() -> String{
+        let date = Date()
+        let prev_date = Date().addingTimeInterval(-2678400) //previous month
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY"
+        let formatter2 = DateFormatter()
+        formatter2.dateFormat = "MMMM"
+        return isFirstofYear() ? formatter.string(from: prev_date) : "January - " + formatter2.string(from: date)
         
+    }
+    func subnoteForYear() -> String{
+        return isFirstofYear() ? "Not enough data has been collected this year, so this is last year's analytics." : ""
+    }
+    
+    func isFirstofYear() -> Bool {
         let date = Date()
         let month = Calendar.current.component(.month, from: date)
-        
-        return month == 1 ? "Not enough data has been collected this year, so this is last year's analytics." : ""
-        
+        return month == 1
     }
     
     ///loads graphable data and totals for the given type
@@ -298,3 +334,4 @@ struct PPC {
     var graphableData : [(String, Int)]
     var totals : [String : String]
 }
+

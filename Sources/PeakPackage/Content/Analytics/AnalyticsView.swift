@@ -61,12 +61,17 @@ struct AnalyticsView: View {
                 
                 List{
                     
-                    if type == AnalyticsType.thisWeek {
-                        Text(analyticsMan.subtitleForWeek()).font(.footnote).foregroundColor(Color.darkAccent.opacity(0.5))
-                    }else if type == AnalyticsType.thisMonth {
-                        Text(analyticsMan.subtitleForMonth()).font(.footnote).foregroundColor(Color.darkAccent.opacity(0.5))
-                    }else{
-                        Text(analyticsMan.subtitleForYear()).font(.footnote).foregroundColor(Color.darkAccent.opacity(0.5))
+                    VStack(alignment: .leading){
+                        if type == AnalyticsType.thisWeek {
+                            Text(analyticsMan.subtitleForWeek()).font(.footnote).bold().foregroundColor(.darkAccent)
+                            Text(analyticsMan.subnoteForWeek()).font(.footnote).foregroundColor(Color.darkAccent.opacity(0.5))
+                        }else if type == AnalyticsType.thisMonth {
+                            Text(analyticsMan.subtitleForMonth()).font(.footnote).bold().foregroundColor(.darkAccent)
+                            Text(analyticsMan.subnoteForMonth()).font(.footnote).foregroundColor(Color.darkAccent.opacity(0.5))
+                        }else{
+                            Text(analyticsMan.subtitleForYear()).font(.footnote).bold().foregroundColor(.darkAccent)
+                            Text(analyticsMan.subnoteForYear()).font(.footnote).foregroundColor(Color.darkAccent.opacity(0.5))
+                        }
                     }
                     
                     //the page analytics view
@@ -105,6 +110,9 @@ struct PageAnalyticsInfoView : View {
     //maybe a gradient would be nice some day
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
+    
+    @State var delta_visitors = ""
+    @State var delta_events = ""
     
     public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
         self.type = type
@@ -145,11 +153,35 @@ struct PageAnalyticsInfoView : View {
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
                         PageTotals(
-                            prev_totalEvents: dataSource!.previous!.page.totals[AnalyticsManager.totalEvents_key] ?? "",
-                            prev_visitors: dataSource!.previous!.page.totals[AnalyticsManager.visitors_key] ?? "",
-                            totalEvents: dataSource!.now!.page.totals[AnalyticsManager.totalEvents_key] ?? "",
-                            visitors: dataSource!.now!.page.totals[AnalyticsManager.visitors_key] ?? ""
-                        )
+                            prev_totalEvents: dataSource!.previous!.page.totals[AnalyticsManager.totalEvents_key],
+                            prev_visitors: dataSource!.previous!.page.totals[AnalyticsManager.visitors_key],
+                            totalEvents: dataSource!.now!.page.totals[AnalyticsManager.totalEvents_key],
+                            visitors: dataSource!.now!.page.totals[AnalyticsManager.visitors_key],
+                            delta_visitors: $delta_visitors,
+                            delta_events: $delta_events
+                        ).onAppear{
+                            guard let prev_total = dataSource!.previous!.page.totals[AnalyticsManager.totalEvents_key]?.digits.integer,
+                                  let prev_visitors = dataSource!.previous!.page.totals[AnalyticsManager.visitors_key]?.digits.integer,
+                                  let total = dataSource!.now!.page.totals[AnalyticsManager.totalEvents_key]?.digits.integer,
+                                  let visitors = dataSource!.now!.page.totals[AnalyticsManager.visitors_key]?.digits.integer
+                                  else { return }
+                            
+                            if prev_visitors == 0 {
+                                return
+                            }
+                            
+                            var visitor_d = Float(visitors - prev_visitors) / Float(prev_visitors) * 100
+                            var visitor_d_str = (visitor_d > 0 ? "+" : "") + String(visitor_d)
+                            delta_visitors = visitor_d_str.withDecimalPrecision(1) + "%"
+                            
+                            if prev_total == 0 {
+                                return
+                            }
+                            
+                            var total_d = Float(total - prev_total) / Float(prev_total) * 100
+                            var total_d_str = (total_d > 0 ? "+" : "") + String(total_d)
+                            delta_events = total_d_str.withDecimalPrecision(1) + "%"
+                        }
                     
                     Spacer()
                 
@@ -176,12 +208,6 @@ struct PageAnalyticsInfoView : View {
               let visitors = dataSource!.now!.page.totals[AnalyticsManager.visitors_key]?.digits.integer
               else { return Text("") }
         
-        var visitor_d = Float(visitors - prev_visitors) / Float(prev_visitors) * 100
-        var visitor_d_str = (visitor_d > 0 ? "+" : "") + String(visitor_d)
-        
-        var total_d = Float(total - prev_total) / Float(prev_total) * 100
-        var total_d_str = (total_d > 0 ? "+" : "") + String(total_d)
-        
         var timePeriod = ""
         switch type{
         
@@ -196,7 +222,7 @@ struct PageAnalyticsInfoView : View {
         }
         
         
-        return Text("This \(timePeriod) your site has attracted \(visitors) visitors (\(visitor_d_str.withDecimalPrecision(1))% from last \(timePeriod)'s \(prev_visitors)) and \(total) leads (\(total_d_str.withDecimalPrecision(1))% from last \(timePeriod)'s \(prev_total) ).").font(.footnote).foregroundColor(.darkAccent)
+        return Text("This \(timePeriod) your site has attracted \(visitors) visitors (\(delta_visitors) from last \(timePeriod)'s \(prev_visitors)) and \(total) leads (\(delta_events) from last \(timePeriod)'s \(prev_total) ).").font(.footnote).foregroundColor(.darkAccent)
         
     }
     
@@ -215,6 +241,9 @@ struct PPCAnalyticsInfoView : View {
     //maybe a gradient would be nice some day
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
+    
+    @State var delta_sessions = ""
+    @State var delta_sessionsWithEvents = ""
     
     public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
         self.type = type
@@ -255,11 +284,35 @@ struct PPCAnalyticsInfoView : View {
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
                     PPCTotals(
-                        prev_sessions: dataSource?.previous?.ppc.totals[AnalyticsManager.sessions_key] ?? "",
-                        prev_sessionsWithEvents: dataSource?.previous?.ppc.totals[AnalyticsManager.sessionsWithEvent_key] ?? "",
-                        sessions: dataSource?.now?.ppc.totals[AnalyticsManager.sessions_key] ?? "",
-                        sessionsWithEvents: dataSource?.now?.ppc.totals[AnalyticsManager.sessionsWithEvent_key] ?? ""
-                    )
+                        prev_sessions: dataSource?.previous?.ppc.totals[AnalyticsManager.sessions_key],
+                        prev_sessionsWithEvents: dataSource?.previous?.ppc.totals[AnalyticsManager.sessionsWithEvent_key],
+                        sessions: dataSource?.now?.ppc.totals[AnalyticsManager.sessions_key],
+                        sessionsWithEvents: dataSource?.now?.ppc.totals[AnalyticsManager.sessionsWithEvent_key],
+                        delta_sessions: $delta_sessions,
+                        delta_sessionsWithEvents: $delta_sessionsWithEvents
+                    ).onAppear{
+                        guard let prev_sessions = dataSource!.previous!.ppc.totals[AnalyticsManager.sessions_key]?.digits.integer,
+                              let prev_sessionsWithEvent = dataSource!.previous!.ppc.totals[AnalyticsManager.sessionsWithEvent_key]?.digits.integer,
+                              let sessions = dataSource!.now!.ppc.totals[AnalyticsManager.sessions_key]?.digits.integer,
+                              let sessionsWithEvent = dataSource!.now!.ppc.totals[AnalyticsManager.sessionsWithEvent_key]?.digits.integer
+                              else { return }
+                        
+                        if prev_sessionsWithEvent == 0{
+                            return
+                        }
+                        
+                        var sessionsWithEvent_d = Float(sessionsWithEvent - prev_sessionsWithEvent) / Float(prev_sessionsWithEvent) * 100
+                        var sessionsWithEvent_d_str = (sessionsWithEvent_d > 0 ? "+" : "") + String(sessionsWithEvent_d)
+                        delta_sessionsWithEvents = sessionsWithEvent_d_str.withDecimalPrecision(1) + "%"
+                        
+                        if prev_sessions == 0{
+                            return
+                        }
+                        
+                        var sessions_d = Float(sessions - prev_sessions) / Float(prev_sessions) * 100
+                        var sessions_d_str = (sessions_d > 0 ? "+" : "") + String(sessions_d)
+                        delta_sessions = sessions_d_str.withDecimalPrecision(1) + "%"
+                    }
                     
                     Spacer()
                 
@@ -286,12 +339,6 @@ struct PPCAnalyticsInfoView : View {
               let sessionsWithEvent = dataSource!.now!.ppc.totals[AnalyticsManager.sessionsWithEvent_key]?.digits.integer
               else { return Text("") }
         
-        var sessionsWithEvent_d = Float(sessionsWithEvent - prev_sessionsWithEvent) / Float(prev_sessionsWithEvent) * 100
-        var sessionsWithEvent_d_str = (sessionsWithEvent_d > 0 ? "+" : "") + String(sessionsWithEvent_d)
-        
-        var sessions_d = Float(sessions - prev_sessions) / Float(prev_sessions) * 100
-        var sessions_d_str = (sessions_d > 0 ? "+" : "") + String(sessions_d)
-        
         var timePeriod = ""
         switch type{
         
@@ -306,7 +353,7 @@ struct PPCAnalyticsInfoView : View {
         }
         
         
-        return Text("This \(timePeriod) your PPC ads have attracted \(sessions) visitors (\(sessions_d_str.withDecimalPrecision(1))% from last \(timePeriod)'s \(prev_sessions)) and \(sessionsWithEvent) leads (\(sessionsWithEvent_d_str.withDecimalPrecision(1))% from last \(timePeriod)'s \(prev_sessionsWithEvent) ).").font(.footnote).foregroundColor(.darkAccent)
+        return Text("This \(timePeriod) your PPC ads have attracted \(sessions) visitors (\(delta_sessions) from last \(timePeriod)'s \(prev_sessions)) and \(sessionsWithEvent) leads (\(delta_sessionsWithEvents) from last \(timePeriod)'s \(prev_sessionsWithEvent) ).").font(.footnote).foregroundColor(.darkAccent)
         
     }
     
@@ -388,7 +435,10 @@ struct PageTotals : View {
     var prev_visitors : String?
     
     var totalEvents : String?
-    var visitors : String
+    var visitors : String?
+    
+    @Binding var delta_visitors : String
+    @Binding var delta_events : String
     
     var body : some View {
         VStack(alignment: .leading){
@@ -396,9 +446,9 @@ struct PageTotals : View {
             //visitors
             Text(AnalyticsManager.visitors_key)
                 .analyticsTotals_Label_style()
-            Text(visitors)
+            Text(visitors ?? "")
                 .analyticsTotals_style()
-            Text(prev_visitors ?? "")
+            Text(delta_visitors)
                 .analyticsTotals_Past_style()
             
             //total events
@@ -406,9 +456,8 @@ struct PageTotals : View {
                 .analyticsTotals_Label_style()
             Text(totalEvents ?? "")
                 .analyticsTotals_style()
-            Text(prev_totalEvents ?? "")
+            Text(delta_events)
                 .analyticsTotals_Past_style()
-            
             
         }
     }
@@ -428,8 +477,11 @@ struct PPCTotals : View {
     var prev_sessionsWithEvents : String?
     
     //the important values for ppc analytics
-    var sessions : String
-    var sessionsWithEvents : String
+    var sessions : String?
+    var sessionsWithEvents : String?
+    
+    @Binding var delta_sessions : String
+    @Binding var delta_sessionsWithEvents : String
     
     var body : some View {
         VStack(alignment: .leading){
@@ -437,17 +489,17 @@ struct PPCTotals : View {
             //Ad clicks
             Text(AnalyticsManager.sessions_key)
                 .analyticsTotals_Label_style()
-            Text(sessions)
+            Text(sessions ?? "")
                 .analyticsTotals_style()
-            Text(prev_sessions ?? "")
+            Text(delta_sessions)
                 .analyticsTotals_Past_style()
             
             //ad cost
             Text(AnalyticsManager.sessionsWithEvent_key)
                 .analyticsTotals_Label_style()
-            Text(sessionsWithEvents)
+            Text(sessionsWithEvents ?? "")
                 .analyticsTotals_style()
-            Text(prev_sessionsWithEvents ?? "")
+            Text(delta_sessionsWithEvents)
                 .analyticsTotals_Past_style()
             
         
@@ -470,14 +522,15 @@ extension Text {
     func analyticsTotals_Past_style() -> some View {
         return self
             .bold()
-            .font(.title3)
+            .font(.body)
             .foregroundColor(.darkAccent).opacity(0.5)
     }
     
     func analyticsTotals_style() -> some View {
         return self
             .bold()
-            .font(.largeTitle)
+            .font(.title2)
             .foregroundColor(.darkAccent)
     }
 }
+
