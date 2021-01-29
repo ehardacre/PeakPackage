@@ -4,7 +4,7 @@ Internal Package for Apps by Peak Studios.
 
 ## Swift Package Manager
 
-This package can be imported using SPM by going to `File` > `Swift Packages` > `Add Package Dependency...` and entering the url for the package: 
+This package can be imported using SPM by going to `File` > `Swift Packages` > `Add Package Dependency...` and entering the url for the package: `https://github.com/ehardacre/PeakPackage.git`
 
 ## Usage
 
