@@ -15,16 +15,6 @@ extension ContentView {
     ///the content for the analytics tab. separated for simplicity
     func AnalyticsContent() -> some View {
         ZStack{
-            //Pages for the analytics tab
-//            Pages_a(currentPage: $analyticsIndex){
-//
-//
-//
-//
-//
-//                AnalyticsView(type: AnalyticsType.thisWeek, analyticsMan: analyticsManager)
-//
-//            }
             
             switch analyticsIndex{
             

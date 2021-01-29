@@ -20,30 +20,33 @@ struct NotificationsView: View {
         ZStack{
             
             if notificationMan.loaded {
-            
-            //Pages for the analytics tab
-            Pages_a(currentPage: $leadsIndex){
                 
-
+                switch leadsIndex {
+                
+                case 0:
                 LeadsView(notificationMan: notificationMan,
                          selectionManager: selectionMan,
                          title: "Open Leads",
                          list: notificationMan.open_leads,
                          loaded: notificationMan.loaded)
                 
+                case 1:
                 LeadsView(notificationMan: notificationMan,
                           selectionManager: selectionMan,
                           title: "Accepted",
                           list: notificationMan.accepted_leads,
                           loaded: notificationMan.loaded)
 
+                case 2:
                 LeadsView(notificationMan: notificationMan,
                           selectionManager: selectionMan,
                           title: "Scheduled",
                           list: notificationMan.scheduled_leads,
                           loaded: notificationMan.loaded)
+                default:
+                    EmptyView()
                 
-            }
+                }
                 
             }else{
                 ProgressView()
