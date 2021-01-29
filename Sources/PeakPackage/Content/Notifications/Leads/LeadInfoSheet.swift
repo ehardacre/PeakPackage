@@ -63,7 +63,7 @@ struct LeadInfoSheet: View {
                 }
                 HStack{
                     ForEach(imageURLs, id: \.self){ url in
-                        RemoteImage(url: url)
+                        RemoteImage(url: url).frame(width: 200, height: 200)
                     }
                 }
                 

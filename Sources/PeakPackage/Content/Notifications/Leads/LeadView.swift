@@ -233,6 +233,7 @@ extension LeadCardView {
                     if range != nil{
                         photoURLs.append(content.substring(with: range!))
                     }else{
+                        printr("no photos")
                         return photoURLs
                     }
                 }
@@ -240,6 +241,7 @@ extension LeadCardView {
         }catch{
             printr(error, tag: printTags.error)
         }
+        printr(photoURLs)
         return photoURLs
     }
     
