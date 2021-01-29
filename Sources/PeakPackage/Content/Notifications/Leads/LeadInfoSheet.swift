@@ -65,7 +65,7 @@ struct LeadInfoSheet: View {
                     ForEach(imageURLs, id: \.self){ url in
                         RemoteImage(url: url).frame(width: 200, height: 200)
                     }
-                }
+                }.frame(height: 200)
                 
                 if lead.notification_value.job_type != nil {
                     HStack{
