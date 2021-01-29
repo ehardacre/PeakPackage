@@ -228,7 +228,7 @@ extension LeadCardView {
             let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
             let matches = detector.matches(in: content, range: NSRange(content.startIndex..., in: content))
             for match in matches {
-                if match.resultType == .address {
+                if match.resultType == .link {
                     let range = Range(match.range, in: content)
                     if range != nil{
                         photoURLs.append(content.substring(with: range!))
@@ -241,7 +241,6 @@ extension LeadCardView {
         }catch{
             printr(error, tag: printTags.error)
         }
-        printr(photoURLs)
         return photoURLs
     }
     
@@ -254,7 +253,6 @@ extension LeadCardView {
         //date = date.toLocalTime()
         
         var dateString = date.dayOfWeekWithMonthAndDay
-        
     
         return dateString
     }
