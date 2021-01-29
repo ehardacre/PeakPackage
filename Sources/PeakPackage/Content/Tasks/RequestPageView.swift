@@ -14,33 +14,22 @@ extension ContentView  {
     func TaskContent() -> some View {
         ZStack{
             //Only the admin users can view in progress tasks
-            if defaults.admin{
-                Pages(currentPage: $taskIndex){
-                    RequestPageView(taskMan: taskManager, tasklist: self.taskManager.openTasks, status: TaskStatus.open)
-                    
-//                    RequestPageView(taskMan: taskManager, tasklist: self.taskManager.inProgressTasks, status: TaskStatus.inProgress)
-                    
-                    RequestPageView(taskMan: taskManager, tasklist: self.taskManager.completeTasks, status: TaskStatus.complete)
-                }.onAppear{
-                    if self.tab == tabs.tasks {
-                        self.taskIndex = 1
-                    }
-                    self.taskManager.loadTasks()
-                }
-                
-            }else{
-        
-                Pages(currentPage: $taskIndex){
-                    RequestPageView(taskMan: taskManager, tasklist: self.taskManager.openTasks, status: TaskStatus.open)
-                    
-                    RequestPageView(taskMan: taskManager, tasklist: self.taskManager.completeTasks, status: TaskStatus.complete)
-                }.onAppear{
-                    if self.tab == tabs.tasks {
-                        self.taskIndex = 1
-                    }
-                    self.taskManager.loadTasks()
-                }
+            
+            switch taskIndex{
+            
+            case 0:
+                RequestPageView(taskMan: taskManager, tasklist: self.taskManager.openTasks, status: TaskStatus.open)
+            case 1:
+                RequestPageView(taskMan: taskManager, tasklist: self.taskManager.completeTasks, status: TaskStatus.complete)
             }
+        
+//                .onAppear{
+//                    if self.tab == tabs.tasks {
+//                        self.taskIndex = 1
+//                    }
+//                    self.taskManager.loadTasks()
+//                }
+    
             
             
             VStack{
