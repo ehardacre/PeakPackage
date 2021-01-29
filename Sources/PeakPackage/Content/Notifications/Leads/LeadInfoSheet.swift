@@ -35,6 +35,8 @@ struct LeadInfoSheet: View {
     
     @State var annotations : [LeadLocation] = []
     
+    @State var imageURLs : [String]
+    
     
     var body: some View {
         VStack{
@@ -59,6 +61,12 @@ struct LeadInfoSheet: View {
                 if lead.notification_value.job_date != nil {
                     Text(lead.notification_value.job_date!).font(.footnote).foregroundColor(Color.darkAccent)
                 }
+                HStack{
+                    ForEach(imageURLs, id: \.self){ url in
+                        RemoteImage(url: url)
+                    }
+                }
+                
                 if lead.notification_value.job_type != nil {
                     HStack{
                         if lead.notification_value.job_type!.contains("Estimate") {

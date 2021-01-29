@@ -128,7 +128,7 @@ struct LeadCardView: View {
             }
             .sheet(isPresented: self.$showMoreInfo, content: {
 //                LeadInfoSheet(lead: lead, notificationMan: notificationMan, phoneNumber: self.findPhoneNumber(in: lead.notification_value), email: self.findEmail(in: lead.notification_value), address: self.findAddress(in: lead.notification_value))
-                LeadInfoSheet(lead: lead, notificationMan: notificationMan, phoneNumber: lead.notification_value.phone, email: lead.notification_value.email, address: lead.notification_value.job_address)
+                LeadInfoSheet(lead: lead, notificationMan: notificationMan, phoneNumber: lead.notification_value.phone, email: lead.notification_value.email, address: lead.notification_value.job_address, imageURLs: self.findPhotos(in: lead.notification_value.note ?? ""))
             })
         }
     
@@ -220,6 +220,27 @@ extension LeadCardView {
         }
         return nil
         
+    }
+    
+    func findPhotos(in content : String) -> [String]{
+        var photoURLs : [String] = []
+        do {
+            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = detector.matches(in: content, range: NSRange(content.startIndex..., in: content))
+            for match in matches {
+                if match.resultType == .address {
+                    let range = Range(match.range, in: content)
+                    if range != nil{
+                        photoURLs.append(content.substring(with: range!))
+                    }else{
+                        return photoURLs
+                    }
+                }
+            }
+        }catch{
+            printr(error, tag: printTags.error)
+        }
+        return photoURLs
     }
     
     func formatDate(_ str_date: String) -> String{
