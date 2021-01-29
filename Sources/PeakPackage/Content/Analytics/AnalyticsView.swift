@@ -16,14 +16,26 @@ extension ContentView {
     func AnalyticsContent() -> some View {
         ZStack{
             //Pages for the analytics tab
-            Pages_a(currentPage: $analyticsIndex){
-
+//            Pages_a(currentPage: $analyticsIndex){
+//
+//
+//
+//
+//
+//                AnalyticsView(type: AnalyticsType.thisWeek, analyticsMan: analyticsManager)
+//
+//            }
+            
+            switch analyticsIndex{
+            
+            case 0:
                 AnalyticsView(type: AnalyticsType.thisYear, analyticsMan: analyticsManager)
-
+            case 1:
                 AnalyticsView(type: AnalyticsType.thisMonth, analyticsMan: analyticsManager)
-
+            case 2:
                 AnalyticsView(type: AnalyticsType.thisWeek, analyticsMan: analyticsManager)
-                
+            default:
+                EmptyView()
             }
             
             
