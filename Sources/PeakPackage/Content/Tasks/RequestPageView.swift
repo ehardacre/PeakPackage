@@ -21,6 +21,8 @@ extension ContentView  {
                 RequestPageView(taskMan: taskManager, tasklist: self.taskManager.openTasks, status: TaskStatus.open)
             case 1:
                 RequestPageView(taskMan: taskManager, tasklist: self.taskManager.completeTasks, status: TaskStatus.complete)
+            default:
+                EmptyView()
             }
         
 //                .onAppear{
