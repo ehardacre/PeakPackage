@@ -8,7 +8,7 @@ This package can be imported using SPM by going to `File` > `Swift Packages` > `
 
 ## Usage
 
-import the PeakPackage in the App file and athe ContentView.swift file: `import PeakPackage`
+import the PeakPackage in the App file and the ContentView.swift file: `import PeakPackage`
 
 ### App File:
 
