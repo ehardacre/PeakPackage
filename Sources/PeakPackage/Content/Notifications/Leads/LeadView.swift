@@ -128,7 +128,7 @@ struct LeadCardView: View {
             }
             .sheet(isPresented: self.$showMoreInfo, content: {
 //                LeadInfoSheet(lead: lead, notificationMan: notificationMan, phoneNumber: self.findPhoneNumber(in: lead.notification_value), email: self.findEmail(in: lead.notification_value), address: self.findAddress(in: lead.notification_value))
-                LeadInfoSheet(lead: cleanNote(in: lead), notificationMan: notificationMan, phoneNumber: lead.notification_value.phone, email: lead.notification_value.email, address: lead.notification_value.job_address, imageURLs: self.findPhotos(in: lead.notification_value.note ?? ""))
+                LeadInfoSheet(lead: cleanNote(in: lead), notificationMan: notificationMan, phoneNumber: lead.notification_value.phone, email: lead.notification_value.email, address: lead.notification_value.job_address, images: self.findPhotos(in: lead.notification_value.note ?? "").map({RemoteImage(url: $0)}))
             })
         }
     

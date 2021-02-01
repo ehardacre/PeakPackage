@@ -9,6 +9,9 @@ import Foundation
 import SwiftUI
 
 struct RemoteImage: View {
+    
+    public let id = UUID()
+    
     private enum LoadState {
         case loading, success, failure
     }

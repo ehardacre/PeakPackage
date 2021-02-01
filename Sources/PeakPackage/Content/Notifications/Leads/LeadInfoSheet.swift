@@ -35,8 +35,8 @@ struct LeadInfoSheet: View {
     
     @State var annotations : [LeadLocation] = []
     
-    @State var imageURLs : [String]
-    
+    @State var images : [ RemoteImage]
+    @State var selectedImage : RemoteImage? = nil
     
     var body: some View {
         VStack{
@@ -62,44 +62,54 @@ struct LeadInfoSheet: View {
                     Text(lead.notification_value.job_date!).font(.footnote).foregroundColor(Color.darkAccent)
                 }
                 
-                if imageURLs.count != 0 {
+                if images.count != 0 {
                     ScrollView(.horizontal){
                         HStack{
-                            ForEach(imageURLs, id: \.self){ url in
-                                RemoteImage(url: url).cornerRadius(20).frame(width: 100, height: 100)
+                            ForEach(images, id: \.id){ image in
+                                image.cornerRadius(20).frame(width: 100, height: 100).onClick{
+                                    selectedImage = image
+                                }
                             }
                             Spacer()
                         }.frame(height: 100)
                     }
                 }
+                if selectedImage != nil {
+                    GeometryReader{ geo in
+                        selectedImage.cornerRadius(20).frame(width: geo.size.width)
+                    }
+                }else{
                 
-                if lead.notification_value.job_type != nil {
-                    HStack{
-                        if lead.notification_value.job_type!.contains("Estimate") {
-                            Image(systemName: "dollarsign.square.fill").imageScale(.large).foregroundColor(.mid)
-                        }else if lead.notification_value.job_type!.contains("Work") {
-                            Image(systemName: "paintbrush.fill").imageScale(.large).foregroundColor(.mid)
-                        }else{
-                            Image(systemName: "questionmark.diamond.fill").imageScale(.large).foregroundColor(.mid)
+                
+                
+                    if lead.notification_value.job_type != nil {
+                        HStack{
+                            if lead.notification_value.job_type!.contains("Estimate") {
+                                Image(systemName: "dollarsign.square.fill").imageScale(.large).foregroundColor(.mid)
+                            }else if lead.notification_value.job_type!.contains("Work") {
+                                Image(systemName: "paintbrush.fill").imageScale(.large).foregroundColor(.mid)
+                            }else{
+                                Image(systemName: "questionmark.diamond.fill").imageScale(.large).foregroundColor(.mid)
+                            }
+                            Text(lead.notification_value.job_type!).bold().foregroundColor(Color.darkAccent)
+                        }.padding(20)
+                    }
+                    if lead.notification_value.note != nil {
+                        Text(lead.notification_value.note!).font(.footnote).foregroundColor(Color.darkAccent)
+                    }
+                    
+                    VStack{
+                        Text(lead.notification_value.phone ?? "").font(.footnote).foregroundColor(Color.darkAccent)
+                        Text(lead.notification_value.email ?? "").font(.footnote).foregroundColor(Color.darkAccent)
+                        if lead.notification_value.lead_source != nil {
+                            Text("Lead Source: " + lead.notification_value.lead_source!).font(.footnote).foregroundColor(Color.darkAccent)
                         }
-                        Text(lead.notification_value.job_type!).bold().foregroundColor(Color.darkAccent)
-                    }.padding(20)
-                }
-                if lead.notification_value.note != nil {
-                    Text(lead.notification_value.note!).font(.footnote).foregroundColor(Color.darkAccent)
-                }
+                        if lead.notification_value.technician_name != nil {
+                            Text("Technician: " + lead.notification_value.technician_name!).font(.footnote).foregroundColor(Color.darkAccent)
+                        }
+                    }.padding(20).background(Color.darkAccent.opacity(0.2)).cornerRadius(20)
                 
-                VStack{
-                    Text(lead.notification_value.phone ?? "").font(.footnote).foregroundColor(Color.darkAccent)
-                    Text(lead.notification_value.email ?? "").font(.footnote).foregroundColor(Color.darkAccent)
-                    if lead.notification_value.lead_source != nil {
-                        Text("Lead Source: " + lead.notification_value.lead_source!).font(.footnote).foregroundColor(Color.darkAccent)
-                    }
-                    if lead.notification_value.technician_name != nil {
-                        Text("Technician: " + lead.notification_value.technician_name!).font(.footnote).foregroundColor(Color.darkAccent)
-                    }
-                }.padding(20).background(Color.darkAccent.opacity(0.2)).cornerRadius(20)
-                
+                }
             }
             Spacer()
             HStack{
