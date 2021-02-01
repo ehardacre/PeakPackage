@@ -63,7 +63,7 @@ struct LeadInfoSheet: View {
                 }
                 
                 if imageURLs.count != 0 {
-                    ScrollView{
+                    ScrollView(.horizontal){
                         HStack{
                             ForEach(imageURLs, id: \.self){ url in
                                 RemoteImage(url: url).cornerRadius(20).frame(width: 100, height: 100)
