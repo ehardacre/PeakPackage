@@ -68,6 +68,7 @@ struct LeadInfoSheet: View {
                             ForEach(images, id: \.id){ image in
                                 image.cornerRadius(20).frame(width: 100, height: 100).onTapGesture{
                                     selectedImage = image
+                                    printr("selected image")
                                 }
                             }
                             Spacer()
@@ -78,7 +79,7 @@ struct LeadInfoSheet: View {
             Section{
                 if selectedImage != nil {
                     GeometryReader{ geo in
-                        selectedImage.cornerRadius(20).frame(width: geo.size.width)
+                        selectedImage.cornerRadius(20).frame(width: geo.size.width).scaledToFit()
                     }
                 }else{
                 
