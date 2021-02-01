@@ -21,7 +21,8 @@ let package = Package(
         .package(name: "ElegantPages", url: "https://github.com/ThasianX/ElegantPages", from: "1.4.2"),
         .package(name: "Introspect", url: "https://github.com/siteline/SwiftUI-Introspect.git", from: "0.1.2"),
         .package(name: "Pages", url: "https://github.com/nachonavarro/Pages", from: "0.1.5"),
-        .package(name: "SwiftUICharts", url: "https://github.com/AppPear/ChartView", from: "1.5.4")
+        .package(name: "SwiftUICharts", url: "https://github.com/AppPear/ChartView", from: "1.5.4"),
+        .package(name: "SwiftUIRefresh", url: "https://github.com/timbersoftware/SwiftUIRefresh.git", from: "0.0.3")
             
     ],
     targets: [
@@ -29,7 +30,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "PeakPackage",
-            dependencies: ["ElegantPages", "Introspect", "Pages", "SwiftUICharts"]),
+            dependencies: ["ElegantPages", "Introspect", "Pages", "SwiftUICharts","SwiftUIRefresh"]),
         .testTarget(
             name: "PeakPackageTests",
             dependencies: ["PeakPackage"]),

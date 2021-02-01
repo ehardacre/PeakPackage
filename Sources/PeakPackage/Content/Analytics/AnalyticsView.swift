@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SwiftUICharts
+import SwiftUIRefresh
 
 ///this is the content that is the analytics tab
 extension ContentView {
@@ -55,6 +56,8 @@ struct AnalyticsView: View {
     //the analytics manager
     @State var analyticsMan : AnalyticsManager
     
+    @State var refreshing = false
+    
     var body: some View {
         
         VStack{
@@ -93,6 +96,11 @@ struct AnalyticsView: View {
                 .listStyle(SidebarListStyle())
                 .navigationBarTitle(type.displayName(full: true))
                 .background(Color.clear)
+            }.pullToRefresh(isShowing: $refreshing){
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    analyticsMan.loadAnalytics()
+                    self.refreshing = false
+                }
             }
         }
         .stackOnlyNavigationView()

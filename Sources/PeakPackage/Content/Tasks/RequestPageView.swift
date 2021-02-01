@@ -123,6 +123,8 @@ struct RequestListView: View {
     
     @State var navbarTitle = ""
     
+    @State var refreshing = false
+    
     var body: some View {
         NavigationView{
             List{
@@ -158,6 +160,12 @@ struct RequestListView: View {
                 navbarTitle = "Complete"
             }else{
                 navbarTitle = "In Progress"
+            }
+        }
+        .pullToRefresh(isShowing: $refreshing){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                taskMan.loadTasks()
+                self.refreshing = false
             }
         }
             

@@ -19,7 +19,7 @@ struct NotificationsView: View {
         
         ZStack{
             
-            if notificationMan.loaded {
+//            if notificationMan.loaded {
                 
                 switch leadsIndex {
                 
@@ -48,9 +48,9 @@ struct NotificationsView: View {
                 
                 }
                 
-            }else{
-                ProgressView()
-            }
+//            }else{
+//                ProgressView()
+//            }
             
             
             VStack{
@@ -76,6 +76,8 @@ struct LeadsView : View {
     @State var list : [Lead]
     @State var loaded : Bool
     
+    @State var refreshing = false
+    
     var body: some View {
         NavigationView{
             
@@ -100,6 +102,12 @@ struct LeadsView : View {
             }
             }
             .stackOnlyNavigationView()
+            .pullToRefresh(isShowing: $refreshing){
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    notificationMan.loadNotifications()
+                    self.refreshing = false
+                }
+            }
         }
     
     
