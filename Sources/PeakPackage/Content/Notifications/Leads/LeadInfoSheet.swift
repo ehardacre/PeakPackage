@@ -61,12 +61,17 @@ struct LeadInfoSheet: View {
                 if lead.notification_value.job_date != nil {
                     Text(lead.notification_value.job_date!).font(.footnote).foregroundColor(Color.darkAccent)
                 }
-                HStack{
-                    ForEach(imageURLs, id: \.self){ url in
-                        RemoteImage(url: url).cornerRadius(20).frame(width: 100, height: 100)
+                
+                if imageURLs.count != 0 {
+                    ScrollView{
+                        HStack{
+                            ForEach(imageURLs, id: \.self){ url in
+                                RemoteImage(url: url).cornerRadius(20).frame(width: 100, height: 100)
+                            }
+                            Spacer()
+                        }.frame(height: 100)
                     }
-                    Spacer()
-                }.frame(height: 100)
+                }
                 
                 if lead.notification_value.job_type != nil {
                     HStack{
