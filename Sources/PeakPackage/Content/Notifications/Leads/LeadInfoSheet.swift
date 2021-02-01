@@ -67,9 +67,10 @@ struct LeadInfoSheet: View {
                         HStack{
                             ForEach(images, id: \.id){ image in
                                 image.cornerRadius(20).frame(width: 100, height: 100).onTapGesture{
-                                    selectedImage = nil
-                                    selectedImage = image
-                                    printr("selected image")
+                                    //TODO: selected image not changing
+//                                    selectedImage = nil
+//                                    selectedImage = image
+//                                    printr("selected image")
                                 }
                             }
                             Spacer()
