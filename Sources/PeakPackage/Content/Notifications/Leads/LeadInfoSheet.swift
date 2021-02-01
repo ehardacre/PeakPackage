@@ -66,7 +66,7 @@ struct LeadInfoSheet: View {
                     ScrollView(.horizontal){
                         HStack{
                             ForEach(images, id: \.id){ image in
-                                image.cornerRadius(20).frame(width: 100, height: 100).onClick{
+                                image.cornerRadius(20).frame(width: 100, height: 100).onTapGesture{
                                     selectedImage = image
                                 }
                             }
@@ -74,6 +74,8 @@ struct LeadInfoSheet: View {
                         }.frame(height: 100)
                     }
                 }
+            }
+            Section{
                 if selectedImage != nil {
                     GeometryReader{ geo in
                         selectedImage.cornerRadius(20).frame(width: geo.size.width)
