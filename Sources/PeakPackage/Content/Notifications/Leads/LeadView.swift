@@ -255,7 +255,7 @@ extension LeadCardView {
         var modString = regex.stringByReplacingMatches(in: note, options: [], range: range, withTemplate: "XXX")
         
         if modString.contains("XXX"){
-            modString.replacingOccurrences(of: "XXX", with: "Customer Message:")
+            modString = modString.replacingOccurrences(of: "XXX", with: "Customer Message:")
         }else{
             
             let regexOne = try! NSRegularExpression(pattern: "Photos:.*")
