@@ -250,7 +250,7 @@ extension LeadCardView {
         
         var note = lead.notification_value.note ?? ""
         
-        let regex = try! NSRegularExpression(pattern: "Photos:{.*} Customer Message:")
+        let regex = try! NSRegularExpression(pattern: "Photos:.* Customer Message:")
         let range = NSMakeRange(0, note.count)
         let modString = regex.stringByReplacingMatches(in: note, options: [], range: range, withTemplate: "XX")
 
