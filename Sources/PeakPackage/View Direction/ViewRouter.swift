@@ -28,11 +28,13 @@ public class ViewRouter: ObservableObject {
     
     //the current and previous page that the app is on
     @Published var currentPage: LoginPages = LoginPages.noPage
-//    {
-//        didSet {
-//            goTo(page: currentPage)
-//        }
-//    }
+    {
+        didSet {
+            if currentPage != LoginPages.noPage{
+                goTo(page: currentPage)
+            }
+        }
+    }
     private var previousPages : Stack<LoginPages> = []
     
     
@@ -67,7 +69,6 @@ public class ViewRouter: ObservableObject {
                 }
             }
             printr("changing page")
-            printr(page)
             //transition and set previous page for back button
             previousPages.push(currentPage)
             currentPage = page
