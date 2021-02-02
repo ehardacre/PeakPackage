@@ -15,9 +15,6 @@ public struct MotherView: View{
     
     @State var content : AnyView
     
-    let pub = NotificationCenter.default
-                .publisher(for: NSNotification.Name("GoToContent"))
-    
     public var body: some View {
         VStack {
             if viewRouter.currentPage == LoginPages.content{
@@ -37,8 +34,6 @@ public struct MotherView: View{
                     printr(InternalError.viewLoading.rawValue, tag: printTags.error)
                 }
             }
-        }.onReceive(pub){ note in
-            viewRouter.currentPage = LoginPages.content
         }
     }
 }

@@ -28,10 +28,11 @@ public enum LoginPages {
 public class ViewRouter: ObservableObject {
     
     //the current and previous page that the app is on
-    public var objectWillChange = PassthroughSubject<Void, Never>()
+    //public var objectWillChange = PassthroughSubject<Void, Never>()
     @Published var currentPage: LoginPages = LoginPages.noPage {
-        willSet {
-            objectWillChange.send()
+        didSet {
+            goTo(page: currentPage)
+            //objectWillChange.send()
         }
     }
     private var previousPages : Stack<LoginPages> = []
