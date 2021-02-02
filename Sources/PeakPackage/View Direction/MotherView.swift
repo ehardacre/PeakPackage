@@ -21,15 +21,14 @@ public struct MotherView: View{
         VStack {
             if viewRouter.currentPage == LoginPages.content{
                 //go to main content
-                content
-                    .environmentObject(AnalyticsManager())
-                    .environmentObject(NotificationManager())
-                    .environmentObject(DashboardMessageManager())
-                    .environmentObject(TaskManager())
-                    .environmentObject(AppointmentManager())
-                    .onAppear{
-                        printr("showing content")
-                    }
+//                content
+//                    .environmentObject(AnalyticsManager())
+//                    .environmentObject(NotificationManager())
+//                    .environmentObject(DashboardMessageManager())
+//                    .environmentObject(TaskManager())
+//                    .environmentObject(AppointmentManager())
+//
+                Text("Content")
             }else if viewRouter.currentPage == LoginPages.standardLogin{
                 //go to standard login
                 LoginView(viewRouter: viewRouter)
