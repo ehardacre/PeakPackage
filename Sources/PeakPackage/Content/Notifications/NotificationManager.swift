@@ -11,7 +11,7 @@ import SwiftUI
 import UIKit
 import UserNotifications
 
-class NotificationManager : ObservableObject {
+public class NotificationManager : ObservableObject {
     
     static let pages = ["Open", "Accepted", "Scheduled"]
 
@@ -27,7 +27,7 @@ class NotificationManager : ObservableObject {
     @Published var loaded = false
     var loading = [false, false, false]
     
-    init() {
+    public init() {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadOnOpen), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     

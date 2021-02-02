@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-class AppointmentManager : ObservableObject {
+public class AppointmentManager : ObservableObject {
     
     @Published var appointments = [Visit]()
     @Published var todaysAppointments = [Visit]()

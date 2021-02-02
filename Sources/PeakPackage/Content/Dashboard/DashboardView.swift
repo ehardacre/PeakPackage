@@ -113,7 +113,7 @@ extension View {
     }
 }
 
-class DashboardMessageManager : ObservableObject {
+public class DashboardMessageManager : ObservableObject {
     
     @Published var message : DashboardMessage?
     

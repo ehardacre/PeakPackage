@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class TaskManager : ObservableObject {
+public class TaskManager : ObservableObject {
     
     @Published var tasks = [Task]()
     
