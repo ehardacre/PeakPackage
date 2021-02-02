@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 //MARK: Page Types
 /**
@@ -27,7 +28,12 @@ public enum LoginPages {
 public class ViewRouter: ObservableObject {
     
     //the current and previous page that the app is on
-    @Published var currentPage : LoginPages = LoginPages.noPage
+    public var objectWillChange = PassthroughSubject<Void, Never>()
+    @Published var currentPage: LoginPages = LoginPages.noPage {
+        willSet {
+            objectWillChange.send()
+        }
+    }
     private var previousPages : Stack<LoginPages> = []
     
     
