@@ -31,6 +31,7 @@ public class ViewRouter: ObservableObject {
     {
         didSet {
             if currentPage != LoginPages.noPage{
+                printr("changing currentPage variable")
                 goTo(page: currentPage)
             }
         }
