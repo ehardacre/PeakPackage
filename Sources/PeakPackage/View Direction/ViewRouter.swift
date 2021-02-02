@@ -27,11 +27,12 @@ public enum LoginPages {
 public class ViewRouter: ObservableObject {
     
     //the current and previous page that the app is on
-    @Published var currentPage: LoginPages = LoginPages.noPage {
-        didSet {
-            goTo(page: currentPage)
-        }
-    }
+    @Published var currentPage: LoginPages = LoginPages.noPage
+//    {
+//        didSet {
+//            goTo(page: currentPage)
+//        }
+//    }
     private var previousPages : Stack<LoginPages> = []
     
     
