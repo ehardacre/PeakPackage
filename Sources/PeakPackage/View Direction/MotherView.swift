@@ -13,22 +13,19 @@ public struct MotherView: View{
     
     @EnvironmentObject var viewRouter: ViewRouter
     
-    //show the action sheet to confirm franchise
-    @State var showActionView = false
     @State var content : AnyView
     
     public var body: some View {
         VStack {
             if viewRouter.currentPage == LoginPages.content{
                 //go to main content
-//                content
-//                    .environmentObject(AnalyticsManager())
-//                    .environmentObject(NotificationManager())
-//                    .environmentObject(DashboardMessageManager())
-//                    .environmentObject(TaskManager())
-//                    .environmentObject(AppointmentManager())
-//
-                Text("Content")
+                content
+                    .environmentObject(AnalyticsManager())
+                    .environmentObject(NotificationManager())
+                    .environmentObject(DashboardMessageManager())
+                    .environmentObject(TaskManager())
+                    .environmentObject(AppointmentManager())
+
             }else if viewRouter.currentPage == LoginPages.standardLogin{
                 //go to standard login
                 LoginView(viewRouter: viewRouter)

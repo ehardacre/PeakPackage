@@ -65,7 +65,7 @@ public class ViewRouter: ObservableObject {
             printr(page)
             //transition and set previous page for back button
             previousPages.push(currentPage)
-            currentPage = page
+            currentPage = LoginPages.content
         } catch DataError.nilDefaults {
             printr(DataError.nilDefaults.rawValue, tag: printTags.error)
         } catch {

@@ -13,7 +13,7 @@ import Foundation
  #Analytics Manager
  functionally manages all of the data required for analytics
  */
-class AnalyticsManager : ObservableObject {
+public class AnalyticsManager : ObservableObject {
     
     //private variables for data
     private var thisWeekData : Analytics_BreakDown?
