@@ -27,6 +27,8 @@ public class TaskManager : ObservableObject {
     static var taskTypes = [TaskStatus.open , TaskStatus.complete]
     static var adminTaskTypes = ["Open Tasks", "Complete"]
     
+    public init(){}
+    
     /**
     #loadTasks
      loads all tasks for the signed in user

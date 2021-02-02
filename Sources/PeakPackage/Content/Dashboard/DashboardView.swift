@@ -117,6 +117,8 @@ public class DashboardMessageManager : ObservableObject {
     
     @Published var message : DashboardMessage?
     
+    public init(){}
+    
     func loadMessage(){
         if message == nil{
             let json = JsonFormat.getDashboardMessage.format()

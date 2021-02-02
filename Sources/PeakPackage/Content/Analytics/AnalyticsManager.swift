@@ -51,6 +51,8 @@ public class AnalyticsManager : ObservableObject {
     static let pages = [AnalyticsType.thisYear.displayName(), AnalyticsType.thisMonth.displayName(), AnalyticsType.thisWeek.displayName()]
     static let pages_types = [AnalyticsType.thisYear, AnalyticsType.thisMonth, AnalyticsType.thisWeek]
     
+    public init(){}
+    
     ///the only call you need to make to load analytics
     func loadAnalytics() {
         
