@@ -27,7 +27,7 @@ public enum LoginPages {
 public class ViewRouter: ObservableObject {
     
     //the current and previous page that the app is on
-    @Published var currentPage: LoginPages = LoginPages.noPage
+    @Published public var currentPage: LoginPages = LoginPages.noPage
     {
         didSet {
             if currentPage != LoginPages.noPage{
@@ -60,7 +60,7 @@ public class ViewRouter: ObservableObject {
         #go To
      - Parameter page: the page that will be transitioned to by the view router
      */
-    func goTo(page: LoginPages){
+    public func goTo(page: LoginPages){
         //Make sure that all of the necessary login information has been collected
         do{
             if page == LoginPages.content {
