@@ -30,10 +30,8 @@ open class ViewRouter: ObservableObject {
     @Published open var currentPage: LoginPages = LoginPages.noPage
     {
         didSet {
-            if currentPage != LoginPages.noPage{
-                printr("changing currentPage variable")
-                goTo(page: currentPage)
-            }
+            printr("changing currentPage")
+            goTo(page: currentPage)
         }
     }
     private var previousPages : Stack<LoginPages> = []
@@ -61,6 +59,9 @@ open class ViewRouter: ObservableObject {
      - Parameter page: the page that will be transitioned to by the view router
      */
     open func goTo(page: LoginPages){
+        if page == LoginPages.noPage{
+            return
+        }
         //Make sure that all of the necessary login information has been collected
         do{
             if page == LoginPages.content {
