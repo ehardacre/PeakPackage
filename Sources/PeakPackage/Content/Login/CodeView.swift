@@ -117,7 +117,7 @@ struct CodeView: View {
             }
             //go to content
             self.viewRouter.goTo(page: LoginPages.content)
-            NotificationCenter.default.post(Notification(name: "GoToContent"))
+            NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "GoToContent")))
         }
     }
 }

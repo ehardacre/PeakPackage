@@ -37,7 +37,7 @@ public struct MotherView: View{
                     printr(InternalError.viewLoading.rawValue, tag: printTags.error)
                 }
             }
-        }.onReceive(pub){
+        }.onReceive(pub){ note in
             viewRouter.currentPage = LoginPages.content
         }
     }
