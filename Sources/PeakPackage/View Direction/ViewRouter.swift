@@ -24,10 +24,10 @@ public enum LoginPages {
  # View Router
  The view router extends observable object and is used to track which page is being shown mainly in the login sequence
  */
-public class ViewRouter: ObservableObject {
+open class ViewRouter: ObservableObject {
     
     //the current and previous page that the app is on
-    @Published public var currentPage: LoginPages = LoginPages.noPage
+    @Published open var currentPage: LoginPages = LoginPages.noPage
     {
         didSet {
             if currentPage != LoginPages.noPage{
@@ -60,7 +60,7 @@ public class ViewRouter: ObservableObject {
         #go To
      - Parameter page: the page that will be transitioned to by the view router
      */
-    public func goTo(page: LoginPages){
+    open func goTo(page: LoginPages){
         //Make sure that all of the necessary login information has been collected
         do{
             if page == LoginPages.content {
