@@ -27,6 +27,9 @@ public struct MotherView: View{
                     .environmentObject(DashboardMessageManager())
                     .environmentObject(TaskManager())
                     .environmentObject(AppointmentManager())
+                    .onAppear{
+                        printr("showing content")
+                    }
             }else if viewRouter.currentPage == LoginPages.standardLogin{
                 //go to standard login
                 LoginView(viewRouter: viewRouter)
