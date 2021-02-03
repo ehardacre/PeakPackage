@@ -30,6 +30,7 @@ open class ViewRouter: ObservableObject {
     @Published open var currentPage: LoginPages = LoginPages.noPage
     {
         didSet {
+            //
             printr("changed currentPage")
         }
         willSet(newVal) {
