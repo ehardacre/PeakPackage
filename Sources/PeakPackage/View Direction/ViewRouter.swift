@@ -29,6 +29,9 @@ open class ViewRouter: ObservableObject {
     //the current and previous page that the app is on
     @Published open var currentPage: LoginPages = LoginPages.noPage
     {
+        didSet{
+            printr("moved to Content")
+        }
         willSet(newVal) {
             goTo(page: newVal)
         }
