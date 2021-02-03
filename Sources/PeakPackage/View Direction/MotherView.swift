@@ -20,7 +20,6 @@ public struct MotherView: View{
             if viewRouter.currentPage == LoginPages.content{
                 //go to main content
                 content
-
             }else if viewRouter.currentPage == LoginPages.standardLogin{
                 //go to standard login
                 LoginView(viewRouter: viewRouter)
