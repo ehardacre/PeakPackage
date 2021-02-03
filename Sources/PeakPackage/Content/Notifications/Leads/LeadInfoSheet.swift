@@ -122,41 +122,41 @@ struct LeadInfoSheet: View {
                 
                 if lead.notification_state == notificationType.open.rawValue {
                     
-                    HStack{
-                        
-                        HStack{
-                            
-                            Spacer()
-                            Text("Decline").bold().foregroundColor(.main)
-                            Spacer()
-                            
-                        }.onTapGesture(count: 1, perform: {
-                            printr(lead.notification_value.account_id)
-                            let json = JsonFormat.declineLead(franchiseId: defaults.franchiseId()!, accountId: lead.notification_value.account_id!).format()
-                            DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: { rex in
-                                notificationMan.loadNotifications()
-                                self.presentationMode.wrappedValue.dismiss()
-                            })
-                        })
-                        
-                        HStack{
-                            
-                            Spacer()
-                            Text("Accept").bold().foregroundColor(.lightAccent)
-                            Spacer()
-                            
-                        }.padding(20).background(Color.darkAccent).clipShape(Capsule())
-                        .onTapGesture(count: 1, perform: {
-                            printr(lead.notification_id)
-                            let json = JsonFormat.acceptLead(franchiseId: defaults.franchiseId()!, leadId: lead.notification_id).format()
-                            DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {rex in
-                                notificationMan.loadNotifications()
-                                //TODO: reload view as accepted instead of dismissing
-                                self.presentationMode.wrappedValue.dismiss()
-                            })
-                        })
-                        
-                    }
+//                    HStack{
+//
+//                        HStack{
+//
+//                            Spacer()
+//                            Text("Decline").bold().foregroundColor(.main)
+//                            Spacer()
+//
+//                        }.onTapGesture(count: 1, perform: {
+//                            printr(lead.notification_value.account_id)
+//                            let json = JsonFormat.declineLead(franchiseId: defaults.franchiseId()!, accountId: lead.notification_value.account_id!).format()
+//                            DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: { rex in
+//                                notificationMan.loadNotifications()
+//                                self.presentationMode.wrappedValue.dismiss()
+//                            })
+//                        })
+//
+//                        HStack{
+//
+//                            Spacer()
+//                            Text("Accept").bold().foregroundColor(.lightAccent)
+//                            Spacer()
+//
+//                        }.padding(20).background(Color.darkAccent).clipShape(Capsule())
+//                        .onTapGesture(count: 1, perform: {
+//                            printr(lead.notification_id)
+//                            let json = JsonFormat.acceptLead(franchiseId: defaults.franchiseId()!, leadId: lead.notification_id).format()
+//                            DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {rex in
+//                                notificationMan.loadNotifications()
+//                                //TODO: reload view as accepted instead of dismissing
+//                                self.presentationMode.wrappedValue.dismiss()
+//                            })
+//                        })
+//
+//                    }
                     
                 }else{
                     
