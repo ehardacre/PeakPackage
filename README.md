@@ -37,6 +37,11 @@ First, change the name of the struct to mainContent to avoid conflicts (`struct 
 
 ```
 ContentView(tabMenuOptions: [tabs.analytics, tabs.calendar, tabs.dashboard, tabs.tasks, tabs.leads, tabs.ratings])
+.environmentObject(AnalyticsManager())
+.environmentObject(NotificationManager())
+.environmentObject(DashboardMessageManager())
+.environmentObject(TaskManager())
+.environmentObject(AppointmentManager())
 ```
 
 
