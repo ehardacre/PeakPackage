@@ -11,7 +11,8 @@ import SwiftUI
 //MARK: Mother View
 public struct MotherView: View{
     
-    @EnvironmentObject var viewRouter: ViewRouter
+    //@EnvironmentObject var viewRouter: ViewRouter
+    @ObservedObject var viewRouter = ViewRouter()
     
     @State var content : AnyView
     

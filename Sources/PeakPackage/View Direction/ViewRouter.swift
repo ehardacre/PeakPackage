@@ -31,6 +31,7 @@ open class ViewRouter: ObservableObject {
     {
         didSet {
             printr("changed currentPage")
+            goTo(page: newVal)
         }
         willSet(newVal) {
             printr("changing currentPage")
