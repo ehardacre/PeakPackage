@@ -116,8 +116,8 @@ struct CodeView: View {
                 printr("Notification Token Nil")
             }
             //go to content
-            viewRouter.goTo(page: LoginPages.content)
-            NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "GoToContent")))
+            viewRouter.currentPage = LoginPages.content
+            //viewRouter.goTo(page: LoginPages.content)
         }
     }
 }

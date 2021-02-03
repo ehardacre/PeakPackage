@@ -57,8 +57,7 @@ struct LoginView: View {
                 
                 //submission button
                 Button(action:{
-                    //self.checkForUser()
-                    self.viewRouter.goTo(page: LoginPages.content)
+                    self.checkForUser()
                 }){
                     Text("Find Your Franchise").foregroundColor(Color.blue)
                 }
