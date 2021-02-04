@@ -41,15 +41,21 @@ struct RemoteImage: View {
     }
 
     @StateObject private var loader: Loader
+    @State var loadComplete = true
     var loading: Image
     var failure: Image
 
     var body: some View {
-        selectImage()
-            .resizable()
+        if loadComplete{
+            ProgressView()
+        }else{
+            selectImage()
+                .resizable()
+                .scaledToFit()
+        }
     }
 
-    init(url: String, loading: Image = Image(systemName: "photo"), failure: Image = Image(systemName: "multiply.circle")) {
+    init(url: String, loading: Image = Image(systemName: "rays"), failure: Image = Image(systemName: "photo")) {
         _loader = StateObject(wrappedValue: Loader(url: url))
         self.loading = loading
         self.failure = failure
@@ -63,6 +69,7 @@ struct RemoteImage: View {
             return failure
         default:
             if let image = UIImage(data: loader.data) {
+                loadComplete = true
                 return Image(uiImage: image)
             } else {
                 return failure

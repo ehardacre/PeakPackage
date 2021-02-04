@@ -37,6 +37,7 @@ struct LeadInfoSheet: View {
     
     @State var images : [ RemoteImage]
     @State var selectedImage : RemoteImage? = nil
+    @State var showFullScreenImage = false
     
     var body: some View {
         VStack{
@@ -68,9 +69,8 @@ struct LeadInfoSheet: View {
                             ForEach(images, id: \.id){ image in
                                 image.cornerRadius(20).frame(width: 100, height: 100).onTapGesture{
                                     //TODO: selected image not changing
-//                                    selectedImage = nil
-//                                    selectedImage = image
-//                                    printr("selected image")
+                                    selectedImage = image
+                                    showFullScreenImage = true
                                 }
                             }
                             Spacer()
@@ -233,6 +233,9 @@ struct LeadInfoSheet: View {
             .sheet(isPresented: $isShowingMailView) {
                 MailView(isShowing: self.$isShowingMailView, result: self.$result, email: self.email!)
             }
+        .sheet(isPresented: $showFullScreenImage, onDismiss: {selectedImage = nil}){
+                FullScreenImageView(image: selectedImage!)
+            }
     }
     
     func openMaps(){
@@ -305,3 +308,18 @@ struct LeadLocation: Identifiable {
       CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
   }
+
+struct FullScreenImageView : View {
+    
+    @State var image : RemoteImage
+    
+    var body: some View{
+        GeometryReader{ geo in
+            VStack{
+                Spacer()
+                image.frame(width: geo.size.width)
+                Spacer()
+            }
+        }
+    }
+}
