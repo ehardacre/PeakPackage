@@ -8,6 +8,7 @@ This package can be imported using SPM by going to `File` > `Swift Packages` > `
 
 ## Usage
 
+Before submitting the app to App Store Connect make sure you enable the signing capability for push notifications.
 import the PeakPackage in the App file and the ContentView.swift file: `import PeakPackage`
 
 ### App File:
