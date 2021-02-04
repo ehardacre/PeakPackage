@@ -12,7 +12,7 @@ import SwiftUI
 public struct MotherView: View{
     
     //@EnvironmentObject var viewRouter: ViewRouter
-    @ObservedObject var viewRouter = ViewRouter()
+    @ObservedObject var viewRouter = ViewRouter()//
     
     @State var content : AnyView
     
