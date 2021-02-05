@@ -9,6 +9,137 @@
 import Foundation
 import SwiftUI
 
+extension DatabaseDelegate {
+    
+    static func getDashboardAnalytics(completion: @escaping (Any) -> Void){
+        if try! defaults.getApplicationType() == .PeakClients{
+            let id = defaults.franchiseId()!
+            let json = JsonFormat.getDashboardAnalytics_peak(id: id).format()
+            DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion:{
+                rex in
+                completion(rex)
+            })
+        }else if try! defaults.getApplicationType() == .NHanceConnect {
+            let analyticsURL = defaults.franchiseURL()!.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
+            let dashboardJson = JsonFormat.getDashboardAnalytics_nhance(url: analyticsURL).format()
+            DatabaseDelegate.performRequest(with: dashboardJson, ret: returnType.analytics, completion: {
+                rex in
+                completion(rex)
+            })
+        }else{
+            printr("Application Type not set, could not get dashboard analytics")
+        }
+    }
+    
+    static func getAnalytics(completion: @escaping (Any) -> Void){
+        if try! defaults.getApplicationType() == .PeakClients{
+            let id = defaults.franchiseId()!
+            let json = JsonFormat.getAnalytics_peak(id: id).format()
+            DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion:{
+                rex in
+                completion(rex)
+            })
+        }else if try! defaults.getApplicationType() == .NHanceConnect {
+            let analyticsURL = defaults.franchiseURL()!.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
+            let json = JsonFormat.getAnalytics_nhance(url: analyticsURL).format()
+            DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion: { rex in
+                completion(rex)
+            })
+        }else{
+            printr("Application Type not set, could not get analytics")
+        }
+    }
+    
+    static func getAppointments(completion: @escaping (Any) -> Void){
+        if try! defaults.getApplicationType() == .PeakClients{
+            //format the json for the request
+            let json = JsonFormat.getAppointments(id: defaults.franchiseId()!).format()
+            //perform the database operation
+            DatabaseDelegate.performRequest(with: json, ret: returnType.visit, completion: {
+                 rex in
+                completion(rex)
+             })
+        }else if try! defaults.getApplicationType() == .NHanceConnect {
+            printr("App type is set to NHance Connect, there are no appointments for NHance Connect")
+        }else{
+            printr("Application Type not set, could not get appointments")
+        }
+    }
+    
+    static func getDashboardMessage(completion: @escaping (Any) -> Void){
+        if try! defaults.getApplicationType() == .PeakClients{
+            let json = JsonFormat.getDashboardMessage.format()
+            DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
+                rex in
+                completion(rex)
+            })
+        }else if try! defaults.getApplicationType() == .NHanceConnect {
+            let json = JsonFormat.getDashboardMessage.format()
+            DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
+                rex in
+                completion(rex)
+            })
+        }else{
+            printr("Application Type not set, could not get dashboard message")
+        }
+    }
+    
+    static func getOpenLeads(completion: @escaping (Any) -> Void){
+        let topic = defaults.getTopics()
+        let json_new = JsonFormat.getLeads_nhance(type: "open", id: defaults.franchiseId()!).format()
+        DatabaseDelegate.performRequest(with: json_new, ret: returnType.leads, completion: { rex in
+           completion(rex)
+        })
+    }
+    
+    static func getAcceptedLeads(completion: @escaping (Any) -> Void){
+        let topic = defaults.getTopics()
+        let json_acc = JsonFormat.getLeads_nhance(type: "accepted", id: defaults.franchiseId()!).format()
+        DatabaseDelegate.performRequest(with: json_acc, ret: returnType.leads, completion: { rex in
+            completion(rex)
+        })
+    }
+    
+    static func getScheduledLeads(completion: @escaping (Any) -> Void){
+        let topic = defaults.getTopics()
+        let json_sch = JsonFormat.getLeads_nhance(type: "scheduled", id: defaults.franchiseId()!).format()
+        DatabaseDelegate.performRequest(with: json_sch, ret: returnType.leads, completion: { rex in
+            completion(rex)
+        })
+    }
+    
+    static func getPeakLeads(completion: @escaping (Any) -> Void){
+        
+        //TODO: add woo commerce
+        let topic = defaults.getTopics()
+        let json = JsonFormat.getLeads_peak(topic: topic).format()
+        DatabaseDelegate.performRequest(with: json, ret: returnType.leads, completion: {
+            rex in
+            completion(rex)
+        })
+    }
+    
+    static func getTasks(completion: @escaping (Any) -> Void){
+        if try! defaults.getApplicationType() == .PeakClients{
+            let json = JsonFormat.getTasks(id: defaults.franchiseId()!).format()
+            //perform data base request
+            DatabaseDelegate.performRequest(with: json, ret: returnType.taskList, completion: {
+                    rex in
+                    completion(rex)
+            })
+        }else if try! defaults.getApplicationType() == .NHanceConnect {
+            printr("NHance Connect App does not use tasks")
+        }else{
+            printr("Application Type not set, could not get Tasks")
+        }
+    }
+    
+    static func getRatings(completion: @escaping (Any) -> Void){
+        printr("ratings not set up yet")
+    }
+    
+}
+
 //MARK: Database Delegate
 /**
  # Database Delegate

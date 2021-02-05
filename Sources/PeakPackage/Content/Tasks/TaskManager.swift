@@ -40,16 +40,12 @@ public class TaskManager : ObservableObject {
             return
         }
         
-        //get the json for the request
-        let json = JsonFormat.getTasks(id: defaults.franchiseId()!).format()
-            
-        //perform data base request
-        DatabaseDelegate.performRequest(with: json, ret: returnType.taskList, completion: {
-                rex in
-                //set the result to the appropriate tasks
-                self.tasks = self.removeAppts(tasks: rex as! [Task])
-                self.separateTasks()
-            })
+        DatabaseDelegate.getTasks(completion: {
+            rex in
+            //set the result to the appropriate tasks
+            self.tasks = self.removeAppts(tasks: rex as! [Task])
+            self.separateTasks()
+        })
     }
     
     /**

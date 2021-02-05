@@ -141,7 +141,7 @@ struct defaults {
     private static func setDBURL(){
         switch application{
         case .PeakClients:
-            DatabaseDelegate.setURL("https://clients.peakstudios.com/apphook/")
+            DatabaseDelegate.setURL("https://clients.peakstudios.com/peak-clients-api-v2/")
         case .NHanceConnect:
             DatabaseDelegate.setURL("https://www.nhance.com/peak-studios-api/")
         default:

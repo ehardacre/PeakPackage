@@ -24,6 +24,17 @@ public class NotificationManager : ObservableObject {
     @Published var accepted_leads = [Lead]()
     @Published var scheduled_leads = [Lead]()
     
+    //normal
+    @Published var unread_leads = [Lead]()
+    @Published var read_leads = [Lead]()
+    @Published var contacted_leads = [Lead]()
+    @Published var starred_leads = [Lead]()
+    
+    //woocommerce
+    @Published var pending_orders = [Order]()
+    @Published var processing_orders = [Order]()
+    @Published var completed_orders = [Order]()
+    
     @Published var loaded = false
     var loading = [false, false, false]
     
@@ -89,32 +100,60 @@ public class NotificationManager : ObservableObject {
         let topic = defaults.getTopics()
         printr(topic)
         
-        //open, accepted, scheduled
-        let json_new = JsonFormat.getLeads(type: "open", id: defaults.franchiseId()!).format()
-        DatabaseDelegate.performRequest(with: json_new, ret: returnType.leads, completion: { rex in
-            let leads = rex as! [Lead]
-            self.open_leads = leads
-            self.newNotifications = leads.count
-            self.loading[0] = true
-            self.loaded = self.checkForLoading()
-        })
+        if try! defaults.getApplicationType() == .NHanceConnect{
+            DatabaseDelegate.getOpenLeads(completion: { rex in
+                    let leads = rex as! [Lead]
+                    self.open_leads = leads
+                    self.newNotifications = leads.count
+                    self.loading[0] = true
+                    self.loaded = self.checkForLoading()
+            })
+            DatabaseDelegate.getAcceptedLeads(completion: { rex in
+                    let leads = rex as! [Lead]
+                    self.accepted_leads = leads
+                    self.loading[1] = true
+                    self.loaded = self.checkForLoading()
+            })
+            DatabaseDelegate.getScheduledLeads(completion: { rex in
+                    let leads = rex as! [Lead]
+                    self.scheduled_leads = leads
+                    self.loading[2] = true
+                    self.loaded = self.checkForLoading()
+            })
+        }else if try! defaults.getApplicationType() == .PeakClients{
+            DatabaseDelegate.getPeakLeads(completion:{
+                rex in
+                self.leads = rex as! [Lead]
+                self.sortLeads()
+            })
+        }
+    }
+    
+    func sortLeads(){
         
-        let json_acc = JsonFormat.getLeads(type: "accepted", id: defaults.franchiseId()!).format()
-        DatabaseDelegate.performRequest(with: json_acc, ret: returnType.leads, completion: { rex in
-            let leads = rex as! [Lead]
-            self.accepted_leads = leads
-            self.loading[1] = true
-            self.loaded = self.checkForLoading()
-        })
+        unread_leads = []
+        read_leads = []
+        contacted_leads = []
+        starred_leads = []
         
-        let json_sch = JsonFormat.getLeads(type: "scheduled", id: defaults.franchiseId()!).format()
-        DatabaseDelegate.performRequest(with: json_sch, ret: returnType.leads, completion: { rex in
-            let leads = rex as! [Lead]
-            self.scheduled_leads = leads
-            self.loading[2] = true
-            self.loaded = self.checkForLoading()
-        })
-        
+        for lead in leads {
+            switch lead.notification_state{
+            case notificationType.starred.rawValue:
+                starred_leads.append(lead)
+            case notificationType.unread.rawValue:
+                unread_leads.append(lead)
+            case notificationType.read.rawValue:
+                read_leads.append(lead)
+            case notificationType.deleted.rawValue:
+                continue
+                
+            default:
+                contacted_leads.append(lead)
+            }
+        }
+        newNotifications = unread_leads.count
+        starredLeads = starred_leads.count
+        leads = unread_leads + read_leads + contacted_leads
     }
     
     func checkForLoading() -> Bool{

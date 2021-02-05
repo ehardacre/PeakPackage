@@ -30,18 +30,13 @@ public class AppointmentManager : ObservableObject {
         if !appointments.isEmpty {
             return
         }
-        
-        //format the json for the request
-        let json = JsonFormat.getAppointments(id: defaults.franchiseId()!).format()
-        
-        //perform the database operation
-        DatabaseDelegate.performRequest(with: json, ret: returnType.visit, completion: {
-             rex in
-            
-            //convert the backend format to the front end format
-            self.appointments = (rex as! [BackendVisit]).map(self.makeFrontendVisit(visit:))
-            self.loadTodaysVisits()
-         })
+        DatabaseDelegate.getAppointments(completion: {
+            rex in
+           
+           //convert the backend format to the front end format
+           self.appointments = (rex as! [BackendVisit]).map(self.makeFrontendVisit(visit:))
+           self.loadTodaysVisits()
+        })
      }
     
     func resetAppointments(){

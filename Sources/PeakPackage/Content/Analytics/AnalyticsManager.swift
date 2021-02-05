@@ -55,12 +55,8 @@ public class AnalyticsManager : ObservableObject {
     
     ///the only call you need to make to load analytics
     func loadAnalytics() {
-        
-        let analyticsURL = defaults.franchiseURL()!.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
-        printr(analyticsURL)
-        
-        let dashboardJson = JsonFormat.getDashboardAnalytics(url: analyticsURL).format()
-        DatabaseDelegate.performRequest(with: dashboardJson, ret: returnType.analytics, completion: { rex in
+        DatabaseDelegate.getAnalytics(completion: {
+            rex in
             let analytics = rex as! [Analytics]
             for lit in analytics {
                 self.todayData = lit.data!
@@ -68,8 +64,8 @@ public class AnalyticsManager : ObservableObject {
             self.today.page.totals = self.todayData!.page!.getTotals()
         })
         
-        let json = JsonFormat.getAnanlytics(url: analyticsURL).format()
-        DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion: { rex in
+        DatabaseDelegate.getAnalytics(completion: {
+            rex in
             let analytics = rex as! [Analytics]
             self.separateAnalytics(analytics: analytics)
             self.loadGraphableData()

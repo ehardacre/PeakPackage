@@ -23,11 +23,8 @@ enum JsonKeys : String{
     //keys for two factor auth
     case twofactor_type = "verification"
     case twofactor_contact = "contact"
-    //key for getting the analytics id
-    case analyticsId_key = "analytics_id_key"
     //get the message shown on the dashboard
     case dashboard_key = "dashboard_message"
-    case dashboard_analytics_key = "dashboard_analytics_site_url"
     //notification values
     case add_notification_key = "device_id"
     case add_notification_cat_key = "notification_category"
@@ -58,6 +55,17 @@ enum JsonKeys : String{
     case image_send_key = "imageData"
     //key for converting kanban id to wp id
     case id_key = "id_key"
+    //Analytics
+    case peak_analytics_key = "get_analytics_data_id_key"
+    case peak_dashboard_analytics_key = "get_analytics_data_id_dashboard_key"
+    //Leads
+    case peak_leads_key = "get_leads_topic_key"
+    case peak_updateLeadsID_key = "update_leads_id_key"
+    case peak_updateLeadsState_key = "update_leads_state_key"
+    //WOOCOMMERCE:
+    case woo_leads_key = "get_unspilt_leads_topic_key"
+    case woo_updateLeadsID_key = "update_unspilt_leads_id_key"
+    case woo_updateLeadsState_key = "update_unspilt_leads_state_key"
     
     //MARK: N-HANCE CONNECT
     //keys for getting leads
@@ -68,6 +76,9 @@ enum JsonKeys : String{
     //accept and decline on-trac leads
     case accept_lead_key = "accept_weblead_id"
     case decline_lead_key = "delete_account_id"
+    //key for getting the analytics id
+    case analyticsId_key = "analytics_id_key"
+    case dashboard_analytics_key = "dashboard_analytics_site_url"
     
 }
 
@@ -86,9 +97,6 @@ enum JsonFormat {
     case getDashboardMessage
     //two factor authentication
     case twoFactor(type: String, contact: String)
-    //analytics jams
-    case getDashboardAnalytics(url: String)
-    case getAnanlytics(url: String)
     //takes the kanban id
     case getAnalyticsId(id: String)
     //store notification token
@@ -109,6 +117,15 @@ enum JsonFormat {
     //id is the id of the form we're trying to get
     case getDynamicForm(id: String)
     case getDynamicFormTypes(id: String)
+    //get peak analytics
+    case getAnalytics_peak(id: String)
+    case getDashboardAnalytics_peak(id: String)
+    //peak leads and such
+    case getLeads_peak(topic: String)
+    case updateLeads_peak(id: String, state: String)
+    //woo commerce leads
+    case getLeads_woo(topic: String)
+    case updateLeads_woo(id: String, state: String)
     
     
     //MARK: N-HANCE CONNECT
@@ -116,7 +133,11 @@ enum JsonFormat {
     case acceptLead(franchiseId: String, leadId: String)
     case declineLead(franchiseId: String, accountId: String)
     //get leads from on-trac
-    case getLeads(type: String, id: String)
+    case getLeads_nhance(type: String, id: String)
+    //analytics jams
+    case getDashboardAnalytics_nhance(url: String)
+    case getAnalytics_nhance(url: String)
+    
     
 
     //format into the json form for the apphook
@@ -151,8 +172,6 @@ enum JsonFormat {
         //analytics
         case .getAnalyticsId(let id):
             retVal = [JsonKeys.analyticsId_key.rawValue: id]
-        case .getDashboardAnalytics(let url):
-            retVal = [JsonKeys.dashboard_analytics_key.rawValue: url]
         
         
         //MARK: PEAK CLIENTS
@@ -190,6 +209,22 @@ enum JsonFormat {
             if phone != nil { json[JsonKeys.newPhone_key.rawValue] = phone! }
             if email != nil { json[JsonKeys.newEmail_key.rawValue] = email! }
             retVal = json
+        //get peak analytics
+        case .getAnalytics_peak(let id):
+            retVal = [JsonKeys.peak_analytics_key.rawValue: id]
+        case .getDashboardAnalytics_peak(let id):
+            retVal = [JsonKeys.peak_dashboard_analytics_key.rawValue: id]
+        //peak leads and such
+        case .getLeads_peak(let topic):
+            retVal = [JsonKeys.peak_leads_key.rawValue: topic]
+        case .updateLeads_peak(let id, let state):
+            retVal = [JsonKeys.peak_updateLeadsID_key.rawValue: id, JsonKeys.peak_updateLeadsState_key.rawValue: state]
+        //woo commerce leads
+        case .getLeads_woo(let topic):
+            retVal = [JsonKeys.woo_leads_key.rawValue: topic]
+        case .updateLeads_woo(let id, let state):
+            retVal = [JsonKeys.woo_updateLeadsID_key.rawValue: id,
+                      JsonKeys.woo_updateLeadsState_key.rawValue: state]
             
             
         //MARK: N-HANCE CONNECT
@@ -197,10 +232,12 @@ enum JsonFormat {
             retVal = [JsonKeys.leadsFranchise_key.rawValue: franchiseId, JsonKeys.accept_lead_key.rawValue: leadId]
         case .declineLead(let franchiseId, let accountId):
             retVal = [JsonKeys.leadsFranchise_key.rawValue: franchiseId, JsonKeys.decline_lead_key.rawValue: accountId]
-        case .getAnanlytics(let url):
+        case .getAnalytics_nhance(let url):
             retVal = [JsonKeys.analyticsUrl_key.rawValue: url]
-        case .getLeads(let type, let id):
+        case .getLeads_nhance(let type, let id):
             retVal = [JsonKeys.leadsType_key.rawValue: type, JsonKeys.leadsFranchise_key.rawValue: id]
+        case .getDashboardAnalytics_nhance(let url):
+            retVal = [JsonKeys.dashboard_analytics_key.rawValue: url]
         
             
             //should never run

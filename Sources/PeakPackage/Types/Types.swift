@@ -13,10 +13,19 @@ import SwiftUI
 //Would be better named Lead types, these are the types that exist
 //TODO: this is likely different on the peak studios app
 enum notificationType : String {
+    //NHance
     case open = "Open"
     case accepted = "Accepted"
     case scheduled = "Scheduled"
     case scheduled_full = "Estimate Scheduled"
+    
+    //Peak
+    case unread = "unread"
+    case starred = "starred"
+    case read = "read"
+    case called = "called"
+    case emailed = "emailed"
+    case deleted = "deleted"
 }
 
 //order type for woocommerce
