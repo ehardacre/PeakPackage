@@ -15,6 +15,10 @@ struct LoginView: View {
     //the view router that hosts this login view
     @ObservedObject var viewRouter: ViewRouter
     
+    //input variables for sheet peak
+    @State var firstname = ""
+    @State var lastname = ""
+    //all
     @State var email = ""
     
     //show error to user
@@ -43,7 +47,11 @@ struct LoginView: View {
             
             Spacer()
             
-            LoginFields(email: $email, showActionSheet_ipad: $showActionSheet_ipad)
+            if try! defaults.getApplicationType() == .NHanceConnect {
+                LoginFields_Nhance(email: $email, showActionSheet_ipad: $showActionSheet_ipad)
+            }else if try! defaults.getApplicationType() == .PeakClients {
+                LoginFields_Peak(firstname: $firstname, lastname: $lastname, email: $email, showActionSheet_ipad: $showActionSheet_ipad)
+            }
             
             //if error is to be shown
             
@@ -180,7 +188,7 @@ struct LoginView: View {
     }
 }
 
-struct LoginFields: View {
+struct LoginFields_Nhance: View {
     
     @Binding var email : String
     @Binding var showActionSheet_ipad : Bool
@@ -201,6 +209,46 @@ struct LoginFields: View {
             Divider().frame(width: 250.0)
 
         }else{
+            Text(email).foregroundColor(Color.gray)
+        }
+    }
+    
+}
+
+struct LoginFields_Peak: View {
+    
+    @Binding var firstname : String
+    @Binding var lastname : String
+    @Binding var email : String
+    @Binding var showActionSheet_ipad : Bool
+    
+    var body : some View {
+        
+        if !showActionSheet_ipad {
+            
+            //first and last name input
+            TextField("First Name", text: $firstname)
+            .frame(width: 250.0, height: 40.0)
+            .cornerRadius(10)
+            .multilineTextAlignment(.center)
+                .allowsHitTesting(!showActionSheet_ipad)
+            TextField("Last Name", text: $lastname)
+            .frame(width: 250.0, height: 40.0)
+            .cornerRadius(10)
+            .multilineTextAlignment(.center)
+
+            TextField("Enter your franchise email", text: $email)
+                .frame(width: 250.0, height: 40.0)
+                .cornerRadius(10)
+                .multilineTextAlignment(.center)
+                .keyboardType(.emailAddress)
+                .disableAutocorrection(true)
+                .autocapitalization(UITextAutocapitalizationType.none)
+            Divider().frame(width: 250.0)
+
+        }else{
+            Text(firstname).foregroundColor(Color.gray)
+            Text(lastname).foregroundColor(Color.gray)
             Text(email).foregroundColor(Color.gray)
         }
     }
