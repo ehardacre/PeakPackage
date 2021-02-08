@@ -34,10 +34,15 @@ extension DatabaseDelegate {
     static func getAnalytics(completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients{
             let id = defaults.franchiseId()!
-            let json = JsonFormat.getAnalytics_peak(id: id).format()
-            DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion:{
-                rex in
-                completion(rex)
+            let json_id = JsonFormat.getAnalyticsId(id: id).format()
+            DatabaseDelegate.performRequest(with: json_id, ret: returnType.string, completion: { analytics_id in
+                
+                let json = JsonFormat.getAnalytics_peak(id: analytics_id as! String).format()
+                DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion:{
+                    rex in
+                    completion(rex)
+                })
+                
             })
         }else if defaults.getApplicationType() == .NHanceConnect {
             let analyticsURL = defaults.franchiseURL()!.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
