@@ -109,7 +109,7 @@ struct PageAnalyticsInfoView : View {
             var previous = dataSource!.previous!.page.totals[key]
             var comparison = ComparisonObject(key: key, value: value, previous: previous)
             values.append(comparison)
-            recapString += "\(value) in the category \(key) (\(comparison.delta) from last \(timePeriod)'s \(previous) "
+            recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0") "
         }
         
         return Text(recapString)
@@ -216,7 +216,7 @@ struct PPCAnalyticsInfoView : View {
             var previous = dataSource!.previous!.page.totals[key]
             var comparison = ComparisonObject(key: key, value: value, previous: previous)
             values.append(comparison)
-            recapString += "\(value) in the category \(key) (\(comparison.delta) from last \(timePeriod)'s \(previous) "
+            recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0") "
         }
         
         return Text(recapString)
