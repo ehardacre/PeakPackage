@@ -63,7 +63,7 @@ struct PageAnalyticsInfoView : View {
                 //the text information about analytics
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
-                    DataTotals(fields: values)
+                    DataTotals(fields: $values)
                     
                     Spacer()
                 
@@ -171,7 +171,7 @@ struct PPCAnalyticsInfoView : View {
                 //the text information about analytics
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
-                    DataTotals(fields: values)
+                    DataTotals(fields: $values)
                     Spacer()
                 
                 }
@@ -265,7 +265,7 @@ struct ComparisonObject{
 struct DataTotals : View {
     
     //the important values for page analytics
-    var fields : [ComparisonObject]
+    @Binding var fields : [ComparisonObject]
     
     var body : some View {
         VStack(alignment: .leading){
