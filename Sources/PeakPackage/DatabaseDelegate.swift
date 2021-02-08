@@ -37,7 +37,7 @@ extension DatabaseDelegate {
             let json_id = JsonFormat.getAnalyticsId(id: id).format()
             DatabaseDelegate.performRequest(with: json_id, ret: returnType.string, completion: { analytics_id in
                 
-                let json = JsonFormat.getAnalytics_peak(id: analytics_id as! String).format()
+                let json = JsonFormat.getAnalytics_peak(id: (analytics_id as! String).digits).format()
                 DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion:{
                     rex in
                     completion(rex)
