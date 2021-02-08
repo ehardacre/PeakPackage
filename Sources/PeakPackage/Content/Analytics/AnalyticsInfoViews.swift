@@ -63,7 +63,13 @@ struct PageAnalyticsInfoView : View {
                 //the text information about analytics
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
-                    DataTotals(fields: $values)
+                    DataTotals(fields: $values).onAppear{
+                        for (key,value) in dataSource!.now!.page.totals {
+                            var previous = dataSource!.previous!.page.totals[key]
+                            var comparison = ComparisonObject(key: key, value: value, previous: previous)
+                            values.append(comparison)
+                        }
+                    }
                     
                     Spacer()
                 
@@ -108,7 +114,7 @@ struct PageAnalyticsInfoView : View {
             }
             var previous = dataSource!.previous!.page.totals[key]
             var comparison = ComparisonObject(key: key, value: value, previous: previous)
-            values.append(comparison)
+            //values.append(comparison)
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
         }
         
@@ -171,7 +177,13 @@ struct PPCAnalyticsInfoView : View {
                 //the text information about analytics
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
-                    DataTotals(fields: $values)
+                    DataTotals(fields: $values).onAppear{
+                        for (key,value) in dataSource!.now!.ppc.totals {
+                            var previous = dataSource!.previous!.ppc.totals[key]
+                            var comparison = ComparisonObject(key: key, value: value, previous: previous)
+                            values.append(comparison)
+                        }
+                    }
                     Spacer()
                 
                 }
@@ -213,9 +225,9 @@ struct PPCAnalyticsInfoView : View {
             }else{
                 first = false
             }
-            var previous = dataSource!.previous!.page.totals[key]
+            var previous = dataSource!.previous!.ppc.totals[key]
             var comparison = ComparisonObject(key: key, value: value, previous: previous)
-            values.append(comparison)
+            //values.append(comparison)
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
         }
         
