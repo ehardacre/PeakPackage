@@ -190,7 +190,7 @@ struct DatabaseDelegate {
         //convert dictionary input to json data
         let json: [String: Any] = with
         request.httpBody = try? JSONSerialization.data(withJSONObject: json)
-        printr(try? JSONSerialization.data(withJSONObject: json))
+        printr(json)
 
         //open URL session with the request
         URLSession.shared.dataTask(with: request) { data, response, dberror in
