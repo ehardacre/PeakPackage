@@ -171,6 +171,10 @@ struct defaults {
         UserDefaults.standard.set(value, forKey: name_key)
     }
     
+    static func username(value: String){
+        UserDefaults.standard.set(value, forKey: username_key)
+    }
+    
     //MARK: Exists Functions
     
     static func signedIn(exists: Bool) -> Bool{

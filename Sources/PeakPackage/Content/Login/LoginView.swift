@@ -144,7 +144,7 @@ struct LoginView: View {
         
         //code view for two factor authentication
         .sheet(isPresented: $showCodeView){
-            CodeView(viewRouter: self.viewRouter, expectedCode: defaults.expectedCode, franchise: self.franchise!)
+            CodeView(viewRouter: self.viewRouter, expectedCode: defaults.expectedCode, name: firstname + " " + lastname, franchise: self.franchise!)
         }
         
     }

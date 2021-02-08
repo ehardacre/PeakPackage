@@ -17,6 +17,7 @@ struct CodeView: View {
     //the code that the user enters and code expected
     @State var codeInput = ""
     @State var expectedCode = ""
+    @State var name = ""
     
     //show error with code
     @State var showError = false
@@ -103,6 +104,9 @@ struct CodeView: View {
         if codeInput == expectedCode || ( defaults.admin && codeInput == "63070" ){
             printr("logging in...")
             defaults.signIn()
+            if self.name != "" {
+                defaults.username(value: self.name)
+            }
             defaults.franchiseId(value: self.franchise.franchiseId)
             defaults.franchiseName(value: self.franchise.franchiseTitle)
             defaults.setFranchiseURL(self.franchise.franchiseURL)
