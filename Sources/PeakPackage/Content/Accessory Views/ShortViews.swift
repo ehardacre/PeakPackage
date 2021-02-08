@@ -64,3 +64,64 @@ struct LeadsShortView : View {
         }
     }
 }
+
+/**
+ #Analytics Info View
+ smaller view that shows a singular section of analytics data
+currently just a graph and some fields depending on the type
+ - Parameter content : custom content for the view (TODO: not implmented yet)
+ - Parameter analyticsMan : the analytics manager  for the data
+ - Parameter type : the analytics type
+ - Parameter page : optional, boolean for whether its page analytics or not (default true)
+ - Parameter ppc : optional, boolean opposite of page
+ 
+ */
+struct DashboardAnalytics: View {
+    
+    //handles the data
+    private var analyticsMan: AnalyticsManager
+    
+    //the data source for the analytics
+    private var dataSource : SwiftAnalyticsObject?
+
+    //page and ppc are both optional, default is page
+    public init(analyticsMan: AnalyticsManager) {
+        
+        dataSource = analyticsMan.today
+        self.analyticsMan = analyticsMan
+        
+    }
+    
+    var body: some View {
+        
+        VStack{
+        
+            HStack{
+                //the text information about analytics
+                
+                Spacer()
+                
+                VStack{
+                    //visitors
+                    Text(dataSource!.page.totals[AnalyticsManager.visitors_key] ?? "0")
+                        .analyticsTotals_style()
+                    Text("Visitors")
+                        .analyticsTotals_Label_style()
+                }
+                
+                Spacer()
+                
+                VStack{
+                    //total events
+                    Text(dataSource!.page.totals[AnalyticsManager.totalEvents_key] ?? "0")
+                        .analyticsTotals_style()
+                    Text("Leads")
+                        .analyticsTotals_Label_style()
+                }
+                
+                Spacer()
+            
+            }
+        }.padding(20).background(Color.lightAccent).cornerRadius(20.0)
+    }
+}

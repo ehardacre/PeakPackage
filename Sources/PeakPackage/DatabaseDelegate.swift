@@ -12,14 +12,14 @@ import SwiftUI
 extension DatabaseDelegate {
     
     static func getDashboardAnalytics(completion: @escaping (Any) -> Void){
-        if try! defaults.getApplicationType() == .PeakClients{
+        if defaults.getApplicationType() == .PeakClients{
             let id = defaults.franchiseId()!
             let json = JsonFormat.getDashboardAnalytics_peak(id: id).format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion:{
                 rex in
                 completion(rex)
             })
-        }else if try! defaults.getApplicationType() == .NHanceConnect {
+        }else if defaults.getApplicationType() == .NHanceConnect {
             let analyticsURL = defaults.franchiseURL()!.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
             let dashboardJson = JsonFormat.getDashboardAnalytics_nhance(url: analyticsURL).format()
             DatabaseDelegate.performRequest(with: dashboardJson, ret: returnType.analytics, completion: {
@@ -32,14 +32,14 @@ extension DatabaseDelegate {
     }
     
     static func getAnalytics(completion: @escaping (Any) -> Void){
-        if try! defaults.getApplicationType() == .PeakClients{
+        if defaults.getApplicationType() == .PeakClients{
             let id = defaults.franchiseId()!
             let json = JsonFormat.getAnalytics_peak(id: id).format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion:{
                 rex in
                 completion(rex)
             })
-        }else if try! defaults.getApplicationType() == .NHanceConnect {
+        }else if defaults.getApplicationType() == .NHanceConnect {
             let analyticsURL = defaults.franchiseURL()!.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
             let json = JsonFormat.getAnalytics_nhance(url: analyticsURL).format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion: { rex in
@@ -51,7 +51,7 @@ extension DatabaseDelegate {
     }
     
     static func getAppointments(completion: @escaping (Any) -> Void){
-        if try! defaults.getApplicationType() == .PeakClients{
+        if defaults.getApplicationType() == .PeakClients{
             //format the json for the request
             let json = JsonFormat.getAppointments(id: defaults.franchiseId()!).format()
             //perform the database operation
@@ -59,7 +59,7 @@ extension DatabaseDelegate {
                  rex in
                 completion(rex)
              })
-        }else if try! defaults.getApplicationType() == .NHanceConnect {
+        }else if defaults.getApplicationType() == .NHanceConnect {
             printr("App type is set to NHance Connect, there are no appointments for NHance Connect")
         }else{
             printr("Application Type not set, could not get appointments")
@@ -67,13 +67,13 @@ extension DatabaseDelegate {
     }
     
     static func getDashboardMessage(completion: @escaping (Any) -> Void){
-        if try! defaults.getApplicationType() == .PeakClients{
+        if defaults.getApplicationType() == .PeakClients{
             let json = JsonFormat.getDashboardMessage.format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
                 rex in
                 completion(rex)
             })
-        }else if try! defaults.getApplicationType() == .NHanceConnect {
+        }else if defaults.getApplicationType() == .NHanceConnect {
             let json = JsonFormat.getDashboardMessage.format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
                 rex in

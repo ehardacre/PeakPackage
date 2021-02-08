@@ -20,25 +20,25 @@ struct NotificationsView: View {
         ZStack{
             
 //            if notificationMan.loaded {
-                
+            if defaults.getApplicationType() == .NHanceConnect{
                 switch leadsIndex {
                 
                 case 0:
-                LeadsView(notificationMan: notificationMan,
+                LeadsView_NHance(notificationMan: notificationMan,
                          selectionManager: selectionMan,
                          title: "Open Leads",
                          list: notificationMan.open_leads,
                          loaded: notificationMan.loaded)
                 
                 case 1:
-                LeadsView(notificationMan: notificationMan,
+                LeadsView_NHance(notificationMan: notificationMan,
                           selectionManager: selectionMan,
                           title: "Accepted",
                           list: notificationMan.accepted_leads,
                           loaded: notificationMan.loaded)
 
                 case 2:
-                LeadsView(notificationMan: notificationMan,
+                LeadsView_NHance(notificationMan: notificationMan,
                           selectionManager: selectionMan,
                           title: "Scheduled",
                           list: notificationMan.scheduled_leads,
@@ -47,6 +47,13 @@ struct NotificationsView: View {
                     EmptyView()
                 
                 }
+            }else if defaults.getApplicationType() == .PeakClients{
+                if defaults.woocommerce {
+                    OrdersView_Woo(notificationMan: notificationMan)
+                }else{
+                    LeadsView_Peak(notificationMan: notificationMan)
+                }
+            }
                 
 //            }else{
 //                ProgressView()
@@ -68,7 +75,7 @@ struct NotificationsView: View {
     }
 }
 
-struct LeadsView : View {
+struct LeadsView_NHance : View {
     
     @State var notificationMan : NotificationManager
     @ObservedObject var selectionManager = SelectionManager()
@@ -109,9 +116,69 @@ struct LeadsView : View {
                 }
             }
         }
+}
+
+struct LeadsView_Peak : View {
     
+    @State var notificationMan : NotificationManager
+    @ObservedObject var selectionManager = SelectionManager()
     
-    func addToList(lead: [Lead]){
-        
+    var body: some View {
+        List{
+            Text("New").bold().font(.title2)
+                .listRowBackground(Color.clear)
+                .foregroundColor(Color.darkAccent)
+                .overlay(NotificationNumLabel(number: notificationMan.newNotifications, position: CGPoint(x: 55, y: 0)))
+            if notificationMan.newNotifications == 0 && notificationMan.starredLeads == 0{
+                Text("No new leads to report right now.").foregroundColor(Color.secondary)
+            }
+            ForEach(notificationMan.starred_leads, id: \.notification_id){ lead in
+                LeadCardView(selectionManager: selectionManager, notificationMan: notificationMan, lead: lead)
+                    .listRowBackground(Color.clear)
+            }
+            ForEach(notificationMan.unread_leads, id: \.notification_id){ lead in
+                LeadCardView(selectionManager: selectionManager, notificationMan: notificationMan, lead: lead)
+                    .listRowBackground(Color.clear)
+            }
+            
+            Text("Opened & Contacted").bold().font(.title2).listRowBackground(Color.clear).foregroundColor(Color.darkAccent)
+            ForEach((notificationMan.read_leads + notificationMan.contacted_leads), id: \.notification_id){ lead in
+                LeadCardView(selectionManager: selectionManager, notificationMan: notificationMan, lead: lead)
+                    .listRowBackground(Color.clear)
+            }
+        }
+        .listStyle(SidebarListStyle())
+        .environment(\.defaultMinListRowHeight, 120).padding(0.0)
+        .navigationTitle(Text("Leads"))
+    }
+}
+
+struct OrdersView_Woo : View {
+    
+    @State var notificationMan : NotificationManager
+    @ObservedObject var selectionManager = SelectionManager()
+    
+    var body: some View {
+        List{
+            Text("Pending").bold().font(.title2)
+                .listRowBackground(Color.clear)
+                .foregroundColor(Color.darkAccent)
+                .overlay(NotificationNumLabel(number: notificationMan.newNotifications, position: CGPoint(x: 55, y: 0)))
+            if notificationMan.newNotifications == 0 {
+                Text("No new orders to report right now.").foregroundColor(Color.secondary)
+            }
+            ForEach(notificationMan.pending_orders, id: \.notification_id){ order in
+                  OrderCardView(selectionManager: selectionManager, notificationMan: notificationMan, order: order)
+            }
+            
+            Text("Processing").bold().font(.title2).listRowBackground(Color.clear).foregroundColor(Color.darkAccent)
+            ForEach((notificationMan.processing_orders), id: \.notification_id){ order in
+                OrderCardView(selectionManager: selectionManager, notificationMan: notificationMan, order: order)
+                    .listRowBackground(Color.clear)
+            }
+        }
+        .listStyle(SidebarListStyle())
+        .environment(\.defaultMinListRowHeight, 120).padding(0.0)
+        .navigationTitle(Text("Orders"))
     }
 }

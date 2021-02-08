@@ -260,8 +260,17 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
         var newTotals : [String : String] = [:]
         var totals = totalsForAllResults
         
-        newTotals[AnalyticsManager.sessions_key] = totals?.gasessions
-        newTotals[AnalyticsManager.sessionsWithEvent_key] = totals?.gasessionsWithEvent
+        if totals != nil {
+        
+            if totals!.showingAdData(){
+                newTotals[AnalyticsManager.adClicks_key] = totals?.gaadClicks
+                newTotals[AnalyticsManager.adCost_key] = totals?.gaadCost
+                newTotals[AnalyticsManager.costPerClick_key] = totals?.gacostPerConversion
+            }else if totals!.showingSessionData(){
+                newTotals[AnalyticsManager.sessions_key] = totals?.gasessions
+                newTotals[AnalyticsManager.sessionsWithEvent_key] = totals?.gasessionsWithEvent
+            }
+        }
         
         return newTotals
     }
@@ -295,15 +304,37 @@ struct GA_ColumnHeader : Codable {
 
 struct GA_TotalsForAllResults_Page : Codable {
     
+    //NHANCE AND PEAK
     var gavisitors : String
     var gatotalEvents : String
+    
+    //WOOCOMMERCE
+    var gatransactionRevenue : String?
+    var gatransactions : String?
 }
 
 struct GA_TotalsForAllResults_PPC : Codable {
     
-    //WORDPRESS
-    var gasessionsWithEvent : String
-    var gasessions : String
+    //NHANCE
+    var gasessionsWithEvent : String?
+    var gasessions : String?
+    
+    //PEAK
+    var gaadClicks : String?
+    var gaadCost : String?
+    var gacostPerConversion : String?
+    
+    func showingAdData() -> Bool {
+        return
+            (gaadClicks != nil && gaadCost != nil && gacostPerConversion != nil) ||
+            defaults.getApplicationType() == .PeakClients
+    }
+    
+    func showingSessionData() -> Bool{
+        return
+            (gasessionsWithEvent != nil && gasessions != nil) ||
+            defaults.getApplicationType() == .NHanceConnect
+    }
     
 }
 

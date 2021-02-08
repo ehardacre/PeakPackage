@@ -63,9 +63,9 @@ struct defaults {
         Color(name, bundle: Bundle.module)
     }
     
-    static func getApplicationType() throws -> ApplicationType {
+    static func getApplicationType() -> ApplicationType {
         if self.application == nil {
-            throw IncompleteSetupError.applicationType
+            fatalError("Application Type must be set")
         }
         return self.application!
     }
@@ -185,6 +185,10 @@ struct defaults {
         return exists && (franchiseName() != nil)
     }
     
+    static func username(exists: Bool) -> Bool{
+        return exists && (getUsername() != nil)
+    }
+    
     
     //MARK: Functions
     
@@ -218,7 +222,15 @@ struct defaults {
     }
 
     static func allSet() -> Bool {
-        return signedIn(exists: true)
+        var all = signedIn(exists: true)
+        if try! defaults.getApplicationType() == .NHanceConnect {
+            
+        }else if try! defaults.getApplicationType() == .PeakClients {
+            all = username(exists: true) && franchiseId(exists: true) && franchiseName(exists: true)
+        }else{
+            return false
+        }
+        return all
         //TODO: add all variables that need to be set
         #warning("TODO: add all variables that need to be set on sign in.")
     }

@@ -238,11 +238,9 @@ enum JsonFormat {
             retVal = [JsonKeys.leadsType_key.rawValue: type, JsonKeys.leadsFranchise_key.rawValue: id]
         case .getDashboardAnalytics_nhance(let url):
             retVal = [JsonKeys.dashboard_analytics_key.rawValue: url]
-        
             
             //should never run
         default:
-            
             printr(InternalError.nilContent.rawValue, tag: printTags.error)
             
         }
