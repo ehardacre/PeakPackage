@@ -117,17 +117,18 @@ extension DatabaseDelegate {
             rex in
             completion(rex)
         })
+        
     }
     
     static func getTasks(completion: @escaping (Any) -> Void){
-        if try! defaults.getApplicationType() == .PeakClients{
+        if defaults.getApplicationType() == .PeakClients{
             let json = JsonFormat.getTasks(id: defaults.franchiseId()!).format()
             //perform data base request
             DatabaseDelegate.performRequest(with: json, ret: returnType.taskList, completion: {
                     rex in
                     completion(rex)
             })
-        }else if try! defaults.getApplicationType() == .NHanceConnect {
+        }else if defaults.getApplicationType() == .NHanceConnect {
             printr("NHance Connect App does not use tasks")
         }else{
             printr("Application Type not set, could not get Tasks")
@@ -189,6 +190,7 @@ struct DatabaseDelegate {
         //convert dictionary input to json data
         let json: [String: Any] = with
         request.httpBody = try? JSONSerialization.data(withJSONObject: json)
+        printr(try? JSONSerialization.data(withJSONObject: json))
 
         //open URL session with the request
         URLSession.shared.dataTask(with: request) { data, response, dberror in
