@@ -58,6 +58,7 @@ public class AnalyticsManager : ObservableObject {
     
     ///the only call you need to make to load analytics
     func loadAnalytics(for type: AnalyticsType_general) {
+        self.loading = true
         DatabaseDelegate.getAnalytics(for: type, completion: {
             rex in
             let analytics = rex as! [Analytics]
