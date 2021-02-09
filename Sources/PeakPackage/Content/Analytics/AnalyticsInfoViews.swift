@@ -64,6 +64,7 @@ struct PageAnalyticsInfoView : View {
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
                     DataTotals(fields: values).onAppear{
+                        values.list = []
                         for (key,value) in (dataSource?.now?.page?.totals ?? [:]) {
                             var previous = dataSource?.previous?.page?.totals?[key] ?? "0"
                             var comparison = ComparisonObject(key: key, value: value, previous: previous)
@@ -178,6 +179,7 @@ struct PPCAnalyticsInfoView : View {
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
                     DataTotals(fields: values).onAppear{
+                        values.list = []
                         for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
                             var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
                             var comparison = ComparisonObject(key: key, value: value, previous: previous)
