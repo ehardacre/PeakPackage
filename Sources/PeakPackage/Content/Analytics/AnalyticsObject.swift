@@ -192,7 +192,7 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             var value = 0
             if count < (rows ?? []).count {
                 let row = rows![count]
-                value = Int(row[2]) ?? 0
+                value = Int(row[1]) ?? 0
             }
             graph.append((label,value))
             count += 1
@@ -213,7 +213,7 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             var date = "0\(count + 1)"
             if count < (rows ?? []).count {
                 let row = rows![count]
-                value = Int(row[2]) ?? 0
+                value = Int(row[1]) ?? 0
                 date = row[0]
             }
             
@@ -239,7 +239,7 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             var month = "0\(count)"
             if count < (rows ?? []).count {
                 let row = rows![count]
-                value = Int(row[2]) ?? 0
+                value = Int(row[1]) ?? 0
                 month = row[0]
             }
             
@@ -264,8 +264,8 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
         
             if totals!.showingAdData(){
                 newTotals[AnalyticsManager.adClicks_key] = totals?.gaadClicks
-                newTotals[AnalyticsManager.adCost_key] = totals?.gaadCost
-                newTotals[AnalyticsManager.costPerClick_key] = totals?.gacostPerConversion
+                newTotals[AnalyticsManager.adCost_key] = totals?.gaadCost?.withDecimalPrecision(1)
+                newTotals[AnalyticsManager.costPerClick_key] = totals?.gacostPerConversion?.withDecimalPrecision(1)
             }else if totals!.showingSessionData(){
                 newTotals[AnalyticsManager.sessions_key] = totals?.gasessions
                 newTotals[AnalyticsManager.sessionsWithEvent_key] = totals?.gasessionsWithEvent

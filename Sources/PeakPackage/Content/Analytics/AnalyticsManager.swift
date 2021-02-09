@@ -57,8 +57,8 @@ public class AnalyticsManager : ObservableObject {
     public init(){}
     
     ///the only call you need to make to load analytics
-    func loadAnalytics() {
-        DatabaseDelegate.getAnalytics(completion: {
+    func loadAnalytics(for type: AnalyticsType_general) {
+        DatabaseDelegate.getAnalytics(for: type, completion: {
             rex in
             let analytics = rex as! [Analytics]
             for lit in analytics {
@@ -67,35 +67,13 @@ public class AnalyticsManager : ObservableObject {
             self.today.page.totals = self.todayData!.page!.getTotals()
         })
         
-        DatabaseDelegate.getAnalytics(completion: {
+        DatabaseDelegate.getAnalytics(for: type, completion: {
             rex in
             let analytics = rex as! [Analytics]
             self.separateAnalytics(analytics: analytics)
             self.loadGraphableData()
             self.loading = false
         })
-        
-        
-//        let json = JsonFormat.getAnalyticsId(id: defaults.franchiseId()!).format()
-//
-//        DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
-//            id in
-//
-//            //there were some issues with white space on the ID
-//            let parsedId = (id as! String).trimmingCharacters(in: .whitespacesAndNewlines)
-//
-//            //perform analytics request is slightly different than perform request
-//            DatabaseDelegate.performAnalyticsRequest(with: parsedId, completion: {
-//                rex in
-//
-//                let analytics = rex as! [Analytics]
-//                //separate into different analytics types
-//                self.separateAnalytics(analytics: analytics)
-//                //parse the data into a more readable form
-//                self.loadGraphableData()
-//                self.loading = false
-//            })
-//        })
     }
     
     ///separates the analytics objects into thisWeek, thisMonth and Last Month
@@ -106,22 +84,21 @@ public class AnalyticsManager : ObservableObject {
             switch lit.title{
             //pretty
             case "ThisWeek" :
-                thisWeekData = lit.data!
+                thisWeekData = lit.data
             //self
             case "ThisMonth" :
-                thisMonthData = lit.data!
+                thisMonthData = lit.data
             //explanitory
             case "ThisYear" :
-                thisYearData = lit.data!
+                thisYearData = lit.data
             
                 
             case "LastWeek":
-                lastWeekData = lit.data!
+                lastWeekData = lit.data
             case "LastMonth":
-                lastMonthData = lit.data!
+                lastMonthData = lit.data
             case "LastYear":
-                lastYearData = lit.data!
-                
+                lastYearData = lit.data
             default:
                 return
             }
@@ -244,8 +221,15 @@ public class AnalyticsManager : ObservableObject {
  describes the time period for the analytics data
  google analytics separates the data into: this week, this month, and last month
  */
+enum AnalyticsType_general{
+    //generals
+    case Day
+    case Week
+    case Month
+    case Year
+}
 enum AnalyticsType {
-    
+    //specifics
     case thisWeek
     case thisMonth
     case thisYear

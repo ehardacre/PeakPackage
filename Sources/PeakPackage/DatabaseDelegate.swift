@@ -11,48 +11,32 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
-    static func getDashboardAnalytics(completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients{
-            let id = defaults.franchiseId()!
-            let json = JsonFormat.getDashboardAnalytics_peak(id: id).format()
-            DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion:{
-                rex in
-                completion(rex)
-            })
-        }else if defaults.getApplicationType() == .NHanceConnect {
-            let analyticsURL = defaults.franchiseURL()!.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
-            let dashboardJson = JsonFormat.getDashboardAnalytics_nhance(url: analyticsURL).format()
-            DatabaseDelegate.performRequest(with: dashboardJson, ret: returnType.analytics, completion: {
-                rex in
-                completion(rex)
-            })
-        }else{
-            printr("Application Type not set, could not get dashboard analytics")
+    static func getAnalytics(for type: AnalyticsType_general, completion: @escaping (Any) -> Void){
+        
+        var json : [String: Any] = [:]
+        
+        var url = defaults.franchiseURL() ?? ""
+        if defaults.getApplicationType() == .NHanceConnect{
+            url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
         }
-    }
-    
-    static func getAnalytics(completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients{
-            let id = defaults.franchiseId()!
-            let json_id = JsonFormat.getAnalyticsId(id: id).format()
-            DatabaseDelegate.performRequest(with: json_id, ret: returnType.string, completion: { analytics_id in
-                
-                let json = JsonFormat.getAnalytics_peak(id: (analytics_id as! String).digits).format()
-                DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion:{
-                    rex in
-                    completion(rex)
-                })
-                
-            })
-        }else if defaults.getApplicationType() == .NHanceConnect {
-            let analyticsURL = defaults.franchiseURL()!.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
-            let json = JsonFormat.getAnalytics_nhance(url: analyticsURL).format()
-            DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion: { rex in
-                completion(rex)
-            })
-        }else{
-            printr("Application Type not set, could not get analytics")
+        
+        switch type{
+        case .Day:
+            json = JsonFormat.getDashboardAnalytics(url: url).format()
+        case .Week:
+            json = JsonFormat.getWeekAnalytics(url: url).format()
+        case .Month:
+            json = JsonFormat.getMonthAnalytics(url: url).format()
+        case .Year:
+            json = JsonFormat.getYearAnalytics(url: url).format()
+        default:
+            printr("called for analytics without specifying type")
         }
+        
+        DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion: {
+            rex in
+            completion(rex)
+        })
     }
     
     static func getAppointments(completion: @escaping (Any) -> Void){

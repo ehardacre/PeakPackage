@@ -20,11 +20,17 @@ extension ContentView {
             switch analyticsIndex{
             
             case 0:
-                AnalyticsView(type: AnalyticsType.thisYear, analyticsMan: analyticsManager)
+                AnalyticsView(type: AnalyticsType.thisYear, analyticsMan: analyticsManager).onAppear{
+                    analyticsManager.loadAnalytics(for: .Year)
+                }
             case 1:
-                AnalyticsView(type: AnalyticsType.thisMonth, analyticsMan: analyticsManager)
+                AnalyticsView(type: AnalyticsType.thisMonth, analyticsMan: analyticsManager).onAppear{
+                    analyticsManager.loadAnalytics(for: .Month)
+                }
             case 2:
-                AnalyticsView(type: AnalyticsType.thisWeek, analyticsMan: analyticsManager)
+                AnalyticsView(type: AnalyticsType.thisWeek, analyticsMan: analyticsManager).onAppear{
+                    analyticsManager.loadAnalytics(for: .Week)
+                }
             default:
                 EmptyView()
             }
@@ -98,7 +104,7 @@ struct AnalyticsView: View {
                 .background(Color.clear)
             }.pullToRefresh(isShowing: $refreshing){
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    analyticsMan.loadAnalytics()
+                    //analyticsMan.loadAnalytics()
                     self.refreshing = false
                 }
             }
