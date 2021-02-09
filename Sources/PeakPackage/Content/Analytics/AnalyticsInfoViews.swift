@@ -23,7 +23,7 @@ struct PageAnalyticsInfoView : View {
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     
-    @State var values : [ComparisonObject] = []
+    @ObservedObject var values = Comparisons()
     
     public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
         self.type = type
@@ -63,8 +63,7 @@ struct PageAnalyticsInfoView : View {
                 //the text information about analytics
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
-                    DataTotals(fields: $values).onAppear{
-                        values = []
+                    DataTotals(fields: values).onAppear{
                         for (key,value) in (dataSource?.now?.page?.totals ?? [:]) {
                             var previous = dataSource?.previous?.page?.totals?[key] ?? "0"
                             var comparison = ComparisonObject(key: key, value: value, previous: previous)
@@ -126,7 +125,7 @@ struct PageAnalyticsInfoView : View {
 
 struct PPCAnalyticsInfoView : View {
     
-    private var analyticsMan: AnalyticsManager
+    @ObservedObject private var analyticsMan: AnalyticsManager
     
     private var type: AnalyticsType
     
@@ -138,7 +137,7 @@ struct PPCAnalyticsInfoView : View {
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     
-    @State var values : [ComparisonObject] = []
+    @ObservedObject var values = Comparisons()
     
     public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
         self.type = type
@@ -178,8 +177,7 @@ struct PPCAnalyticsInfoView : View {
                 //the text information about analytics
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
-                    DataTotals(fields: $values).onAppear{
-                        values = []
+                    DataTotals(fields: values).onAppear{
                         for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
                             var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
                             var comparison = ComparisonObject(key: key, value: value, previous: previous)
@@ -238,6 +236,14 @@ struct PPCAnalyticsInfoView : View {
     
 }
 
+class Comparisons : ObservableObject {
+    @Published var list : [ComparisonObject] = []
+    
+    func append(_ new: ComparisonObject){
+        list.append(new)
+    }
+}
+
 struct ComparisonObject{
     
     let id = UUID()
@@ -279,11 +285,11 @@ struct ComparisonObject{
 struct DataTotals : View {
     
     //the important values for page analytics
-    @Binding var fields : [ComparisonObject]
+    @State var fields : Comparisons
     
     var body : some View {
         VStack(alignment: .leading){
-            ForEach(fields, id: \.id){ obj in
+            ForEach(fields.list, id: \.id){ obj in
                 Text(obj.key ?? "")
                     .analyticsTotals_Label_style()
                 Text(obj.value ?? "")
