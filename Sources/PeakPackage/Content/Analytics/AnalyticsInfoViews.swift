@@ -11,7 +11,7 @@ import SwiftUICharts
 
 struct PageAnalyticsInfoView : View {
     
-    private var analyticsMan: AnalyticsManager
+    @ObservedObject private var analyticsMan: AnalyticsManager
     
     private var type: AnalyticsType
     
@@ -119,7 +119,7 @@ struct PageAnalyticsInfoView : View {
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
         }
         
-        return Text(recapString)
+        return Text(recapString).font(.footnote)
     }
     
 }
@@ -233,7 +233,7 @@ struct PPCAnalyticsInfoView : View {
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
         }
         
-        return Text(recapString)
+        return Text(recapString).font(.footnote)
     }
     
 }

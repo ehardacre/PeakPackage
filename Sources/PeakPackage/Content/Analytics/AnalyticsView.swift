@@ -60,7 +60,7 @@ struct AnalyticsView: View {
     var type : AnalyticsType
     
     //the analytics manager
-    @State var analyticsMan : AnalyticsManager
+    @ObservedObject var analyticsMan : AnalyticsManager
     
     @State var refreshing = false
     

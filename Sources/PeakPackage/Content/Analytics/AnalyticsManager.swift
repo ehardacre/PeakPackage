@@ -61,15 +61,6 @@ public class AnalyticsManager : ObservableObject {
         DatabaseDelegate.getAnalytics(for: type, completion: {
             rex in
             let analytics = rex as! [Analytics]
-            for lit in analytics {
-                self.todayData = lit.data!
-            }
-            self.today.page?.totals = self.todayData?.page?.getTotals() ?? [:]
-        })
-        
-        DatabaseDelegate.getAnalytics(for: type, completion: {
-            rex in
-            let analytics = rex as! [Analytics]
             self.separateAnalytics(analytics: analytics)
             self.loadGraphableData()
             self.loading = false
@@ -82,6 +73,11 @@ public class AnalyticsManager : ObservableObject {
         for lit in analytics {
             
             switch lit.title{
+            
+            case "Today" :
+                todayData = lit.data
+                today.page?.totals = todayData?.page?.getTotals() ?? [:]
+
             //pretty
             case "ThisWeek" :
                 thisWeekData = lit.data
