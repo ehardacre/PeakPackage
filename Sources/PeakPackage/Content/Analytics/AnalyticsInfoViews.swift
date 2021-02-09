@@ -287,7 +287,7 @@ struct ComparisonObject{
 struct DataTotals : View {
     
     //the important values for page analytics
-    @State var fields : Comparisons
+    @ObservedObject var fields : Comparisons
     
     var body : some View {
         VStack(alignment: .leading){
