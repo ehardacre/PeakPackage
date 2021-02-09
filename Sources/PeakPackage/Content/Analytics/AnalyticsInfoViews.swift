@@ -50,7 +50,7 @@ struct PageAnalyticsInfoView : View {
             HStack{
             
                 BarChartView(data: ChartData(
-                            values: dataSource?.now?.page.graphableData ?? []),
+                            values: dataSource?.now?.page?.graphableData ?? []),
                          title: "All",
                          legend: "Visitors",
                          style: chartStyle,
@@ -65,8 +65,8 @@ struct PageAnalyticsInfoView : View {
                     //the totals text for the page analytics
                     DataTotals(fields: $values).onAppear{
                         values = []
-                        for (key,value) in dataSource!.now!.page.totals {
-                            var previous = dataSource!.previous!.page.totals[key]
+                        for (key,value) in (dataSource?.now?.page?.totals ?? [:]) {
+                            var previous = dataSource?.previous?.page?.totals?[key] ?? "0"
                             var comparison = ComparisonObject(key: key, value: value, previous: previous)
                             values.append(comparison)
                         }
@@ -107,13 +107,13 @@ struct PageAnalyticsInfoView : View {
         var recapString = "This \(timePeriod) your site has had "
         var first = true
         
-        for (key,value) in dataSource!.now!.page.totals {
+        for (key,value) in (dataSource?.now?.page?.totals ?? [:]) {
             if !first {
                 recapString += "and "
             }else{
                 first = false
             }
-            var previous = dataSource!.previous!.page.totals[key]
+            var previous = dataSource?.previous?.page?.totals?[key] ?? "0"
             var comparison = ComparisonObject(key: key, value: value, previous: previous)
             //values.append(comparison)
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
@@ -165,7 +165,7 @@ struct PPCAnalyticsInfoView : View {
             HStack{
             
                 BarChartView(data: ChartData(
-                            values: dataSource?.now?.ppc.graphableData ?? []),
+                            values: dataSource?.now?.ppc?.graphableData ?? []),
                          title: "PPC",
                          legend: "Visitors",
                          style: chartStyle,
@@ -180,8 +180,8 @@ struct PPCAnalyticsInfoView : View {
                     //the totals text for the page analytics
                     DataTotals(fields: $values).onAppear{
                         values = []
-                        for (key,value) in dataSource!.now!.ppc.totals {
-                            var previous = dataSource!.previous!.ppc.totals[key]
+                        for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
+                            var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
                             var comparison = ComparisonObject(key: key, value: value, previous: previous)
                             values.append(comparison)
                         }
@@ -221,13 +221,13 @@ struct PPCAnalyticsInfoView : View {
         var recapString = "This \(timePeriod) your site has had "
         var first = true
         
-        for (key,value) in dataSource!.now!.ppc.totals {
+        for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
             if !first {
                 recapString += "and "
             }else{
                 first = false
             }
-            var previous = dataSource!.previous!.ppc.totals[key]
+            var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
             var comparison = ComparisonObject(key: key, value: value, previous: previous)
             //values.append(comparison)
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "

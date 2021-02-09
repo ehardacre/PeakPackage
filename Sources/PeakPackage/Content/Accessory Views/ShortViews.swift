@@ -103,7 +103,7 @@ struct DashboardAnalytics: View {
                 
                 VStack{
                     //visitors
-                    Text(dataSource!.page.totals[AnalyticsManager.visitors_key] ?? "0")
+                    Text(dataSource?.page?.totals?[AnalyticsManager.visitors_key] ?? "0")
                         .analyticsTotals_style()
                     Text("Visitors")
                         .analyticsTotals_Label_style()
@@ -113,7 +113,7 @@ struct DashboardAnalytics: View {
                 
                 VStack{
                     //total events
-                    Text(dataSource!.page.totals[AnalyticsManager.totalEvents_key] ?? "0")
+                    Text(dataSource?.page?.totals?[AnalyticsManager.totalEvents_key] ?? "0")
                         .analyticsTotals_style()
                     Text("Leads")
                         .analyticsTotals_Label_style()

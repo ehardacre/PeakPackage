@@ -64,7 +64,7 @@ public class AnalyticsManager : ObservableObject {
             for lit in analytics {
                 self.todayData = lit.data!
             }
-            self.today.page.totals = self.todayData!.page!.getTotals()
+            self.today.page?.totals = self.todayData?.page?.getTotals() ?? [:]
         })
         
         DatabaseDelegate.getAnalytics(for: type, completion: {
@@ -178,35 +178,35 @@ public class AnalyticsManager : ObservableObject {
     private func loadGraphableData(for type: AnalyticsType){
         switch type{
         case .thisWeek:
-            thisWeek.page.graphableData = thisWeekData!.page!.getGraphableData(for: type)
-            thisWeek.page.totals = thisWeekData!.page!.getTotals()
-            thisWeek.ppc.graphableData = thisWeekData!.ppc!.getGraphableData(for: type)
-            thisWeek.ppc.totals = thisWeekData!.ppc!.getTotals()
+            thisWeek.page?.graphableData = thisWeekData?.page?.getGraphableData(for: type) ?? []
+            thisWeek.page?.totals = thisWeekData?.page?.getTotals() ?? [:]
+            thisWeek.ppc?.graphableData = thisWeekData?.ppc?.getGraphableData(for: type) ?? []
+            thisWeek.ppc?.totals = thisWeekData?.ppc?.getTotals() ?? [:]
         case .thisMonth:
-            thisMonth.page.graphableData = thisMonthData!.page!.getGraphableData(for: type)
-            thisMonth.page.totals = thisMonthData!.page!.getTotals()
-            thisMonth.ppc.graphableData = thisMonthData!.ppc!.getGraphableData(for: type)
-            thisMonth.ppc.totals = thisMonthData!.ppc!.getTotals()
+            thisMonth.page?.graphableData = thisMonthData?.page?.getGraphableData(for: type) ?? []
+            thisMonth.page?.totals = thisMonthData?.page?.getTotals() ?? [:]
+            thisMonth.ppc?.graphableData = thisMonthData?.ppc?.getGraphableData(for: type) ?? []
+            thisMonth.ppc?.totals = thisMonthData?.ppc?.getTotals() ?? [:]
         case.thisYear:
-            thisYear.page.graphableData = thisYearData!.page!.getGraphableData(for: type)
-            thisYear.page.totals = thisYearData!.page!.getTotals()
-            thisYear.ppc.graphableData = thisYearData!.ppc!.getGraphableData(for: type)
-            thisYear.ppc.totals = thisYearData!.ppc!.getTotals()
+            thisYear.page?.graphableData = thisYearData?.page?.getGraphableData(for: type) ?? []
+            thisYear.page?.totals = thisYearData?.page?.getTotals() ?? [:]
+            thisYear.ppc?.graphableData = thisYearData?.ppc?.getGraphableData(for: type) ?? []
+            thisYear.ppc?.totals = thisYearData?.ppc?.getTotals() ?? [:]
         case.lastWeek:
-            lastWeek.page.graphableData = lastWeekData!.page!.getGraphableData(for: type)
-            lastWeek.page.totals = lastWeekData!.page!.getTotals()
-            lastWeek.ppc.graphableData = lastWeekData!.ppc!.getGraphableData(for: type)
-            lastWeek.ppc.totals = lastWeekData!.ppc!.getTotals()
+            lastWeek.page?.graphableData = lastWeekData?.page?.getGraphableData(for: type) ?? []
+            lastWeek.page?.totals = lastWeekData?.page?.getTotals() ?? [:]
+            lastWeek.ppc?.graphableData = lastWeekData?.ppc?.getGraphableData(for: type) ?? []
+            lastWeek.ppc?.totals = lastWeekData?.ppc?.getTotals() ?? [:]
         case .lastMonth:
-            lastMonth.page.graphableData = lastMonthData!.page!.getGraphableData(for: type)
-            lastMonth.page.totals = lastMonthData!.page!.getTotals()
-            lastMonth.ppc.graphableData = lastMonthData!.ppc!.getGraphableData(for: type)
-            lastMonth.ppc.totals = lastMonthData!.ppc!.getTotals()
+            lastMonth.page?.graphableData = lastMonthData?.page?.getGraphableData(for: type) ?? []
+            lastMonth.page?.totals = lastMonthData?.page?.getTotals() ?? [:]
+            lastMonth.ppc?.graphableData = lastMonthData?.ppc?.getGraphableData(for: type) ?? []
+            lastMonth.ppc?.totals = lastMonthData?.ppc?.getTotals() ?? [:]
         case .lastYear:
-            lastYear.page.graphableData = lastYearData!.page!.getGraphableData(for: type)
-            lastYear.page.totals = lastYearData!.page!.getTotals()
-            lastYear.ppc.graphableData = lastYearData!.ppc!.getGraphableData(for: type)
-            lastYear.ppc.totals = lastYearData!.ppc!.getTotals()
+            lastYear.page?.graphableData = lastYearData?.page?.getGraphableData(for: type) ?? []
+            lastYear.page?.totals = lastYearData?.page?.getTotals() ?? [:]
+            lastYear.ppc?.graphableData = lastYearData?.ppc?.getGraphableData(for: type) ?? []
+            lastYear.ppc?.totals = lastYearData?.ppc?.getTotals() ?? [:]
     
         default:
             return
@@ -301,8 +301,8 @@ enum AnalyticsType {
  */
 
 struct SwiftAnalyticsObject {
-    var page : Page
-    var ppc : PPC
+    var page : Page?
+    var ppc : PPC?
     
     init() {
         page = Page(graphableData: [], totals: [:])
@@ -311,12 +311,12 @@ struct SwiftAnalyticsObject {
 }
 
 struct Page {
-    var graphableData : [(String, Int)]
-    var totals : [String : String]
+    var graphableData : [(String, Int)]?
+    var totals : [String : String]?
 }
 
 struct PPC {
-    var graphableData : [(String, Int)]
-    var totals : [String : String]
+    var graphableData : [(String, Int)]?
+    var totals : [String : String]?
 }
 
