@@ -182,7 +182,7 @@ struct PPCAnalyticsInfoView : View {
                 )
         
                         //the totals text for the page analytics
-                        LazyVStack(alignment: .leading){
+                        VStack(alignment: .leading){
                             ForEach(values, id: \.id){ obj in
                                     Text(obj.key ?? "empty")
                                         .analyticsTotals_Label_style()
@@ -192,6 +192,12 @@ struct PPCAnalyticsInfoView : View {
                                         .analyticsTotals_Past_style()
                             }
                             Spacer()
+                        }.onAppear{
+                            for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
+                                var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
+                                var comparison = ComparisonObject(key: key, value: value, previous: previous)
+                                values.append(comparison)
+                            }
                         }
                 Spacer()
 
