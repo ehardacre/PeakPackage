@@ -136,7 +136,7 @@ struct PPCAnalyticsInfoView : View {
     
     @ObservedObject private var analyticsMan: AnalyticsManager
     
-    @State var values = [ComparisonObject]()
+    @State var values = [ComparisonObject](repeating: ComparisonObject(key: nil, value: nil, previous: nil), count: 3)
     
     private var type: AnalyticsType
     
@@ -194,10 +194,12 @@ struct PPCAnalyticsInfoView : View {
                             Spacer()
                         }.onAppear{
                             values = []
+                            var count = 0
                             for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
                                 var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
                                 var comparison = ComparisonObject(key: key, value: value, previous: previous)
-                                values.append(comparison)
+                                values[count] = comparison
+                                count += 1
                             }
                         }
                 Spacer()
