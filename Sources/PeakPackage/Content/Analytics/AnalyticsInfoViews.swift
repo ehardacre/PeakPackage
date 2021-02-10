@@ -193,7 +193,7 @@ struct PPCAnalyticsInfoView : View {
                             }
                             Spacer()
                         }.onAppear{
-                            values = []
+                            values = [ComparisonObject](repeating: ComparisonObject(key: nil, value: nil, previous: nil), count: 3)
                             var count = 0
                             for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
                                 var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
