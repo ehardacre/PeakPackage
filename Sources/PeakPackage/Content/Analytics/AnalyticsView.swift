@@ -25,11 +25,12 @@ extension ContentView {
                 }
             case 1:
                 AnalyticsView(type: AnalyticsType.thisMonth, analyticsMan: analyticsManager).onAppear{
-                    analyticsManager.loadAnalytics(for: .Year)
+                    //analyticsManager.loadAnalytics(for: .Year)
                 }
             case 2:
                 AnalyticsView(type: AnalyticsType.thisWeek, analyticsMan: analyticsManager).onAppear{
                     analyticsManager.loadAnalytics(for: .Month)
+                    analyticsManager.loadAnalytics(for: .Year)
                 }
             default:
                 EmptyView()

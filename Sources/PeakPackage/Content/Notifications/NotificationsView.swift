@@ -64,7 +64,9 @@ struct NotificationsView: View {
                 
                 Spacer()
                 
-                PageControl(index: $leadsIndex, maxIndex: NotificationManager.pages.count - 1, pageNames: NotificationManager.pages, dividers: true)
+                if defaults.getApplicationType() == .NHanceConnect{
+                    PageControl(index: $leadsIndex, maxIndex: NotificationManager.pages.count - 1, pageNames: NotificationManager.pages, dividers: true)
+                }
                 
             }
         }

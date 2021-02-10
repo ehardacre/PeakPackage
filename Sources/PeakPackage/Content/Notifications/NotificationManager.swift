@@ -72,7 +72,7 @@ public class NotificationManager : ObservableObject {
     func formatDate(_ str_date: String) -> String{
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.dateFormat = defaults.getApplicationType() == .NHanceConnect ? "yyyy-MM-dd'T'HH:mm:ss" : "yyyy-MM-dd HH:mm:ss"
         var date = dateFormatter.date(from:str_date)!
         
         date = date.toLocalTime()
@@ -85,7 +85,7 @@ public class NotificationManager : ObservableObject {
     
     func formatTime(_ str_date: String) -> String{
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.dateFormat = defaults.getApplicationType() == .NHanceConnect ? "yyyy-MM-dd'T'HH:mm:ss" : "yyyy-MM-dd HH:mm:ss"
         var date = dateFormatter.date(from:str_date)!
         
         date = date.toLocalTime()
@@ -100,7 +100,7 @@ public class NotificationManager : ObservableObject {
         let topic = defaults.getTopics()
         printr(topic)
         
-        if try! defaults.getApplicationType() == .NHanceConnect{
+        if defaults.getApplicationType() == .NHanceConnect{
             DatabaseDelegate.getOpenLeads(completion: { rex in
                     let leads = rex as! [Lead]
                     self.open_leads = leads
@@ -120,7 +120,7 @@ public class NotificationManager : ObservableObject {
                     self.loading[2] = true
                     self.loaded = self.checkForLoading()
             })
-        }else if try! defaults.getApplicationType() == .PeakClients{
+        }else if defaults.getApplicationType() == .PeakClients{
             DatabaseDelegate.getPeakLeads(completion:{
                 rex in
                 self.leads = rex as! [Lead]
