@@ -194,13 +194,6 @@ struct PPCAnalyticsInfoView : View {
                                         .analyticsTotals_Past_style()
                             }
                             Spacer()
-                        }.onAppear{
-                            if values.count == 0 {
-                                for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
-                                    var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
-                                    values.append(ComparisonObject(key: key, value: value, previous: previous))
-                                }
-                            }
                         }
                     
                 }else{
@@ -236,6 +229,7 @@ struct PPCAnalyticsInfoView : View {
         var recapString = "This \(timePeriod) your site has had "
         var first = true
         
+        
         for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
             if !first {
                 recapString += "and "
@@ -244,7 +238,7 @@ struct PPCAnalyticsInfoView : View {
             }
             var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
             var comparison = ComparisonObject(key: key, value: value, previous: previous)
-            //values.append(comparison)
+            values.append(comparison)
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
         }
         
