@@ -193,6 +193,7 @@ struct PPCAnalyticsInfoView : View {
                             }
                             Spacer()
                         }.onAppear{
+                            values = []
                             for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
                                 var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
                                 var comparison = ComparisonObject(key: key, value: value, previous: previous)
@@ -249,10 +250,10 @@ struct PPCAnalyticsInfoView : View {
 struct ComparisonObject{
     
     let id = UUID()
-    @State var key : String?
-    @State var value : String?
-    @State var previous : String?
-    @State var delta : String?
+    var key : String?
+    var value : String?
+    var previous : String?
+    var delta : String?
     
     init(key: String?, value: String?, previous: String?){
         self.key = key
