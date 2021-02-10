@@ -239,6 +239,8 @@ struct PPCAnalyticsInfoView : View {
                 first = false
             }
             var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
+            var comparison = ComparisonObject(key: key, value: value, previous: previous)
+            //values.append(comparison)
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
         }
         
