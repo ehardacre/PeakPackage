@@ -183,7 +183,6 @@ struct PPCAnalyticsInfoView : View {
             
                 if !analyticsMan.loading {
                     //the text information about analytics
-                    VStack(alignment: .leading){
                         //the totals text for the page analytics
                         VStack(alignment: .leading){
                             ForEach(values, id: \.id){ obj in
@@ -194,6 +193,7 @@ struct PPCAnalyticsInfoView : View {
                                     Text(obj.delta ?? "")
                                         .analyticsTotals_Past_style()
                             }
+                            Spacer()
                         }.onAppear{
                             if values.count == 0 {
                                 for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
@@ -202,9 +202,7 @@ struct PPCAnalyticsInfoView : View {
                                 }
                             }
                         }
-                        Spacer()
                     
-                    }
                 }else{
                     ProgressView().progressViewStyle(CircularProgressViewStyle()).frame(width: 30, height: 30)
                 }
