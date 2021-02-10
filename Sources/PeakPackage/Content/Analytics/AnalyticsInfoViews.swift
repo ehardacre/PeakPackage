@@ -182,14 +182,13 @@ struct PPCAnalyticsInfoView : View {
                 )
         
                         //the totals text for the page analytics
-                        VStack(alignment: .leading){
-                            Text(values.count)
+                        LazyVStack(alignment: .leading){
                             ForEach(values, id: \.id){ obj in
-                                    Text(obj.key ?? "")
+                                    Text(obj.key ?? "empty")
                                         .analyticsTotals_Label_style()
-                                    Text(obj.value ?? "")
+                                    Text(obj.value ?? "empty")
                                         .analyticsTotals_style()
-                                    Text(obj.delta ?? "")
+                                    Text(obj.delta ?? "empty")
                                         .analyticsTotals_Past_style()
                             }
                             Spacer()
