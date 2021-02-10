@@ -182,7 +182,8 @@ struct PPCAnalyticsInfoView : View {
                 )
         
                         //the totals text for the page analytics
-                        List{
+                        VStack(alignment: .leading){
+                            Text("AHHH")
                             ForEach(values, id: \.id){ obj in
                                     Text(obj.key ?? "")
                                         .analyticsTotals_Label_style()
