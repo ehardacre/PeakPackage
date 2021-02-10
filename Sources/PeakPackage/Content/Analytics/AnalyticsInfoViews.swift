@@ -65,14 +65,12 @@ struct PageAnalyticsInfoView : View {
                     //the totals text for the page analytics
                     VStack(alignment: .leading){
                         ForEach(values, id: \.id){ obj in
-                            if !obj.empty {
                                 Text(obj.key ?? "")
                                     .analyticsTotals_Label_style()
                                 Text(obj.value ?? "")
                                     .analyticsTotals_style()
                                 Text(obj.delta ?? "")
                                     .analyticsTotals_Past_style()
-                            }
                         }
                     }.onAppear{
                         if values.count == 0 {
@@ -266,7 +264,6 @@ struct ComparisonObject{
     @State var delta : String?
     
     init(key: String?, value: String?, previous: String?){
-        self.empty = empty!
         self.key = key
         self.value = value
         self.previous = previous
@@ -304,14 +301,13 @@ struct DataTotals : View {
     var body : some View {
         VStack(alignment: .leading){
             ForEach(fields, id: \.id){ obj in
-                if !obj.empty {
                     Text(obj.key ?? "")
                         .analyticsTotals_Label_style()
                     Text(obj.value ?? "")
                         .analyticsTotals_style()
                     Text(obj.delta ?? "")
                         .analyticsTotals_Past_style()
-                }
+                
             }
         }
     }
