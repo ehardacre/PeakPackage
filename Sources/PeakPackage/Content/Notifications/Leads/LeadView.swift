@@ -268,26 +268,22 @@ extension LeadCardView {
         
         return tempLead
     }
-    
     func formatDate(_ str_date: String) -> String{
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.dateFormat = defaults.getApplicationType() == .NHanceConnect ? "yyyy-MM-dd'T'HH:mm:ss" : "yyyy-MM-dd HH:mm:ss"
         var date = dateFormatter.date(from:str_date)!
         
-        //date = date.toLocalTime()
-        
         var dateString = date.dayOfWeekWithMonthAndDay
+        
     
         return dateString
     }
     
     func formatTime(_ str_date: String) -> String{
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.dateFormat = defaults.getApplicationType() == .NHanceConnect ? "yyyy-MM-dd'T'HH:mm:ss" : "yyyy-MM-dd HH:mm:ss"
         var date = dateFormatter.date(from:str_date)!
-        
-        //date = date.toLocalTime()
         
         var dateString = date.timeOnlyWithPadding
         
