@@ -25,9 +25,10 @@ struct PageAnalyticsInfoView : View {
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     
-    public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
+    public init(type: AnalyticsType, analyticsMan: AnalyticsManager, values: Comparisons) {
         self.type = type
         self.analyticsMan = analyticsMan
+        self.values = values
         
         //choosing the proper datasource from the manager based on type
         switch type{
@@ -139,9 +140,10 @@ struct PPCAnalyticsInfoView : View {
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     
-    public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
+    public init(type: AnalyticsType, analyticsMan: AnalyticsManager, values: Comparisons) {
         self.type = type
         self.analyticsMan = analyticsMan
+        self.values = values
         
         //choosing the proper datasource from the manager based on type
         switch type{

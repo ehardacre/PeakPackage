@@ -97,7 +97,7 @@ struct AnalyticsView: View {
                     //.listRowBackground(Color.clear)
                     
                     PageAnalyticsInfoView(type: type, analyticsMan: analyticsMan, values: page_text_values)
-                    PPCAnalyticsInfoView(type: type, analyticsMan: analyticsMan values: ppc_text_values)
+                    PPCAnalyticsInfoView(type: type, analyticsMan: analyticsMan, values: ppc_text_values)
                     
                     Spacer(minLength: 50)
                     
