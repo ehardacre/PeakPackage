@@ -180,7 +180,8 @@ struct PPCAnalyticsInfoView : View {
                          dropShadow: false,
                          cornerImage: Image(systemName: "cursor.rays")
                 )
-        
+                        
+                if !analyticsMan.loading {
                         //the totals text for the page analytics
                         VStack(alignment: .leading){
                             ForEach(values, id: \.id){ obj in
@@ -202,6 +203,9 @@ struct PPCAnalyticsInfoView : View {
                                 count += 1
                             }
                         }
+                }else{
+                    ProgressView().progressViewStyle(CircularProgressViewStyle()).frame(width: 30, height: 30)
+                }
                 Spacer()
 
             }
