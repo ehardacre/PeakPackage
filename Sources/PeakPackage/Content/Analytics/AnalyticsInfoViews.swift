@@ -15,7 +15,7 @@ struct AnalyticsInfoView : View {
     
     @State var values = [ComparisonObject]()
     
-    @State var ppc : Bool
+    @State var ppc : Bool = false
     
     private var type: AnalyticsType
     
