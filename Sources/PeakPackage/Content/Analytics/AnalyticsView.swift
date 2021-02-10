@@ -62,6 +62,9 @@ struct AnalyticsView: View {
     //the analytics manager
     @ObservedObject var analyticsMan : AnalyticsManager
     
+    @ObservedObject var ppc_text_values : Comparisons = Comparisons()
+    @ObservedObject var page_text_values : Comparisons = Comparisons()
+    
     @State var refreshing = false
     
     var body: some View {
@@ -93,8 +96,8 @@ struct AnalyticsView: View {
                     //AnalyticsInfoView(type: type, analyticsMan: analyticsMan, page: false){}
                     //.listRowBackground(Color.clear)
                     
-                    PageAnalyticsInfoView(type: type, analyticsMan: analyticsMan)
-                    PPCAnalyticsInfoView(type: type, analyticsMan: analyticsMan)
+                    PageAnalyticsInfoView(type: type, analyticsMan: analyticsMan, values: page_text_values)
+                    PPCAnalyticsInfoView(type: type, analyticsMan: analyticsMan values: ppc_text_values)
                     
                     Spacer(minLength: 50)
                     

@@ -60,11 +60,11 @@ public class AnalyticsManager : ObservableObject {
     func loadAnalytics(for type: AnalyticsType_general) {
         switch type{
         case .Day:
-            if todayData != nil{ return }
+            if todayData != nil { return }
         case .Week:
-            if thisWeekData != nil{ return }
+            if thisWeekData != nil { return }
         case .Month:
-            if thisMonthData != nil{ return }
+            if thisMonthData != nil { return }
         case .Year:
             if thisYearData != nil { return }
         }

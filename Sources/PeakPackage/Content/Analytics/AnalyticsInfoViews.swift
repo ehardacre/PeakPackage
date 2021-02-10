@@ -13,6 +13,8 @@ struct PageAnalyticsInfoView : View {
     
     @ObservedObject private var analyticsMan: AnalyticsManager
     
+    @ObservedObject var values : Comparisons
+    
     private var type: AnalyticsType
     
     //the data source for the analytics
@@ -22,8 +24,6 @@ struct PageAnalyticsInfoView : View {
     //maybe a gradient would be nice some day
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
-    
-    @ObservedObject var values = Comparisons()
     
     public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
         self.type = type
@@ -127,6 +127,8 @@ struct PPCAnalyticsInfoView : View {
     
     @ObservedObject private var analyticsMan: AnalyticsManager
     
+    @ObservedObject var values : Comparisons
+    
     private var type: AnalyticsType
     
     //the data source for the analytics
@@ -136,8 +138,6 @@ struct PPCAnalyticsInfoView : View {
     //maybe a gradient would be nice some day
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
-    
-    @ObservedObject var values = Comparisons()
     
     public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
         self.type = type
