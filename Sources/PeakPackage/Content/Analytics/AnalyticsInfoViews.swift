@@ -9,11 +9,13 @@ import Foundation
 import SwiftUI
 import SwiftUICharts
 
-struct PageAnalyticsInfoView : View {
+struct AnalyticsInfoView : View {
     
     @ObservedObject private var analyticsMan: AnalyticsManager
     
     @State var values = [ComparisonObject]()
+    
+    @State var ppc : Bool
     
     private var type: AnalyticsType
     
@@ -25,9 +27,10 @@ struct PageAnalyticsInfoView : View {
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     
-    public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
+    public init(type: AnalyticsType, analyticsMan: AnalyticsManager, ppc: Bool) {
         self.type = type
         self.analyticsMan = analyticsMan
+        self.ppc = ppc
         
         //choosing the proper datasource from the manager based on type
         switch type{
@@ -48,17 +51,25 @@ struct PageAnalyticsInfoView : View {
     var body : some View {
         VStack{
             HStack{
-            
-                BarChartView(data: ChartData(
-                            values: dataSource?.now?.page?.graphableData ?? []),
-                         title: "All",
-                         legend: "Visitors",
-                         style: chartStyle,
-                         dropShadow: false,
-                         cornerImage: Image(systemName: "person.3.fill")
-                ).overlay(
-                    ProgressView().progressViewStyle(CircularProgressViewStyle()).frame(width: 30, height: 30).if(!analyticsMan.loading, content: {view in view.hidden()})
-                )
+                if ppc {
+                    BarChartView(data: ChartData(
+                                values: dataSource?.now?.ppc?.graphableData ?? []),
+                             title: "PPC",
+                             legend: "Visitors",
+                             style: chartStyle,
+                             dropShadow: false,
+                             cornerImage: Image(systemName: "cursor.rays")
+                    )
+                }else{
+                    BarChartView(data: ChartData(
+                                values: dataSource?.now?.page?.graphableData ?? []),
+                             title: "All",
+                             legend: "Visitors",
+                             style: chartStyle,
+                             dropShadow: false,
+                             cornerImage: Image(systemName: "person.3.fill")
+                    )
+                }
             
                 //the text information about analytics
                 VStack(alignment: .leading){
@@ -74,10 +85,18 @@ struct PageAnalyticsInfoView : View {
                         }
                     }.onAppear{
                         if values.count == 0 {
-                            for (key,value) in (dataSource?.now?.page?.totals ?? [:]) {
-                                var previous = dataSource?.previous?.page?.totals?[key] ?? "0"
-                                var comparison = ComparisonObject(key: key, value: value, previous: previous)
-                                values.append(comparison)
+                            if ppc {
+                                for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
+                                    var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
+                                    var comparison = ComparisonObject(key: key, value: value, previous: previous)
+                                    values.append(comparison)
+                                }
+                            }else{
+                                for (key,value) in (dataSource?.now?.page?.totals ?? [:]) {
+                                    var previous = dataSource?.previous?.page?.totals?[key] ?? "0"
+                                    var comparison = ComparisonObject(key: key, value: value, previous: previous)
+                                    values.append(comparison)
+                                }
                             }
                         }
                     }
@@ -115,136 +134,15 @@ struct PageAnalyticsInfoView : View {
         var recapString = "This \(timePeriod) your site has had "
         var first = true
         
-        for (key,value) in (dataSource?.now?.page?.totals ?? [:]) {
+        var data = ppc ? dataSource?.now?.ppc?.totals : dataSource?.now?.page?.totals
+        
+        for (key,value) in (data ?? [:]) {
             if !first {
                 recapString += "and "
             }else{
                 first = false
             }
-            var previous = dataSource?.previous?.page?.totals?[key] ?? "0"
-            var comparison = ComparisonObject(key: key, value: value, previous: previous)
-            //values.append(comparison)
-            recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
-        }
-        
-        return Text(recapString).font(.footnote)
-    }
-    
-}
-
-struct PPCAnalyticsInfoView : View {
-    
-    @ObservedObject private var analyticsMan: AnalyticsManager
-    
-    @State var values = [ComparisonObject](repeating: ComparisonObject(key: nil, value: nil, previous: nil), count: 3)
-    
-    private var type: AnalyticsType
-    
-    //the data source for the analytics
-    private var dataSource : (previous: SwiftAnalyticsObject?, now: SwiftAnalyticsObject?)?
-    @State var mockBarChartDataSet: BarChart.DataSet = BarChart.DataSet(elements: [], selectionColor: Color.red)
-    
-    //maybe a gradient would be nice some day
-    private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
-    private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
-    
-    public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
-        self.type = type
-        self.analyticsMan = analyticsMan
-        
-        //choosing the proper datasource from the manager based on type
-        switch type{
-        case .thisWeek:
-            self.dataSource = (previous: analyticsMan.lastWeek, now: analyticsMan.thisWeek)
-        case .thisMonth:
-            self.dataSource = (previous: analyticsMan.lastMonth, now: analyticsMan.thisMonth)
-        case .thisYear:
-            self.dataSource = (previous: analyticsMan.lastYear, now: analyticsMan.thisYear)
-        default:
-            self.dataSource = nil
-        }
-        
-        //making the chart appropriate for dark mode as well
-        chartStyle.darkModeStyle = darkModeChartStyle
-    }
-    
-    var body : some View {
-        VStack{
-            HStack{
-            
-                BarChartView(data: ChartData(
-                            values: dataSource?.now?.ppc?.graphableData ?? []),
-                         title: "PPC",
-                         legend: "Visitors",
-                         style: chartStyle,
-                         dropShadow: false,
-                         cornerImage: Image(systemName: "cursor.rays")
-                )
-                        
-                if !analyticsMan.loading {
-                        //the totals text for the page analytics
-                        VStack(alignment: .leading){
-                            ForEach(values, id: \.id){ obj in
-                                    Text(obj.key ?? "empty")
-                                        .analyticsTotals_Label_style()
-                                    Text(obj.value ?? "empty")
-                                        .analyticsTotals_style()
-                                    Text(obj.delta ?? "empty")
-                                        .analyticsTotals_Past_style()
-                            }
-                            Spacer()
-                        }.onAppear{
-                            values = [ComparisonObject](repeating: ComparisonObject(key: nil, value: nil, previous: nil), count: 3)
-                            var count = 0
-                            printr(dataSource)
-                            for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
-                                var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
-                                var comparison = ComparisonObject(key: key, value: value, previous: previous)
-                                values[count] = comparison
-                                count += 1
-                            }
-                            printr(values)
-                        }
-                }else{
-                    ProgressView().progressViewStyle(CircularProgressViewStyle()).frame(width: 30, height: 30)
-                }
-                Spacer()
-
-            }
-            
-            makeTextRecap()
-        
-        }.padding(20).background(Color.lightAccent).cornerRadius(20.0)
-        
-    }
-    
-    
-    func makeTextRecap() -> some View {
-        
-        var timePeriod = ""
-        switch type{
-        
-        case .thisWeek:
-            timePeriod = "week"
-        case .thisMonth:
-            timePeriod = "month"
-        case .thisYear:
-            timePeriod = "year"
-        default:
-            timePeriod = "period"
-        }
-        
-        var recapString = "This \(timePeriod) your site has had "
-        var first = true
-        
-        
-        for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
-            if !first {
-                recapString += "and "
-            }else{
-                first = false
-            }
-            var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
+            var previous = ( ppc ? dataSource?.previous?.ppc?.totals?[key] : dataSource?.previous?.page?.totals?[key] ) ?? "0"
             var comparison = ComparisonObject(key: key, value: value, previous: previous)
             //values.append(comparison)
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
