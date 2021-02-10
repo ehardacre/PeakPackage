@@ -13,7 +13,7 @@ struct PageAnalyticsInfoView : View {
     
     @ObservedObject private var analyticsMan: AnalyticsManager
     
-    @ObservedObject var values = Comparisons()
+    @State var values = [ComparisonObject]()
     
     private var type: AnalyticsType
     
@@ -63,8 +63,8 @@ struct PageAnalyticsInfoView : View {
                 //the text information about analytics
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
-                    DataTotals(fields: values).onAppear{
-                        if values.list.count == 0 {
+                    DataTotals(fields: $values).onAppear{
+                        if values.count == 0 {
                             for (key,value) in (dataSource?.now?.page?.totals ?? [:]) {
                                 var previous = dataSource?.previous?.page?.totals?[key] ?? "0"
                                 var comparison = ComparisonObject(key: key, value: value, previous: previous)
@@ -127,7 +127,7 @@ struct PPCAnalyticsInfoView : View {
     
     @ObservedObject private var analyticsMan: AnalyticsManager
     
-    @ObservedObject var values = Comparisons()
+    @State var values = [ComparisonObject]()
     
     private var type: AnalyticsType
     
@@ -177,8 +177,8 @@ struct PPCAnalyticsInfoView : View {
                 //the text information about analytics
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
-                    DataTotals(fields: values).onAppear{
-                        if values.list.count == 0 {
+                    DataTotals(fields: $values).onAppear{
+                        if values.count == 0 {
                             for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
                                 var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
                                 var comparison = ComparisonObject(key: key, value: value, previous: previous)
@@ -236,15 +236,6 @@ struct PPCAnalyticsInfoView : View {
     
 }
 
-class Comparisons : ObservableObject {
-    @Published var list : [ComparisonObject] = []
-    
-    func append(_ new: ComparisonObject){
-        objectWillChange.send()
-        list.append(new)
-    }
-}
-
 struct ComparisonObject{
     
     let id = UUID()
@@ -286,11 +277,11 @@ struct ComparisonObject{
 struct DataTotals : View {
     
     //the important values for page analytics
-    @ObservedObject var fields : Comparisons
+    @Binding var fields : [ComparisonObject]
     
     var body : some View {
         VStack(alignment: .leading){
-            ForEach(fields.list, id: \.id){ obj in
+            ForEach(fields, id: \.id){ obj in
                 Text(obj.key ?? "")
                     .analyticsTotals_Label_style()
                 Text(obj.value ?? "")
