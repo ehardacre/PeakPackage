@@ -13,7 +13,7 @@ struct PageAnalyticsInfoView : View {
     
     @ObservedObject private var analyticsMan: AnalyticsManager
     
-    @ObservedObject var values : Comparisons
+    @ObservedObject var values = Comparisons()
     
     private var type: AnalyticsType
     
@@ -25,10 +25,9 @@ struct PageAnalyticsInfoView : View {
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     
-    public init(type: AnalyticsType, analyticsMan: AnalyticsManager, values: Comparisons) {
+    public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
         self.type = type
         self.analyticsMan = analyticsMan
-        self.values = values
         
         //choosing the proper datasource from the manager based on type
         switch type{
@@ -128,7 +127,7 @@ struct PPCAnalyticsInfoView : View {
     
     @ObservedObject private var analyticsMan: AnalyticsManager
     
-    @ObservedObject var values : Comparisons
+    @ObservedObject var values = Comparisons()
     
     private var type: AnalyticsType
     
@@ -140,10 +139,9 @@ struct PPCAnalyticsInfoView : View {
     private let chartStyle = ChartStyle(backgroundColor: .lightAccent, accentColor: .darkAccent, gradientColor: GradientColor(start: .darkAccent, end: .darkAccent), textColor: .darkAccent, legendTextColor: .darkAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     private let darkModeChartStyle = ChartStyle(backgroundColor: Color.black, accentColor: Color.darkAccent, gradientColor: GradientColor(start: .main, end: .main), textColor: .darkAccent, legendTextColor: .lightAccent, dropShadowColor: Color.darkAccent.opacity(0.2))
     
-    public init(type: AnalyticsType, analyticsMan: AnalyticsManager, values: Comparisons) {
+    public init(type: AnalyticsType, analyticsMan: AnalyticsManager) {
         self.type = type
         self.analyticsMan = analyticsMan
-        self.values = values
         
         //choosing the proper datasource from the manager based on type
         switch type{
@@ -193,9 +191,7 @@ struct PPCAnalyticsInfoView : View {
                 }
             
                 Spacer()
-    
-            
-            
+
             }
             
             makeTextRecap()
@@ -244,6 +240,7 @@ class Comparisons : ObservableObject {
     @Published var list : [ComparisonObject] = []
     
     func append(_ new: ComparisonObject){
+        objectWillChange.send()
         list.append(new)
     }
 }
