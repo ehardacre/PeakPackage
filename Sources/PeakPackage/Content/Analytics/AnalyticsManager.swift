@@ -58,6 +58,16 @@ public class AnalyticsManager : ObservableObject {
     
     ///the only call you need to make to load analytics
     func loadAnalytics(for type: AnalyticsType_general) {
+        switch type{
+        case .Day:
+            if todayData != nil{ return }
+        case .Week:
+            if thisWeekData != nil{ return }
+        case .Month:
+            if thisMonthData != nil{ return }
+        case .Year:
+            if thisYearData != nil { return }
+        }
         self.loading = true
         DatabaseDelegate.getAnalytics(for: type, completion: {
             rex in
