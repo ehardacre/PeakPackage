@@ -100,6 +100,7 @@ public struct ContentView: View {
                 .onAppear{
                     
                     analyticsManager.loadAnalytics(for: .Day)
+                    analyticsManager.loadAnalytics(for: .Week)
                     notificationManager.loadNotifications()
                     
                     
