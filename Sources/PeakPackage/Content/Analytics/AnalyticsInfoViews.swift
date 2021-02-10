@@ -196,12 +196,14 @@ struct PPCAnalyticsInfoView : View {
                         }.onAppear{
                             values = [ComparisonObject](repeating: ComparisonObject(key: nil, value: nil, previous: nil), count: 3)
                             var count = 0
+                            printr(dataSource)
                             for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
                                 var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
                                 var comparison = ComparisonObject(key: key, value: value, previous: previous)
                                 values[count] = comparison
                                 count += 1
                             }
+                            printr(values)
                         }
                 }else{
                     ProgressView().progressViewStyle(CircularProgressViewStyle()).frame(width: 30, height: 30)
