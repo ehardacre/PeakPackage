@@ -181,35 +181,34 @@ struct PPCAnalyticsInfoView : View {
                          style: chartStyle,
                          dropShadow: false,
                          cornerImage: Image(systemName: "cursor.rays")
-                ).overlay(
-                    ProgressView().progressViewStyle(CircularProgressViewStyle()).frame(width: 30, height: 30).if(!analyticsMan.loading, content: {view in view.hidden()})
                 )
             
-                //the text information about analytics
-                VStack(alignment: .leading){
-                    //the totals text for the page analytics
+                if !analyticsMan.loading {
+                    //the text information about analytics
                     VStack(alignment: .leading){
-                        ForEach(values, id: \.id){ obj in
-                            if !obj.empty {
-                                Text(obj.key ?? "")
-                                    .analyticsTotals_Label_style()
-                                Text(obj.value ?? "")
-                                    .analyticsTotals_style()
-                                Text(obj.delta ?? "")
-                                    .analyticsTotals_Past_style()
+                        //the totals text for the page analytics
+                        VStack(alignment: .leading){
+                            ForEach(values, id: \.id){ obj in
+                                    Text(obj.key ?? "")
+                                        .analyticsTotals_Label_style()
+                                    Text(obj.value ?? "")
+                                        .analyticsTotals_style()
+                                    Text(obj.delta ?? "")
+                                        .analyticsTotals_Past_style()
+                            }
+                        }.onAppear{
+                            if values.count == 0 {
+                                for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
+                                    var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
+                                    values.append(ComparisonObject(key: key, value: value, previous: previous))
+                                }
                             }
                         }
-                    }.onAppear{
-                        if values.count == 0 {
-                            for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
-                                var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
-                                var comparison = ComparisonObject(key: key, value: value, previous: previous)
-                                values.append(comparison)
-                            }
-                        }
+                        Spacer()
+                    
                     }
-                    Spacer()
-                
+                }else{
+                    ProgressView().progressViewStyle(CircularProgressViewStyle()).frame(width: 30, height: 30)
                 }
             
                 Spacer()
@@ -260,23 +259,14 @@ struct PPCAnalyticsInfoView : View {
 
 struct ComparisonObject{
     
-    var id = UUID()
-    @State var empty = false
+    let id = UUID()
     @State var key : String?
     @State var value : String?
     @State var previous : String?
     @State var delta : String?
     
-    init(empty: Bool? = false, key: String?, value: String?, previous: String?){
+    init(key: String?, value: String?, previous: String?){
         self.empty = empty!
-        self.key = key
-        self.value = value
-        self.previous = previous
-        delta = calculateChange()
-    }
-    
-    func set(key: String?, value: String?, previous: String?){
-        self.empty = true
         self.key = key
         self.value = value
         self.previous = previous
