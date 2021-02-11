@@ -50,14 +50,14 @@ struct TaskCardView: View {
                             //determines the image that is placed on the left side of the card
                             if self.type.origin == TaskOrigin.complementary {
                                 Rectangle().fill(Color.mid).frame(width: 50.0)
-                                Image("bolt").resizable().frame(width:40,height:40).foregroundColor(Color.darkAccent)
+                                Image(systemName: "bolt.fill").resizable().frame(width:40,height:40).foregroundColor(Color.darkAccent)
                             } else {
                                 if self.type.status == TaskStatus.complete {
                                     Rectangle().fill(Color.darkAccent).frame(width: 50.0)
-                                    Image("done").resizable().frame(width:40,height:40).opacity(0.5).foregroundColor(Color.lightAccent)
-                                }else if self.type.status == TaskStatus.open {
+                                    Image(systemName: "checkmark").resizable().frame(width:40,height:40).opacity(0.5).foregroundColor(Color.lightAccent)
+                                }else { // if self.type.status == TaskStatus.open
                                     Rectangle().fill(Color.mid).frame(width: 50.0)
-                                    Image("add").resizable().frame(width:40,height:40).opacity(0.5).foregroundColor(Color.black)
+                                    Image("square.stack.3d.up").resizable().frame(width:40,height:40).opacity(0.5).foregroundColor(Color.black)
                                 }
                             }
                             
