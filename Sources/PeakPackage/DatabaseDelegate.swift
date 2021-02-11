@@ -106,6 +106,20 @@ extension DatabaseDelegate {
             rex in
             completion(rex)
         })
+    }
+    
+    static func updatePeakLeads(id: String, state: String, woo: Bool = false, completion: @escaping (Any) -> Void){
+        
+        var json : [String : Any] = [:]
+        if !woo {
+            json = JsonFormat.updateLeads_peak(id: id, state: state).format()
+        }else{
+            json = JsonFormat.updateLeads_woo(id: id, state: state).format()
+        }
+        DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {
+            rex in
+            completion(rex)
+        })
         
     }
     

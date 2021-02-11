@@ -97,7 +97,7 @@ struct TaskCardView: View {
                                 .stroke((self.id == self.selectionManager.id) ? Color.blue : Color.mid, lineWidth: (self.id == self.selectionManager.id) ? 3 : 1))
                         //OVERLAY end
                         )
-                .onTapGesture(count: 2, perform: {
+                .onTapGesture(count: 1, perform: {
                     if self.id == self.selectionManager.id {
                         self.selectionManager.id = nil
                     }else{

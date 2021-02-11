@@ -21,13 +21,7 @@ struct LeadInfoSheet: View {
     var phoneNumber : String?
     var email : String?
     var address : String?
-    
-    private let phoneIcon = "phone.fill"
-    private let textIcon = "text.bubble.fill"
-    private let emailIcon = "envelope.fill"
-    
-    @State var result: Result<MFMailComposeResult, Error>? = nil
-    @State var isShowingMailView = false
+
     
     @State var confirmTrash : Bool = false
     
@@ -44,14 +38,15 @@ struct LeadInfoSheet: View {
             Text(lead.notification_key).font(.title2).bold().foregroundColor(Color.darkAccent)
             Divider().frame(width: 250)
             ZStack{
-                Map(coordinateRegion: $region, annotationItems: annotations){
-                    place in
-                    MapMarker(coordinate: place.coordinate, tint: .main)
-                }.frame(height: 200).cornerRadius(20.0).onTapGesture(count: 1, perform: {
-                    openMaps()
-                })
                 if annotations.count == 0 {
                     Text("No Address Found").padding(20).background(Color.white.opacity(0.5)).cornerRadius(20.0)
+                }else{
+                    Map(coordinateRegion: $region, annotationItems: annotations){
+                        place in
+                        MapMarker(coordinate: place.coordinate, tint: .main)
+                    }.frame(height: 200).cornerRadius(20.0).onTapGesture(count: 1, perform: {
+                        openMaps()
+                    })
                 }
             }
             Section{
@@ -103,108 +98,27 @@ struct LeadInfoSheet: View {
                         Text(lead.notification_value.note!).font(.footnote).foregroundColor(Color.darkAccent)
                     }
                     
-                    VStack{
-                        Text(lead.notification_value.phone ?? "").font(.footnote).foregroundColor(Color.darkAccent)
-                        Text(lead.notification_value.email ?? "").font(.footnote).foregroundColor(Color.darkAccent)
-                        if lead.notification_value.lead_source != nil {
-                            Text("Lead Source: " + lead.notification_value.lead_source!).font(.footnote).foregroundColor(Color.darkAccent)
-                        }
-                        if lead.notification_value.technician_name != nil {
-                            Text("Technician: " + lead.notification_value.technician_name!).font(.footnote).foregroundColor(Color.darkAccent)
-                        }
-                    }.padding(20).background(Color.darkAccent.opacity(0.2)).cornerRadius(20)
+                    if lead.notification_value.phone != nil || lead.notification_value.email != nil || lead.notification_value.lead_source != nil || lead.notification_value.technician_name != nil{
+                        VStack{
+                            Text(lead.notification_value.phone ?? "").font(.footnote).foregroundColor(Color.darkAccent)
+                            Text(lead.notification_value.email ?? "").font(.footnote).foregroundColor(Color.darkAccent)
+                            if lead.notification_value.lead_source != nil {
+                                Text("Lead Source: " + lead.notification_value.lead_source!).font(.footnote).foregroundColor(Color.darkAccent)
+                            }
+                            if lead.notification_value.technician_name != nil {
+                                Text("Technician: " + lead.notification_value.technician_name!).font(.footnote).foregroundColor(Color.darkAccent)
+                            }
+                        }.padding(20).background(Color.darkAccent.opacity(0.2)).cornerRadius(20)
+                    }
                 
                 }
             }
             Spacer()
-            HStack{
-                
-                
-                if lead.notification_state == notificationType.open.rawValue {
-                    
-//                    HStack{
-//
-//                        HStack{
-//
-//                            Spacer()
-//                            Text("Decline").bold().foregroundColor(.main)
-//                            Spacer()
-//
-//                        }.onTapGesture(count: 1, perform: {
-//                            printr(lead.notification_value.account_id)
-//                            let json = JsonFormat.declineLead(franchiseId: defaults.franchiseId()!, accountId: lead.notification_value.account_id!).format()
-//                            DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: { rex in
-//                                notificationMan.loadNotifications()
-//                                self.presentationMode.wrappedValue.dismiss()
-//                            })
-//                        })
-//
-//                        HStack{
-//
-//                            Spacer()
-//                            Text("Accept").bold().foregroundColor(.lightAccent)
-//                            Spacer()
-//
-//                        }.padding(20).background(Color.darkAccent).clipShape(Capsule())
-//                        .onTapGesture(count: 1, perform: {
-//                            printr(lead.notification_id)
-//                            let json = JsonFormat.acceptLead(franchiseId: defaults.franchiseId()!, leadId: lead.notification_id).format()
-//                            DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {rex in
-//                                notificationMan.loadNotifications()
-//                                //TODO: reload view as accepted instead of dismissing
-//                                self.presentationMode.wrappedValue.dismiss()
-//                            })
-//                        })
-//
-//                    }
-                    
-                }else{
-                    
-                    HStack{
-                        
-                        HStack{
-                            Spacer()
-                            Image(systemName: phoneIcon).imageScale(.large).foregroundColor(.lightAccent)
-                            Spacer()
-                        }.padding(20).background(Color.darkAccent).clipShape(Capsule()).opacity(phoneNumber == nil ? 0.2 : 1.0).onTapGesture {
-                            if phoneNumber != nil{
-                                LeadCardView.makeCall(to: phoneNumber!)
-                            }else{
-                                //TODO
-                            }
-                        }
-                        
-                        HStack{
-                            Spacer()
-                            Image(systemName: textIcon).imageScale(.large).foregroundColor(.lightAccent)
-                            Spacer()
-                        }.padding(20).background(Color.darkAccent).clipShape(Capsule()).opacity(phoneNumber == nil ? 0.2 : 1.0).onTapGesture {
-                            if phoneNumber != nil{
-                                LeadCardView.makeText(to: phoneNumber!)
-                            }else{
-                                //TODO
-                            }
-                        }
-                        
-                    }
-                    
-                    
-                
-                
-
-                //email
-                HStack{
-                    Spacer()
-                    Image(systemName: emailIcon).imageScale(.large).foregroundColor(.lightAccent)
-                    Spacer()
-                }.padding(20).background(Color.darkAccent).clipShape(Capsule()).opacity(email == nil || !MFMailComposeViewController.canSendMail() ? 0.2 : 1.0).onTapGesture {
-                    if email != nil && MFMailComposeViewController.canSendMail(){
-                        isShowingMailView = true
-                    }
-                }
-                    
-                }
-                
+            
+            if defaults.getApplicationType() == .NHanceConnect{
+                BottomBar_NHance(email: email, phoneNumber: phoneNumber)
+            }else if defaults.getApplicationType() == .PeakClients{
+                BottomBar_Peak(id: lead.notification_id, state_str: lead.notification_state, parent: self)
             }
             
         }.onAppear{
@@ -230,12 +144,13 @@ struct LeadInfoSheet: View {
                 }
             
         }.padding(30)
-            .sheet(isPresented: $isShowingMailView) {
-                MailView(isShowing: self.$isShowingMailView, result: self.$result, email: self.email!)
-            }
         .sheet(isPresented: $showFullScreenImage, onDismiss: {selectedImage = nil}){
                 FullScreenImageView(image: selectedImage!)
             }
+    }
+    
+    func dismiss(){
+        self.presentationMode.wrappedValue.dismiss()
     }
     
     func openMaps(){
@@ -322,4 +237,177 @@ struct FullScreenImageView : View {
             }
         }
     }
+}
+
+struct BottomBar_NHance : View{
+    
+    @State var email : String?
+    @State var phoneNumber : String?
+    
+    private let phoneIcon = "phone.fill"
+    private let textIcon = "text.bubble.fill"
+    private let emailIcon = "envelope.fill"
+    
+    @State var result: Result<MFMailComposeResult, Error>? = nil
+    @State var isShowingMailView = false
+    
+    var body : some View {
+        HStack{
+                
+                HStack{
+                    
+                    HStack{
+                        Spacer()
+                        Image(systemName: phoneIcon).imageScale(.large).foregroundColor(.lightAccent)
+                        Spacer()
+                    }.padding(20).background(Color.darkAccent).clipShape(Capsule()).opacity(phoneNumber == nil ? 0.2 : 1.0).onTapGesture {
+                        if phoneNumber != nil{
+                            LeadCardView.makeCall(to: phoneNumber!)
+                        }else{
+                            //TODO
+                        }
+                    }
+                    
+                    HStack{
+                        Spacer()
+                        Image(systemName: textIcon).imageScale(.large).foregroundColor(.lightAccent)
+                        Spacer()
+                    }.padding(20).background(Color.darkAccent).clipShape(Capsule()).opacity(phoneNumber == nil ? 0.2 : 1.0).onTapGesture {
+                        if phoneNumber != nil{
+                            LeadCardView.makeText(to: phoneNumber!)
+                        }else{
+                            //TODO
+                        }
+                    }
+                    
+                
+                
+            
+            
+
+            //email
+            HStack{
+                Spacer()
+                Image(systemName: emailIcon).imageScale(.large).foregroundColor(.lightAccent)
+                Spacer()
+            }.padding(20).background(Color.darkAccent).clipShape(Capsule()).opacity(email == nil || !MFMailComposeViewController.canSendMail() ? 0.2 : 1.0).onTapGesture {
+                if email != nil && MFMailComposeViewController.canSendMail(){
+                    isShowingMailView = true
+                }
+            }
+                
+            }
+            
+        }
+        .sheet(isPresented: $isShowingMailView) {
+            MailView(isShowing: self.$isShowingMailView, result: self.$result, email: self.email!)
+            }
+    }
+}
+
+struct BottomBar_Peak : View{
+    
+    @State var id : String
+    @State var state_str : String
+    @State var state : notificationType = notificationType.read
+    @State var parent : LeadInfoSheet
+    
+    @State var email : String?
+    @State var phoneNumber : String?
+    @State var confirmTrash = false
+    
+    private let phoneIcon = "phone.fill"
+    private let textIcon = "text.bubble.fill"
+    private let emailIcon = "envelope.fill"
+    
+    @State var result: Result<MFMailComposeResult, Error>? = nil
+    @State var isShowingMailView = false
+    
+    var body : some View {
+        HStack{
+            
+            //star
+            HStack{
+                Spacer()
+                Image(systemName: state == notificationType.starred ? "star.fill" : "star").imageScale(.large).foregroundColor(state == notificationType.starred ? .yellow : .lightAccent)
+                Spacer()
+            }.padding(20).background(Color.darkAccent).clipShape(Capsule()).onTapGesture {
+                if state == notificationType.starred {
+                    state = notificationType.read
+                }else{
+                    state = notificationType.starred
+                }
+            }
+            
+            //phone call
+            HStack{
+                Spacer()
+                Image(systemName: phoneIcon).imageScale(.large).foregroundColor(.lightAccent)
+                Spacer()
+            }.padding(20).background(Color.darkAccent).clipShape(Capsule()).opacity(phoneNumber == nil ? 0.2 : 1.0).onTapGesture {
+                if phoneNumber != nil{
+                    LeadCardView.makeCall(to: phoneNumber!)
+                    state = notificationType.called
+                }else{
+                    //TODO
+                }
+            }
+            
+            //email
+            HStack{
+                Spacer()
+                Image(systemName: emailIcon).imageScale(.large).foregroundColor(.lightAccent)
+                Spacer()
+            }.padding(20).background(Color.darkAccent).clipShape(Capsule()).opacity(email == nil || !MFMailComposeViewController.canSendMail() ? 0.2 : 1.0).onTapGesture {
+                if email != nil && MFMailComposeViewController.canSendMail(){
+                    isShowingMailView = true
+                    state = notificationType.emailed
+                }
+            }
+            
+            //delete
+            HStack{
+                Spacer()
+                Image(systemName: "trash").imageScale(.large).foregroundColor(.darkAccent)
+                Spacer()
+            }.padding(20).background(Color.clear).clipShape(Capsule()).onTapGesture {
+                confirmTrash = true
+            }
+
+        }
+        .onAppear{
+            switch state_str{
+            case "emailed":
+                state = notificationType.emailed
+            case "called":
+                state = notificationType.called
+            case "starred":
+                state = notificationType.starred
+            default:
+                state = notificationType.read
+            }
+        }
+        .onDisappear{
+            DatabaseDelegate.updatePeakLeads(id: id, state: state.rawValue, completion: {
+                rex in
+                
+            })
+        }
+        .alert(isPresented: $confirmTrash, content: {
+            Alert(title: Text("Are you sure?").font(.title3),
+                  message: Text("You will be deleting this lead.").font(.footnote) ,
+                  primaryButton:
+                    .cancel(),
+                  secondaryButton:
+                    .destructive(Text("Delete")){
+                        state = notificationType.deleted
+                        parent.dismiss()
+                    }
+                    )
+            })
+        .sheet(isPresented: $isShowingMailView) {
+            MailView(isShowing: self.$isShowingMailView, result: self.$result, email: self.email!)
+            }
+    }
+    
 }
