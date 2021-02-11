@@ -102,7 +102,11 @@ public struct ContentView: View {
                     analyticsManager.loadAnalytics(for: .Day)
                     analyticsManager.loadAnalytics(for: .Week)
                     notificationManager.loadNotifications()
-                    
+                    if defaults.getApplicationType() == .PeakClients{
+                        taskManager.loadTasks()
+                        appointmentManager.loadAppointments()
+                        appointmentManager.loadTodaysVisits()
+                    }
                     
                 }
             
