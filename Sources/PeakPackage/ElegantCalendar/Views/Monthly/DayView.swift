@@ -63,7 +63,7 @@ struct DayView: View, MonthlyCalendarManagerDirectAccess {
     private var backgroundColor: some View {
         Group {
             if isDayToday {
-                Color.primary
+                Color.primary.opacity(0.3)
             } else if isDaySelectableAndInRange {
                 theme.primary
                     .opacity(datasource?.calendar(backgroundColorOpacityForDate: day) ?? 1)
