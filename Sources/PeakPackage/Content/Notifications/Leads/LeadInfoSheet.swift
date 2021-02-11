@@ -58,7 +58,7 @@ struct LeadInfoSheet: View {
                     Text(lead.notification_value.job_date!).font(.footnote).foregroundColor(Color.darkAccent)
                 }
                 
-                if images.count != 0 {
+                if images.count != 0 || defaults.getApplicationType() == .PeakClients{
                     ScrollView(.horizontal){
                         HStack{
                             ForEach(images, id: \.id){ image in
