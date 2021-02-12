@@ -43,6 +43,7 @@ struct TaskCardView: View {
         GeometryReader{ geo in
             RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(Color.lightAccent)
+                .background(Color.clear)
                 .frame(height: self.height)
                 .overlay(
                     HStack{
