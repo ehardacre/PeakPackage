@@ -15,7 +15,7 @@ struct AnalyticsInfoView : View {
     
     @State var values = [ComparisonObject]()
     
-    @State var ppc : Bool?
+    var ppc : Bool
     
     private var type: AnalyticsType
     
@@ -51,9 +51,7 @@ struct AnalyticsInfoView : View {
     var body : some View {
         VStack{
             HStack{
-                if ppc == nil {
-                    
-                }else if ppc! {
+                if ppc {
                     BarChartView(data: ChartData(
                                 values: dataSource?.now?.ppc?.graphableData ?? []),
                              title: "PPC",
@@ -87,9 +85,7 @@ struct AnalyticsInfoView : View {
                         }
                     }.onAppear{
                         if values.count == 0 {
-                            if ppc == nil {
-                                
-                            }else if ppc! {
+                            if ppc {
                                 for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
                                     var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
                                     var comparison = ComparisonObject(key: key, value: value, previous: previous)
@@ -138,7 +134,7 @@ struct AnalyticsInfoView : View {
         var recapString = "This \(timePeriod) your site has had "
         var first = true
         
-        var data = (ppc ?? true) ? dataSource?.now?.ppc?.totals : dataSource?.now?.page?.totals
+        var data = ppc ? dataSource?.now?.ppc?.totals : dataSource?.now?.page?.totals
         
         for (key,value) in (data ?? [:]) {
             if !first {
@@ -146,7 +142,7 @@ struct AnalyticsInfoView : View {
             }else{
                 first = false
             }
-            var previous = ((ppc ?? true) ? dataSource?.previous?.ppc?.totals?[key] : dataSource?.previous?.page?.totals?[key] ) ?? "0"
+            var previous = (ppc ? dataSource?.previous?.ppc?.totals?[key] : dataSource?.previous?.page?.totals?[key] ) ?? "0"
             var comparison = ComparisonObject(key: key, value: value, previous: previous)
             //values.append(comparison)
             recapString += "\(value) in the category \(key) (\(comparison.delta ?? "0%") from last \(timePeriod)'s \(previous ?? "0")) "
