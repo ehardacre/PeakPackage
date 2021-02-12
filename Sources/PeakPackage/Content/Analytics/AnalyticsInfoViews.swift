@@ -60,7 +60,7 @@ struct AnalyticsInfoView : View {
                              dropShadow: false,
                              cornerImage: Image(systemName: "cursor.rays")
                     )
-                }else{
+                }else{//
                     BarChartView(data: ChartData(
                                 values: dataSource?.now?.page?.graphableData ?? []),
                              title: "All",
