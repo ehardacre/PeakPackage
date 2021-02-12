@@ -134,6 +134,8 @@ struct RequestListView: View {
                     task
                         .listRowBackground(Color.clear)
                 }
+                .listStyle(SidebarListStyle())
+                .environment(\.defaultMinListRowHeight, 120).padding(0.0)
                 
             //LIST end
             }
