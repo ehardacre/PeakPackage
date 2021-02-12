@@ -15,7 +15,7 @@ struct AnalyticsInfoView : View {
     
     @State var values = [ComparisonObject]()
     
-    @State var ppc : Bool = true
+    @State var ppc : Bool?
     
     private var type: AnalyticsType
     
@@ -51,7 +51,9 @@ struct AnalyticsInfoView : View {
     var body : some View {
         VStack{
             HStack{
-                if ppc {
+                if ppc == nil {
+                    
+                }else if ppc {
                     BarChartView(data: ChartData(
                                 values: dataSource?.now?.ppc?.graphableData ?? []),
                              title: "PPC",
@@ -85,7 +87,9 @@ struct AnalyticsInfoView : View {
                         }
                     }.onAppear{
                         if values.count == 0 {
-                            if ppc {
+                            if ppc == nil {
+                                
+                            }else if ppc {
                                 for (key,value) in (dataSource?.now?.ppc?.totals ?? [:]) {
                                     var previous = dataSource?.previous?.ppc?.totals?[key] ?? "0"
                                     var comparison = ComparisonObject(key: key, value: value, previous: previous)
