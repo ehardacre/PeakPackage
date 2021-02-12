@@ -139,6 +139,7 @@ struct RequestListView: View {
                 
             //LIST end
             }
+            .listRowBackground(Color.clear)
             .listStyle(SidebarListStyle())
             .environment(\.defaultMinListRowHeight, 120).padding(0.0)
             .navigationBarTitle(self.navbarTitle)
