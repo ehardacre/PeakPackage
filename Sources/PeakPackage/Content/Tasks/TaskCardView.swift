@@ -112,6 +112,7 @@ struct TaskCardView: View {
     
                 
             }
+            .background(Color.clear)
             .sheet(isPresented: self.$showMoreInfo, content: {
                 TaskDetails(task: self.task).onDisappear{
                     self.selectionManager.id = nil
