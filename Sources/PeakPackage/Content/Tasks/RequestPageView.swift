@@ -132,8 +132,8 @@ struct RequestListView: View {
                 ForEach(self.tasks, id: \.id) { task in
                     //show task card
                     task
-                        .background(Color.clear)
                         .listRowBackground(Color.clear)
+                        .background(Color.clear)
                 }
                 .listRowBackground(Color.clear)
                 .listStyle(SidebarListStyle())
