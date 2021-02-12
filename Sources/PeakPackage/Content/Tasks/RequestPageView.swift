@@ -132,8 +132,10 @@ struct RequestListView: View {
                 ForEach(self.tasks, id: \.id) { task in
                     //show task card
                     task
+                        .background(Color.clear)
                         .listRowBackground(Color.clear)
                 }
+                .listRowBackground(Color.clear)
                 .listStyle(SidebarListStyle())
                 .environment(\.defaultMinListRowHeight, 120).padding(0.0)
                 
