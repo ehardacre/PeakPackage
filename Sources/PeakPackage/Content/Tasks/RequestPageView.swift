@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Pages
+import SwiftUIRefresh
 
 ///content that will show in content view, removed for readabiliity
 extension ContentView  {

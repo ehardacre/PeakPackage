@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftUIRefresh
 
 struct NotificationsView: View {
     
@@ -84,6 +85,8 @@ struct LeadsView_NHance : View {
     @State var title : String
     @State var list : [Lead]
     @State var loaded : Bool
+    
+    @State var refreshing = false
     
     @State var refreshing = false
     

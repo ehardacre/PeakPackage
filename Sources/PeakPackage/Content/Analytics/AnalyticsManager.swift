@@ -48,7 +48,7 @@ public class AnalyticsManager : ObservableObject {
     static let sessionsWithEvent_key = "PPC Leads"
     static let adClicks_key = "Ad Clicks"
     static let adCost_key = "Ad Cost"
-    static let costPerClick_key = "Cost per Click"
+    static let costPerClick_key = "CPC"
     
     //the page names and page types for analytics view
     static let pages = [AnalyticsType.thisYear.displayName(), AnalyticsType.thisMonth.displayName(), AnalyticsType.thisWeek.displayName()]
