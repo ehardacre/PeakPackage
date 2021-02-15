@@ -67,7 +67,7 @@ struct LeadCardView: View {
                                 }else{
                                     
                                     Rectangle().fill(Color.lightAccent).frame(width: 50.0)
-                                    Image(systemName: "questionmark.diamond.fill").imageScale(.large).foregroundColor(.mid)
+                                    Image(systemName: "doc").imageScale(.large).foregroundColor(.mid)
                                     
                                 }
                                 
