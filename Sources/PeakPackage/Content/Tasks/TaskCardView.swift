@@ -100,6 +100,7 @@ struct TaskCardView: View {
                                 .foregroundColor(Color.clear)
                         //OVERLAY end
                         )
+                .clipShape(RoundedRectangle(cornerRadius: 10)) 
                 .onTapGesture(count: 1, perform: {
                     if self.id == self.selectionManager.id {
                         self.selectionManager.id = nil
@@ -114,6 +115,7 @@ struct TaskCardView: View {
     
                 
             }
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             .background(Color.clear)
             .sheet(isPresented: self.$showMoreInfo, content: {
                 TaskDetails(task: self.task).onDisappear{
@@ -124,35 +126,3 @@ struct TaskCardView: View {
     
     }
 
-//GeometryReader{ geo in
-//    RoundedRectangle(cornerRadius: 10)
-//        .foregroundColor(Color.lightAccent)
-//        .background(Color.clear)
-//        .frame(height: self.height)
-//        .overlay(
-//            HStack{
-//                //blah blah blah probably not important to the issue
-//                //if it is let me know and I will edit
-//
-//            //HSTACK
-//            }.frame(width: geo.size.width, height: self.height)
-//                .cornerRadius(10)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 10)
-//                        .stroke((self.id == self.selectionManager.id) ? Color.blue : Color.mid, lineWidth: (self.id == self.selectionManager.id) ? 3 : 1))
-//                //OVERLAY end
-//                )
-//        .onTapGesture(count: 1, perform: {
-//            if self.id == self.selectionManager.id {
-//                self.selectionManager.id = nil
-//            }else{
-//                let generator = UINotificationFeedbackGenerator()
-//                generator.notificationOccurred(.success)
-//                self.selectionManager.id = self.id
-//                self.showMoreInfo = true
-//            }
-//
-//        })
-//
-//
-//    }
