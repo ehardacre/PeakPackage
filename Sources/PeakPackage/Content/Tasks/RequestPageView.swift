@@ -133,7 +133,8 @@ struct RequestListView: View {
                     //show task card
                     task
                         .listRowBackground(Color.clear)
-                        .background(Color.clear)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        
                 }
                 .listRowBackground(Color.clear)
                 .listStyle(SidebarListStyle())
