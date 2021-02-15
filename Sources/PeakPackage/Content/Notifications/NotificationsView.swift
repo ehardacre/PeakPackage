@@ -135,25 +135,32 @@ struct LeadsView_Peak : View {
             Text("New").bold().font(.title2)
                 .listRowBackground(Color.clear)
                 .foregroundColor(Color.darkAccent)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
                 .overlay(NotificationNumLabel(number: notificationMan.newNotifications, position: CGPoint(x: 55, y: 0)))
             if notificationMan.newNotifications == 0 && notificationMan.starredLeads == 0{
                 Text("No new leads to report right now.").foregroundColor(Color.secondary)
+                    .listRowBackground(Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             ForEach(notificationMan.starred_leads, id: \.notification_id){ lead in
                 LeadCardView(selectionManager: selectionManager, notificationMan: notificationMan, lead: lead)
                     .listRowBackground(Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             ForEach(notificationMan.unread_leads, id: \.notification_id){ lead in
                 LeadCardView(selectionManager: selectionManager, notificationMan: notificationMan, lead: lead)
                     .listRowBackground(Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             
             Text("Opened & Contacted").bold().font(.title2).listRowBackground(Color.clear).foregroundColor(Color.darkAccent)
             ForEach((notificationMan.read_leads + notificationMan.contacted_leads), id: \.notification_id){ lead in
                 LeadCardView(selectionManager: selectionManager, notificationMan: notificationMan, lead: lead)
                     .listRowBackground(Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
         }
+        .listRowBackground(Color.clear)
         .listStyle(SidebarListStyle())
         .environment(\.defaultMinListRowHeight, 120).padding(0.0)
         .navigationTitle(Text("Leads"))
