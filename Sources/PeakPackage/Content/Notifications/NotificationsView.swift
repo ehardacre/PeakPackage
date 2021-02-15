@@ -101,11 +101,12 @@ struct LeadsView_NHance : View {
                     if list.count == 0{
                             Text("No \(title) leads to report right now.").foregroundColor(Color.secondary)
                                 .listRowBackground(Color.clear)
-                                .clipShape(RoundedRectangle(cornerRadius: 10)) 
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     Spacer(minLength: 200)
                     }
+                    .listRowBackground(Color.clear)
                     .listStyle(SidebarListStyle())
                     .environment(\.defaultMinListRowHeight, 120).padding(0.0)
                     .navigationTitle(Text(title))
