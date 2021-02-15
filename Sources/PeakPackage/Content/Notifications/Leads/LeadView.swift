@@ -112,6 +112,7 @@ struct LeadCardView: View {
                                 .stroke((self.id == self.selectionManager.id) ? Color.blue : Color.mid, lineWidth: (self.id == self.selectionManager.id) ? 3 : 1))
                         //OVERLAY end
                         )
+                .clipShape(RoundedRectangle(cornerRadius: 10))
                 .onTapGesture(count: 1, perform: {
                     if self.id == self.selectionManager.id {
                         self.selectionManager.id = nil
@@ -126,6 +127,7 @@ struct LeadCardView: View {
     
                 
             }
+            .clipShape(RoundedRectangle(cornerRadius: 10)) 
             .sheet(isPresented: self.$showMoreInfo, content: {
 //                LeadInfoSheet(lead: lead, notificationMan: notificationMan, phoneNumber: self.findPhoneNumber(in: lead.notification_value), email: self.findEmail(in: lead.notification_value), address: self.findAddress(in: lead.notification_value))
                 LeadInfoSheet(lead: cleanNote(in: lead), notificationMan: notificationMan, phoneNumber: lead.notification_value.phone, email: lead.notification_value.email, address: lead.notification_value.job_address, images: self.findPhotos(in: lead.notification_value.note ?? "").map({RemoteImage(url: $0)}))
