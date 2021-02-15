@@ -95,10 +95,14 @@ struct LeadsView_NHance : View {
                 List{
                     ForEach(list, id: \.notification_id){ lead in
                         LeadCardView(selectionManager: selectionManager, notificationMan: notificationMan, lead: lead)
+                            .listRowBackground(Color.clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     if list.count == 0{
                             Text("No \(title) leads to report right now.").foregroundColor(Color.secondary)
-                        }
+                                .listRowBackground(Color.clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 10)) 
+                    }
                     
                     Spacer(minLength: 200)
                     }
