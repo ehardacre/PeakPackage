@@ -88,8 +88,6 @@ struct LeadsView_NHance : View {
     
     @State var refreshing = false
     
-    @State var refreshing = false
-    
     var body: some View {
         NavigationView{
             
