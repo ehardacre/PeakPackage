@@ -10,12 +10,12 @@ import Foundation
 import SwiftUI
 import UIKit
 
-public class AppointmentManager : ObservableObject {
+public class AppointmentManager : Manager {
     
     @Published var appointments = [Visit]()
     @Published var todaysAppointments = [Visit]()
     
-    public init(){}
+    public override init(){}
     
     func isValidAppointment(_ date: Date? = nil){
         

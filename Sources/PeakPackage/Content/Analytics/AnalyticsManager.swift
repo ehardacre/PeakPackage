@@ -13,7 +13,7 @@ import Foundation
  #Analytics Manager
  functionally manages all of the data required for analytics
  */
-public class AnalyticsManager : ObservableObject {
+public class AnalyticsManager : Manager {
     
     //private variables for data
     private var thisWeekData : Analytics_BreakDown?
@@ -54,7 +54,7 @@ public class AnalyticsManager : ObservableObject {
     static let pages = [AnalyticsType.thisYear.displayName(), AnalyticsType.thisMonth.displayName(), AnalyticsType.thisWeek.displayName()]
     static let pages_types = [AnalyticsType.thisYear, AnalyticsType.thisMonth, AnalyticsType.thisWeek]
     
-    public init(){}
+    public override init(){}
     
     ///the only call you need to make to load analytics
     func loadAnalytics(for type: AnalyticsType_general) {

@@ -113,11 +113,11 @@ extension View {
     }
 }
 
-public class DashboardMessageManager : ObservableObject {
+public class DashboardMessageManager : Manager {
     
     @Published var message : DashboardMessage?
     
-    public init(){}
+    public override init(){}
     
     func loadMessage(){
         if message == nil{

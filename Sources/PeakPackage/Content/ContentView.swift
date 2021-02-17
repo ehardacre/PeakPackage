@@ -21,12 +21,17 @@ public enum tabs : Int{
     case tasks = 5
 }
 
+protocol PublicFacingContent : View{
+    var manager : Manager {get set}
+}
+
 /**
  #Content View
  Content view holds all of the main content for the app
  */
 public struct ContentView: View {
     
+    var layout : AppLayout
     @State var availableTabs : [tabs]
     
     //tab for switching tabs
@@ -34,7 +39,6 @@ public struct ContentView: View {
     
     //the indices for the page views
     @State var taskIndex = 0
-    @State var analyticsIndex = 2
     @State var showProfile = false
     
     //data managers
@@ -44,9 +48,11 @@ public struct ContentView: View {
     @EnvironmentObject var taskManager : TaskManager
     @EnvironmentObject var appointmentManager : AppointmentManager
     
-    public init(tabMenuOptions : [tabs]? = [tabs.analytics, tabs.dashboard, tabs.leads]) {
+    public init(layout: AppLayout) {
         
-        _availableTabs = State(initialValue: tabMenuOptions!)
+        self.layout = layout
+        _availableTabs = State(initialValue: [])
+        availableTabs = determineTabs()
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none
         
@@ -55,6 +61,26 @@ public struct ContentView: View {
         UITableViewCell.appearance().backgroundColor = .clear
         UIListContentView.appearance().backgroundColor = .clear
         
+    }
+
+    func determineTabs() -> [tabs]{
+        var temptabs : [tabs] = []
+        if layout.DashboardView_exists{
+            temptabs.append(tabs.dashboard)
+        }
+        if layout.AnalyticsView_exists{
+            temptabs.append(tabs.analytics)
+        }
+        if layout.CalendarView_exists{
+            temptabs.append(tabs.calendar)
+        }
+        if layout.TasksView_exists{
+            temptabs.append(tabs.tasks)
+        }
+        if layout.LeadsView_exists{
+            temptabs.append(tabs.leads)
+        }
+        return temptabs
     }
     
     public var body: some View {
@@ -69,26 +95,23 @@ public struct ContentView: View {
                     //manage tabs
                     if tab == tabs.analytics {
 
-                        AnalyticsContent()
+                        layout.AnalyticsView(manager: analyticsManager)
 
                     }else if tab == tabs.leads{
 
-                        //this one's pretty easy so we don't need an extension
-                        //ProfileView()
-                        NotificationsView(notificationMan: notificationManager)
-                        
+                        layout.LeadsView(manager: notificationManager)
                         
                     }else if tab == tabs.calendar{
 
-                        CallCalendarView(ascVisits: appointmentManager.appointments, content: self)
+                        layout.CalendarView(manager: appointmentManager)
 
                     }else if tab == tabs.tasks{
                         
-                        TaskContent()
+                        layout.TasksView(manager: taskManager)
 
                     }else if tab == tabs.dashboard{
 
-                        DashboardContent()
+                        layout.DashboardView(manager: messageManager)
 
                     }
                 }

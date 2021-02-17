@@ -9,45 +9,6 @@
 import SwiftUI
 import SwiftUICharts
 
-///this is the content that is the analytics tab
-extension ContentView {
-    
-    ///the content for the analytics tab. separated for simplicity
-    func AnalyticsContent() -> some View {
-        ZStack{
-            
-            switch analyticsIndex{
-            
-            case 0:
-                AnalyticsView(type: AnalyticsType.thisYear, analyticsMan: analyticsManager).onAppear{
-//                    analyticsManager.loadAnalytics(for: .Year)
-                }
-            case 1:
-                AnalyticsView(type: AnalyticsType.thisMonth, analyticsMan: analyticsManager).onAppear{
-                    //analyticsManager.loadAnalytics(for: .Year)
-                }
-            case 2:
-                AnalyticsView(type: AnalyticsType.thisWeek, analyticsMan: analyticsManager).onAppear{
-                    analyticsManager.loadAnalytics(for: .Month)
-                    analyticsManager.loadAnalytics(for: .Year)
-                }
-            default:
-                EmptyView()
-            }
-            
-            
-            VStack{
-                
-                Spacer()
-                
-                PageControl(index: $analyticsIndex, maxIndex: AnalyticsManager.pages.count - 1, pageNames: AnalyticsManager.pages, dividers: true)
-                
-            }
-        }
-    }
-    
-}
-
 /**
  #Analytics View
  the view that is used for each of the analytics pages

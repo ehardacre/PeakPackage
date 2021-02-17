@@ -28,12 +28,12 @@ struct CallCalendarView: View {
     @State var showPick = false
     
     //the content view that holds the calendar view
-    var parent : ContentView
+    //var parent : ContentView
     
     // Call Calendar View
-    init(ascVisits: [Visit], content: ContentView) {
+    init(ascVisits: [Visit]) {
         
-        parent = content
+       // parent = content
         
         //initialize the calendar configs
         let configuration = CalendarConfiguration(
@@ -141,13 +141,15 @@ struct CallCalendarView: View {
         //get the user id
         let id = defaults.franchiseId()!
         
+        //TODO: database requests done differently now
+        
         //create the json object for a new appointment
         let json = JsonFormat.setAppointment(id: id, value: reason, date: formattedDate, duration: duration).format()
         
         //perform the request
         DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {
             rex in
-            self.parent.appointmentManager.resetAppointments()
+            //self.parent.appointmentManager.resetAppointments()
         })
     }
     
