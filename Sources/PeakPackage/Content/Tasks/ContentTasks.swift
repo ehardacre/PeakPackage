@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Content_Tasks: PublicFacingContent {
+public struct Content_Tasks: PublicFacingContent {
 
     @ObservedObject public var manager : Manager
     @State public var taskIndex = 0
