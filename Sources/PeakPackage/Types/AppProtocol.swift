@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 //a protocol for defining app layouts without having them hard coded into the framework
-public class AppLayout {
+open class AppLayout {
     
     var AnalyticsView_exists = false
     var CalendarView_exists = false
@@ -18,10 +18,10 @@ public class AppLayout {
     var LeadsView_exists = false
     
     //each app layout must define the following
-    func AnalyticsView(manager: Manager?) -> AnyView? {
+    open func AnalyticsView(manager: Manager?) -> AnyView? {
         fatalError("Must Override")
     }
-    func AnalyticsView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
+    open func AnalyticsView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
         if manager == nil {
             return nil
         }else{
@@ -30,10 +30,10 @@ public class AppLayout {
         }
     }
     
-    func CalendarView(manager: Manager?) -> AnyView? {
+    open func CalendarView(manager: Manager?) -> AnyView? {
         fatalError("Must Override")
     }
-    func CalendarView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
+    open func CalendarView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
         if manager == nil {
             return nil
         }else{
@@ -42,10 +42,10 @@ public class AppLayout {
         }
     }
     
-    func DashboardView(manager: Manager?) -> AnyView? {
+    open func DashboardView(manager: Manager?) -> AnyView? {
         fatalError("Must Override")
     }
-    func DashboardView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
+    open func DashboardView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
         if manager == nil {
             return nil
         }else{
@@ -54,10 +54,10 @@ public class AppLayout {
         }
     }
     
-    func TasksView(manager: Manager?) -> AnyView? {
+    open func TasksView(manager: Manager?) -> AnyView? {
         fatalError("Must Override")
     }
-    func TasksView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
+    open func TasksView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
         if manager == nil {
             return nil
         }else{
@@ -66,10 +66,10 @@ public class AppLayout {
         }
     }
     
-    func LeadsView(manager: Manager?) -> AnyView? {
+    open func LeadsView(manager: Manager?) -> AnyView? {
         fatalError("Must Override")
     }
-    func LeadsView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
+    open func LeadsView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
         if manager == nil {
             return nil
         }else{
