@@ -80,46 +80,46 @@ public class AppLayout {
     
 }
 
-class Peak : AppLayout {
-    override func AnalyticsView(manager: Manager?) -> AnyView? {
-        return super.AnalyticsView(manager: manager){
-            AnyView{
-                Content_Analytics_multiPage(manager: manager!)
-            }!
-        }
-    }
-    
-    override func CalendarView(manager: Manager?) -> AnyView? {
-        return super.CalendarView(manager: manager){
-            AnyView{
-                Content_Calendar(manager: manager!)
-            }!
-        }
-    }
-    
-    override func DashboardView(manager: Manager?) -> AnyView? {
-        return super.DashboardView(manager: manager){
-            AnyView{
-                Content_Calendar(manager: manager!)
-            }!
-        }
-    }
-    
-    override func TasksView(manager: Manager?) -> AnyView? {
-        return super.DashboardView(manager: manager){
-            AnyView{
-                Content_Tasks(manager: manager!)
-            }!
-        }
-    }
-    
-    override func LeadsView(manager: Manager?) -> AnyView? {
-        return super.LeadsView(manager: manager){
-            AnyView{
-                Content_Leads_multiPage(manager: manager!)
-            }!
-        }
-    }
-    
-    
-}
+//class Peak : AppLayout {
+//    override func AnalyticsView(manager: Manager?) -> AnyView? {
+//        return super.AnalyticsView(manager: manager){
+//            AnyView{
+//                Content_Analytics_multiPage(manager: manager!)
+//            }!
+//        }
+//    }
+//    
+//    override func CalendarView(manager: Manager?) -> AnyView? {
+//        return super.CalendarView(manager: manager){
+//            AnyView{
+//                Content_Calendar(manager: manager!)
+//            }!
+//        }
+//    }
+//    
+//    override func DashboardView(manager: Manager?) -> AnyView? {
+//        return super.DashboardView(manager: manager){
+//            AnyView{
+//                Content_Calendar(manager: manager!)
+//            }!
+//        }
+//    }
+//    
+//    override func TasksView(manager: Manager?) -> AnyView? {
+//        return super.DashboardView(manager: manager){
+//            AnyView{
+//                Content_Tasks(manager: manager!)
+//            }!
+//        }
+//    }
+//    
+//    override func LeadsView(manager: Manager?) -> AnyView? {
+//        return super.LeadsView(manager: manager){
+//            AnyView{
+//                Content_Leads_multiPage(manager: manager!)
+//            }!
+//        }
+//    }
+//    
+//    
+//}
