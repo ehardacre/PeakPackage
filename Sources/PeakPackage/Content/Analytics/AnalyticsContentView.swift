@@ -12,6 +12,10 @@ public struct Content_Analytics_multiPage : PublicFacingContent{
     
     @ObservedObject public var manager: Manager
     @State public var analyticsIndex = 2
+    
+    init(manager: Manager) {
+        self.manager = manager
+    }
 
     public var body : some View {
         ZStack{

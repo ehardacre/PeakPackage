@@ -23,6 +23,8 @@ public enum tabs : Int{
 
 protocol PublicFacingContent : View{
     var manager : Manager {get set}
+    
+    init(manager: Manager)
 }
 
 /**

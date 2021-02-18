@@ -13,6 +13,10 @@ public struct Content_Leads_multiPage: PublicFacingContent {
     @State public var selectionMan = SelectionManager()
     @State public var leadsIndex = 0
     
+    init(manager: Manager) {
+        self.manager = manager
+    }
+    
     public var body: some View {
         ZStack{
             switch leadsIndex {
