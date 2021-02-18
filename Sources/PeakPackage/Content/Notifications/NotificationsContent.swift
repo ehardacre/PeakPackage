@@ -10,8 +10,8 @@ import SwiftUI
 public struct Content_Leads_multiPage: PublicFacingContent {
     
     @ObservedObject public var manager : Manager
-    @State var selectionMan = SelectionManager()
-    @State var leadsIndex = 0
+    @State public var selectionMan = SelectionManager()
+    @State public var leadsIndex = 0
     
     public var body: some View {
         ZStack{

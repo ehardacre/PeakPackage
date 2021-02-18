@@ -10,7 +10,7 @@ import SwiftUI
 struct Content_Tasks: PublicFacingContent {
 
     @ObservedObject public var manager : Manager
-    @State var taskIndex = 0
+    @State public var taskIndex = 0
     
     var body: some View {
         ZStack{

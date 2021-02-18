@@ -11,7 +11,7 @@ import SwiftUI
 public struct Content_Analytics_multiPage : PublicFacingContent{
     
     @ObservedObject public var manager: Manager
-    @State var analyticsIndex = 2
+    @State public var analyticsIndex = 2
 
     public var body : some View {
         ZStack{
