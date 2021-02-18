@@ -10,8 +10,8 @@ import SwiftUI
 public struct Content_Leads_multiPage: PublicFacingContent {
     
     @ObservedObject public var manager : Manager
-    @State public var selectionMan = SelectionManager()
-    @State public var leadsIndex = 0
+    @State var selectionMan = SelectionManager()
+    @State var leadsIndex = 0
     
     init(manager: Manager) {
         self.manager = manager
@@ -61,8 +61,12 @@ public struct Content_Leads_multiPage: PublicFacingContent {
 
 public struct Content_Orders: PublicFacingContent {
     
-    @ObservedObject var manager : Manager
+    @ObservedObject public var manager : Manager
     @ObservedObject var selectionManager = SelectionManager()
+    
+    init(manager: Manager) {
+        self.manager = manager
+    }
     
     public var body: some View {
         List{
@@ -91,8 +95,12 @@ public struct Content_Orders: PublicFacingContent {
 
 public struct Content_Leads_singlePageSectioned: PublicFacingContent {
     
-    @ObservedObject var manager : Manager
+    @ObservedObject public var manager : Manager
     @ObservedObject var selectionManager = SelectionManager()
+    
+    init(manager: Manager) {
+        self.manager = manager
+    }
     
     public var body: some View {
         List{
