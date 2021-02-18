@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct Content_Analytics_multiPage : PublicFacingContent{
     
-    @ObservedObject var manager: Manager
+    @ObservedObject public var manager: Manager
     @State var analyticsIndex = 2
 
     public var body : some View {

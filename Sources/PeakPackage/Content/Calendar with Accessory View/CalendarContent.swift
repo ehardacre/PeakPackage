@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct Content_Calendar: PublicFacingContent{
     
-    @ObservedObject var manager: Manager
+    @ObservedObject public var manager: Manager
     
     public var body: some View {
         CallCalendarView(ascVisits: (manager as! AppointmentManager).appointments)

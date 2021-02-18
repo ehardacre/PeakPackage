@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct Content_Leads_multiPage: PublicFacingContent {
     
-    @ObservedObject var manager : Manager
+    @ObservedObject public var manager : Manager
     @State var selectionMan = SelectionManager()
     @State var leadsIndex = 0
     
