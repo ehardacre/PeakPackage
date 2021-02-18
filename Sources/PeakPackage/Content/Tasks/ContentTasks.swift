@@ -12,7 +12,7 @@ struct Content_Tasks: PublicFacingContent {
     @ObservedObject public var manager : Manager
     @State public var taskIndex = 0
 
-    init(manager: Manager) {
+    public init(manager: Manager) {
         self.manager = manager
     }
     

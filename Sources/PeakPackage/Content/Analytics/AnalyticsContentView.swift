@@ -13,7 +13,7 @@ public struct Content_Analytics_multiPage : PublicFacingContent{
     @ObservedObject public var manager: Manager
     @State public var analyticsIndex = 2
     
-    init(manager: Manager) {
+    public init(manager: Manager) {
         self.manager = manager
     }
 

@@ -13,7 +13,7 @@ public struct Content_Leads_multiPage: PublicFacingContent {
     @State var selectionMan = SelectionManager()
     @State var leadsIndex = 0
     
-    init(manager: Manager) {
+    public init(manager: Manager) {
         self.manager = manager
     }
     
@@ -64,7 +64,7 @@ public struct Content_Orders: PublicFacingContent {
     @ObservedObject public var manager : Manager
     @ObservedObject var selectionManager = SelectionManager()
     
-    init(manager: Manager) {
+    public init(manager: Manager) {
         self.manager = manager
     }
     
@@ -98,7 +98,7 @@ public struct Content_Leads_singlePageSectioned: PublicFacingContent {
     @ObservedObject public var manager : Manager
     @ObservedObject var selectionManager = SelectionManager()
     
-    init(manager: Manager) {
+    public init(manager: Manager) {
         self.manager = manager
     }
     

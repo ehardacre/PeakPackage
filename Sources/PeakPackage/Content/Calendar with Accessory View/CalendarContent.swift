@@ -11,7 +11,7 @@ public struct Content_Calendar: PublicFacingContent{
     
     @ObservedObject public var manager: Manager
     
-    init(manager: Manager) {
+    public init(manager: Manager) {
         self.manager = manager
     }
     
