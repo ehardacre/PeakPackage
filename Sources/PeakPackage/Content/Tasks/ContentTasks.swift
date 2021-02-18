@@ -16,7 +16,7 @@ public struct Content_Tasks: PublicFacingContent {
         self.manager = manager
     }
     
-    var body: some View {
+    public var body: some View {
         ZStack{
             //Only the admin users can view in progress tasks
             
