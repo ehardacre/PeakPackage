@@ -17,9 +17,8 @@ open class AppLayout {
     var TasksView_exists = false
     var LeadsView_exists = false
     
-    public init(apptype: ApplicationType){
-        printr("setting app type")
-        defaults.setApplicationType(apptype)
+    public init(){
+        
     }
     
     //each app layout must define the following

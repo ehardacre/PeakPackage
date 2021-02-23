@@ -39,6 +39,10 @@ public struct PeakApp {
         return AppDelegate.self
     }
     
+    public static func setAppType(_ type: ApplicationType) {
+        defaults.setApplicationType(type)
+    }
+    
     /**
      #Construct Scene
      constructs the scene based on the app type
