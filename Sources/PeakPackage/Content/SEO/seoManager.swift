@@ -23,7 +23,7 @@ open class SEOManager : Manager {
     @Published var rankings : [SearchRanking] = []
     
     //needs a public
-    open init(){}
+    open override init(){}
     
     static func loadRankings(){
         
