@@ -43,7 +43,7 @@ struct TitleView: View {
 }
 
 ///the content that will be shown for the dashboard
-struct Content_Dashboard : PublicFacingContent {
+public struct Content_Dashboard : PublicFacingContent {
     
     @ObservedObject public var manager: Manager
     
