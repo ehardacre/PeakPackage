@@ -9,19 +9,19 @@
 import SwiftUI
 import Introspect
 
-struct TitleView: View {
+public struct TitleView: View {
     
     var title: String
     var actionTitle: Text
     var action: () -> Void
     
-    init(_ title : String, actionTitle: Text = Text(""), action: @escaping ()->Void = {return}){
+    public init(_ title : String, actionTitle: Text = Text(""), action: @escaping ()->Void = {return}){
         self.title = title
         self.actionTitle = actionTitle
         self.action = action
     }
     
-    var body: some View {
+    public var body: some View {
         VStack {
             HStack {
                 Spacer()
@@ -63,32 +63,18 @@ public struct Content_Dashboard : PublicFacingContent {
 //        }
     }
 }
-//extension ContentView {
-//
-//    func DashboardContent() -> some View {
-//        ZStack{
-//            DashboardView(parent: self)
-//
-//        }.sheet(isPresented: $showProfile){
-//            ProfileView(showing: $showProfile)
-//                .introspectViewController{
-//                    $0.isModalInPresentation = showProfile
-//                }
-//        }
-//    }
-//}
 
 /**
  #Home View
  this is the dashboard view TODO: dashboard might be a more apt name
  */
 //MARK: Dashboard / HomeView
-struct DashboardView: View {
+public struct DashboardView: View {
     
     //the content view that hosts this dashboard
     @State var manager: DashboardManager
     
-    var body: some View {
+    public var body: some View {
         
         NavigationView{
             
@@ -140,7 +126,7 @@ public class DashboardManager : Manager {
     
     public override init(){}
     
-    func loadMessage(){
+    public func loadMessage(){
         if message == nil{
             DatabaseDelegate.getDashboardMessage(){
                 rex in
@@ -151,11 +137,11 @@ public class DashboardManager : Manager {
     }
 }
 
-struct DashboardMessageShortView : View{
+public struct DashboardMessageShortView : View{
     
     @State var manager : DashboardManager
     
-    var body: some View {
+    public var body: some View {
         HStack{
             Spacer()
             VStack{
