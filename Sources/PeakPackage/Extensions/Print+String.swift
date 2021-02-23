@@ -36,6 +36,13 @@ extension String {
     func makeNumeric() -> String{
         return self.components(separatedBy: CharacterSet.letters.union(CharacterSet.punctuationCharacters)).joined().replacingOccurrences(of: " ", with: "")
     }
+    
+    static func fromInt(_ number : Int?) -> String?{
+        if number != nil{
+            return String(number!)
+        }
+        return nil
+    }
 }
 
 extension String {

@@ -150,6 +150,15 @@ class Form_Element : Codable, Identifiable {
     }
 }
 
+class SearchRanking : Codable{
+    
+    var id : String
+    var keyword : String
+    var maps_ranking : String?
+    var organic_ranking : String?
+    
+}
+
 /**
  # Return Type
  This enum keeps track of the different return types from the database so that they can be easily referenced

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 //the swift format of a json object
-typealias JSON = [String : Any]
+public typealias JSON = [String : Any]
 
 //MARK: JSON Keys
 /**
@@ -33,6 +33,12 @@ enum JsonKeys : String{
     case month_analytics_key = "month_analytics_site_url"
     case year_analytics_key = "year_analytics_site_url"
     case day_analytics_key = "dashboard_analytics_site_url"
+    //seo ranking keys
+    case seo_url_key = "rank_franchise_url"
+    case seo_keyword_key = "rank_keyword"
+    case seo_mapranking_key = "maps_ranking"
+    case seo_organicranking_key = "organic_ranking"
+    case seo_site_key = "from_site"
     
     //MARK: PEAK CLIENTS
     //keys for recieving calls from the app
@@ -78,6 +84,7 @@ enum JsonKeys : String{
     case decline_lead_key = "delete_account_id"
     
     
+    
 }
 
 //MARK: JSON Format
@@ -85,7 +92,7 @@ enum JsonKeys : String{
     #JSON Format
      enumeration used for formating json for different database requests
  */
-enum JsonFormat {
+public enum JsonFormat {
     
     //MARK: ALL
     //used to check for user in login process
@@ -104,6 +111,8 @@ enum JsonFormat {
     case getWeekAnalytics(url: String)
     case getMonthAnalytics(url: String)
     case getYearAnalytics(url: String)
+    //seo
+    case setSEORankings(url: String, keyword: String, mapRanking: String?, organicRanking: String?, site: String)
     
     
     //MARK: PEAK CLIENTS
@@ -174,6 +183,12 @@ enum JsonFormat {
             retVal = [JsonKeys.year_analytics_key.rawValue: url]
         case .getDashboardAnalytics(let url):
             retVal = [JsonKeys.day_analytics_key.rawValue: url]
+        case .setSEORankings(let url, let keyword, let mapRanking, let organicRanking, let site):
+            retVal = [JsonKeys.seo_url_key.rawValue: url,
+                      JsonKeys.seo_keyword_key.rawValue: keyword,
+                      JsonKeys.seo_mapranking_key.rawValue: mapRanking,
+                      JsonKeys.seo_organicranking_key.rawValue: organicRanking,
+                      JsonKeys.seo_site_key.rawValue: site]
         
         
         //MARK: PEAK CLIENTS

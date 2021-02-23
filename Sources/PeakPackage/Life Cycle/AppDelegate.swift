@@ -53,17 +53,31 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotification
     
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        let systemSoundID: SystemSoundID = 1007
-        // to play sound
-        AudioServicesPlaySystemSound(systemSoundID)
-        NotificationCenter.default.post(name: Notification.Name("NotificationRecieved"), object: nil)
+        
+        
+//        let systemSoundID: SystemSoundID = 1007
+//        // to play sound
+//        AudioServicesPlaySystemSound(systemSoundID)
+//        NotificationCenter.default.post(name: Notification.Name("NotificationRecieved"), object: nil)
         
         completionHandler()
     }
     
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        NotificationCenter.default.post(name: Notification.Name("NotificationRecieved"), object: nil)
+        if let aps = userInfo["aps"] as? NSDictionary {
+            if let alert = aps["alert"] as? NSDictionary {
+                if let message = alert["message"] as? NSString {
+                    if message.contains("seoRanking"){
+                        seoManager.scrapeRankings()
+                        printr("scraping for Rankings...")
+                    }
+                }
+            } else if let alert = aps["getRankings"] as? NSString {
+                //run the curl function
+            }
+        }
+        //NotificationCenter.default.post(name: Notification.Name("NotificationRecieved"), object: nil)
         
     }
     

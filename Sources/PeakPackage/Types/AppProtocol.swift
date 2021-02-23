@@ -17,7 +17,9 @@ open class AppLayout {
     var TasksView_exists = false
     var LeadsView_exists = false
     
-    public init(){}
+    public init(apptype: ApplicationType){
+        defaults.setApplicationType(apptype)
+    }
     
     //each app layout must define the following
     open func AnalyticsView(manager: Manager?) -> AnyView? {

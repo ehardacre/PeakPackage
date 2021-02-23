@@ -11,6 +11,23 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func setSEORankings(keyword: String, mapRanking: Int?, organicRanking: Int?){
+        var site = ""
+        var url = defaults.franchiseURL() ?? ""
+        if defaults.getApplicationType() == .NHanceConnect{
+            site = "nhance"
+            url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
+        }else if defaults.getApplicationType() == .PeakClients{
+            //idk what to do here
+        }
+        let json = JsonFormat.setSEORankings(url: url, keyword: keyword, mapRanking: String.fromInt(mapRanking), organicRanking: String.fromInt(organicRanking), site: site).format()
+        
+        DatabaseDelegate.performSEORequest(with: json, ret: returnType.string){
+            rex in
+            printr("seo rankings set")
+        }
+    }
+    
     static func getAnalytics(for type: AnalyticsType_general, completion: @escaping (Any) -> Void){
         
         var json : [String: Any] = [:]
@@ -156,12 +173,18 @@ extension DatabaseDelegate {
  */
 struct DatabaseDelegate {
     
+    //the seo url for all seo calls
+    static var seo_url = "http://psgrank.wpengine.com/"
     
     //URL for apphook used for wordpress requests
     static private var str_url : String? = nil
     
     static func setURL(_ url: String){
         str_url = url
+    }
+    
+    static func performSEORequest(with: [String: Any], ret: returnType, completion: @escaping (Any) -> Void){
+        performRequest(with: with, ret: ret, replacementURL: seo_url, completion: completion)
     }
     
     /**
@@ -172,17 +195,20 @@ struct DatabaseDelegate {
      
             in order to run this function you need to have called DatabaseDelegate.setURL
      */
-    static func performRequest(with: [String: Any], ret: returnType, completion: @escaping (Any) -> Void){
+    static func performRequest(with: [String: Any], ret: returnType, replacementURL: String? = nil, completion: @escaping (Any) -> Void){
         
         //MARK: performRequest
         
+        //if there is a replacement url
+        var tempurl : String? = replacementURL != nil ? replacementURL : str_url
+        
         //check that url isn't nil
-        if str_url == nil {
+        if tempurl == nil {
             fatalError("The URL for the Database Delegate is empty. Please provide a URL for the data or the app is pointless. To do this you can call DatabaseDelegate.setURL")
         }
         
         //convert string to URL. Doesn't need error handling because it's constant
-        guard let url = URL(string: self.str_url!) else {
+        guard let url = URL(string: tempurl!) else {
             printr("The URL was unable to be cast into a correct URL. Please make sure that you provided a valid URL to the Database Delegate", tag: printTags.error)
             return
         }
