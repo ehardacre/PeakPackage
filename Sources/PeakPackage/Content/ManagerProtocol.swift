@@ -7,4 +7,4 @@
 
 import Foundation
 
-public class Manager : ObservableObject{}
+open class Manager : ObservableObject{}

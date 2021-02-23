@@ -15,7 +15,7 @@ struct scrapedSearchResult{
     var organic_ranking : Int?
 }
 
-public class SEOManager : Manager {
+open class SEOManager : Manager {
     
     //TODO: change terms eventually based on app type
     static var terms = ["cabinet refinishing", "cabinet refinisher", "cabinet painting", "cabinet painter", "cabinet refacing", "cabinet door replacement", "floor refinishing", "floor sanding", "cabinet color change", "custom color cabinets"]
@@ -23,7 +23,7 @@ public class SEOManager : Manager {
     @Published var rankings : [SearchRanking] = []
     
     //needs a public
-    public override init(){}
+    open init(){}
     
     static func loadRankings(){
         
