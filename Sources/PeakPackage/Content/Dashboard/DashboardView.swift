@@ -47,14 +47,13 @@ public struct Content_Dashboard : PublicFacingContent {
     
     @ObservedObject public var manager: Manager
     
-    init(manager: Manager) {
+    public init(manager: Manager) {
         self.manager = manager
     }
     
-    var body : some View {
+    public var body : some View {
         ZStack{
             DashboardView(manager: manager as! DashboardManager)
-            
         }
 //        .sheet(isPresented: manager.showProfile){
 //            ProfileView(showing: manager.showProfile)
