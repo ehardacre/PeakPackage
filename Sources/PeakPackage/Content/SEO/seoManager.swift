@@ -22,8 +22,8 @@ public class SEOManager : Manager {
     
     @Published var rankings : [SearchRanking] = []
     
-    //needs a public 
-    public init(){}
+    //needs a public
+    public override init(){}
     
     static func loadRankings(){
         
