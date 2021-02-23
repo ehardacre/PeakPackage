@@ -18,6 +18,7 @@ open class AppLayout {
     var LeadsView_exists = false
     
     public init(apptype: ApplicationType){
+        printr("setting app type")
         defaults.setApplicationType(apptype)
     }
     
