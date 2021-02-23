@@ -46,14 +46,20 @@ public struct TitleView: View {
 public struct Content_Dashboard : PublicFacingContent {
     
     @ObservedObject public var manager: Manager
+    @State public var parent: ContentView?
     
     public init(manager: Manager) {
         self.manager = manager
     }
     
+    public init(manager: Manager, parent: ContentView){
+        self.manager = manager
+        self.parent = parent
+    }
+    
     public var body : some View {
         ZStack{
-            DashboardView(manager: manager as! DashboardManager)
+            DashboardView(manager: manager as! DashboardManager, parent: parent!)
         }
 //        .sheet(isPresented: manager.showProfile){
 //            ProfileView(showing: manager.showProfile)
@@ -73,6 +79,7 @@ public struct DashboardView: View {
     
     //the content view that hosts this dashboard
     @State var manager: DashboardManager
+    @State var parent: ContentView
     
     public var body: some View {
         
@@ -84,11 +91,11 @@ public struct DashboardView: View {
                 
                 Divider()
                 
-               // LeadsShortView(parent: parent).listRowBackground(Color.clear)
+                LeadsShortView(parent: parent).listRowBackground(Color.clear)
                 
                 Divider()
                 
-                //AnalyticsShortView(parent: parent).listRowBackground(Color.clear)
+                AnalyticsShortView(parent: parent).listRowBackground(Color.clear)
                 
                 Divider()
                 

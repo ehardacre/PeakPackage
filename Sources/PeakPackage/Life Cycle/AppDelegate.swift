@@ -69,7 +69,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotification
             if let alert = aps["alert"] as? NSDictionary {
                 if let message = alert["message"] as? NSString {
                     if message.contains("seoRanking"){
-                        seoManager.scrapeRankings()
+                        SEOManager.scrapeRankings()
                         printr("scraping for Rankings...")
                     }
                 }

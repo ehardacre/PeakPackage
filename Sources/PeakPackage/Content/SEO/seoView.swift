@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+public struct Content_SEO : PublicFacingContent {
+    
+    @ObservedObject var manager : Manager
+    
+    public init(manager: Manager){
+        self.manager = manager
+    }
+    
+    public var body : some View {
+        seoView()
+    }
+    
+}
+
 struct seoView: View {
     var body: some View {
         NavigationView{

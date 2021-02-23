@@ -17,7 +17,7 @@ public enum tabs : Int{
     case leads = 1
     case dashboard = 2
     case calendar = 3
-    case ratings = 4
+    case seo = 4
     case tasks = 5
 }
 
@@ -33,7 +33,7 @@ protocol PublicFacingContent : View{
  */
 public struct ContentView: View {
     
-    var layout : AppLayout
+    //var layout : AppLayout
     @State var availableTabs : [tabs]
     
     //tab for switching tabs
@@ -49,10 +49,11 @@ public struct ContentView: View {
     @EnvironmentObject var dashboardManager : DashboardManager
     @EnvironmentObject var taskManager : TaskManager
     @EnvironmentObject var appointmentManager : AppointmentManager
+    @EnvironmentObject var seoManager : SEOManager
     
-    public init(layout: AppLayout) {
+    public init() {
         
-        self.layout = layout
+       //self.layout = layout
         _availableTabs = State(initialValue: [])
         availableTabs = determineTabs()
         // To remove all separators including the actual ones:
@@ -66,23 +67,28 @@ public struct ContentView: View {
     }
 
     func determineTabs() -> [tabs]{
-        var temptabs : [tabs] = []
-        if layout.DashboardView_exists{
-            temptabs.append(tabs.dashboard)
+//        var temptabs : [tabs] = []
+//        if layout.DashboardView_exists{
+//            temptabs.append(tabs.dashboard)
+//        }
+//        if layout.AnalyticsView_exists{
+//            temptabs.append(tabs.analytics)
+//        }
+//        if layout.CalendarView_exists{
+//            temptabs.append(tabs.calendar)
+//        }
+//        if layout.TasksView_exists{
+//            temptabs.append(tabs.tasks)
+//        }
+//        if layout.LeadsView_exists{
+//            temptabs.append(tabs.leads)
+//        }
+        if defaults.getApplicationType() == .NHanceConnect{
+            return [tabs.dashboard, tabs.analytics, tabs.leads, tabs.seo]
+        }else if defaults.getApplicationType() == .PeakClients{
+            return [tabs.dashboard, tabs.analytics, tabs.calendar, tabs.tasks, tabs.leads]
         }
-        if layout.AnalyticsView_exists{
-            temptabs.append(tabs.analytics)
-        }
-        if layout.CalendarView_exists{
-            temptabs.append(tabs.calendar)
-        }
-        if layout.TasksView_exists{
-            temptabs.append(tabs.tasks)
-        }
-        if layout.LeadsView_exists{
-            temptabs.append(tabs.leads)
-        }
-        return temptabs
+        return []
     }
     
     public var body: some View {
@@ -97,24 +103,36 @@ public struct ContentView: View {
                     //manage tabs
                     if tab == tabs.analytics {
 
-                        layout.AnalyticsView(manager: analyticsManager)
+//                        layout.AnalyticsView(manager: analyticsManager)
+                        Content_Analytics_multiPage(manager: analyticsManager)
 
                     }else if tab == tabs.leads{
 
-                        layout.LeadsView(manager: notificationManager)
+                       // layout.LeadsView(manager: notificationManager)
+                        if defaults.getApplicationType() == .NHanceConnect {
+                            Content_Leads_multiPage(manager: notificationManager)
+                        }else if defaults.getApplicationType() == .PeakClients {
+                            Content_Leads_singlePageSectioned(manager: notificationManager)
+                        }
                         
                     }else if tab == tabs.calendar{
 
-                        layout.CalendarView(manager: appointmentManager)
+                        //layout.CalendarView(manager: appointmentManager)
+                        Content_Calendar(manager: appointmentManager)
 
                     }else if tab == tabs.tasks{
                         
-                        layout.TasksView(manager: taskManager)
+                       // layout.TasksView(manager: taskManager)
+                        Content_Tasks(manager: taskManager)
 
                     }else if tab == tabs.dashboard{
 
-                        layout.DashboardView(manager: dashboardManager)
+                        //layout.DashboardView(manager: dashboardManager)
+                        Content_Dashboard(manager: dashboardManager, parent: self)
 
+                    }else if tab == tabs.seo{
+                        
+                        Content_SEO(manager: seoManager)
                     }
                 }
                 
