@@ -46,7 +46,7 @@ public struct ContentView: View {
     //data managers
     @EnvironmentObject var analyticsManager : AnalyticsManager
     @EnvironmentObject var notificationManager : NotificationManager
-    @EnvironmentObject var messageManager : DashboardMessageManager
+    @EnvironmentObject var dashboardManager : DashboardManager
     @EnvironmentObject var taskManager : TaskManager
     @EnvironmentObject var appointmentManager : AppointmentManager
     
@@ -113,7 +113,7 @@ public struct ContentView: View {
 
                     }else if tab == tabs.dashboard{
 
-                        layout.DashboardView(manager: messageManager)
+                        layout.DashboardView(manager: dashboardManager)
 
                     }
                 }

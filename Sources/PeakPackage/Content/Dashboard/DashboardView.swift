@@ -43,20 +43,41 @@ struct TitleView: View {
 }
 
 ///the content that will be shown for the dashboard
-extension ContentView {
+struct Content_Dashboard : PublicFacingContent {
     
-    func DashboardContent() -> some View {
+    @ObservedObject public var manager: Manager
+    
+    init(manager: Manager) {
+        self.manager = manager
+    }
+    
+    var body : some View {
         ZStack{
-            DashboardView(parent: self)
+            DashboardView(manager: manager as! DashboardManager)
             
-        }.sheet(isPresented: $showProfile){
-            ProfileView(showing: $showProfile)
-                .introspectViewController{
-                    $0.isModalInPresentation = showProfile
-                }
         }
+//        .sheet(isPresented: manager.showProfile){
+//            ProfileView(showing: manager.showProfile)
+//                .introspectViewController{
+//                    $0.isModalInPresentation = manager.showProfile
+//                }
+//        }
     }
 }
+//extension ContentView {
+//
+//    func DashboardContent() -> some View {
+//        ZStack{
+//            DashboardView(parent: self)
+//
+//        }.sheet(isPresented: $showProfile){
+//            ProfileView(showing: $showProfile)
+//                .introspectViewController{
+//                    $0.isModalInPresentation = showProfile
+//                }
+//        }
+//    }
+//}
 
 /**
  #Home View
@@ -66,7 +87,7 @@ extension ContentView {
 struct DashboardView: View {
     
     //the content view that hosts this dashboard
-    var parent: ContentView
+    @State var manager: DashboardManager
     
     var body: some View {
         
@@ -74,15 +95,15 @@ struct DashboardView: View {
             
             List{
                 
-                DashboardMessageShortView(parent: parent)
+                DashboardMessageShortView(manager: manager)
                 
                 Divider()
                 
-                LeadsShortView(parent: parent).listRowBackground(Color.clear)
+               // LeadsShortView(parent: parent).listRowBackground(Color.clear)
                 
                 Divider()
                 
-                AnalyticsShortView(parent: parent).listRowBackground(Color.clear)
+                //AnalyticsShortView(parent: parent).listRowBackground(Color.clear)
                 
                 Divider()
                 
@@ -93,7 +114,7 @@ struct DashboardView: View {
             .navigationBarItems(trailing:
             Button(action:{
                 if defaults.admin{
-                self.parent.showProfile = true
+                self.manager.showProfile = true
                 }
             }){
                 if defaults.admin{
@@ -113,40 +134,39 @@ extension View {
     }
 }
 
-public class DashboardMessageManager : Manager {
+public class DashboardManager : Manager {
     
+    @Published var showProfile = false
     @Published var message : DashboardMessage?
     
     public override init(){}
     
     func loadMessage(){
         if message == nil{
-            let json = JsonFormat.getDashboardMessage.format()
-            printr(json,tag: printTags.error)
-            DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
+            DatabaseDelegate.getDashboardMessage(){
                 rex in
                 let mes = rex as! DashboardMessage
                 self.message = mes
-            })
+            }
         }
     }
 }
 
 struct DashboardMessageShortView : View{
     
-    @State var parent : ContentView
+    @State var manager : DashboardManager
     
     var body: some View {
         HStack{
             Spacer()
             VStack{
                 
-                Text(parent.messageManager.message?.dashMessageTitle ?? "").font(.title3).bold().multilineTextAlignment(.center).foregroundColor(.white)
-                Text(parent.messageManager.message?.dashMessageBody ?? "").font(.body).foregroundColor(.white)
+                Text(manager.message?.dashMessageTitle ?? "").font(.title3).bold().multilineTextAlignment(.center).foregroundColor(.white)
+                Text(manager.message?.dashMessageBody ?? "").font(.body).foregroundColor(.white)
                 
-            }.padding(parent.messageManager.message != nil ? 30 : 0).background(parent.messageManager.message != nil ? Color.main : Color.clear).cornerRadius(20).onAppear{
+            }.padding(manager.message != nil ? 30 : 0).background(manager.message != nil ? Color.main : Color.clear).cornerRadius(20).onAppear{
                 
-                parent.messageManager.loadMessage()
+                manager.loadMessage()
                 
             }
             Spacer()
