@@ -43,23 +43,15 @@ public struct TitleView: View {
 }
 
 ///the content that will be shown for the dashboard
-public struct Content_Dashboard : PublicFacingContent {
+//could not conform to Public Facing Content
+public struct Content_Dashboard : View {
     
     @ObservedObject public var manager: Manager
-    @State public var parent: ContentView?
-    
-    public init(manager: Manager) {
-        self.manager = manager
-    }
-    
-    public init(manager: Manager, parent: ContentView){
-        self.manager = manager
-        self.parent = parent
-    }
+    @State public var parent: ContentView
     
     public var body : some View {
         ZStack{
-            DashboardView(manager: manager as! DashboardManager, parent: parent!)
+            DashboardView(manager: manager as! DashboardManager, parent: parent)
         }
 //        .sheet(isPresented: manager.showProfile){
 //            ProfileView(showing: manager.showProfile)
