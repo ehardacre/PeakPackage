@@ -51,11 +51,10 @@ public struct ContentView: View {
     @EnvironmentObject var appointmentManager : AppointmentManager
     @EnvironmentObject var seoManager : SEOManager
     
-    public init() {
+    public init(tabs : [tabs]) {
+
+        availableTabs = tabs
         
-       //self.layout = layout
-        _availableTabs = State(initialValue: [])
-        availableTabs = determineTabs()
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none
         
@@ -66,30 +65,30 @@ public struct ContentView: View {
         
     }
 
-    func determineTabs() -> [tabs]{
-//        var temptabs : [tabs] = []
-//        if layout.DashboardView_exists{
-//            temptabs.append(tabs.dashboard)
+//    func determineTabs() -> [tabs]{
+////        var temptabs : [tabs] = []
+////        if layout.DashboardView_exists{
+////            temptabs.append(tabs.dashboard)
+////        }
+////        if layout.AnalyticsView_exists{
+////            temptabs.append(tabs.analytics)
+////        }
+////        if layout.CalendarView_exists{
+////            temptabs.append(tabs.calendar)
+////        }
+////        if layout.TasksView_exists{
+////            temptabs.append(tabs.tasks)
+////        }
+////        if layout.LeadsView_exists{
+////            temptabs.append(tabs.leads)
+////        }
+//        if defaults.getApplicationType() == .NHanceConnect{
+//            return [tabs.dashboard, tabs.analytics, tabs.leads, tabs.seo]
+//        }else if defaults.getApplicationType() == .PeakClients{
+//            return [tabs.dashboard, tabs.analytics, tabs.calendar, tabs.tasks, tabs.leads]
 //        }
-//        if layout.AnalyticsView_exists{
-//            temptabs.append(tabs.analytics)
-//        }
-//        if layout.CalendarView_exists{
-//            temptabs.append(tabs.calendar)
-//        }
-//        if layout.TasksView_exists{
-//            temptabs.append(tabs.tasks)
-//        }
-//        if layout.LeadsView_exists{
-//            temptabs.append(tabs.leads)
-//        }
-        if defaults.getApplicationType() == .NHanceConnect{
-            return [tabs.dashboard, tabs.analytics, tabs.leads, tabs.seo]
-        }else if defaults.getApplicationType() == .PeakClients{
-            return [tabs.dashboard, tabs.analytics, tabs.calendar, tabs.tasks, tabs.leads]
-        }
-        return []
-    }
+//        return []
+//    }
     
     public var body: some View {
         
