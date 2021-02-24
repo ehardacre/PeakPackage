@@ -53,7 +53,7 @@ public struct ContentView: View {
     
     public init(tabs : [tabs]) {
 
-        availableTabs = tabs
+        _availableTabs = State(initialValue: tabs)
         
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none
