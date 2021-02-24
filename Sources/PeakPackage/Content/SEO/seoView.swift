@@ -37,15 +37,24 @@ struct seoView: View {
                     Spacer()
                     Text("Rank").font(.footnote).foregroundColor(.darkAccent).opacity(0.5)
                 }
-                ForEach(manager.rankings, id: \.id){ rank in
-                    
-                    HStack{
-                        Text(rank.term)
-                        Spacer()
-                        Text(rank.organic_rank)
-                        Image(systemName: rank.change == nil ? noChange : rank.change! ? upSymbol : downSymbol)
+                if manager.rankings.count > 0{
+                    ForEach(manager.rankings, id: \.id){ rank in
+                        
+                        HStack{
+                            Text(rank.term)
+                            Spacer()
+                            Text(rank.organic_rank)
+                            Image(systemName: rank.change == nil ? noChange : rank.change! ? upSymbol : downSymbol)
+                        }
+                        
                     }
-                    
+                }else{
+                    HStack{
+                        Spacer()
+                        Text("Not enough data").bold()
+                        Text("Check in next week to view your site's SEO rankings").font(.footnote)
+                        Spacer()
+                    }
                 }
             }
             .listStyle(SidebarListStyle())
