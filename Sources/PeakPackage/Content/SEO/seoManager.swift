@@ -76,7 +76,7 @@ public class SEOManager : Manager {
         for index in 0..<links.count{
             let result = links[index]
             if result.contains(str){
-                return scrapedSearchResult(term: searchTerm.replacingCharacters(in: "+", with: " "), map_ranking: -1, organic_ranking: index+1)
+                return scrapedSearchResult(term: searchTerm.replacingOccurrences(of: "+", with: " "), map_ranking: -1, organic_ranking: index+1)
             }
         }
         
