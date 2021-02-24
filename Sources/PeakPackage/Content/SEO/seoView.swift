@@ -26,9 +26,9 @@ struct seoView: View {
         NavigationView{
             List{
                 HStack{
-                    Text("Search Term")//.bold().font(.footnote).foregroundColor(.lightAccent)
+                    Text("Search Term").bold().font(.footnote).foregroundColor(.darkAccent).opacity(0.5)
                     Spacer()
-                    Text("Rank")//.font(.footnote).foregroundColor(.lightAccent)
+                    Text("Rank").font(.footnote).foregroundColor(.darkAccent).opacity(0.5)
                 }
                 HStack{
                     Text("Cabinet Refinishing")
