@@ -174,7 +174,7 @@ extension DatabaseDelegate {
 struct DatabaseDelegate {
     
     //the seo url for all seo calls
-    static var seo_url = "http://psgrank.wpengine.com/"
+    static var seo_url = "https://psgrank.wpengine.com/"
     
     //URL for apphook used for wordpress requests
     static private var str_url : String? = nil
