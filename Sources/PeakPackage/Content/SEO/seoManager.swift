@@ -46,7 +46,15 @@ public class SEOManager : Manager {
     }
     
     func calculateChange(){
-        if weekbyweek.count > 1{
+        if weekbyweek.count == 1{
+            let first = weekbyweek.first!
+            for searchTerm in first.list{
+                let result = viewableSearchResult(term: searchTerm.keyword,
+                                                  organic_rank: searchTerm.organic_ranking ?? "-",
+                                                  change: nil)
+                rankings.append(result)
+            }
+        }else if weekbyweek.count > 1{
             let first = weekbyweek.first!
             let last = weekbyweek.last!
             let timeframe = Int(last.week.digits)

@@ -49,7 +49,6 @@ struct seoView: View {
                 }
             }
             .listStyle(SidebarListStyle())
-            .cornerRadius(10.0)
             .navigationTitle("SEO Rankings")
         }
     }
