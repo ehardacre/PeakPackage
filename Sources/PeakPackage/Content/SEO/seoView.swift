@@ -25,6 +25,10 @@ struct seoView: View {
     
    @State var manager : SEOManager
     
+    let upSymbol = "arrow.up.circle.fill"
+    let downSymbol = "arrow.down.circle.fill"
+    let noChange = "circle.fill"
+    
     var body: some View {
         NavigationView{
             List{
@@ -36,32 +40,16 @@ struct seoView: View {
                 ForEach(manager.rankings, id: \.id){ rank in
                     
                     HStack{
-                        Text(rank.keyword)
+                        Text(rank.term)
                         Spacer()
-                        Text(rank.organic_ranking ?? "-")
+                        Text(rank.organic_rank)
+                        Image(systemName: rank.change == nil ? noChange : rank.change! ? upSymbol : downSymbol)
                     }
                     
                 }
-//                HStack{
-//                    Text("Cabinet Refinishing")
-//                    Spacer()
-//                    Text("10")
-//                    Image(systemName: "arrow.up.circle.fill").foregroundColor(.green)
-//                }
-//
-//                HStack{
-//                    Text("NHance")
-//                    Spacer()
-//                    Text("5")
-//                    Image(systemName: "arrow.down.circle.fill").foregroundColor(.red)
-//                }
-                Button(action: {
-                    SEOManager.scrapeRankings()
-                }, label: {
-                    Text("Run Scrape")
-                })
             }
             .listStyle(SidebarListStyle())
+            .cornerRadius(10.0)
             .navigationTitle("SEO Rankings")
         }
     }

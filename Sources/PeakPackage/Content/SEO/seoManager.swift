@@ -15,12 +15,22 @@ struct scrapedSearchResult{
     var organic_ranking : Int?
 }
 
+struct viewableSearchResult{
+    
+    var id = UUID()
+    var term : String
+    var organic_rank : String
+    var change : Bool?
+    
+}
+
 public class SEOManager : Manager {
     
     //TODO: change terms eventually based on app type
     static var terms = ["cabinet refinishing", "cabinet refinisher", "cabinet painting", "cabinet painter", "cabinet refacing", "cabinet door replacement", "floor refinishing", "floor sanding", "cabinet color change", "custom color cabinets"]
     
-    @Published var rankings : [SearchRanking] = []
+    @Published var rankings : [viewableSearchResult] = []
+    @Published var weekbyweek : [SearchRankingforTime] = []
     
     //needs a public
     public override init(){}
@@ -28,9 +38,47 @@ public class SEOManager : Manager {
     func loadRankings(){
         DatabaseDelegate.getSEORankings(completion: {
             rex in
-            let rankList = rex as! [SearchRanking]
-            self.rankings = rankList
+            
+            let rankList = rex as! [SearchRankingforTime]
+            self.weekbyweek = rankList
+            self.calculateChange()
         })
+    }
+    
+    func calculateChange(){
+        if weekbyweek.count > 1{
+            let first = weekbyweek.first!
+            let last = weekbyweek.last!
+            let timeframe = Int(last.week.digits)
+            for searchTerm in first.list{
+                for searchTerm2 in last.list{
+                    if searchTerm.keyword == searchTerm2.keyword{
+                        var change : Bool? = nil
+                        if searchTerm.organic_ranking != nil && searchTerm2.organic_ranking != nil{
+                            //both have rankings
+                            var rank1 = Int(searchTerm.organic_ranking!) ?? 0
+                            var rank2 = Int(searchTerm2.organic_ranking!) ?? 0
+                            change = rank1 == rank2 ? nil : rank1 > rank2
+        
+                        }else if searchTerm.organic_ranking == nil && searchTerm2.organic_ranking == nil{
+                            //both don't have ranking
+                        }else if searchTerm.organic_ranking != nil{
+                            //went up
+                            change = true
+                        }else{
+                            //went down
+                            change = false
+                        }
+                        let result = viewableSearchResult(term: searchTerm.keyword,
+                                                          organic_rank: searchTerm.organic_ranking ?? "-",
+                                                          change: change)
+                        rankings.append(result)
+                    }
+                }
+            }
+        }else{
+            printr("no SEO data")
+        }
     }
     
     static func scrapeRankings(){

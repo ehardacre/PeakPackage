@@ -150,6 +150,12 @@ class Form_Element : Codable, Identifiable {
     }
 }
 
+class SearchRankingforTime : Codable{
+    
+    var week : String
+    var list : [SearchRanking]
+}
+
 class SearchRanking : Codable{
     
     var id : String

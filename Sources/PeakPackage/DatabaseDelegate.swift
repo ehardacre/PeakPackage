@@ -300,7 +300,7 @@ struct DatabaseDelegate {
         case returnType.dashboardMessage:
             rex = try? JSONDecoder().decode(DashboardMessage.self, from: data)
         case returnType.searchRank:
-            rex = try? JSONDecoder().decode([SearchRanking].self, from: data)
+            rex = try? JSONDecoder().decode([SearchRankingforTime].self, from: data)
         default:
             rex = String.init(data: data, encoding: .ascii)!
         }
