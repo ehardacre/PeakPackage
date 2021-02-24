@@ -16,12 +16,15 @@ public struct Content_SEO : PublicFacingContent {
     }
     
     public var body : some View {
-        seoView()
+        seoView(manager: manager as! SEOManager)
     }
     
 }
 
 struct seoView: View {
+    
+   @State var manager : SEOManager
+    
     var body: some View {
         NavigationView{
             List{
@@ -30,19 +33,28 @@ struct seoView: View {
                     Spacer()
                     Text("Rank").font(.footnote).foregroundColor(.darkAccent).opacity(0.5)
                 }
-                HStack{
-                    Text("Cabinet Refinishing")
-                    Spacer()
-                    Text("10")
-                    Image(systemName: "arrow.up.circle.fill").foregroundColor(.green)
+                ForEach(manager.rankings, id: \.id){ rank in
+                    
+                    HStack{
+                        Text(rank.keyword)
+                        Spacer()
+                        Text(rank.organic_ranking ?? "-")
+                    }
+                    
                 }
-                
-                HStack{
-                    Text("NHance")
-                    Spacer()
-                    Text("5")
-                    Image(systemName: "arrow.down.circle.fill").foregroundColor(.red)
-                }
+//                HStack{
+//                    Text("Cabinet Refinishing")
+//                    Spacer()
+//                    Text("10")
+//                    Image(systemName: "arrow.up.circle.fill").foregroundColor(.green)
+//                }
+//
+//                HStack{
+//                    Text("NHance")
+//                    Spacer()
+//                    Text("5")
+//                    Image(systemName: "arrow.down.circle.fill").foregroundColor(.red)
+//                }
                 Button(action: {
                     SEOManager.scrapeRankings()
                 }, label: {
@@ -55,8 +67,8 @@ struct seoView: View {
     }
 }
 
-struct seoView_Previews: PreviewProvider {
-    static var previews: some View {
-        seoView()
-    }
-}
+//struct seoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        seoView()
+//    }
+//}

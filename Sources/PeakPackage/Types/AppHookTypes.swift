@@ -39,6 +39,7 @@ enum JsonKeys : String{
     case seo_mapranking_key = "maps_ranking"
     case seo_organicranking_key = "organic_ranking"
     case seo_site_key = "from_site"
+    case seo_get_key = "get_ranks_url"
     
     //MARK: PEAK CLIENTS
     //keys for recieving calls from the app
@@ -113,6 +114,7 @@ public enum JsonFormat {
     case getYearAnalytics(url: String)
     //seo
     case setSEORankings(url: String, keyword: String, mapRanking: String, organicRanking: String, site: String)
+    case getSEORankings(url: String)
     
     
     //MARK: PEAK CLIENTS
@@ -189,6 +191,8 @@ public enum JsonFormat {
                       JsonKeys.seo_mapranking_key.rawValue: mapRanking,
                       JsonKeys.seo_organicranking_key.rawValue: organicRanking,
                       JsonKeys.seo_site_key.rawValue: site]
+        case .getSEORankings(let url):
+            retVal = [JsonKeys.seo_get_key.rawValue: url]
         
         
         //MARK: PEAK CLIENTS

@@ -25,8 +25,12 @@ public class SEOManager : Manager {
     //needs a public
     public override init(){}
     
-    static func loadRankings(){
-        
+    func loadRankings(){
+        DatabaseDelegate.getSEORankings(completion: {
+            rex in
+            let rankList = rex as! [SearchRanking]
+            self.rankings = rankList
+        })
     }
     
     static func scrapeRankings(){

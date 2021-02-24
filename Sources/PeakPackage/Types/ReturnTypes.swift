@@ -176,4 +176,5 @@ enum returnType {
     case leads
     case string
     case dashboardMessage
+    case searchRank
 }

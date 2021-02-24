@@ -11,10 +11,28 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func getSEORankings(completion: @escaping (Any) -> Void){
+        var url = defaults.franchiseURL() ?? ""
+        if defaults.getApplicationType() == .NHanceConnect{
+            url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
+        }else if defaults.getApplicationType() == .PeakClients{
+            //idk what to do here
+        }
+        
+        let json = JsonFormat.getSEORankings(url: url).format()
+        
+        DatabaseDelegate.performSEORequest(with: json, ret: .searchRank){
+            rex in
+            completion(rex)
+        }
+    }
+    
     static func setSEORankings(keyword: String, mapRanking: Int?, organicRanking: Int?){
         var site = ""
         var url = defaults.franchiseURL() ?? ""
-        if defaults.getApplicationType() == .NHanceConnect{
+        if defaults.admin {
+            url = "admin test"
+        }else if defaults.getApplicationType() == .NHanceConnect{
             site = "nhance"
             url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
         }else if defaults.getApplicationType() == .PeakClients{
@@ -281,6 +299,8 @@ struct DatabaseDelegate {
             rex = try? JSONDecoder().decode([Lead].self, from: data)
         case returnType.dashboardMessage:
             rex = try? JSONDecoder().decode(DashboardMessage.self, from: data)
+        case returnType.searchRank:
+            rex = try? JSONDecoder().decode([SearchRanking].self, from: data)
         default:
             rex = String.init(data: data, encoding: .ascii)!
         }
