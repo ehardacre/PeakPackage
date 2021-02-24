@@ -35,7 +35,7 @@ enum JsonKeys : String{
     case day_analytics_key = "dashboard_analytics_site_url"
     //seo ranking keys
     case seo_url_key = "rank_franchise_url"
-    case seo_keyword_key = "rank_keyword"
+    case seo_keyword_key = "keyword"
     case seo_mapranking_key = "maps_ranking"
     case seo_organicranking_key = "organic_ranking"
     case seo_site_key = "from_site"
