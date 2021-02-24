@@ -112,7 +112,7 @@ public enum JsonFormat {
     case getMonthAnalytics(url: String)
     case getYearAnalytics(url: String)
     //seo
-    case setSEORankings(url: String, keyword: String, mapRanking: String?, organicRanking: String?, site: String)
+    case setSEORankings(url: String, keyword: String, mapRanking: String, organicRanking: String, site: String)
     
     
     //MARK: PEAK CLIENTS

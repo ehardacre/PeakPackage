@@ -20,7 +20,7 @@ extension DatabaseDelegate {
         }else if defaults.getApplicationType() == .PeakClients{
             //idk what to do here
         }
-        let json = JsonFormat.setSEORankings(url: url, keyword: keyword, mapRanking: String.fromInt(mapRanking), organicRanking: String.fromInt(organicRanking), site: site).format()
+        let json = JsonFormat.setSEORankings(url: url, keyword: keyword, mapRanking: String.fromInt(mapRanking)!, organicRanking: String.fromInt(organicRanking)!, site: site).format()
         
         DatabaseDelegate.performSEORequest(with: json, ret: returnType.string){
             rex in
