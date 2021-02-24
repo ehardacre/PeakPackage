@@ -76,11 +76,11 @@ public class SEOManager : Manager {
         for index in 0..<links.count{
             let result = links[index]
             if result.contains(str){
-                return scrapedSearchResult(term: searchTerm, map_ranking: nil, organic_ranking: index+1)
+                return scrapedSearchResult(term: searchTerm, map_ranking: -1, organic_ranking: index+1)
             }
         }
         
-        return scrapedSearchResult(term: searchTerm, map_ranking: nil, organic_ranking: nil)
+        return scrapedSearchResult(term: searchTerm, map_ranking: -1, organic_ranking: -1)
     }
 
     static func parseHTML(url : URL) -> String{
