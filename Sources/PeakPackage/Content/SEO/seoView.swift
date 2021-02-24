@@ -43,6 +43,11 @@ struct seoView: View {
                     Text("5")
                     Image(systemName: "arrow.down.circle.fill").foregroundColor(.red)
                 }
+                Button(action: {
+                    SEOManager.scrapeRankings()
+                }, label: {
+                    Text("Run Scrape")
+                })
             }
             .listStyle(SidebarListStyle())
             .navigationTitle("SEO Rankings")
