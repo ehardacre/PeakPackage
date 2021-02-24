@@ -73,14 +73,15 @@ public class SEOManager : Manager {
 
     static func getSearchPosition(of str: String, in html: String, searchTerm: String) -> scrapedSearchResult{
         let links = matches(for: "www.[^ ]*.com", in: html)
+        let tempterm = searchTerm.replacingOccurrences(of: "+", with: " ")
         for index in 0..<links.count{
             let result = links[index]
             if result.contains(str){
-                return scrapedSearchResult(term: searchTerm.replacingOccurrences(of: "+", with: " "), map_ranking: -1, organic_ranking: index+1)
+                return scrapedSearchResult(term: tempterm, map_ranking: -1, organic_ranking: index+1)
             }
         }
         
-        return scrapedSearchResult(term: searchTerm, map_ranking: -1, organic_ranking: -1)
+        return scrapedSearchResult(term: tempterm, map_ranking: -1, organic_ranking: -1)
     }
 
     static func parseHTML(url : URL) -> String{
