@@ -52,7 +52,7 @@ struct seoView: View {
                     HStack{
                         Spacer()
                         VStack{
-                            Text("Not enough data").bold().foregroundColor(.lightAccent).padding(.top,20)
+                            Text("Not enough data").bold().foregroundColor(.lightAccent)
                             Text("Check in next week to view your site's SEO rankings").font(.footnote).foregroundColor(.lightAccent)
                         }
                         Spacer()
