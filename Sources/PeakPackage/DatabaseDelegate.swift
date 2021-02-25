@@ -12,7 +12,7 @@ import SwiftUI
 extension DatabaseDelegate {
     
     static func getProfiles(completion: @escaping (Any) -> Void){
-        var json = JsonFormat.getProfiles().format()
+        var json = JsonFormat.getProfiles.format()
         DatabaseDelegate.performRequest(with: json, ret: .franchiseList, completion: {
             rex in
             completion(rex)

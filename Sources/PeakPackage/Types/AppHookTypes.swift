@@ -147,7 +147,7 @@ public enum JsonFormat {
     //get leads from on-trac
     case getLeads_nhance(type: String, id: String)
     //get the list of profiles
-    case getProfiles()
+    case getProfiles
     
     
 
@@ -253,7 +253,7 @@ public enum JsonFormat {
             retVal = [JsonKeys.leadsFranchise_key.rawValue: franchiseId, JsonKeys.decline_lead_key.rawValue: accountId]
         case .getLeads_nhance(let type, let id):
             retVal = [JsonKeys.leadsType_key.rawValue: type, JsonKeys.leadsFranchise_key.rawValue: id]
-        case.getProfiles():
+        case.getProfiles:
             retVal = [JsonKeys.get_profiles_key.rawValue : "get"]
             
             //should never run

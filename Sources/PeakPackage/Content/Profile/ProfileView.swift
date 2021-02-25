@@ -35,6 +35,8 @@ struct ProfileView: View {
     
     @Binding var showing : Bool
     
+    @ObservedObject var profiles : [Franchise] = []
+    
     var body: some View {
         
         GeometryReader{ geo in
@@ -67,7 +69,9 @@ struct ProfileView: View {
 //                    }.listRowBackground(Color.clear)
                     
                     if defaults.admin {
-                        SwitchProfileView()
+                        SwitchProfileView(profiles: profiles).onAppear{
+                            loadProfiles()
+                        }
                         LogView(logs: defaults.getLogs()).frame(height: 400)
                     }
                     
@@ -130,6 +134,13 @@ struct ProfileView: View {
                     self.confirmation = false
                     self.editting = false
             }), secondaryButton: .cancel())
+        })
+    }
+    
+    func loadProfiles(){
+        DatabaseDelegate.getProfiles(completion: {
+            rex in
+            profiles = rex as! [Franchise]
         })
     }
     
