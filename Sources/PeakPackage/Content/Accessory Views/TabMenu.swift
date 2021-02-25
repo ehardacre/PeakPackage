@@ -16,8 +16,10 @@ public struct TabMenu : View {
     @Binding var availableTabs : [tabs]
     var notificationCount : Int
     
+    
+    //rectangle.stack.person.crop.fill, magnifyingglass.circle.fill, chart.bar.fill
     let images : [tabs : String] =
-        [ tabs.analytics : "chart.bar.fill", tabs.calendar : "calendar", tabs.leads : "rectangle.stack.person.crop.fill", tabs.seo : "magnifyingglass.circle.fill", tabs.tasks : "list.dash"]
+        [ tabs.analytics : "chart.bar.xaxis", tabs.calendar : "calendar", tabs.leads : "person.crop.square.fill.and.at.rectangle", tabs.seo : "filemenu.and.selection", tabs.tasks : "list.dash"]
     
     public var body : some View{
         HStack{

@@ -51,8 +51,10 @@ struct seoView: View {
                 }else{
                     HStack{
                         Spacer()
-                        Text("Not enough data").bold()
-                        Text("Check in next week to view your site's SEO rankings").font(.footnote)
+                        VStack{
+                            Text("Not enough data").bold()
+                            Text("Check in next week to view your site's SEO rankings").font(.footnote)
+                        }
                         Spacer()
                     }
                 }
