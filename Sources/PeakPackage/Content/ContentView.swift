@@ -50,6 +50,7 @@ public struct ContentView: View {
     @EnvironmentObject var taskManager : TaskManager
     @EnvironmentObject var appointmentManager : AppointmentManager
     @EnvironmentObject var seoManager : SEOManager
+    @EnvironmentObject var profileManager : ProfileManager
     
     public init(tabs : [tabs]) {
 
@@ -141,6 +142,7 @@ public struct ContentView: View {
             TabMenu(tab: self.$tab, availableTabs: self.$availableTabs, notificationCount: notificationManager.newNotifications).shadow(color: Color.darkAccent.opacity(0.1), radius: 4, y: -4).frame(maxHeight: 70)
                 .onAppear{
                     
+                    profileManager.loadProfiles()
                     analyticsManager.loadAnalytics(for: .Day)
                     analyticsManager.loadAnalytics(for: .Week)
                     notificationManager.loadNotifications()

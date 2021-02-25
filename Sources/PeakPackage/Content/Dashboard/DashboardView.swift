@@ -67,7 +67,6 @@ public struct DashboardView: View {
     @State var manager: DashboardManager
     @State var parent: ContentView
     @State var showProfile = false
-    @State var allProfiles : [Franchise] = []
     
     public var body: some View {
         
@@ -104,25 +103,16 @@ public struct DashboardView: View {
             
         //NAVIGATION VIEW end
         }
-        .onAppear{
-            getProfiles()
-        }
         .background(Color.clear)
         .stackOnlyNavigationView()
         .sheet(isPresented: $showProfile){
-            ProfileView(showing: $showProfile, profiles: allProfiles)
+            ProfileView(showing: $showProfile, manager: parent.profileManager)
                 .introspectViewController{
                     $0.isModalInPresentation = showProfile
                 }
         }
     }
     
-    func getProfiles(){
-        DatabaseDelegate.getProfiles(completion: {
-            rex in
-            allProfiles = rex as! [Franchise]
-        })
-    }
 }
 
 extension View {

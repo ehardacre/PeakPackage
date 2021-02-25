@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SwitchProfileView: View {
     
-    @Binding var profiles : [Franchise]
+    @State var profiles : [Franchise]
     @ObservedObject var selectionManager = SelectionManager()
     
     var body: some View {
