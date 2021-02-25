@@ -83,7 +83,8 @@ enum JsonKeys : String{
     //accept and decline on-trac leads
     case accept_lead_key = "accept_weblead_id"
     case decline_lead_key = "delete_account_id"
-    
+    //getting the list of profiles
+    case get_profiles_key = "franchise_ids_and_urls"
     
     
 }
@@ -145,6 +146,8 @@ public enum JsonFormat {
     case declineLead(franchiseId: String, accountId: String)
     //get leads from on-trac
     case getLeads_nhance(type: String, id: String)
+    //get the list of profiles
+    case getProfiles()
     
     
 
@@ -250,6 +253,8 @@ public enum JsonFormat {
             retVal = [JsonKeys.leadsFranchise_key.rawValue: franchiseId, JsonKeys.decline_lead_key.rawValue: accountId]
         case .getLeads_nhance(let type, let id):
             retVal = [JsonKeys.leadsType_key.rawValue: type, JsonKeys.leadsFranchise_key.rawValue: id]
+        case.getProfiles():
+            retVal = [JsonKeys.get_profiles_key.rawValue : "get"]
             
             //should never run
         default:
