@@ -35,7 +35,7 @@ struct ProfileView: View {
     
     @Binding var showing : Bool
     
-    @ObservedObject var profiles : [Franchise] = []
+    @State var profiles : [Franchise] = []
     
     var body: some View {
         
@@ -69,7 +69,7 @@ struct ProfileView: View {
 //                    }.listRowBackground(Color.clear)
                     
                     if defaults.admin {
-                        SwitchProfileView(profiles: profiles).onAppear{
+                        SwitchProfileView(profiles: $profiles).onAppear{
                             loadProfiles()
                         }
                         LogView(logs: defaults.getLogs()).frame(height: 400)
