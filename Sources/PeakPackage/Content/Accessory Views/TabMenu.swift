@@ -19,7 +19,7 @@ public struct TabMenu : View {
     
     //rectangle.stack.person.crop.fill, magnifyingglass.circle.fill, chart.bar.fill
     let images : [tabs : String] =
-        [ tabs.analytics : "chart.bar.fill", tabs.calendar : "calendar", tabs.leads : "rectangle.stack.person.crop.fill", tabs.seo : "arrow.up.arrow.down.square.fill", tabs.tasks : "list.dash"]
+        [ tabs.analytics : "chart.bar.fill", tabs.calendar : "calendar", tabs.leads : "rectangle.stack.person.crop.fill", tabs.seo : "arrow.up.forward.square.fill", tabs.tasks : "list.dash"]
     
     public var body : some View{
         HStack{
