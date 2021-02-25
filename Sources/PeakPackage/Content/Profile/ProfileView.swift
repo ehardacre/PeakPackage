@@ -69,7 +69,7 @@ struct ProfileView: View {
 //                    }.listRowBackground(Color.clear)
                     
                     if defaults.admin {
-                        SwitchProfileView(profiles: manager.profiles)
+                        SwitchProfileView(profiles: manager.profiles).frame(height: 400).cornerRadius(10.0)
                         LogView(logs: defaults.getLogs()).frame(height: 400)
                     }
                     

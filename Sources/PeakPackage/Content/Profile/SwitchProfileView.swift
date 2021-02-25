@@ -30,7 +30,7 @@ struct profileRow: View {
     
     var body: some View{
         HStack{
-            Text(franchise.franchiseTitle)
+            Text(franchise.franchiseTitle).padding()
             Spacer()
         }
         .border(self.selected ? Color.main : Color.clear)
