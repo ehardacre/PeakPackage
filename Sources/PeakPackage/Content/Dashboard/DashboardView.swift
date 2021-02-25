@@ -46,19 +46,13 @@ public struct TitleView: View {
 //could not conform to Public Facing Content
 public struct Content_Dashboard : View {
     
-    @ObservedObject public var manager: Manager
+    @ObservedObject public var manager: DashboardManager
     @State public var parent: ContentView
     
     public var body : some View {
         ZStack{
-            DashboardView(manager: manager as! DashboardManager, parent: parent)
+            DashboardView(manager: manager, parent: parent)
         }
-//        .sheet(isPresented: manager.showProfile){
-//            ProfileView(showing: manager.showProfile)
-//                .introspectViewController{
-//                    $0.isModalInPresentation = manager.showProfile
-//                }
-//        }
     }
 }
 
@@ -72,6 +66,7 @@ public struct DashboardView: View {
     //the content view that hosts this dashboard
     @State var manager: DashboardManager
     @State var parent: ContentView
+    @State var showProfile = false
     
     public var body: some View {
         
@@ -98,7 +93,7 @@ public struct DashboardView: View {
             .navigationBarItems(trailing:
             Button(action:{
                 if defaults.admin{
-                self.manager.showProfile = true
+                self.showProfile = true
                 }
             }){
                 if defaults.admin{
@@ -109,6 +104,12 @@ public struct DashboardView: View {
         //NAVIGATION VIEW end
         }.background(Color.clear)
         .stackOnlyNavigationView()
+        .sheet(isPresented: $showProfile){
+            ProfileView(showing: $showProfile)
+                .introspectViewController{
+                    $0.isModalInPresentation = showProfile
+                }
+        }
     }
 }
 
@@ -120,7 +121,6 @@ extension View {
 
 public class DashboardManager : Manager {
     
-    @Published var showProfile = false
     @Published var message : DashboardMessage?
     
     public override init(){}
