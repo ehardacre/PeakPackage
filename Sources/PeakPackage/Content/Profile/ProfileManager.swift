@@ -11,6 +11,8 @@ public class ProfileManager : Manager {
     
     @Published var profiles : [Franchise] = []
     
+    public override init() {}
+    
     func loadProfiles(){
         DatabaseDelegate.getProfiles(completion: {
             rex in
