@@ -29,8 +29,6 @@ struct seoView: View {
     private let downSymbol = "arrow.down.circle.fill"
     private let noChange = "circle.fill"
     
-    var searchResult : viewableSearchResult
-    
     var body: some View {
         NavigationView{
             List{

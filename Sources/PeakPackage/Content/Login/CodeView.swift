@@ -117,7 +117,7 @@ struct CodeView: View {
                     DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: { rex in
                         printr("Registered for Notifcations")
                     })
-                    let json2 = JsonFormat.setNotificationToken(token: defaults.getNotificationToken()!, category: "nhancebackground")
+                    let json2 = JsonFormat.setNotificationToken(token: defaults.getNotificationToken()!, category: "nhancebackground").format()
                     DatabaseDelegate.performRequest(with: json2, ret: returnType.string, completion: { rex in
                         printr("Registered for background Notifcations")
                     })
