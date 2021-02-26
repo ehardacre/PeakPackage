@@ -55,10 +55,10 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotification
         
         
         
-//        let systemSoundID: SystemSoundID = 1007
-//        // to play sound
-//        AudioServicesPlaySystemSound(systemSoundID)
-//        NotificationCenter.default.post(name: Notification.Name("NotificationRecieved"), object: nil)
+        let systemSoundID: SystemSoundID = 1007
+        // to play sound
+        AudioServicesPlaySystemSound(systemSoundID)
+        NotificationCenter.default.post(name: Notification.Name("NotificationRecieved"), object: nil)
         
         completionHandler()
     }
@@ -77,6 +77,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotification
 //                //run the curl function
 //            }
 //        }
+        
+        printr(userInfo)
         
         if let payload = userInfo["message"] as? NSString{
             if payload.contains("seoRanking"){

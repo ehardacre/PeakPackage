@@ -121,6 +121,7 @@ struct CodeView: View {
                     DatabaseDelegate.performRequest(with: json2, ret: returnType.string, completion: { rex in
                         printr("Registered for background Notifcations")
                     })
+                    
                 }else if defaults.getApplicationType() == .PeakClients{
                     let json = JsonFormat.setNotificationToken(token: defaults.getNotificationToken()!, category: "peak"+defaults.franchiseId()!).format()
                     printr(json)
