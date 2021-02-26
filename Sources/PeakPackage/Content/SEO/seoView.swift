@@ -25,9 +25,11 @@ struct seoView: View {
     
    @State var manager : SEOManager
     
-    let upSymbol = "arrow.up.circle.fill"
-    let downSymbol = "arrow.down.circle.fill"
-    let noChange = "circle.fill"
+    private let upSymbol = "arrow.up.circle.fill"
+    private let downSymbol = "arrow.down.circle.fill"
+    private let noChange = "circle.fill"
+    
+    var searchResult : viewableSearchResult
     
     var body: some View {
         NavigationView{

@@ -111,11 +111,23 @@ struct CodeView: View {
             defaults.franchiseName(value: self.franchise.franchiseTitle)
             defaults.setFranchiseURL(self.franchise.franchiseURL)
             if defaults.getNotificationToken() != nil{
-                let json = JsonFormat.setNotificationToken(token: defaults.getNotificationToken()!, category: "nhance"+defaults.franchiseId()!).format()
-                printr(json)
-                DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: { rex in
-                    printr("Registered for Notifcations")
-                })
+                if defaults.getApplicationType() == .NHanceConnect{
+                    let json = JsonFormat.setNotificationToken(token: defaults.getNotificationToken()!, category: "nhance"+defaults.franchiseId()!).format()
+                    printr(json)
+                    DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: { rex in
+                        printr("Registered for Notifcations")
+                    })
+                    let json2 = JsonFormat.setNotificationToken(token: defaults.getNotificationToken()!, category: "nhancebackground")
+                    DatabaseDelegate.performRequest(with: json2, ret: returnType.string, completion: { rex in
+                        printr("Registered for background Notifcations")
+                    })
+                }else if defaults.getApplicationType() == .PeakClients{
+                    let json = JsonFormat.setNotificationToken(token: defaults.getNotificationToken()!, category: "peak"+defaults.franchiseId()!).format()
+                    printr(json)
+                    DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: { rex in
+                        printr("Registered for Notifcations")
+                    })
+                }
             }else{
                 printr("Notification Token Nil")
             }
