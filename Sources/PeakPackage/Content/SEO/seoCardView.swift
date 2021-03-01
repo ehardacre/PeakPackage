@@ -56,19 +56,16 @@ struct seoCardView: View {
                             VStack(alignment: .leading) {
                                 
                                 Text(rank.term)
-                                        .font(.headline)
-                                        .foregroundColor(.darkAccent)
+                                    .font(.headline)
+                                    .foregroundColor(.darkAccent)
                                     .padding(20)
                                
                                 HStack{
                                     if rank.change == nil {
-                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
                                         Image(systemName: noChange).imageScale(.large).foregroundColor(Color.darkAccent).opacity(0.2)
                                     } else if rank.change! {
-                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
                                         Image(systemName: downSymbol).imageScale(.large).foregroundColor(Color.red)
                                     } else {
-                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
                                         Image(systemName: upSymbol).imageScale(.large).foregroundColor(Color.green)
                                     }
                                     
@@ -78,19 +75,16 @@ struct seoCardView: View {
                                     Spacer()
                                     
                                     if rank.change_maps == nil {
-                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
                                         Image(systemName: noChange).imageScale(.large).foregroundColor(Color.darkAccent).opacity(0.2)
                                     } else if rank.change_maps! {
-                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
                                         Image(systemName: downSymbol).imageScale(.large).foregroundColor(Color.red)
                                     } else {
-                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
                                         Image(systemName: upSymbol).imageScale(.large).foregroundColor(Color.green)
                                     }
                                     
                                     Text(rank.maps_rank).font(.footnote).bold().foregroundColor(Color.darkAccent)
                                     Text("Maps Rank").font(.footnote).foregroundColor(Color.darkAccent).opacity(0.5)
-                                }.padding(0)
+                                }.padding(20)
                                 
                                 
                             //VSTACK end
