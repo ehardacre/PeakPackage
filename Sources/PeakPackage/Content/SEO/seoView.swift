@@ -24,6 +24,7 @@ public struct Content_SEO : PublicFacingContent {
 struct seoView: View {
     
    @State var manager : SEOManager
+    @ObservedObject var selectionManager = SelectionManager()
     
     private let upSymbol = "arrow.up.circle.fill"
     private let downSymbol = "arrow.down.circle.fill"
@@ -32,20 +33,22 @@ struct seoView: View {
     var body: some View {
         NavigationView{
             List{
-                HStack{
-                    Text("Search Term").bold().font(.footnote).foregroundColor(.darkAccent).opacity(0.5)
-                    Spacer()
-                    Text("Rank").font(.footnote).foregroundColor(.darkAccent).opacity(0.5)
-                }
+//                HStack{
+//                    Text("Search Term").bold().font(.footnote).foregroundColor(.darkAccent).opacity(0.5)
+//                    Spacer()
+//                    Text("Rank").font(.footnote).foregroundColor(.darkAccent).opacity(0.5)
+//                }
                 if manager.rankings.count > 0{
                     ForEach(manager.rankings, id: \.id){ rank in
                         
-                        HStack{
-                            Text(rank.term)
-                            Spacer()
-                            Text(rank.organic_rank)
-                            Image(systemName: rank.change == nil ? noChange : rank.change! ? upSymbol : downSymbol)
-                        }
+                        seoCardView(selectionManager: selectionManager, manager: manager, rank: rank)
+                            .listRowBackground(Color.clear)
+//                        HStack{
+//                            Text(rank.term)
+//                            Spacer()
+//                            Text(rank.organic_rank)
+//                            Image(systemName: rank.change == nil ? noChange : rank.change! ? upSymbol : downSymbol)
+//                        }
                         
                     }
                 }else{
@@ -59,6 +62,7 @@ struct seoView: View {
                     }
                 }
             }
+            .environment(\.defaultMinListRowHeight, 120).padding(0.0)
             .listStyle(SidebarListStyle())
             .navigationTitle("SEO Rankings")
         }
