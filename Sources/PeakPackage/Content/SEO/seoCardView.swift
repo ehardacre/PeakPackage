@@ -58,6 +58,7 @@ struct seoCardView: View {
                                 Text(rank.term)
                                         .font(.headline)
                                         .foregroundColor(.darkAccent)
+                                    .padding(20)
                                
                                 HStack{
                                     if rank.change == nil {
@@ -89,7 +90,7 @@ struct seoCardView: View {
                                     
                                     Text(rank.maps_rank).font(.footnote).bold().foregroundColor(Color.darkAccent)
                                     Text("Maps Rank").font(.footnote).foregroundColor(Color.darkAccent).opacity(0.5)
-                                }
+                                }.padding(0)
                                 
                                 
                             //VSTACK end
