@@ -20,7 +20,7 @@ struct viewableSearchResult{
     var id = UUID()
     var term : String
     var organic_rank : String
-    var maps_rank : String = "0"
+    var maps_rank : String 
     var change : Bool?
     var change_maps : Bool?
     
@@ -53,7 +53,9 @@ public class SEOManager : Manager {
             for searchTerm in first.list{
                 let result = viewableSearchResult(term: searchTerm.keyword,
                                                   organic_rank: searchTerm.organic_ranking ?? "-",
-                                                  change: nil)
+                                                  maps_rank: searchTerm.maps_ranking ?? "-",
+                                                  change: nil,
+                                                  change_maps: nil)
                 rankings.append(result)
             }
         }else if weekbyweek.count > 1{
@@ -64,6 +66,7 @@ public class SEOManager : Manager {
                 for searchTerm2 in last.list{
                     if searchTerm.keyword == searchTerm2.keyword{
                         var change : Bool? = nil
+                        //Calculating organic change
                         if searchTerm.organic_ranking != nil && searchTerm2.organic_ranking != nil{
                             //both have rankings
                             var rank1 = Int(searchTerm.organic_ranking!) ?? 0
@@ -79,9 +82,26 @@ public class SEOManager : Manager {
                             //went down
                             change = false
                         }
+                        
+                        var mapsChange : Bool? = nil
+                        //Calculating maps change
+                        if searchTerm.maps_ranking != nil && searchTerm2.maps_ranking != nil {
+                            
+                        }else if searchTerm.maps_ranking == nil && searchTerm2.maps_ranking == nil{
+                            //both don't have ranking
+                        }else if searchTerm.maps_ranking != nil{
+                            //went up
+                            mapsChange = true
+                        }else{
+                            //went down
+                            mapsChange = false
+                        }
+                        
                         let result = viewableSearchResult(term: searchTerm.keyword,
                                                           organic_rank: searchTerm.organic_ranking ?? "-",
-                                                          change: change)
+                                                          maps_rank: searchTerm.maps_ranking ?? "_",
+                                                          change: change,
+                                                          change_maps: mapsChange)
                         rankings.append(result)
                     }
                 }
@@ -110,6 +130,7 @@ public class SEOManager : Manager {
             let url_str = baseURL + term
             guard let url = URL(string: url_str) else { continue }
             let body = parseHTML(url: url).lowercased()
+            printr(body, tag: printTags.error)
             //TODO: eventually change to not nhance
             searchArray.append(getSearchPosition(of: "nhance", in: body, searchTerm: term))
         }
