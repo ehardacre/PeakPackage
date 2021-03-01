@@ -36,22 +36,22 @@ struct seoCardView: View {
                 .frame(height: self.height)
                 .overlay(
                     HStack{
-                        ZStack{
-                            //determines the image that is placed on the left side of the card
-                            if rank.change == nil {
-                                Rectangle().fill(Color.lightAccent).frame(width: 50.0)
-                                Image(systemName: noChange).imageScale(.large).foregroundColor(Color.darkAccent).opacity(0.2)
-                            } else if rank.change! {
-                                Rectangle().fill(Color.lightAccent).frame(width: 50.0)
-                                Image(systemName: downSymbol).imageScale(.large).foregroundColor(Color.red)
-                            } else {
-                                Rectangle().fill(Color.lightAccent).frame(width: 50.0)
-                                Image(systemName: upSymbol).imageScale(.large).foregroundColor(Color.green)
-                            }
-                            
-                        //ZSTACK end
-                        }
-                        
+//                        ZStack{
+//                            //determines the image that is placed on the left side of the card
+//                            if rank.change == nil {
+//                                Rectangle().fill(Color.lightAccent).frame(width: 50.0)
+//                                Image(systemName: noChange).imageScale(.large).foregroundColor(Color.darkAccent).opacity(0.2)
+//                            } else if rank.change! {
+//                                Rectangle().fill(Color.lightAccent).frame(width: 50.0)
+//                                Image(systemName: downSymbol).imageScale(.large).foregroundColor(Color.red)
+//                            } else {
+//                                Rectangle().fill(Color.lightAccent).frame(width: 50.0)
+//                                Image(systemName: upSymbol).imageScale(.large).foregroundColor(Color.green)
+//                            }
+//
+//                        //ZSTACK end
+//                        }
+//
                         //displaying the content on the card
                             VStack(alignment: .leading) {
                                 
@@ -59,6 +59,37 @@ struct seoCardView: View {
                                         .font(.headline)
                                         .foregroundColor(.darkAccent)
                                
+                                HStack{
+                                    if rank.change == nil {
+                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
+                                        Image(systemName: noChange).imageScale(.large).foregroundColor(Color.darkAccent).opacity(0.2)
+                                    } else if rank.change! {
+                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
+                                        Image(systemName: downSymbol).imageScale(.large).foregroundColor(Color.red)
+                                    } else {
+                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
+                                        Image(systemName: upSymbol).imageScale(.large).foregroundColor(Color.green)
+                                    }
+                                    
+                                    Text(rank.organic_rank).font(.footnote).bold().foregroundColor(Color.darkAccent)
+                                    Text("Organic Rank").font(.footnote).foregroundColor(Color.darkAccent).opacity(0.5)
+                                    
+                                    Spacer()
+                                    
+                                    if rank.change_maps == nil {
+                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
+                                        Image(systemName: noChange).imageScale(.large).foregroundColor(Color.darkAccent).opacity(0.2)
+                                    } else if rank.change_maps! {
+                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
+                                        Image(systemName: downSymbol).imageScale(.large).foregroundColor(Color.red)
+                                    } else {
+                                        Rectangle().fill(Color.lightAccent).frame(width: 50.0)
+                                        Image(systemName: upSymbol).imageScale(.large).foregroundColor(Color.green)
+                                    }
+                                    
+                                    Text(rank.maps_rank).font(.footnote).bold().foregroundColor(Color.darkAccent)
+                                    Text("Maps Rank").font(.footnote).foregroundColor(Color.darkAccent).opacity(0.5)
+                                }
                                 
                                 
                             //VSTACK end

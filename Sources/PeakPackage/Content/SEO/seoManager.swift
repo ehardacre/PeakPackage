@@ -20,7 +20,9 @@ struct viewableSearchResult{
     var id = UUID()
     var term : String
     var organic_rank : String
+    var maps_rank : String = "0"
     var change : Bool?
+    var change_maps : Bool?
     
 }
 
