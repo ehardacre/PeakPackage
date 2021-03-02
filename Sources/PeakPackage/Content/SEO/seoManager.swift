@@ -37,7 +37,7 @@ public class SEOManager : Manager {
     //needs a public
     public override init(){
         //TODO: remove
-        SEOManager.scrapeRankings()
+       // SEOManager.scrapeRankings()
     }
     
     func loadRankings(){

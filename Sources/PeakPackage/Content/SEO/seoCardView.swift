@@ -123,7 +123,7 @@ struct seoCardView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .sheet(isPresented: self.$showMoreInfo, content: {
 
-                
+                seoInfoView(manager: manager, searchTerm: rank.term)
                 
             })
         }
