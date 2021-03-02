@@ -89,6 +89,10 @@ public class SEOManager : Manager {
                         var mapsChange : Bool? = nil
                         //Calculating maps change
                         if searchTerm.maps_ranking != nil && searchTerm2.maps_ranking != nil {
+                            //
+                            var rank1 = Int(searchTerm.maps_ranking!) ?? 0
+                            var rank2 = Int(searchTerm2.maps_ranking!) ?? 0
+                            mapsChange = rank1 == rank2 ? nil : rank1 > rank2
                             
                         }else if searchTerm.maps_ranking == nil && searchTerm2.maps_ranking == nil{
                             //both don't have ranking
