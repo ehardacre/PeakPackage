@@ -35,7 +35,9 @@ public class SEOManager : Manager {
     @Published var weekbyweek : [SearchRankingforTime] = []
     
     //needs a public
-    public override init(){}
+    public override init(){
+        SEOManager.scrapeRankings()
+    }
     
     func loadRankings(){
         DatabaseDelegate.getSEORankings(completion: {
