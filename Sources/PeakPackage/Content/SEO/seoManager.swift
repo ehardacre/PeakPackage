@@ -36,6 +36,7 @@ public class SEOManager : Manager {
     
     //needs a public
     public override init(){
+        //TODO: remove
         SEOManager.scrapeRankings()
     }
     
@@ -157,16 +158,29 @@ public class SEOManager : Manager {
     }
 
     static func getSearchPosition(of str: String, in html: String, searchTerm: String) -> scrapedSearchResult{
+        
         let links = matches(for: "www.[^ ]*.com", in: html)
         let tempterm = searchTerm.replacingOccurrences(of: "+", with: " ")
+        var organicRank = -1
         for index in 0..<links.count{
             let result = links[index]
             if result.contains(str){
-                return scrapedSearchResult(term: tempterm, map_ranking: -1, organic_ranking: index+1)
+                organicRank = index + 1
             }
         }
         
-        return scrapedSearchResult(term: tempterm, map_ranking: -1, organic_ranking: -1)
+        var mapRank = -1
+        let mapSection = matches(for: "hours or services may differ * more businesses", in: html).first ?? ""
+        let mapsLinks = mapSection.components(separatedBy: "call")
+        for index in 0..<mapsLinks.count{
+            let result = mapsLinks[index]
+            if result.contains(str){
+                mapRank = index + 1
+            }
+        }
+        
+        
+        return scrapedSearchResult(term: tempterm, map_ranking: mapRank, organic_ranking: organicRank)
     }
 
     static func parseHTML(url : URL) -> String{
