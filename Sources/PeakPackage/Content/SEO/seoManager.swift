@@ -52,11 +52,11 @@ public class SEOManager : Manager {
     
     func weekbyweek(for term: String) -> [viewableSearchResult]{
         
-        var list = []
+        var list : [viewableSearchResult] = []
         for week in weekbyweek{
             for search in week.list{
-                if search == term{
-                    list.append(viewableSearchResult(term: week.week, organic_rank: search.organic_ranking, maps_rank: search.maps_ranking))
+                if search.keyword == term{
+                    list.append(viewableSearchResult(term: week.week, organic_rank: search.organic_ranking ?? "-", maps_rank: search.maps_ranking ?? "-"))
                 }
             }
         }
