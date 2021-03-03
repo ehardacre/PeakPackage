@@ -10,7 +10,7 @@ import Foundation
 public class ProfileManager : Manager {
     
     @Published var profiles : [Franchise] = []
-    @Published var selectedID : String?
+    @Published var id : String?
     
     public override init() {}
     
