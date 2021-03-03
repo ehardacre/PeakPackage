@@ -16,11 +16,11 @@ struct seoInfoView : View {
     
     var body : some View{
         VStack{
-            Text(searchTerm)
+            Text(searchTerm).bold().font(.title3).padding(20)
             List{
                 ForEach(manager.weekbyweek(for: searchTerm), id: \.id){ week in
                     pastSeoCardView(week: week.term, organicRank: week.organic_rank, mapsRank: week.maps_rank)
-                }
+                }.listRowBackground(Color.clear)
             }
         }
     }
@@ -77,7 +77,9 @@ struct pastSeoCardView: View {
             .cornerRadius(20)
             
             Spacer()
-        }.padding(.horizontal,50)
+        }
+        .background(Color.clear)
+        .padding(.horizontal,50)
         .padding(.vertical, 10)
             
     
