@@ -32,7 +32,6 @@ struct profileRow: View {
     
     @State var franchise : Franchise
     @State var selectionManager : ProfileSelectionManager
-    @State var selected = false
     
     let selectionIDKey = "selectionIdProfile"
     
@@ -43,7 +42,8 @@ struct profileRow: View {
             }
             Spacer()
         }
-        .border(self.selected ? Color.main : Color.clear)
+        .background(self.franchise.franchiseId == self.selectionManager.id ? Color.main : Color.clear)
+        .foregroundColor(self.franchise.franchiseId == self.selectionManager.id ? Color.lightAccent : Color.darkAccent)
         .onTapGesture(count: 1, perform: {
             if self.franchise.franchiseId == self.selectionManager.id {
                 self.selectionManager.id = nil
@@ -51,7 +51,6 @@ struct profileRow: View {
                 let generator = UINotificationFeedbackGenerator()
                 generator.notificationOccurred(.success)
                 self.selectionManager.id = self.franchise.franchiseId
-                self.selected = true
                 defaults.setTempFranchiseURL(self.franchise.franchiseURL)
                 UserDefaults.standard.set(self.franchise.franchiseId, forKey: selectionIDKey)
             }
@@ -60,7 +59,7 @@ struct profileRow: View {
     
     func checkForSelection(){
         if UserDefaults.standard.string(forKey: selectionIDKey) == self.franchise.franchiseId{
-            selected = true
+            self.selectionManager.id = self.franchise.franchiseId
         }
     }
 }
