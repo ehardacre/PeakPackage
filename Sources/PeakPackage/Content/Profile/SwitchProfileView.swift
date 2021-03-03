@@ -34,9 +34,7 @@ struct profileRow: View {
     
     var body: some View{
         HStack{
-            Text(franchise.franchiseTitle).padding().onAppear{
-                checkForSelection()
-            }
+            Text(franchise.franchiseTitle).padding()
             Spacer()
         }
         .cornerRadius(10)
