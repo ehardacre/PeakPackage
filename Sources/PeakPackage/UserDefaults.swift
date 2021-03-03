@@ -46,6 +46,8 @@ struct defaults {
     private static let username_key = "username"
     private static let franchise_key = "franchiseID"
     private static let url_key = "franchiseURL"
+    private static let temp_url_key = "tempURL"
+    static var urlChanged = false
     private static let name_key = "franchiseName"
     private static let email_key = "email"
     private static let phone_key = "phone"
@@ -96,9 +98,19 @@ struct defaults {
         return mainTopic
     }
     
-    static func franchiseURL() -> String?{return UserDefaults.standard.string(forKey: url_key)}
+    static func franchiseURL() -> String?{
+        var url : String?
+        if urlChanged{
+            url = UserDefaults.standard.string(forKey: temp_url_key)
+        }else{
+            url = UserDefaults.standard.string(forKey: url_key)
+        }
+        return url
+    }
     
-    static func getUsername() -> String?{return UserDefaults.standard.string(forKey: username_key)}
+    static func getUsername() -> String?{
+        return UserDefaults.standard.string(forKey: username_key)
+    }
     
     /**
     #Get Encoded Email
@@ -150,6 +162,12 @@ struct defaults {
     }
     
     static func setFranchiseURL(_ url: String){UserDefaults.standard.set(url, forKey: url_key)}
+    static func setTempFranchiseURL(_ url: String){
+        if admin{
+            urlChanged = true
+            UserDefaults.standard.set(url, forKey: temp_url_key)
+        }
+    }
     
     static func setEmail(_ email: String){
         UserDefaults.standard.set(email, forKey: email_key)
