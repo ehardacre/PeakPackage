@@ -31,7 +31,7 @@ struct SwitchProfileView: View {
 struct profileRow: View {
     
     @State var franchise : Franchise
-    @State var selectionManager : ProfileSelectionManager
+    @ObservedObject var selectionManager : ProfileSelectionManager
     @State var selected = false
     
     let selectionIDKey = "selectionIdProfile"
@@ -43,8 +43,9 @@ struct profileRow: View {
             }
             Spacer()
         }
-        .background(selected ? Color.main : Color.clear)
-        .foregroundColor(selected ? Color.lightAccent : Color.darkAccent)
+        .cornerRadius(10)
+        .background(selectionManager.id == self.franchise.franchiseId ? Color.main : Color.clear)
+        .foregroundColor(selectionManager.id == self.franchise.franchiseId ? Color.lightAccent : Color.darkAccent)
         .onTapGesture(count: 1, perform: {
             if selected {
                 self.selectionManager.id = nil
