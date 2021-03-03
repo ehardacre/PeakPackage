@@ -16,6 +16,7 @@ struct seoInfoView : View {
     
     var body : some View{
         VStack{
+            
             Text(searchTerm).bold().font(.title3).padding(20)
             List{
                 ForEach(manager.weekbyweek(for: searchTerm), id: \.id){ week in
