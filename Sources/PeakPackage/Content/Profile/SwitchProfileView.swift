@@ -42,21 +42,18 @@ struct profileRow: View {
                 checkForSelection()
             }
             Spacer()
-            if selectionManager.id == self.franchise.franchiseId{
-                EmptyView().onAppear{
-                    selected = true
-                }
-            }
         }
         .background(selected ? Color.main : Color.clear)
         .foregroundColor(selected ? Color.lightAccent : Color.darkAccent)
         .onTapGesture(count: 1, perform: {
-            if self.franchise.franchiseId == self.selectionManager.id {
+            if selected {
                 self.selectionManager.id = nil
+                selected = false
             }else{
                 let generator = UINotificationFeedbackGenerator()
                 generator.notificationOccurred(.success)
                 self.selectionManager.id = self.franchise.franchiseId
+                selected = true
                 defaults.setTempFranchiseURL(self.franchise.franchiseURL)
                 UserDefaults.standard.set(self.franchise.franchiseId, forKey: selectionIDKey)
             }
@@ -66,6 +63,7 @@ struct profileRow: View {
     func checkForSelection(){
         if UserDefaults.standard.string(forKey: selectionIDKey) == self.franchise.franchiseId{
             self.selectionManager.id = self.franchise.franchiseId
+            self.selected = true
         }
     }
 }
