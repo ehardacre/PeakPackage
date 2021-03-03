@@ -7,21 +7,17 @@
 
 import SwiftUI
 
-class ProfileSelectionManager: ObservableObject {
-    @Published var id : String?
-}
-
 struct SwitchProfileView: View {
     
     @State var profiles : [Franchise]
-    @ObservedObject var selectionManager = ProfileSelectionManager()
+    @ObservedObject var profileManager = ProfileManager()
     
     var body: some View {
         VStack{
             Text("Switch Profiles").bold().foregroundColor(Color.darkAccent)
             List(){
                 ForEach(profiles, id: \.franchiseId){ profile in
-                    profileRow(franchise: profile, selectionManager: selectionManager)
+                    profileRow(franchise: profile, selectionManager: profileManager)
                 }
             }
         }
@@ -31,7 +27,7 @@ struct SwitchProfileView: View {
 struct profileRow: View {
     
     @State var franchise : Franchise
-    @ObservedObject var selectionManager : ProfileSelectionManager
+    @ObservedObject var selectionManager : ProfileManager
     @State var selected = false
     
     let selectionIDKey = "selectionIdProfile"
@@ -56,15 +52,7 @@ struct profileRow: View {
                 self.selectionManager.id = self.franchise.franchiseId
                 selected = true
                 defaults.setTempFranchiseURL(self.franchise.franchiseURL)
-                UserDefaults.standard.set(self.franchise.franchiseId, forKey: selectionIDKey)
             }
         })
-    }
-    
-    func checkForSelection(){
-        if UserDefaults.standard.string(forKey: selectionIDKey) == self.franchise.franchiseId{
-            self.selectionManager.id = self.franchise.franchiseId
-            self.selected = true
-        }
     }
 }
