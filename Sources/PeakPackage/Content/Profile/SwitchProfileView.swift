@@ -38,8 +38,8 @@ struct profileRow: View {
             Spacer()
         }
         .cornerRadius(10)
-        .background(manager.id != nil ? Color.main : Color.clear)
-        .foregroundColor(manager.id != nil ? Color.lightAccent : Color.darkAccent)
+        .background(manager.id == self.franchise.franchiseId ? Color.main : Color.clear)
+        .foregroundColor(manager.id == self.franchise.franchiseId ? Color.lightAccent : Color.darkAccent)
         .onTapGesture(count: 1, perform: {
             manager.changeFranchise(to: franchise.franchiseId, newURL: franchise.franchiseURL)
         })
