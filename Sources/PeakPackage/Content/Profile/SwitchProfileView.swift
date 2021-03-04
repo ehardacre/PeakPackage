@@ -46,9 +46,12 @@ struct profileRow: View {
         .onReceive(
             NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged"))
         ){
-            obj in
-            printr("selected profile: \(obj)")
-            selected = true
+            note in
+            printr("selected profile: \(note.object)")
+            let profile = note.object! as! String
+            if profile == franchise.franchiseId{
+                elected = true
+            }
         }
     }
 }
