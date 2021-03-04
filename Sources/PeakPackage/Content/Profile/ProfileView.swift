@@ -35,7 +35,7 @@ struct ProfileView: View {
     
     @Binding var showing : Bool
     
-    @ObservedObject var manager : ProfileManager
+    @State var manager : ProfileManager
     
     var body: some View {
         

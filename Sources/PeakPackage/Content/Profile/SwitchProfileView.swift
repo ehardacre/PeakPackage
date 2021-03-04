@@ -10,7 +10,7 @@ import SwiftUI
 struct SwitchProfileView: View {
     
     @State var profiles : [Franchise]
-    @ObservedObject var profileManager : ProfileManager
+    @State var profileManager : ProfileManager
     
     var body: some View {
         VStack{
@@ -27,7 +27,7 @@ struct SwitchProfileView: View {
 struct profileRow: View {
     
     @State var franchise : Franchise
-    @ObservedObject var manager : ProfileManager
+    @State var manager : ProfileManager
     @State var selected = false
     
     let selectionIDKey = "selectionIdProfile"
