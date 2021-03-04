@@ -47,7 +47,6 @@ struct profileRow: View {
             NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged"))
         ){
             note in
-            printr("selected profile: \(note.object)")
             let profile = note.object as! String?
             if profile == nil || profile != franchise.franchiseId{
                 selected = false
