@@ -141,7 +141,12 @@ public struct ContentView: View {
             
             TabMenu(tab: self.$tab, availableTabs: self.$availableTabs, notificationCount: notificationManager.newNotifications).shadow(color: Color.darkAccent.opacity(0.1), radius: 4, y: -4).frame(maxHeight: 70)
                 .onAppear{
-                    
+                    NotificationCenter.default.post(Notification(name: Notification.Name("profileChanged"),object: nil))
+                }
+                .onReceive(
+                    NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged"))
+                ){
+                    note in
                     profileManager.loadProfiles()
                     analyticsManager.loadAnalytics(for: .Day)
                     analyticsManager.loadAnalytics(for: .Week)
@@ -154,6 +159,8 @@ public struct ContentView: View {
                     }
                     
                 }
+                
+
             
         //VSTACK end
         }.background(Color.black.opacity(0.05).edgesIgnoringSafeArea(.top))
