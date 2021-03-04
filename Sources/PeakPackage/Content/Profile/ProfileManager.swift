@@ -32,5 +32,6 @@ public class ProfileManager : Manager {
             id = newID
             defaults.setTempFranchiseURL(newURL)
         }
+        printr("profile id: \(id)")
     }
 }

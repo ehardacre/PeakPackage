@@ -27,7 +27,7 @@ struct SwitchProfileView: View {
 struct profileRow: View {
     
     @State var franchise : Franchise
-    @State var manager : ProfileManager
+    @ObservedObject var manager : ProfileManager
     @State var selected = false
     
     let selectionIDKey = "selectionIdProfile"
