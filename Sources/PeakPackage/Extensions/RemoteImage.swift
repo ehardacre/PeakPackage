@@ -41,12 +41,12 @@ struct RemoteImage: View {
     }
 
     @StateObject private var loader: Loader
-    @State var loadComplete = true
+    @State var loadComplete = false
     var loading: Image
     var failure: Image
 
     var body: some View {
-        if loadComplete{
+        if !loadComplete{
             ProgressView()
         }else{
             selectImage()
