@@ -10,7 +10,7 @@ import SwiftUI
 struct SwitchProfileView: View {
     
     @State var profiles : [Franchise]
-    @State var profileManager = ProfileManager()
+    @State var profileManager : ProfileManager
     
     var body: some View {
         VStack{
