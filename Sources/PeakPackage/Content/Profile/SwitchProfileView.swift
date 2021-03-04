@@ -44,10 +44,10 @@ struct profileRow: View {
             manager.changeFranchise(to: franchise.franchiseId, newURL: franchise.franchiseURL)
         })
         .onReceive(
-            NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged:\(franchise.franchiseId)"), object: nil)
+            NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged:\(franchise.franchiseId)"))
         ){
-            note in
-            printr("selected profile: \(franchise.franchiseId)")
+            obj in
+            printr("selected profile: \(obj)")
             selected = true
         }
     }

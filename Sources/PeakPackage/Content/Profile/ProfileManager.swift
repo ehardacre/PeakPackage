@@ -32,7 +32,7 @@ public class ProfileManager : Manager {
             id = newID
             defaults.setTempFranchiseURL(newURL)
         }
-        NotificationCenter.default.post(Notification(name: Notification.Name("profileChanged:\(newID)")))
+        NotificationCenter.default.post(Notification(name: Notification.Name("profileChanged"),object: id))
         printr("profile id: \(id)")
     }
 }
