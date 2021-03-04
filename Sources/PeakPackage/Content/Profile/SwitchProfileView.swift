@@ -17,10 +17,7 @@ struct SwitchProfileView: View {
             Text("Switch Profiles").bold().foregroundColor(Color.darkAccent)
             List(){
                 ForEach(profiles, id: \.franchiseId){ profile in
-                    profileRow(franchise: profile, selected: profileManager.id == profile.franchiseId)
-                    .onTapGesture(count: 1, perform: {
-                        profileManager.changeFranchise(to: profile.franchiseId, newURL: profile.franchiseURL)
-                    })
+                    profileRow(franchise: profile, manager: profileManager)
                 }
             }
         }
@@ -30,7 +27,7 @@ struct SwitchProfileView: View {
 struct profileRow: View {
     
     @State var franchise : Franchise
-    //@State var manager : ProfileManager
+    @State var manager : ProfileManager
     @State var selected = false
     
     let selectionIDKey = "selectionIdProfile"
@@ -43,5 +40,15 @@ struct profileRow: View {
         .cornerRadius(10)
         .background(selected ? Color.main : Color.clear)
         .foregroundColor(selected ? Color.lightAccent : Color.darkAccent)
+        .onTapGesture(count: 1, perform: {
+            manager.changeFranchise(to: franchise.franchiseId, newURL: franchise.franchiseURL)
+        })
+        .onReceive(
+            NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged:\(franchise.franchiseId)"), object: nil)
+        ){
+            note in
+            printr("selected profile: \(franchise.franchiseId)")
+            selected = true
+        }
     }
 }
