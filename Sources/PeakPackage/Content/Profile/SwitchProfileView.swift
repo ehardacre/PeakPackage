@@ -17,7 +17,7 @@ struct SwitchProfileView: View {
             Text("Switch Profiles").bold().foregroundColor(Color.darkAccent)
             List(){
                 ForEach(profiles, id: \.franchiseId){ profile in
-                    profileRow(franchise: profile, manager: profileManager)
+                    profileRow(franchise: profile, manager: profileManager, selected: profileManager.id == profile.franchiseId)
                 }
             }
         }
