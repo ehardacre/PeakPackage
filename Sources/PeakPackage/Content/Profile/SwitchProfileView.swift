@@ -48,7 +48,10 @@ struct profileRow: View {
         ){
             note in
             printr("selected profile: \(note.object)")
-            let profile = note.object! as! String
+            let profile = note.object as! String?
+            if profile == nil{
+                selected = false
+            }
             if profile == franchise.franchiseId{
                 selected = true
             }
