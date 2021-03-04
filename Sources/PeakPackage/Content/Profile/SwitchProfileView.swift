@@ -17,7 +17,7 @@ struct SwitchProfileView: View {
             Text("Switch Profiles").bold().foregroundColor(Color.darkAccent)
             List(){
                 ForEach(profiles, id: \.franchiseId){ profile in
-                    profileRow(franchise: profile, selectionManager: profileManager)
+                    profileRow(franchise: profile, manager: profileManager)
                 }
             }
         }
@@ -27,7 +27,7 @@ struct SwitchProfileView: View {
 struct profileRow: View {
     
     @State var franchise : Franchise
-    @State var selectionManager : ProfileManager
+    @State var manager : ProfileManager
     @State var selected = false
     
     let selectionIDKey = "selectionIdProfile"
@@ -38,19 +38,10 @@ struct profileRow: View {
             Spacer()
         }
         .cornerRadius(10)
-        .background(selectionManager.id == self.franchise.franchiseId ? Color.main : Color.clear)
-        .foregroundColor(selectionManager.id == self.franchise.franchiseId ? Color.lightAccent : Color.darkAccent)
+        .background(manager.id == self.franchise.franchiseId ? Color.main : Color.clear)
+        .foregroundColor(manager.id == self.franchise.franchiseId ? Color.lightAccent : Color.darkAccent)
         .onTapGesture(count: 1, perform: {
-            if selected {
-                self.selectionManager.id = nil
-                selected = false
-            }else{
-                let generator = UINotificationFeedbackGenerator()
-                generator.notificationOccurred(.success)
-                self.selectionManager.id = self.franchise.franchiseId
-                selected = true
-                defaults.setTempFranchiseURL(self.franchise.franchiseURL)
-            }
+            manager.changeFranchise(to: franchise.franchiseId, newURL: franchise.franchiseURL)
         })
     }
 }

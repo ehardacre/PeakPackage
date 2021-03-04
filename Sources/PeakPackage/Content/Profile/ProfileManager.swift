@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+import UIKit
 
 public class ProfileManager : Manager {
     
@@ -19,5 +21,16 @@ public class ProfileManager : Manager {
             rex in
             self.profiles = rex as! [Franchise]
         })
+    }
+    
+    func changeFranchise(to newID: String, newURL: String){
+        if id == newID {
+            id = nil
+        }else{
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+            id = newID
+            defaults.setTempFranchiseURL(newURL)
+        }
     }
 }
