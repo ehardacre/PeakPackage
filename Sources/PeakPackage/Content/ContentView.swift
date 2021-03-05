@@ -98,7 +98,6 @@ public struct ContentView: View {
             
             if profileChanged {
                 HStack{
-                    Spacer()
                     Text("\(defaults.franchiseName() ?? "")").bold().foregroundColor(Color.lightAccent).padding(20)
                     Spacer()
                     Button(action: {
@@ -107,7 +106,7 @@ public struct ContentView: View {
                     }){
                         Image(systemName: "xmark").foregroundColor(Color.lightAccent).padding(20)
                     }
-                }.background(Color.main)
+                }.edgesIgnoringSafeArea(.all).background(Color.main)
             }
             
             ZStack{
@@ -164,7 +163,7 @@ public struct ContentView: View {
                     note in
                     if note.object != nil{
                         profileChanged = true
-                    }else if note.object == nil || (note.object as? String) ?? "" == "1"{
+                    }else if note.object == nil || (note.object as? String) ?? "" == "1" || defaults.franchiseName()! == "admin"{
                         profileChanged = false
                     }
                     profileManager.loadProfiles()
