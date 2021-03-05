@@ -98,7 +98,7 @@ public struct ContentView: View {
             
             if profileChanged {
                 HStack{
-                    Text("\(defaults.franchiseName() ?? "")").bold().foregroundColor(Color.lightAccent).padding(20)
+                    Text("\(defaults.franchiseName() ?? "")").bold().foregroundColor(Color.lightAccent).padding(20).padding(.top, 40)
                     Spacer()
                     Button(action: {
                         profileChanged = false
@@ -106,7 +106,7 @@ public struct ContentView: View {
                     }){
                         Image(systemName: "xmark").foregroundColor(Color.lightAccent).padding(20)
                     }
-                }.edgesIgnoringSafeArea(.all).background(Color.main)
+                }.background(Color.main).edgesIgnoringSafeArea(.all)
             }
             
             ZStack{
