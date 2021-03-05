@@ -162,11 +162,11 @@ public struct ContentView: View {
                 ){
                     note in
                     printr(note.object, tag: printTags.error)
-                    if note.object != nil{
-                        profileChanged = true
-                    }else if note.object == nil || note.object as! Int? == 1 || defaults.franchiseName()! == "admin"{
+                    if note.object == nil || note.object as! Int? == 1{
                         printr("profile released", tag: printTags.error)
                         profileChanged = false
+                    }else{
+                        profileChanged = true
                     }
                     profileManager.loadProfiles()
                     analyticsManager.loadAnalytics(for: .Day)
