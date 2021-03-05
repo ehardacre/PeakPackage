@@ -164,7 +164,8 @@ public struct ContentView: View {
                     printr(note.object, tag: printTags.error)
                     if note.object != nil{
                         profileChanged = true
-                    }else if note.object == nil || (note.object as? String) ?? "" == "1" || defaults.franchiseName()! == "admin"{
+                    }else if note.object == nil || note.object as! String? == "1" || defaults.franchiseName()! == "admin"{
+                        printr("profile released", tag: printTags.error)
                         profileChanged = false
                     }
                     profileManager.loadProfiles()
