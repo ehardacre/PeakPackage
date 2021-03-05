@@ -42,6 +42,7 @@ public struct ContentView: View {
     //the indices for the page views
     @State var taskIndex = 0
     @State var showProfile = false
+    @State var profileName = ""
     @State var profileChanged = false
     
     //data managers
@@ -98,7 +99,7 @@ public struct ContentView: View {
             
             if profileChanged {
                 HStack{
-                    Text("\(defaults.franchiseName() ?? "")").bold().foregroundColor(Color.lightAccent).padding(.top, 50).padding(.horizontal,20)
+                    Text("\(profileName)").bold().foregroundColor(Color.lightAccent).padding(.top, 50).padding(.horizontal,20)
                     Spacer()
                     Button(action: {
                         profileManager.changeFranchise(to: "1", newURL: "test2018", newName: "admin")
@@ -167,6 +168,7 @@ public struct ContentView: View {
                         profileChanged = false
                     }else{
                         profileChanged = true
+                        profileName = defaults.franchiseName() ?? ""
                     }
                     profileManager.loadProfiles()
                     analyticsManager.loadAnalytics(for: .Day)
