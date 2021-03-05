@@ -17,7 +17,7 @@ struct RemoteImage: View {
     }
 
     private class Loader: ObservableObject {
-        @Published var data = Data()
+        var data = Data()
         var state = LoadState.loading
 
         init(url: String) {
@@ -31,6 +31,10 @@ struct RemoteImage: View {
                     self.state = .success
                 } else {
                     self.state = .failure
+                }
+
+                DispatchQueue.main.async {
+                    self.objectWillChange.send()
                 }
             }.resume()
         }

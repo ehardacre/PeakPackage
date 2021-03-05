@@ -43,7 +43,7 @@ struct profileRow: View {
         .background(selected ? Color.main : Color.clear)
         .foregroundColor(selected ? Color.lightAccent : Color.darkAccent)
         .onTapGesture(count: 1, perform: {
-            manager.changeFranchise(to: franchise.franchiseId, newURL: franchise.franchiseURL)
+            manager.changeFranchise(to: franchise.franchiseId, newURL: franchise.franchiseURL, newName: franchise.franchiseTitle)
         })
         .onReceive(
             NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged"))

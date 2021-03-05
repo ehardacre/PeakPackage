@@ -23,14 +23,14 @@ public class ProfileManager : Manager {
         })
     }
     
-    func changeFranchise(to newID: String, newURL: String){
+    func changeFranchise(to newID: String, newURL: String, newName: String){
         if id == newID {
             id = nil
         }else{
             let generator = UINotificationFeedbackGenerator()
             generator.notificationOccurred(.success)
             id = newID
-            defaults.setTempFranchiseURL(newURL)
+            defaults.setTempFranchise(newURL,newName)
         }
         NotificationCenter.default.post(Notification(name: Notification.Name("profileChanged"),object: id))
         printr("profile id: \(id)")

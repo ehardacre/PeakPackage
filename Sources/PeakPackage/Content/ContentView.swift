@@ -42,6 +42,7 @@ public struct ContentView: View {
     //the indices for the page views
     @State var taskIndex = 0
     @State var showProfile = false
+    @State var profileChanged = false
     
     //data managers
     @EnvironmentObject var analyticsManager : AnalyticsManager
@@ -95,6 +96,12 @@ public struct ContentView: View {
         
         VStack(spacing: 0){
             
+            if profileChanged {
+                HStack{
+                    Text("Profile: \(defaults.franchiseName() ?? "")").foregroundColor(Color.lightAccent)
+                }.background(Color.main)
+            }
+            
             ZStack{
                 
                 Color.black.opacity(0.05).edgesIgnoringSafeArea(.top)
@@ -147,6 +154,9 @@ public struct ContentView: View {
                     NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged"))
                 ){
                     note in
+                    if note.object != nil{
+                        profileChanged = true
+                    }
                     profileManager.loadProfiles()
                     analyticsManager.loadAnalytics(for: .Day)
                     analyticsManager.loadAnalytics(for: .Week)

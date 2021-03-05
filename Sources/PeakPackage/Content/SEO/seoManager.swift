@@ -66,6 +66,7 @@ public class SEOManager : Manager {
     }
     
     func calculateChange(){
+        rankings = []
         if weekbyweek.count == 1{
             let first = weekbyweek.first!
             for searchTerm in first.list{
