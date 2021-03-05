@@ -101,8 +101,8 @@ public struct ContentView: View {
                     Text("\(defaults.franchiseName() ?? "")").bold().foregroundColor(Color.lightAccent).padding(.top, 50).padding(.horizontal,20)
                     Spacer()
                     Button(action: {
-                        profileChanged = false
                         profileManager.changeFranchise(to: "1", newURL: "test2018", newName: "admin")
+                        profileChanged = false
                     }){
                         Image(systemName: "xmark").foregroundColor(Color.lightAccent).padding(20)
                     }.padding(.top, 50)
@@ -161,7 +161,7 @@ public struct ContentView: View {
                     NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged"))
                 ){
                     note in
-                    printr(note.object)
+                    printr(note.object, tag: printTags.error)
                     if note.object != nil{
                         profileChanged = true
                     }else if note.object == nil || (note.object as? String) ?? "" == "1" || defaults.franchiseName()! == "admin"{
