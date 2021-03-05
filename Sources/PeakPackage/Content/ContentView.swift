@@ -162,7 +162,7 @@ public struct ContentView: View {
                 ){
                     note in
                     printr(note.object, tag: printTags.error)
-                    if note.object == nil || note.object as! Int? == 1 || defaults.franchiseName()! == "admin"{
+                    if note.object == nil || note.object as! Int? == 1 || defaults.franchiseName() ?? "" == "admin"{
                         printr("profile released", tag: printTags.error)
                         profileChanged = false
                     }else{
