@@ -107,7 +107,7 @@ public struct ContentView: View {
                     }){
                         Image(systemName: "xmark").foregroundColor(Color.lightAccent).padding(20)
                     }.padding(.top, 50)
-                }.background(Color.main).edgesIgnoringSafeArea(.all)
+                }.background(Color.main).edgesIgnoringSafeArea(.all).padding(.bottom,0)
             }
             
             ZStack{
