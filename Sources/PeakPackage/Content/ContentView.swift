@@ -102,8 +102,8 @@ public struct ContentView: View {
                     Text("\(defaults.franchiseName() ?? "")").bold().foregroundColor(Color.lightAccent).padding(20)
                     Spacer()
                     Button(action: {
-                        profileManager.changeFranchise(to: "1", newURL: "test2018", newName: "admin")
                         profileChanged = false
+                        profileManager.changeFranchise(to: "1", newURL: "test2018", newName: "admin")
                     }){
                         Image(systemName: "xmark").foregroundColor(Color.lightAccent).padding(20)
                     }
@@ -164,7 +164,7 @@ public struct ContentView: View {
                     note in
                     if note.object != nil{
                         profileChanged = true
-                    }else{
+                    }else if note.object == nil || (note.object as? String) ?? "" == "1"{
                         profileChanged = false
                     }
                     profileManager.loadProfiles()
