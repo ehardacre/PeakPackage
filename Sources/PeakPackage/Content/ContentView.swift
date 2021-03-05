@@ -128,7 +128,7 @@ public struct ContentView: View {
                             Content_Leads_multiPage(manager: notificationManager)
                         }else if defaults.getApplicationType() == .PeakClients {
                             Content_Leads_singlePageSectioned(manager: notificationManager)
-                        }
+                        } 
                         
                     }else if tab == tabs.calendar{
 
