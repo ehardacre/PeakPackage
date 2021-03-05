@@ -98,7 +98,9 @@ public struct ContentView: View {
             
             if profileChanged {
                 HStack{
-                    Text("Profile: \(defaults.franchiseName() ?? "")").foregroundColor(Color.lightAccent)
+                    Spacer()
+                    Text("\(defaults.franchiseName() ?? "")").bold().foregroundColor(Color.lightAccent).padding(20)
+                    Spacer()
                 }.background(Color.main)
             }
             
@@ -156,6 +158,8 @@ public struct ContentView: View {
                     note in
                     if note.object != nil{
                         profileChanged = true
+                    }else{
+                        profileChanged = false
                     }
                     profileManager.loadProfiles()
                     analyticsManager.loadAnalytics(for: .Day)
