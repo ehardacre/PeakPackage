@@ -149,7 +149,7 @@ public struct ContentView: View {
                         
                         Content_SEO(manager: seoManager)
                     }
-                }
+                }.padding(.top, profileChanged ? -50 : 0)
                 
             //ZSTACK end
             }.padding(.bottom,-35)
