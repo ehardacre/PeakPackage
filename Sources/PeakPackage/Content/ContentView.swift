@@ -103,8 +103,9 @@ public struct ContentView: View {
                     Spacer()
                     Button(action: {
                         profileManager.changeFranchise(to: "1", newURL: "test2018", newName: "admin")
+                        profileChanged = false
                     }){
-                        Image(systemName: "xmark").foregroundColor(Color.lightAccent)
+                        Image(systemName: "xmark").foregroundColor(Color.lightAccent).padding(20)
                     }
                 }.background(Color.main)
             }
