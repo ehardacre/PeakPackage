@@ -21,16 +21,19 @@ struct SwitchProfileView: View {
             
             ProfileSearchBar(searching: $searching, mainList: $profiles, searchedList: $searchedProfiles).onAppear{
                 searchedProfiles = profiles
-            }.padding(0)
+            }
             
             List(){
                 
-                ForEach(searchedProfiles, id: \.franchiseId){ profile in
+                ForEach(searchedProfiles, id: \.franchiseId){
+                    
+                    profile in
+                    
                     profileRow(franchise: profile, manager: profileManager, selected: profileManager.id == profile.franchiseId)
                     
                 }
                 
-            }.padding(0)
+            }
         }
     }
 }
@@ -91,7 +94,8 @@ struct ProfileSearchBar: View {
                     TextField("", text: $searchInput)
                         .onChange(of: searchInput, perform: { searchText in
                             searching = true
-                            searchedList = mainList.filter { $0.franchiseTitle.lowercased().prefix(searchText.count) == searchText.lowercased() || $0.franchiseTitle.contains(searchText) }
+                            searchedList = mainList.filter { $0.franchiseTitle.lowercased().prefix(searchText.count) == searchText.lowercased() || $0.franchiseTitle.lowercased().contains(searchText.lowercased()) }
+                            printr(searchedList.count)
 
                         })
                         .accentColor(.darkAccent)
