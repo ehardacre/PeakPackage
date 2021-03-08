@@ -63,6 +63,7 @@ public class NotificationManager : Manager {
             if Calendar.current.isDateInToday(date) {
                 temp.append((lead: lead, time: date.timeIntervalSince(Date())))
             }
+            
         }
         
         temp.sort(by: {$0.time < $1.time})
