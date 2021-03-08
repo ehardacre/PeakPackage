@@ -9,29 +9,31 @@ import SwiftUI
 
 struct SwitchProfileView: View {
     
-    @State var profiles : [Franchise] = []
-    @State var profileManager : ProfileManager = ProfileManager()
+    @State var profiles : [Franchise]
+    @State var profileManager : ProfileManager
+    
     @State var searchedProfiles : [Franchise] = []
     @State var searching = false
     
     init(profiles: [Franchise], profileManager: ProfileManager) {
-        self.profiles = profiles
-        self.profileManager = profileManager
-        self.searchedProfiles = profiles
+        self.profiles =
     }
     
     var body: some View {
         VStack{
             Text("Switch Profiles").bold().foregroundColor(Color.darkAccent)
             
-            ProfileSearchBar(searching: $searching, mainList: $profiles, searchedList: $searchedProfiles)
+            ProfileSearchBar(searching: $searching, mainList: $profiles, searchedList: $searchedProfiles).onAppear{
+                searchedProfiles = profiles
+            }
             
             List(){
                 
-                ForEach(searchedProfiles, id: \.franchiseId){ profile in
+                ForEach(profiles, id: \.franchiseId){ profile in
                     profileRow(franchise: profile, manager: profileManager, selected: profileManager.id == profile.franchiseId)
                     
                 }
+                
             }
         }
     }
@@ -80,7 +82,7 @@ struct ProfileSearchBar: View {
     var body: some View {
         ZStack {
             // Background Color
-            Color.lightAccent
+            Color.main
             // Custom Search Bar (Search Bar + 'Cancel' Button)
             HStack {
                 // Search Bar
@@ -96,11 +98,11 @@ struct ProfileSearchBar: View {
                             searchedList = mainList.filter { $0.franchiseTitle.lowercased().prefix(searchText.count) == searchText.lowercased() || $0.franchiseTitle.contains(searchText) }
 
                         })
-                        .accentColor(.white)
-                        .foregroundColor(.white)
+                        .accentColor(.darkAccent)
+                        .foregroundColor(.darkAccent)
                 }
                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
-                .background(Color.lightAccent).cornerRadius(8.0)
+                .background(Color.lightAccent.opacity(0.5)).cornerRadius(8.0)
 
                 // 'Cancel' Button
                 Button(action: {
