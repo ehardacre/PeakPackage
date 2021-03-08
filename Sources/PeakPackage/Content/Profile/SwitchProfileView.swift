@@ -21,16 +21,16 @@ struct SwitchProfileView: View {
             
             ProfileSearchBar(searching: $searching, mainList: $profiles, searchedList: $searchedProfiles).onAppear{
                 searchedProfiles = profiles
-            }
+            }.padding(0)
             
             List(){
                 
-                ForEach(profiles, id: \.franchiseId){ profile in
+                ForEach(searchedProfiles, id: \.franchiseId){ profile in
                     profileRow(franchise: profile, manager: profileManager, selected: profileManager.id == profile.franchiseId)
                     
                 }
                 
-            }
+            }.padding(0)
         }
     }
 }
