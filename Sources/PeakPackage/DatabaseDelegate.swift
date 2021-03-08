@@ -258,6 +258,9 @@ struct DatabaseDelegate {
                 printr(String.init(data: d, encoding: .ascii) ?? DataError.badFormat.rawValue, tag: printTags.database )
                 //Convert data to readable response
                 let rex = try objectFrom(data: d, type: ret)
+                
+                //send a notification that a database process has finished
+                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "databaseResponse")))
                 //run the completion function
                 DispatchQueue.main.async {
                     completion(rex)
