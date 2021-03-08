@@ -15,10 +15,6 @@ struct SwitchProfileView: View {
     @State var searchedProfiles : [Franchise] = []
     @State var searching = false
     
-    init(profiles: [Franchise], profileManager: ProfileManager) {
-        self.profiles =
-    }
-    
     var body: some View {
         VStack{
             Text("Switch Profiles").bold().foregroundColor(Color.darkAccent)
