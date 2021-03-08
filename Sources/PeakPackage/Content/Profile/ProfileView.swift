@@ -71,8 +71,12 @@ struct ProfileView: View {
                     if defaults.admin {
                         
                         //TODO: add back in
-                        SwitchProfileView(profiles: manager.profiles, profileManager: manager).frame(height: 400).cornerRadius(10.0)
-                        LogView(logs: defaults.getLogs()).frame(height: 400)
+                        SwitchProfileView(profiles: manager.profiles, profileManager: manager)
+                            .frame(height: 400)
+                            .cornerRadius(10.0)
+                            .buttonStyle(PlainButtonStyle())
+                        LogView(logs: defaults.getLogs())
+                            .frame(height: 400)
                     }
                     
                     HStack{

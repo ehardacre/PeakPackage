@@ -113,7 +113,7 @@ struct ProfileSearchBar: View {
                 }, label: {
                     Text("Cancel")
                 })
-                    .accentColor(Color.white)
+                    .accentColor(Color.lightAccent)
                     .padding(EdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 8))
             }
             .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
