@@ -33,7 +33,7 @@ struct SwitchProfileView: View {
                     
                 }
                 
-            }
+            }.padding(.top, -10)
         }
     }
 }
