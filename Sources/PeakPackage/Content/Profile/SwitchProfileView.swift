@@ -21,7 +21,7 @@ struct SwitchProfileView: View {
             
             ProfileSearchBar(searching: $searching, mainList: $profiles, searchedList: $searchedProfiles).onAppear{
                 searchedProfiles = profiles
-            }
+            }.zIndex(10)
             
             List(){
                 
@@ -33,7 +33,7 @@ struct SwitchProfileView: View {
                     
                 }
                 
-            }.padding(.top, -10)
+            }.padding(.top, -15)
         }
     }
 }
