@@ -81,7 +81,7 @@ struct ProfileSearchBar: View {
     var body: some View {
         ZStack {
             // Background Color
-            Color.darkAccent.cornerRadius(8.0)
+            Color.main.cornerRadius(8.0)
             // Custom Search Bar (Search Bar + 'Cancel' Button)
             HStack {
                 // Search Bar
@@ -100,7 +100,7 @@ struct ProfileSearchBar: View {
                         .accentColor(.darkAccent)
                         .foregroundColor(.darkAccent)
                 }
-                .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+                .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 5))
                 .background(Color.lightAccent.opacity(0.5)).cornerRadius(8.0)
 
                 // 'Cancel' Button
