@@ -81,7 +81,7 @@ struct ProfileSearchBar: View {
     var body: some View {
         ZStack {
             // Background Color
-            Color.main
+            Color.main.cornerRadius(8.0)
             // Custom Search Bar (Search Bar + 'Cancel' Button)
             HStack {
                 // Search Bar
@@ -95,7 +95,6 @@ struct ProfileSearchBar: View {
                         .onChange(of: searchInput, perform: { searchText in
                             searching = true
                             searchedList = mainList.filter { $0.franchiseTitle.lowercased().prefix(searchText.count) == searchText.lowercased() || $0.franchiseTitle.lowercased().contains(searchText.lowercased()) }
-                            printr(searchedList.count)
 
                         })
                         .accentColor(.darkAccent)
