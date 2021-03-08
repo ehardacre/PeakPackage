@@ -81,7 +81,7 @@ struct ProfileSearchBar: View {
     var body: some View {
         ZStack {
             // Background Color
-            Color.main.cornerRadius(8.0)
+            Color.darkAccent.cornerRadius(8.0)
             // Custom Search Bar (Search Bar + 'Cancel' Button)
             HStack {
                 // Search Bar
@@ -111,7 +111,7 @@ struct ProfileSearchBar: View {
                     // Hide Keyboard
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }, label: {
-                    Text("Cancel")
+                    Text("Cancel").foregroundColor(Color.lightAccent)
                 })
                     .accentColor(Color.lightAccent)
                     .padding(EdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 8))
