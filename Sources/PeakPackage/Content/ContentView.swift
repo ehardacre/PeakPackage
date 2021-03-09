@@ -46,13 +46,13 @@ public struct ContentView: View {
     @State var profileChanged = false
     
     //data managers
-    @EnvironmentObject var analyticsManager : AnalyticsManager
-    @EnvironmentObject var notificationManager : NotificationManager
-    @EnvironmentObject var dashboardManager : DashboardManager
-    @EnvironmentObject var taskManager : TaskManager
-    @EnvironmentObject var appointmentManager : AppointmentManager
-    @EnvironmentObject var seoManager : SEOManager
-    @EnvironmentObject var profileManager : ProfileManager
+    @ObservedObject var analyticsManager : AnalyticsManager
+    @ObservedObject var notificationManager : NotificationManager
+    @ObservedObject var dashboardManager : DashboardManager
+    @ObservedObject var taskManager : TaskManager
+    @ObservedObject var appointmentManager : AppointmentManager
+    @ObservedObject var seoManager : SEOManager
+    @ObservedObject var profileManager : ProfileManager
     
     public init(tabs : [tabs]) {
 
@@ -128,7 +128,7 @@ public struct ContentView: View {
                             Content_Leads_multiPage(manager: notificationManager)
                         }else if defaults.getApplicationType() == .PeakClients {
                             Content_Leads_singlePageSectioned(manager: notificationManager)
-                        } 
+                        }
                         
                     }else if tab == tabs.calendar{
 
