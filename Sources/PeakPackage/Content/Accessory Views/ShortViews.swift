@@ -39,6 +39,8 @@ struct LeadsShortView : View {
     
     var parent : ContentView
     
+    @State var lead : Lead?
+    
     var body: some View {
         HStack{
             Spacer()
@@ -61,7 +63,14 @@ struct LeadsShortView : View {
                 
         }
             Spacer()
-        }
+        }.onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "database")), perform: {
+            note in
+            
+            if let leads = note.object as? [Lead] {
+                lead = parent.notificationManager.todaysScheduled().first
+            }
+            
+        })
     }
 }
 
@@ -82,12 +91,12 @@ struct DashboardAnalytics: View {
     private var analyticsMan: AnalyticsManager
     
     //the data source for the analytics
-    private var dataSource : SwiftAnalyticsObject?
+    @State private var dataSource : SwiftAnalyticsObject?
 
     //page and ppc are both optional, default is page
     public init(analyticsMan: AnalyticsManager) {
         
-        dataSource = analyticsMan.today
+        //dataSource = analyticsMan.today
         self.analyticsMan = analyticsMan
         
     }
@@ -123,5 +132,13 @@ struct DashboardAnalytics: View {
             
             }
         }.padding(20).background(Color.lightAccent).cornerRadius(20.0)
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "database")), perform: {
+            note in
+        
+            if let analytics = note.object as? [Analytics] {
+                dataSource = analyticsMan.today
+            }
+        
+        })
     }
 }

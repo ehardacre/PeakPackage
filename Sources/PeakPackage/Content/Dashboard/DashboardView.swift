@@ -133,7 +133,6 @@ public class DashboardManager : Manager {
                 rex in
                 let mes = rex as! DashboardMessage
                 self.message = mes
-                NotificationCenter.default.post(Notification(name: Notification.Name("dashboardMessageLoaded"),object: mes))
             }
         }
     }
@@ -160,11 +159,12 @@ public struct DashboardMessageShortView : View{
             }
             Spacer()
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: {
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "database")), perform: {
             note in
             
-            let message = note.object as! DashboardMessage?
-            self.message = message
+            if let message = note.object as? DashboardMessage {
+                self.message = message
+            }
             
         })
         
