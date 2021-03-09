@@ -78,7 +78,7 @@ public class AnalyticsManager : Manager {
         })
     }
     
-    ///separates the analytics objects into thisWeek, thisMonth and Last Month
+    ///separates the analytics objects into thisWeek, thisMosnth and Last Month
     private func separateAnalytics(analytics: [Analytics]){
         
         for lit in analytics {
