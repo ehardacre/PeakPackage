@@ -138,7 +138,7 @@ struct GooglePageAnalytics: Codable , AnalyticsDataSource{
         var newTotals : [String: String] = [:]
         var totals = totalsForAllResults
         
-        newTotals[AnalyticsManager.visitors_key] = totals?.gavisitors
+        newTotals[AnalyticsManager.visitors_key] = totals?.gasessions
         newTotals[AnalyticsManager.totalEvents_key] = totals?.gatotalEvents
 
         return newTotals
@@ -305,7 +305,7 @@ struct GA_ColumnHeader : Codable {
 struct GA_TotalsForAllResults_Page : Codable {
     
     //NHANCE AND PEAK
-    var gavisitors : String
+    var gasessions : String
     var gatotalEvents : String
     
     //WOOCOMMERCE
