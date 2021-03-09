@@ -46,7 +46,7 @@ public struct TitleView: View {
 //could not conform to Public Facing Content
 public struct Content_Dashboard : View {
     
-    @ObservedObject public var manager: DashboardManager
+    @State public var manager: DashboardManager
     @State public var parent: ContentView
     
     public var body : some View {
