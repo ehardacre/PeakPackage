@@ -128,15 +128,13 @@ public class DashboardManager : Manager {
     public override init(){}
     
     public func loadMessage(){
-        var mes : DashboardMessage? = nil
         if message == nil{
             DatabaseDelegate.getDashboardMessage(){
                 rex in
-                mes = rex as! DashboardMessage
+                let mes = rex as! DashboardMessage
                 self.message = mes
+                NotificationCenter.default.post(Notification(name: Notification.Name("dashboardMessageLoaded"),object: mes))
             }
-        }else{
-            self.message = mes
         }
     }
 }
@@ -144,22 +142,33 @@ public class DashboardManager : Manager {
 public struct DashboardMessageShortView : View{
     
     @State var manager : DashboardManager
+    //@State var showing = false
+    @State var message : DashboardMessage?
     
     public var body: some View {
         HStack{
             Spacer()
             VStack{
                 
-                Text(manager.message?.dashMessageTitle ?? "").font(.title3).bold().multilineTextAlignment(.center).foregroundColor(.white)
-                Text(manager.message?.dashMessageBody ?? "").font(.body).foregroundColor(.white)
+                Text(message?.dashMessageTitle ?? "").font(.title3).bold().multilineTextAlignment(.center).foregroundColor(.white)
+                Text(message?.dashMessageBody ?? "").font(.body).foregroundColor(.white)
                 
-            }.padding(manager.message != nil ? 30 : 0).background(manager.message != nil ? Color.main : Color.clear).cornerRadius(20).onAppear{
+            }.padding(message != nil ? 30 : 0).background(message != nil ? Color.main : Color.clear).cornerRadius(20).onAppear{
                 
                 manager.loadMessage()
                 
             }
             Spacer()
-    }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: {
+            note in
+            
+            let message = note.object as! DashboardMessage?
+            self.message = message
+            
+        })
+        
+        
     }
     
 }
