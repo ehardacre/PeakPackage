@@ -54,9 +54,23 @@ public struct ContentView: View {
     @ObservedObject var seoManager : SEOManager
     @ObservedObject var profileManager : ProfileManager
     
-    public init(tabs : [tabs]) {
+    public init(tabs : [tabs],
+                _ analytics : AnalyticsManager,
+                _ notifications : NotificationManager,
+                _ dashboard : DashboardManager,
+                _ task : TaskManager,
+                _ appointments : AppointmentManager,
+                _ seo : SEOManager,
+                _ profile : ProfileManager) {
 
         _availableTabs = State(initialValue: tabs)
+        analyticsManager = analytics
+        notificationManager = notifications
+        dashboardManager = dashboard
+        taskManager = task
+        appointmentManager = appointments
+        seoManager = seo
+        profileManager = profile
         
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none
