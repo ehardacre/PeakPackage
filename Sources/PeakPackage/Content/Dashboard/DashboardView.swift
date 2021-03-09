@@ -128,12 +128,15 @@ public class DashboardManager : Manager {
     public override init(){}
     
     public func loadMessage(){
+        var mes : DashboardMessage? = nil
         if message == nil{
             DatabaseDelegate.getDashboardMessage(){
                 rex in
-                let mes = rex as! DashboardMessage
+                mes = rex as! DashboardMessage
                 self.message = mes
             }
+        }else{
+            self.message = mes
         }
     }
 }
