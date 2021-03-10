@@ -305,7 +305,7 @@ struct GA_ColumnHeader : Codable {
 struct GA_TotalsForAllResults_Page : Codable {
     
     //NHANCE AND PEAK
-    var gasessions : String
+    var gasessions : String//
     var gatotalEvents : String//
     
     //WOOCOMMERCE
