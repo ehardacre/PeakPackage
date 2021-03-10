@@ -104,7 +104,7 @@ extension DatabaseDelegate {
             let json = JsonFormat.getDashboardMessage(url: "").format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
                 rex in
-                completion(rex)
+                completion(rex)//
             })
         }else if defaults.getApplicationType() == .NHanceConnect {
             let json = JsonFormat.getDashboardMessage(url: (defaults.franchiseURL() ?? "").replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")).format()
