@@ -25,6 +25,7 @@ enum JsonKeys : String{
     case twofactor_contact = "contact"
     //get the message shown on the dashboard
     case dashboard_key = "dashboard_message"
+    case dashboard_url_key = "dashboard_check_url"
     //notification values
     case add_notification_key = "device_id"
     case add_notification_cat_key = "notification_category"
@@ -101,7 +102,7 @@ public enum JsonFormat {
     case getUserFromEmail(email: String)
     case getUserFromPhone(phone: String)
     //get the dashboard message shown to users
-    case getDashboardMessage
+    case getDashboardMessage(url: String)
     //two factor authentication
     case twoFactor(type: String, contact: String)
     //takes the kanban id
@@ -175,8 +176,8 @@ public enum JsonFormat {
         case .twoFactor(let type, let contact):
             retVal = [JsonKeys.twofactor_type.rawValue: type,
                 JsonKeys.twofactor_contact.rawValue: contact]
-        case .getDashboardMessage:
-            retVal = [JsonKeys.dashboard_key.rawValue: "true"]
+        case .getDashboardMessage(let url):
+            retVal = [JsonKeys.dashboard_key.rawValue: "true", JsonKeys.dashboard_url_key.rawValue: url]
         case .setNotificationToken(let token, let category):
             retVal = [JsonKeys.add_notification_key.rawValue: token,
                       JsonKeys.add_notification_cat_key.rawValue: category]

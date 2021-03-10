@@ -100,13 +100,14 @@ extension DatabaseDelegate {
     
     static func getDashboardMessage(completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients{
-            let json = JsonFormat.getDashboardMessage.format()
+            //TODO: probably gotta put something in the url
+            let json = JsonFormat.getDashboardMessage(url: "").format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
                 rex in
                 completion(rex)
             })
         }else if defaults.getApplicationType() == .NHanceConnect {
-            let json = JsonFormat.getDashboardMessage.format()
+            let json = JsonFormat.getDashboardMessage(url: (defaults.franchiseURL() ?? "").replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")).format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
                 rex in
                 completion(rex)
