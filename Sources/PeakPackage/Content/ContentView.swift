@@ -187,6 +187,8 @@ public struct ContentView: View {
                     profileManager.loadProfiles()
                     analyticsManager.loadAnalytics(for: .Day)
                     analyticsManager.loadAnalytics(for: .Week)
+                    analyticsManager.loadAnalytics(for: .Month)
+                    analyticsManager.loadAnalytics(for: .Year)
                     notificationManager.loadNotifications()
                     seoManager.loadRankings()
                     if defaults.getApplicationType() == .PeakClients{
