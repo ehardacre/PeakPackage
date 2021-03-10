@@ -155,6 +155,7 @@ public struct DashboardMessageShortView : View{
             }.padding(message != nil ? 30 : 0).background(message != nil ? Color.main : Color.clear).cornerRadius(20).onAppear{
                 
                 manager.loadMessage()
+                message = manager.message
                 
             }
             Spacer()

@@ -71,6 +71,9 @@ struct LeadsShortView : View {
             }
             
         })
+        .onAppear{
+            lead = parent.notificationManager.todaysScheduled().first
+        }
     }
 }
 
@@ -140,5 +143,8 @@ struct DashboardAnalytics: View {
             }
         
         })
+        .onAppear{
+            dataSource = analyticsMan.today
+        }
     }
 }
