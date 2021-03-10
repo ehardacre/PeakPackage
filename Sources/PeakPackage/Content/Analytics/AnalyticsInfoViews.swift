@@ -75,7 +75,7 @@ struct AnalyticsInfoView : View {
                 VStack(alignment: .leading){
                     //the totals text for the page analytics
                     VStack(alignment: .leading){
-                        ForEach(values, id: \.id){ obj in
+                        ForEach(sortDisplayAnalytics(), id: \.id){ obj in
                                 Text(obj.key ?? "")
                                     .analyticsTotals_Label_style()
                                 Text(obj.value ?? "")
@@ -113,6 +113,20 @@ struct AnalyticsInfoView : View {
         
         }.padding(20).background(Color.lightAccent).cornerRadius(20.0)
         
+    }
+    
+    func sortDisplayAnalytics() -> [ComparisonObject]{
+        var temp : [ComparisonObject] = []
+        
+        for val in values{
+            if (val.key ?? "").contains("Visitors") {
+                temp.insert(val, at: 0)
+            }else{
+                temp.append(val)
+            }
+        }
+        
+        return temp
     }
     
     
