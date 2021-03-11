@@ -165,6 +165,8 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
     ///given a type returns a dictionary that can be easily graphed
     func getGraphableData(for type: AnalyticsType) -> [(String,Int)]{
         
+        printr("getting graph data...")
+        
         if type == AnalyticsType.thisWeek || type == AnalyticsType.lastWeek {
             return graphAsWeek()
         }else if type == AnalyticsType.thisMonth || type == AnalyticsType.lastMonth {
@@ -176,6 +178,10 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
     }
     
     func graphAsWeek() -> [(String,Int)]{
+        
+        printr("graphing as week...")
+        printr("rows:")
+        printr(rows)
         //the dictionary that will be returned
         var graph : [(String, Int)] = []
         
@@ -198,10 +204,18 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             count += 1
         }
         
+        printr("graph:")
+        printr(graph)
+        
         return graph
     }
     
     func graphAsMonth() -> [(String,Int)]{
+        
+        printr("graphing as month...")
+        printr("rows:")
+        printr(rows)
+        
         //the dictionary that will be returned
         var graph : [(String, Int)] = []
         
@@ -226,10 +240,18 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             count += 1
         }
         
+        printr("graph:")
+        printr(graph)
+        
         return graph
     }
     
     func graphAsYear() -> [(String,Int)]{
+        
+        printr("graphing as year...")
+        printr("rows:")
+        printr(rows)
+        
         //the dictionary that will be returned
         var graph : [(String, Int)] = []
         
@@ -251,6 +273,9 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             graph.append((label,value))
             count += 1
         }
+        
+        printr("graph:")
+        printr(graph)
         
         return graph
     }
