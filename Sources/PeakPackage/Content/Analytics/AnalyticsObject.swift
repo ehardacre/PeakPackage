@@ -306,7 +306,7 @@ struct GA_TotalsForAllResults_Page : Codable {
     
     //NHANCE AND PEAK
     var gasessions : String//
-    var gatotalEvents : String//
+    var gasessionsWithEvent : String//
     
     //WOOCOMMERCE
     var gatransactionRevenue : String?

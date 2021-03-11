@@ -25,7 +25,10 @@ public struct Content_Analytics_multiPage : PublicFacingContent{
             case 1:
                 AnalyticsView(type: AnalyticsType.thisMonth, analyticsMan: manager as! AnalyticsManager)
             case 2:
-                AnalyticsView(type: AnalyticsType.thisWeek, analyticsMan: manager as! AnalyticsManager)
+                AnalyticsView(type: AnalyticsType.thisWeek, analyticsMan: manager as! AnalyticsManager).onAppear{
+                    (manager as! AnalyticsManager).loadAnalytics(for: .Month)
+                    (manager as! AnalyticsManager).loadAnalytics(for: .Year)
+                }
             default:
                 EmptyView()
             }
