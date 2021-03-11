@@ -139,7 +139,7 @@ struct GooglePageAnalytics: Codable , AnalyticsDataSource{
         var totals = totalsForAllResults
         
         newTotals[AnalyticsManager.visitors_key] = totals?.gasessions
-        newTotals[AnalyticsManager.totalEvents_key] = totals?.gatotalEvents
+        newTotals[AnalyticsManager.totalEvents_key] = totals?.gasessionsWithEvent
 
         return newTotals
     }
