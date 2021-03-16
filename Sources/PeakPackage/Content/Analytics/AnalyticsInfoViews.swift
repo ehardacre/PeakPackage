@@ -61,7 +61,7 @@ struct AnalyticsInfoView : View {
                                  dropShadow: false,
                                  cornerImage: Image(systemName: "cursor.rays")
                         ).overlay(
-                            ProgressView().if((dataSource?.now?.ppc?.graphableData ?? []).count == 0, content: {view in view.hidden()})
+                            ProgressView().if((dataSource?.now?.ppc?.graphableData ?? []).count != 0, content: {view in view.hidden()})
                         )
                     }else{//
                         BarChartView(data: ChartData(
@@ -72,7 +72,7 @@ struct AnalyticsInfoView : View {
                                  dropShadow: false,
                                  cornerImage: Image(systemName: "person.3.fill")
                         ).overlay(
-                            ProgressView().if((dataSource?.now?.ppc?.graphableData ?? []).count == 0, content: {view in view.hidden()})
+                            ProgressView().if((dataSource?.now?.ppc?.graphableData ?? []).count != 0, content: {view in view.hidden()})
                         )
                         
                     }
