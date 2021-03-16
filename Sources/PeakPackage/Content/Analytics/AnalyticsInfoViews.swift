@@ -51,24 +51,28 @@ struct AnalyticsInfoView : View {
     var body : some View {
         VStack{
             HStack{
-                if ppc {
-                    BarChartView(data: ChartData(
-                                values: dataSource?.now?.ppc?.graphableData ?? []),
-                             title: "PPC",
-                             legend: "Visitors",
-                             style: chartStyle,
-                             dropShadow: false,
-                             cornerImage: Image(systemName: "cursor.rays")
-                    )
-                }else{//
-                    BarChartView(data: ChartData(
-                                values: dataSource?.now?.page?.graphableData ?? []),
-                             title: "All",
-                             legend: "Visitors",
-                             style: chartStyle,
-                             dropShadow: false,
-                             cornerImage: Image(systemName: "person.3.fill")
-                    )
+                if dataSource == nil{
+                    ProgressView()
+                }else{
+                    if ppc {
+                        BarChartView(data: ChartData(
+                                    values: dataSource?.now?.ppc?.graphableData ?? []),
+                                 title: "PPC",
+                                 legend: "Visitors",
+                                 style: chartStyle,
+                                 dropShadow: false,
+                                 cornerImage: Image(systemName: "cursor.rays")
+                        )
+                    }else{//
+                        BarChartView(data: ChartData(
+                                    values: dataSource?.now?.page?.graphableData ?? []),
+                                 title: "All",
+                                 legend: "Visitors",
+                                 style: chartStyle,
+                                 dropShadow: false,
+                                 cornerImage: Image(systemName: "person.3.fill")
+                        )
+                    }
                 }
             
                 //the text information about analytics

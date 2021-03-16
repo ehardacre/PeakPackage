@@ -19,14 +19,22 @@ struct TaskDetails: View {
     @ObservedObject var stopWatchManager = StopWatchManager()
     
     @State var timeText = ""
+    @State var parsedList : [(title: String, value: String)] = []
     
     var body : some View {
         VStack{
-            Image("peak").resizable().frame(width: 50, height: 50)
-            Text(task.type == "user_requested" ? "Requested" : "Complimentary")
-            Text(TaskManager.cleanDate(task.date))
-            Divider().frame(width: 200)
-            Text(task.request)
+            
+            //title info
+            //Image(uiimage: defaults.logo).resizable().frame(width: 50, height: 50)
+            Group{
+                Text(task.type == "user_requested" ?
+                            "Requested" :
+                            "Complimentary")
+                Text(TaskManager.cleanDate(task.date))
+                Divider().frame(width: 200)
+            
+            }
+            
             Spacer()
             if defaults.admin {
             if pickerSelection == 1 {
@@ -120,6 +128,58 @@ struct TaskDetails: View {
             }
         }
     }
+    
+    func parseTaskContent(task: Task){
+        //Format: (Service Page Addition for admin) Details include [Service Title: Test Service] [Custom Content: Testing new Teams update]
+        
+        var tempDetails : [(String,String)] = []
+        
+        var req = task.request
+        let regex_title = "\\([^\\(]\\)"
+        let regex_detail = "\\[[^\\[]\\]" //matches [ ... ] where the string inside doesn't have a new opening bracket
+        // task.request.
+        do {
+            
+            //TITLE
+            let titleDetector = try NSDataDetector(pattern: regex_title)
+            let titlematches = titleDetector.matches(in: req, range: NSRange(req.startIndex..., in: req))
+            for match in titlematches {
+                let start = req.index(req.startIndex, offsetBy: match.range.lowerBound)
+                let end = req.index(req.startIndex, offsetBy: match.range.upperBound)
+                let range = start ..< end
+                let detail = req[range]
+                let info = detail.replacingOccurrences(of: ")", with: "").replacingOccurrences(of: "(", with: "").components(separatedBy: "for")
+                if info.count > 1{
+                    let tempType = String(info[0])
+                    let tempFran = String(info[1])
+                    tempDetails.append((tempType, tempFran))
+                }
+            }
+            
+            //DETAILS
+            let detector = try NSDataDetector(pattern: regex_detail)
+            let matches = detector.matches(in: req, range: NSRange(req.startIndex..., in: req))
+            for match in matches {
+                let start = req.index(req.startIndex, offsetBy: match.range.lowerBound)
+                let end = req.index(req.startIndex, offsetBy: match.range.upperBound)
+                let range = start ..< end
+                let detail = req[range]
+                let info = detail.replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "[", with: "").split(separator: ":")
+                if info.count > 1{
+                    let title = String(info[0])
+                    let value = String(info[1])
+                    tempDetails.append((title, value))
+                }
+            }
+            
+        }catch{
+            
+        }
+        
+        parsedList = tempDetails
+        
+    }
+    
 }
 
 enum stopWatchMode {

@@ -129,9 +129,9 @@ struct TaskCardView: View {
     }
 
 
-//struct TaskCardView_Preview : PreviewProvider {
-//    static var previews: some View {
-//        TaskCardView(selectionManager: SelectionManager(), task: Task(taskId: "1", request: "(Service Page Addition for admin) Details include [Service Title: Test Service][Custom Content: Testing new teams update]", date: "11/19/20", status: "requested", type: <#T##String#>), type: <#T##TaskType#>, date: <#T##String#>, content: <#T##String#>)
-//    }
-//}
+struct TaskCardView_Preview : PreviewProvider {
+    static var previews: some View {
+        TaskCardView(selectionManager: SelectionManager(), task: Task(taskId: "1", request: "", date: "", status: "", type: ""), type: TaskType(status: TaskStatus.inProgress, origin: TaskOrigin.userRequested), date: "11/20/20", content: "(Service Page Addition for admin) Details include [Service Title: Test Service][Custom Content: Testing new teams update]")
+    }
+}
 
