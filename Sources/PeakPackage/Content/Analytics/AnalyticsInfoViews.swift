@@ -51,7 +51,7 @@ struct AnalyticsInfoView : View {
     var body : some View {
         VStack{
             HStack{
-                if dataSource == nil{
+                if (ppc && (dataSource?.now?.ppc?.graphableData ?? nil) == nil) || (!ppc && (dataSource?.now?.page?.graphableData ?? nil) == nil){
                     ProgressView()
                 }else{
                     if ppc {
