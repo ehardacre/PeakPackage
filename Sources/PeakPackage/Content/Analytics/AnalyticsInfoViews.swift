@@ -50,7 +50,6 @@ struct AnalyticsInfoView : View {
     
     var body : some View {
         VStack{
-                
             HStack{
                 
                     if ppc {
@@ -61,10 +60,9 @@ struct AnalyticsInfoView : View {
                                  style: chartStyle,
                                  dropShadow: false,
                                  cornerImage: Image(systemName: "cursor.rays")
+                        ).overlay(
+                            ProgressView().if((dataSource?.now?.ppc?.graphableData ?? []).count == 0, content: {view in view.hidden()})
                         )
-                        .if((dataSource?.now?.ppc?.graphableData ?? []).count == 0){ _ in
-                            ProgressView()
-                        }
                     }else{//
                         BarChartView(data: ChartData(
                                     values: dataSource?.now?.page?.graphableData ?? []),
@@ -73,10 +71,10 @@ struct AnalyticsInfoView : View {
                                  style: chartStyle,
                                  dropShadow: false,
                                  cornerImage: Image(systemName: "person.3.fill")
+                        ).overlay(
+                            ProgressView().if((dataSource?.now?.ppc?.graphableData ?? []).count == 0, content: {view in view.hidden()})
                         )
-                        .if((dataSource?.now?.ppc?.graphableData ?? []).count == 0){ _ in
-                            ProgressView()
-                        }
+                        
                     }
                 
             
@@ -110,9 +108,11 @@ struct AnalyticsInfoView : View {
                         }
                     }
                     
+                    
                     Spacer()
                 
                 }
+
             
                 Spacer()
     
