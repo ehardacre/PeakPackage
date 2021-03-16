@@ -50,10 +50,9 @@ struct AnalyticsInfoView : View {
     
     var body : some View {
         VStack{
+                
             HStack{
-                if (ppc && (dataSource?.now?.ppc?.graphableData ?? []).count == 0) || (!ppc && (dataSource?.now?.page?.graphableData ?? []).count == 0){
-                    ProgressView()
-                }else{
+                
                     if ppc {
                         BarChartView(data: ChartData(
                                     values: dataSource?.now?.ppc?.graphableData ?? []),
@@ -63,6 +62,9 @@ struct AnalyticsInfoView : View {
                                  dropShadow: false,
                                  cornerImage: Image(systemName: "cursor.rays")
                         )
+                        .if((dataSource?.now?.ppc?.graphableData ?? []).count == 0){ _ in
+                            ProgressView()
+                        }
                     }else{//
                         BarChartView(data: ChartData(
                                     values: dataSource?.now?.page?.graphableData ?? []),
@@ -72,8 +74,11 @@ struct AnalyticsInfoView : View {
                                  dropShadow: false,
                                  cornerImage: Image(systemName: "person.3.fill")
                         )
+                        .if((dataSource?.now?.ppc?.graphableData ?? []).count == 0){ _ in
+                            ProgressView()
+                        }
                     }
-                }
+                
             
                 //the text information about analytics
                 VStack(alignment: .leading){
@@ -111,7 +116,7 @@ struct AnalyticsInfoView : View {
             
                 Spacer()
     
-            }
+            }//end hstack
             
             makeTextRecap()
         
