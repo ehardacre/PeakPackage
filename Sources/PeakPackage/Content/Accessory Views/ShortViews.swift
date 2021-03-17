@@ -111,7 +111,7 @@ struct DashboardAnalytics: View {
             HStack{
                 //the text information about analytics
                 
-                if (dataSource?.page?.totals?[AnalyticsManager.visitors_key] == nil || dataSource?.page?.totals?[AnalyticsManager.totalEvents_key] == nil){
+                if (dataSource?.page?.totals?[AnalyticsManager.visitors_key] != nil || dataSource?.page?.totals?[AnalyticsManager.totalEvents_key] != nil){
                 
                     Spacer()
                     
@@ -136,7 +136,9 @@ struct DashboardAnalytics: View {
                     Spacer()
                 
                 }else{
+                    Spacer()
                     ProgressView()
+                    Spacer()
                 }
             
             }
