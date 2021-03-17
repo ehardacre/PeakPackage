@@ -111,27 +111,33 @@ struct DashboardAnalytics: View {
             HStack{
                 //the text information about analytics
                 
-                Spacer()
+                if (dataSource?.page?.totals?[AnalyticsManager.visitors_key] == nil || dataSource?.page?.totals?[AnalyticsManager.totalEvents_key] == nil){
                 
-                VStack{
-                    //visitors
-                    Text(dataSource?.page?.totals?[AnalyticsManager.visitors_key] ?? "0")
-                        .analyticsTotals_style()
-                    Text("Visitors")
-                        .analyticsTotals_Label_style()
+                    Spacer()
+                    
+                    VStack{
+                        //visitors
+                        Text(dataSource?.page?.totals?[AnalyticsManager.visitors_key] ?? "0")
+                            .analyticsTotals_style()
+                        Text("Visitors")
+                            .analyticsTotals_Label_style()
+                    }
+                    
+                    Spacer()
+                    
+                    VStack{
+                        //total events
+                        Text(dataSource?.page?.totals?[AnalyticsManager.totalEvents_key] ?? "0")
+                            .analyticsTotals_style()
+                        Text("Leads")
+                            .analyticsTotals_Label_style()
+                    }
+                    
+                    Spacer()
+                
+                }else{
+                    ProgressView()
                 }
-                
-                Spacer()
-                
-                VStack{
-                    //total events
-                    Text(dataSource?.page?.totals?[AnalyticsManager.totalEvents_key] ?? "0")
-                        .analyticsTotals_style()
-                    Text("Leads")
-                        .analyticsTotals_Label_style()
-                }
-                
-                Spacer()
             
             }
         }.padding(20).background(Color.lightAccent).cornerRadius(20.0)
