@@ -152,7 +152,7 @@ public struct DashboardMessageShortView : View{
                 Text(message?.dashMessageTitle ?? "").font(.title3).bold().multilineTextAlignment(.center).foregroundColor(.white)
                 Text(message?.dashMessageBody ?? "").font(.body).foregroundColor(.white)
                 
-            }.padding(message != nil ? 30 : 0).background(message != nil ? Color.main : Color.clear).cornerRadius(20).onAppear{
+            }.padding(message != nil ? 30 : 0).cornerRadius(20).background(message != nil ? Color.main : Color.clear).onAppear{
                 
                 manager.loadMessage()
                 message = manager.message

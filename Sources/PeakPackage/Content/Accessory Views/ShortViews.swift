@@ -142,7 +142,7 @@ struct DashboardAnalytics: View {
                 }
             
             }
-        }.padding(20).background(Color.lightAccent).cornerRadius(20.0)
+        }.padding(20).cornerRadius(20.0).background(Color.lightAccent)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "database")), perform: {
             note in
         
