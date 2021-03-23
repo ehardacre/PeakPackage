@@ -57,11 +57,13 @@ extension Button {
                 RoundedRectangle(cornerRadius: corners)
                     .stroke(Color.darkAccent, lineWidth: borderRadius)
             )
+            .buttonStyle(PlainButtonStyle())
             .fullWidth()
     }
     
     func TrailingButton() -> some View {
         return self
+            .buttonStyle(PlainButtonStyle()) 
             .padding(pads)
     }
 }
