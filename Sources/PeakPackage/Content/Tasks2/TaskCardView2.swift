@@ -30,9 +30,9 @@ struct TaskCardView2: View {
                 selectionManager: selectionManager,
                 color: Color.mid,
                 icon: Image(systemName: "bolt.fill"),
-                title: "",
-                sub: "",
-                content: "",
+                title: "Complimentary",
+                sub: self.date,
+                content: self.content,
                 showMoreInfo: $showMoreInfo)
         } else {
             if self.type.status == TaskStatus.complete {
@@ -43,9 +43,9 @@ struct TaskCardView2: View {
                     color: Color.darkAccent,
                     icon: Image(systemName: "checkmark.seal.fill"),
                     iconColor: Color.main,
-                    title: "",
-                    sub: "",
-                    content: "",
+                    title: "Requested",
+                    sub: self.date,
+                    content: self.content,
                     showMoreInfo: $showMoreInfo)
 
             } else if self.type.status == TaskStatus.inProgress {
@@ -55,9 +55,9 @@ struct TaskCardView2: View {
                     selectionManager: selectionManager,
                     color: Color.mid,
                     icon: Image(systemName: "seal.fill"),
-                    title: "",
-                    sub: "",
-                    content: "",
+                    title: "Requested",
+                    sub: self.date,
+                    content: self.content,
                     showMoreInfo: $showMoreInfo)
 
             } else { //open
@@ -66,9 +66,9 @@ struct TaskCardView2: View {
                     selectionManager: selectionManager,
                     color: Color.mid,
                     icon: Image(systemName: "seal"),
-                    title: "",
-                    sub: "",
-                    content: "",
+                    title: "Requested",
+                    sub: self.date,
+                    content: self.content,
                     showMoreInfo: $showMoreInfo)
             }
         }
