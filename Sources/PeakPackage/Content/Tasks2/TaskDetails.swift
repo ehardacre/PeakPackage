@@ -156,6 +156,8 @@ struct TaskDetails: View {
     }
     
     func parseTaskContent(task: Task){
+        
+        printr(task.request)
         //Format: (Service Page Addition for admin) Details include [Service Title: Test Service] [Custom Content: Testing new Teams update]
         var tempDetails : [(String,String)] = []
         var req = task.request

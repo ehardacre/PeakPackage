@@ -79,6 +79,9 @@ struct TaskCardView2: View {
             content: {
                 if self.task != nil {
                     TaskDetails(task: self.task!)
+                        .onDisappear{
+                            self.selectionManager.id = nil
+                        }
                 }
         })
     }
