@@ -17,13 +17,18 @@ public class ProfileManager : Manager {
     public override init() {}
     
     func loadProfiles(){
-        DatabaseDelegate.getProfiles(completion: {
+        DatabaseDelegate.getProfiles(
+            completion: {
             rex in
             self.profiles = rex as! [Franchise]
         })
     }
     
-    func changeFranchise(to newID: String, newURL: String, newName: String){
+    func changeFranchise(
+        to newID: String,
+        newURL: String,
+        newName: String){
+        
         if id == newID {
             id = nil
         }else{
@@ -32,7 +37,9 @@ public class ProfileManager : Manager {
             id = newID
             defaults.setTempFranchise(newURL,newName)
         }
-        NotificationCenter.default.post(Notification(name: Notification.Name("profileChanged"),object: id))
-        printr("profile id: \(id)")
+        NotificationCenter.default.post(
+            Notification(
+                name: Notification.Name("profileChanged"),
+                object: id))
     }
 }

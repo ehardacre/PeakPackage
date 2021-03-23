@@ -19,46 +19,48 @@ struct AnalyticsView: View {
     
     //the type of analytics being shown
     var type : AnalyticsType
-    
     //the analytics manager
     @ObservedObject var analyticsMan : AnalyticsManager
-    
     @State var refreshing = false
     
     var body: some View {
-        
         VStack{
-            
             NavigationView{
-                
                 List{
-                    
                     VStack(alignment: .leading){
                         if type == AnalyticsType.thisWeek {
-                            Text(analyticsMan.subtitleForWeek()).font(.footnote).bold().foregroundColor(.darkAccent)
-                            Text(analyticsMan.subnoteForWeek()).font(.footnote).foregroundColor(Color.darkAccent.opacity(0.5))
+                            Text(analyticsMan.subtitleForWeek())
+                                .font(.footnote)
+                                .bold()
+                                .foregroundColor(.darkAccent)
+                            Text(analyticsMan.subnoteForWeek())
+                                .font(.footnote)
+                                .foregroundColor(Color.darkAccent.opacity(0.5))
                         }else if type == AnalyticsType.thisMonth {
-                            Text(analyticsMan.subtitleForMonth()).font(.footnote).bold().foregroundColor(.darkAccent)
-                            Text(analyticsMan.subnoteForMonth()).font(.footnote).foregroundColor(Color.darkAccent.opacity(0.5))
+                            Text(analyticsMan.subtitleForMonth())
+                                .font(.footnote)
+                                .bold()
+                                .foregroundColor(.darkAccent)
+                            Text(analyticsMan.subnoteForMonth())
+                                .font(.footnote)
+                                .foregroundColor(Color.darkAccent.opacity(0.5))
                         }else{
-                            Text(analyticsMan.subtitleForYear()).font(.footnote).bold().foregroundColor(.darkAccent)
-                            Text(analyticsMan.subnoteForYear()).font(.footnote).foregroundColor(Color.darkAccent.opacity(0.5))
+                            Text(analyticsMan.subtitleForYear())
+                                .font(.footnote)
+                                .bold()
+                                .foregroundColor(.darkAccent)
+                            Text(analyticsMan.subnoteForYear())
+                                .font(.footnote)
+                                .foregroundColor(Color.darkAccent.opacity(0.5))
                         }
                     }
-                    
-                    //the page analytics view
-                    //AnalyticsInfoView(type: type, analyticsMan: analyticsMan, page: true){}
-                    //.listRowBackground(Color.clear)
-                    
-                    //the ppc analytics view
-                    //AnalyticsInfoView(type: type, analyticsMan: analyticsMan, page: false){}
-                    //.listRowBackground(Color.clear)
-                    
-                    AnalyticsInfoView(type: type, analyticsMan: analyticsMan, ppc: false)
-                    AnalyticsInfoView(type: type, analyticsMan: analyticsMan, ppc: true)
-                    
+                    AnalyticsInfoView(type: type,
+                                      analyticsMan: analyticsMan,
+                                      ppc: false)
+                    AnalyticsInfoView(type: type,
+                                      analyticsMan: analyticsMan,
+                                      ppc: true)
                     Spacer(minLength: 50)
-                    
                 }
                 .listStyle(SidebarListStyle())
                 .navigationBarTitle(type.displayName(full: true))

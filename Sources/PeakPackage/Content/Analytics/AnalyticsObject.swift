@@ -43,7 +43,6 @@ struct GooglePageAnalytics: Codable , AnalyticsDataSource{
     
     ///given a type returns a dictionary that can be easily graphed
     func getGraphableData(for type: AnalyticsType) -> [(String,Int)]{
-        
         if type == AnalyticsType.thisWeek || type == AnalyticsType.lastWeek {
             return graphAsWeek()
         }else if type == AnalyticsType.thisMonth || type == AnalyticsType.lastMonth {
@@ -54,14 +53,15 @@ struct GooglePageAnalytics: Codable , AnalyticsDataSource{
     }
     
     func graphAsWeek() -> [(String,Int)]{
-        //the dictionary that will be returned
         var graph : [(String, Int)] = []
-        
-        //needed for labeling the graph (week level)
-        let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday"]
-        //needed for labeling the graph (month level)
+        let daysOfWeek = ["Monday",
+                          "Tuesday",
+                          "Wednesday",
+                          "Thursday",
+                          "Friday",
+                          "Saturday",
+                          "Sunday"]
         var count = 0
-        
         while count < 7{
             //day of the week
             let day = count < daysOfWeek.count ? daysOfWeek[count] : ""
@@ -75,17 +75,12 @@ struct GooglePageAnalytics: Codable , AnalyticsDataSource{
             graph.append((label,value))
             count += 1
         }
-        
         return graph
     }
     
     func graphAsMonth() -> [(String,Int)]{
-        //the dictionary that will be returned
         var graph : [(String, Int)] = []
-        
-        //needed for labeling the graph (month level)
         var count = 0
-        
         while count < 31{
             var value = 0
             var date = "0\(count + 1)"
@@ -94,23 +89,16 @@ struct GooglePageAnalytics: Codable , AnalyticsDataSource{
                 value = Int(row[1]) ?? 0
                 date = row[0]
             }
-            
-            //day of the week
             let day = Date().abbreviatedMonth + " " + date.suffix(2)
-            //day of week OR day of month
             let label = day
-            
             graph.append((label,value))
             count += 1
         }
-        
         return graph
     }
     
     func graphAsYear() -> [(String,Int)]{
-        //the dictionary that will be returned
         var graph : [(String, Int)] = []
-        
         var count = 0
         while count < 12{
             var value = 0
@@ -120,16 +108,11 @@ struct GooglePageAnalytics: Codable , AnalyticsDataSource{
                 value = Int(row[1]) ?? 0
                 month = row[0]
             }
-            
-            //day of the month
             let day = "" + month.suffix(2)
-            //day of week OR day of month
             let label = day
-            
             graph.append((label,value))
             count += 1
         }
-        
         return graph
     }
     
@@ -137,10 +120,8 @@ struct GooglePageAnalytics: Codable , AnalyticsDataSource{
     func getTotals() -> [String: String] {
         var newTotals : [String: String] = [:]
         var totals = totalsForAllResults
-        
         newTotals[AnalyticsManager.visitors_key] = totals?.gasessions
         newTotals[AnalyticsManager.totalEvents_key] = totals?.gasessionsWithEvent
-
         return newTotals
     }
 }
@@ -159,37 +140,33 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
     var totalsForAllResults : GA_TotalsForAllResults_PPC?
     var rows : [[String]]?
     
-    //TODO: essentially the same as the function for Page Analytics
-    //maybe there is some way to combine them without losing flexibility
+    #warning("""
+        TODO essentially the same as the function for Page Analytics
+        maybe there is some way to combine them without losing flexibility
+        """)
     ///given the type, returns a dictionary that can be easily graphed
     ///given a type returns a dictionary that can be easily graphed
     func getGraphableData(for type: AnalyticsType) -> [(String,Int)]{
-        
-        printr("getting graph data...")
-        
         if type == AnalyticsType.thisWeek || type == AnalyticsType.lastWeek {
             return graphAsWeek()
-        }else if type == AnalyticsType.thisMonth || type == AnalyticsType.lastMonth {
+        }else if type == AnalyticsType.thisMonth ||
+                    type == AnalyticsType.lastMonth {
             return graphAsMonth()
         }else{
             return graphAsYear()
         }
-        
     }
     
     func graphAsWeek() -> [(String,Int)]{
-        
-        printr("graphing as week...")
-        printr("rows:")
-        printr(rows)
-        //the dictionary that will be returned
         var graph : [(String, Int)] = []
-        
-        //needed for labeling the graph (week level)
-        let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday"]
-        //needed for labeling the graph (month level)
+        let daysOfWeek = ["Monday",
+                          "Tuesday",
+                          "Wednesday",
+                          "Thursday",
+                          "Friday",
+                          "Saturday",
+                          "Sunday"]
         var count = 0
-        
         while count < 7{
             //day of the week
             let day = count < daysOfWeek.count ? daysOfWeek[count] : ""
@@ -203,25 +180,12 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
             graph.append((label,value))
             count += 1
         }
-        
-        printr("graph:")
-        printr(graph)
-        
         return graph
     }
     
     func graphAsMonth() -> [(String,Int)]{
-        
-        printr("graphing as month...")
-        printr("rows:")
-        printr(rows)
-        
-        //the dictionary that will be returned
         var graph : [(String, Int)] = []
-        
-        //needed for labeling the graph (month level)
         var count = 0
-        
         while count < 31{
             var value = 0
             var date = "0\(count + 1)"
@@ -230,31 +194,19 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
                 value = Int(row[2]) ?? 0
                 date = row[0]
             }
-            
             //day of the week
             let day = Date().abbreviatedMonth + " " + date.suffix(2)
             //day of week OR day of month
             let label = day
-            
             graph.append((label,value))
             count += 1
         }
-        
-        printr("graph:")
-        printr(graph)
-        
         return graph
     }
     
     func graphAsYear() -> [(String,Int)]{
-        
-        printr("graphing as year...")
-        printr("rows:")
-        printr(rows)
-        
         //the dictionary that will be returned
         var graph : [(String, Int)] = []
-        
         var count = 0
         while count < 12{
             var value = 0
@@ -264,19 +216,13 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
                 value = Int(row[2]) ?? 0
                 month = row[0]
             }
-            
             //day of the month
             let day = "" + month.suffix(2)
             //day of week OR day of month
             let label = day
-            
             graph.append((label,value))
             count += 1
         }
-        
-        printr("graph:")
-        printr(graph)
-        
         return graph
     }
     
@@ -284,19 +230,21 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
     func getTotals() -> [String : String] {
         var newTotals : [String : String] = [:]
         var totals = totalsForAllResults
-        
         if totals != nil {
-        
             if totals!.showingAdData(){
-                newTotals[AnalyticsManager.adClicks_key] = totals?.gaadClicks
-                newTotals[AnalyticsManager.adCost_key] = totals?.gaadCost?.withDecimalPrecision(1)
-                newTotals[AnalyticsManager.costPerClick_key] = totals?.gacostPerConversion?.withDecimalPrecision(1)
+                newTotals[AnalyticsManager.adClicks_key] =
+                    totals?.gaadClicks
+                newTotals[AnalyticsManager.adCost_key] =
+                    totals?.gaadCost?.withDecimalPrecision(1)
+                newTotals[AnalyticsManager.costPerClick_key] =
+                    totals?.gacostPerConversion?.withDecimalPrecision(1)
             }else if totals!.showingSessionData(){
-                newTotals[AnalyticsManager.sessions_key] = totals?.gasessions
-                newTotals[AnalyticsManager.sessionsWithEvent_key] = totals?.gasessionsWithEvent
+                newTotals[AnalyticsManager.sessions_key] =
+                    totals?.gasessions
+                newTotals[AnalyticsManager.sessionsWithEvent_key] =
+                    totals?.gasessionsWithEvent
             }
         }
-        
         return newTotals
     }
 }

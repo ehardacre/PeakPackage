@@ -12,39 +12,42 @@ import SwiftUI
 ///Specific tab menu for the content of the Peak Clients app
 public struct TabMenu : View {
     
+    //current tab
     @Binding var tab : tabs
+    //all tabs
     @Binding var availableTabs : [tabs]
+    //count for notification num Label
     var notificationCount : Int
-    
-    
-    //rectangle.stack.person.crop.fill, magnifyingglass.circle.fill, chart.bar.fill
+    /* alternate images we've used:
+    rectangle.stack.person.crop.fill,
+     magnifyingglass.circle.fill,
+     chart.bar.fill */
     let images : [tabs : String] =
-        [ tabs.analytics : "chart.bar.fill", tabs.calendar : "calendar", tabs.leads : "rectangle.stack.person.crop.fill", tabs.seo : "megaphone.fill", tabs.tasks : "list.dash"]
+        [ tabs.analytics : "chart.bar.fill",
+          tabs.calendar : "calendar",
+          tabs.leads : "rectangle.stack.person.crop.fill",
+          tabs.seo : "megaphone.fill",
+          tabs.tasks : "list.dash"]
     
     public var body : some View{
         HStack{
-            
-            ForEach(availableTabs, id: \.rawValue){ t in
+            ForEach(availableTabs, id: \.rawValue){
+                t in
                 if t == tabs.dashboard{
                     //Dashboard button
                     Button(action: { self.tab = tabs.dashboard }){
                         Image(uiImage: defaults.logo).tabCenter_style()
-                    }.tabCenter_style()
+                    }
+                    .tabCenter_style()
                 }else{
                     Spacer(minLength: 0)
                     tabButton(imageName: images[t]!, globalTab: $tab, myTab: t)
                     Spacer(minLength: 0)
                 }
             }
-            
-//            Spacer(minLength: 0)
-//
-//            tabButton(imageName: "rectangle.stack.person.crop.fill", globalTab: $tab, myTab: tabs.leads, notificationCount: notificationCount)
-            
-            
-        //HSTACK end
-        }.padding(.horizontal, 35)
-        .background(Color.lightAccent.edgesIgnoringSafeArea(.all)) //lets the view continue into the bottom safe area
+        }
+        .padding(.horizontal, 35)
+        .background(Color.lightAccent.edgesIgnoringSafeArea(.all))
     }
 }
 
@@ -60,7 +63,9 @@ public struct tabButton : View {
 
     public var body: some View {
         Button(action: { self.globalTab = myTab }){
-            Image(systemName: imageName).tab_style().overlay(NotificationNumLabel(number: notificationCount))
+            Image(systemName: imageName)
+                .tab_style()
+                .overlay(NotificationNumLabel(number: notificationCount))
         }
         .tab_style(selected: self.globalTab == myTab)
     }
@@ -93,6 +98,7 @@ extension Image {
         return self
             .renderingMode(.original)
             .resizable()
-            .frame(width:60.0, height: 60.0).background(Circle().foregroundColor(Color.lightAccent))
+            .frame(width:60.0, height: 60.0)
+            .background(Circle().foregroundColor(Color.lightAccent))
     }
 }

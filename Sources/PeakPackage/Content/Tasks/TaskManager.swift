@@ -12,7 +12,6 @@ import SwiftUI
 public class TaskManager : Manager {
     
     @Published var tasks = [Task]()
-    
     //status based lists
     @Published var openTasks = [Task]()
     @Published var inProgressTasks = [Task]()
@@ -22,7 +21,6 @@ public class TaskManager : Manager {
     @Published var complementaryTasks = [Task]()
     //status and origin based lists
     @Published var completeComplementaryTasks = [Task]()
-    
     
     static var taskTypes = [TaskStatus.open , TaskStatus.complete]
     static var adminTaskTypes = ["Open Tasks", "Complete"]
@@ -34,12 +32,10 @@ public class TaskManager : Manager {
      loads all tasks for the signed in user
     */
     func loadTasks(){
-        
         //if tasks has already been populated
         if !tasks.isEmpty {
             return
         }
-        
         DatabaseDelegate.getTasks(completion: {
             rex in
             //set the result to the appropriate tasks
@@ -53,46 +49,44 @@ public class TaskManager : Manager {
         separates the loaded tasks and fills the closed and open tasks arrays
      */
     func separateTasks() {
-        
-//        openTasks = []
-//        completeTasks = []
-//        userTasks = []
-//        complementaryTasks = []
-//        completeComplementaryTasks = []
-        
         for t in tasks{
             let type = t.getType()
             //check the status of the task
             if type.status == TaskStatus.complete {
-                if !self.tasksContains(taskList: self.completeTasks, task: t) {
+                if !self.tasksContains(
+                    taskList: self.completeTasks,
+                    task: t) {
                     self.completeTasks.append(t)
                 }
-                //completeTasks.append(t)
             } else {
-                if !self.tasksContains(taskList: self.openTasks, task: t) {
+                if !self.tasksContains(
+                    taskList: self.openTasks,
+                    task: t) {
                     self.openTasks.append(t)
                 }
-                //openTasks.append(t)
             }
             //check the origin of the task
             if type.origin == TaskOrigin.userRequested {
-                if !self.tasksContains(taskList: self.userTasks, task: t) {
+                if !self.tasksContains(
+                    taskList: self.userTasks,
+                    task: t) {
                     self.userTasks.append(t)
                 }
-                //userTasks.append(t)
             } else {
-                if !self.tasksContains(taskList: self.complementaryTasks, task: t) {
+                if !self.tasksContains(
+                    taskList: self.complementaryTasks,
+                    task: t) {
                     self.complementaryTasks.append(t)
                 }
-                //complementaryTasks.append(t)
             }
             //check status and origin
-            if type.origin == TaskOrigin.complementary && type.status == TaskStatus.complete {
-                
-                if !self.tasksContains(taskList: self.completeComplementaryTasks, task: t) {
-                    self.completeComplementaryTasks.append(t)
+            if type.origin == TaskOrigin.complementary &&
+                type.status == TaskStatus.complete {
+                if !self.tasksContains(
+                    taskList: self.completeComplementaryTasks,
+                    task: t) {
+                        self.completeComplementaryTasks.append(t)
                 }
-                //completeComplementaryTasks.append(t)
             }
         }
         return
@@ -114,7 +108,6 @@ public class TaskManager : Manager {
             }
         }
         return taskList
-        
     }
     
     /**
@@ -124,7 +117,7 @@ public class TaskManager : Manager {
     func resetTasks(){
         //get the json for the request
         let json = JsonFormat.getTasks(id: defaults.franchiseId()!).format()
-            
+        #warning("TODO: move this to dbdelegate file")
         //perform data base request
         DatabaseDelegate.performRequest(with: json, ret: returnType.taskList, completion: {
                 rex in

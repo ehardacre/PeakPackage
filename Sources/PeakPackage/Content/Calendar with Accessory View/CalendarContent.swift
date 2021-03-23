@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+/**
+ #Content_Calendar
+ Content for the calendar view 
+ */
 public struct Content_Calendar: PublicFacingContent{
     
     @ObservedObject public var manager: Manager

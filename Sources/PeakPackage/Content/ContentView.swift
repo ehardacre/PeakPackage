@@ -49,7 +49,7 @@ public struct ContentView: View {
     @ObservedObject var analyticsManager : AnalyticsManager
     @ObservedObject var notificationManager : NotificationManager
     @ObservedObject var dashboardManager : DashboardManager
-    @ObservedObject var taskManager : TaskManager
+    @ObservedObject var taskManager : TaskManager2
     @ObservedObject var appointmentManager : AppointmentManager
     @ObservedObject var seoManager : SEOManager
     @ObservedObject var profileManager : ProfileManager
@@ -58,7 +58,7 @@ public struct ContentView: View {
                 _ analytics : AnalyticsManager,
                 _ notifications : NotificationManager,
                 _ dashboard : DashboardManager,
-                _ task : TaskManager,
+                _ task : TaskManager2,
                 _ appointments : AppointmentManager,
                 _ seo : SEOManager,
                 _ profile : ProfileManager) {
@@ -76,109 +76,99 @@ public struct ContentView: View {
         UITableView.appearance().separatorStyle = .none
         
         //formatting table view (this might be deprecated but there's no harm in keeping it)
-        UITableView.appearance().backgroundColor = .init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1)
+        UITableView.appearance().backgroundColor = .init(red: 0.0,
+                                                         green: 0.0,
+                                                         blue: 0.0,
+                                                         alpha: 0.1)
         UITableViewCell.appearance().backgroundColor = .clear
         UIListContentView.appearance().backgroundColor = .clear
         
     }
-
-//    func determineTabs() -> [tabs]{
-////        var temptabs : [tabs] = []
-////        if layout.DashboardView_exists{
-////            temptabs.append(tabs.dashboard)
-////        }
-////        if layout.AnalyticsView_exists{
-////            temptabs.append(tabs.analytics)
-////        }
-////        if layout.CalendarView_exists{
-////            temptabs.append(tabs.calendar)
-////        }
-////        if layout.TasksView_exists{
-////            temptabs.append(tabs.tasks)
-////        }
-////        if layout.LeadsView_exists{
-////            temptabs.append(tabs.leads)
-////        }
-//        if defaults.getApplicationType() == .NHanceConnect{
-//            return [tabs.dashboard, tabs.analytics, tabs.leads, tabs.seo]
-//        }else if defaults.getApplicationType() == .PeakClients{
-//            return [tabs.dashboard, tabs.analytics, tabs.calendar, tabs.tasks, tabs.leads]
-//        }
-//        return []
-//    }
     
     public var body: some View {
-        
         VStack(spacing: 0){
-            
             if profileChanged {
                 HStack{
-                    Text("\(profileName)").bold().foregroundColor(Color.lightAccent).padding(.top, 50).padding(.horizontal,20)
+                    Text("\(profileName)")
+                        .bold()
+                        .foregroundColor(Color.lightAccent)
+                        .padding(.top, 50)
+                        .padding(.horizontal,20)
                     Spacer()
-                    Button(action: {
-                        profileManager.changeFranchise(to: "1", newURL: "test2018", newName: "admin")
-                        profileChanged = false
+                    Button(
+                        action: {
+                            profileManager.changeFranchise(
+                                to: "1",
+                                newURL: "test2018",
+                                newName: "admin")
+                            profileChanged = false
                     }){
-                        Image(systemName: "xmark").foregroundColor(Color.lightAccent).padding(20)
-                    }.padding(.top, 50)
-                }.background(Color.main).edgesIgnoringSafeArea(.all).padding(.bottom,0)
+                        Image(systemName: "xmark")
+                            .foregroundColor(Color.lightAccent)
+                            .padding(20)
+                    }
+                    .padding(.top, 50)
+                }
+                .background(Color.main)
+                .edgesIgnoringSafeArea(.all)
+                .padding(.bottom,0)
             }
-            
             ZStack{
-                
-                Color.black.opacity(0.05).edgesIgnoringSafeArea(.top)
-                
+                Color.black
+                    .opacity(0.05)
+                    .edgesIgnoringSafeArea(.top)
                 Section{
                     //manage tabs
                     if tab == tabs.analytics {
-
-//                        layout.AnalyticsView(manager: analyticsManager)
-                        Content_Analytics_multiPage(manager: analyticsManager)
-
+                        Content_Analytics_multiPage(
+                            manager: analyticsManager)
                     }else if tab == tabs.leads{
-
-                       // layout.LeadsView(manager: notificationManager)
                         if defaults.getApplicationType() == .NHanceConnect {
-                            Content_Leads_multiPage(manager: notificationManager)
+                            Content_Leads_multiPage(
+                                manager: notificationManager)
                         }else if defaults.getApplicationType() == .PeakClients {
-                            Content_Leads_singlePageSectioned(manager: notificationManager)
+                            Content_Leads_singlePageSectioned(
+                                manager: notificationManager)
                         }
-                        
                     }else if tab == tabs.calendar{
-
-                        //layout.CalendarView(manager: appointmentManager)
-                        Content_Calendar(manager: appointmentManager)
-
+                        Content_Calendar(
+                            manager: appointmentManager)
                     }else if tab == tabs.tasks{
-                        
-                       // layout.TasksView(manager: taskManager)
-                        Content_Tasks(manager: taskManager)
-
+                        Content_Tasks2(
+                            manager: taskManager)
                     }else if tab == tabs.dashboard{
-
-                        //layout.DashboardView(manager: dashboardManager)
-                        Content_Dashboard(manager: dashboardManager, parent: self)
-
+                        Content_Dashboard(
+                            manager: dashboardManager,
+                            parent: self)
                     }else if tab == tabs.seo{
-                        
                         Content_SEO(manager: seoManager)
                     }
-                }.padding(.top, profileChanged ? -50 : 0)
-                
-            //ZSTACK end
-            }.padding(.bottom,-35)
-            
-            TabMenu(tab: self.$tab, availableTabs: self.$availableTabs, notificationCount: notificationManager.newNotifications).shadow(color: Color.darkAccent.opacity(0.1), radius: 4, y: -4).frame(maxHeight: 70)
+                }
+                .padding(.top, profileChanged ? -50 : 0)
+            }
+            .padding(.bottom,-35)
+            TabMenu(
+                tab: self.$tab,
+                availableTabs: self.$availableTabs,
+                notificationCount: notificationManager.newNotifications)
+                .shadow(
+                    color: Color.darkAccent.opacity(0.1),
+                    radius: 4, y: -4)
+                .frame(maxHeight: 70)
                 .onAppear{
-                    NotificationCenter.default.post(Notification(name: Notification.Name("profileChanged"),object: nil))
+                    NotificationCenter.default.post(
+                        Notification(
+                            name: Notification.Name("profileChanged"),
+                            object: nil))
                 }
                 .onReceive(
-                    NotificationCenter.default.publisher(for: Notification.Name(rawValue: "profileChanged"))
+                    NotificationCenter.default.publisher(
+                        for: Notification.Name(rawValue: "profileChanged"))
                 ){
                     note in
-                    printr(note.object, tag: printTags.error)
-                    if note.object == nil || note.object as? Int == 1 || defaults.franchiseName() ?? "" == "admin"{
-                        printr("profile released", tag: printTags.error)
+                    if note.object == nil ||
+                        note.object as? Int == 1 ||
+                        defaults.franchiseName() ?? "" == "admin"{
                         profileChanged = false
                     }else{
                         profileChanged = true
@@ -196,14 +186,11 @@ public struct ContentView: View {
                     }
                     
                 }
-                
-
-            
-        //VSTACK end
-        }.background(Color.black.opacity(0.05).edgesIgnoringSafeArea(.top))
-        
+        }
+        .background(Color.black
+                        .opacity(0.05)
+                        .edgesIgnoringSafeArea(.top))
     }
-    
 }
 
 

@@ -29,21 +29,25 @@ struct PageControl: View {
         
         HStack(spacing: -5) {
             
-            ForEach(0...maxIndex, id: \.self) { index in
+            ForEach(0...maxIndex, id: \.self) {
+                index in
                 
                 //the title of the page
                 Text(self.pageNames[index])
                     .pageControl_style(selected: index == self.index)
-                    .onTapGesture { self.index = index }
+                    .onTapGesture {
+                        self.index = index
+                    }
                 
                 //Only want dividers between indices, not after the last
                 if index != maxIndex && dividers{
-                    Text("|").pageControl_style()
+                    Text("|")
+                        .pageControl_style()
                 }
-                
             }
             
-        }.pageControl_style()
+        }
+        .pageControl_style()
     }
 }
 
@@ -54,7 +58,9 @@ extension Text {
     func pageControl_style(selected: Bool = false) -> some View {
         return self
             .bold()
-            .foregroundColor(selected ? .lightAccent : Color.lightAccent.opacity(0.4))
+            .foregroundColor(selected ?
+                                .lightAccent :
+                                Color.lightAccent.opacity(0.4))
             .padding(10)
     }
 }

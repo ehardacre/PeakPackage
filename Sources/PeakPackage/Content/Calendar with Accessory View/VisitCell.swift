@@ -9,18 +9,15 @@ struct VisitCell: View {
     var body: some View {
         HStack {
             tagView
-
             VStack(alignment: .leading) {
                 locationName
                 visitDuration
             }
-
             Spacer()
         }
         .frame(height: VisitPreviewConstants.cellHeight)
         .padding(.vertical, VisitPreviewConstants.cellPadding)
     }
-
 }
 
 private extension VisitCell {

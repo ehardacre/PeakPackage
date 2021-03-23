@@ -4,6 +4,10 @@ import SwiftUI
 
 let currentCalendar = Calendar.current
 
+/**
+ #Visit
+holds the date location and other details about a visit
+ */
 struct Visit {
 
     let locationName: String
@@ -12,40 +16,35 @@ struct Visit {
     let departureDate: Date
 
     var duration: String {
-        arrivalDate.timeOnlyWithPadding + " ➝ " + departureDate.timeOnlyWithPadding
+        arrivalDate.timeOnlyWithPadding +
+            " ➝ " + departureDate.timeOnlyWithPadding
     }
 
 }
-
 extension Visit: Identifiable {
-
     var id: Int {
         UUID().hashValue
     }
-
 }
-
 extension Visit {
-
     static func mock(withDate date: Date) -> Visit {
         Visit(locationName: "Apple Inc",
               tagColor: .randomColor,
               arrivalDate: date,
               departureDate: date.addingTimeInterval(60*60))
     }
-
     static func mocks(start: Date, end: Date) -> [Visit] {
         currentCalendar.generateVisits(
             start: start,
             end: end)
     }
-
 }
 
+/**
+ All of this stuff is being used to generate random appointments 
+ */
 fileprivate let visitCountRange = 1...20
-
 private extension Calendar {
-
     func generateVisits(start: Date, end: Date) -> [Visit] {
         var visits = [Visit]()
 
@@ -68,9 +67,13 @@ private extension Calendar {
     }
 
 }
-
-fileprivate let colorAssortment: [Color] = [.turquoise, .forestGreen, .darkPink, .darkRed, .lightBlue, .salmon, .military]
-
+fileprivate let colorAssortment: [Color] = [.turquoise,
+                                            .forestGreen,
+                                            .darkPink,
+                                            .darkRed,
+                                            .lightBlue,
+                                            .salmon,
+                                            .military]
 private extension Color {
 
     static var randomColor: Color {
@@ -79,7 +82,6 @@ private extension Color {
     }
 
 }
-
 private extension Color {
 
     static let turquoise = Color(red: 24, green: 147, blue: 120)
@@ -91,12 +93,11 @@ private extension Color {
     static let military = Color(red: 117, green: 142, blue: 41)
 
 }
-
 fileprivate extension Color {
-
     init(red: Int, green: Int, blue: Int) {
-        self.init(red: Double(red)/255, green: Double(green)/255, blue: Double(blue)/255)
+        self.init(red: Double(red)/255,
+                  green: Double(green)/255,
+                  blue: Double(blue)/255)
     }
-
 }
 

@@ -16,12 +16,21 @@ struct seoInfoView : View {
     
     var body : some View{
         VStack{
-            
-            Text(searchTerm).bold().font(.title3).padding(20)
+            Text(searchTerm)
+                .bold()
+                .font(.title3)
+                .padding(20)
             List{
-                ForEach(manager.weekbyweek(for: searchTerm), id: \.id){ week in
-                    pastSeoCardView(week: week.term, organicRank: week.organic_rank, mapsRank: week.maps_rank)
-                }.listRowBackground(Color.clear)
+                ForEach(
+                    manager.weekbyweek(for: searchTerm),
+                    id: \.id){
+                    week in
+                    pastSeoCardView(
+                        week: week.term,
+                        organicRank: week.organic_rank,
+                        mapsRank: week.maps_rank)
+                }
+                .listRowBackground(Color.clear)
             }
         }
     }
@@ -32,7 +41,6 @@ struct pastSeoCardView: View {
     
     //needs an id as an identifier for list
     var id = UUID()
-    
     //height of the row
     var height : CGFloat = 50
 
@@ -41,14 +49,11 @@ struct pastSeoCardView: View {
     @State var mapsRank : String
     
     var body: some View {
-        
-        
         HStack{
-            
-            Image(systemName: "\(week).square.fill").foregroundColor(Color.darkAccent).imageScale(.large)
-            
+            Image(systemName: "\(week).square.fill")
+                .foregroundColor(Color.darkAccent)
+                .imageScale(.large)
             Spacer()
-            
             VStack{
                 Text("Organic")
                     .font(.footnote)
@@ -61,9 +66,7 @@ struct pastSeoCardView: View {
             .padding(20)
             .background(Color.lightAccent)
             .cornerRadius(20)
-            
             Spacer()
-            
             VStack{
                 Text("Maps")
                     .font(.footnote)
@@ -76,25 +79,21 @@ struct pastSeoCardView: View {
             .padding(20)
             .background(Color.lightAccent)
             .cornerRadius(20)
-            
             Spacer()
         }
         .background(Color.clear)
         .padding(.horizontal,50)
         .padding(.vertical, 10)
-            
-    
     }
 }
 
 struct pastSeoCardView_Preview : PreviewProvider {
     
     static var previews: some View{
-        
-        pastSeoCardView(week: "12", organicRank: "3", mapsRank: "2")
-        
+        pastSeoCardView(week: "12",
+                        organicRank: "3",
+                        mapsRank: "2")
     }
-    
 }
 
 

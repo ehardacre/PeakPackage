@@ -9,54 +9,13 @@
 import Foundation
 import SwiftUI
 
-
-//struct LineView: View {
-//    var data: [(Double)]
-//    var title: String?
-//    var price: String?
-//
-//    public init(data: [Double],
-//                title: String? = nil,
-//                price: String? = nil) {
-//        
-//        self.data = data
-//        self.title = title
-//        self.price = price
-//    }
-//    
-//    public var body: some View {
-//     
-//            VStack(alignment: .leading, spacing: 8) {
-//                Group{
-//                    if (self.title != nil){
-//                        Text(self.title!)
-//                            .font(.title)
-//                    }
-//                    if (self.price != nil){
-//                        Text(self.price!)
-//                            .font(.body)
-//                        .offset(x: 5, y: 0)
-//                    }
-//                }.offset(x: 0, y: 0)
-//                ZStack{
-//
-//                        GraphLine(data: self.data,
-//                             frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width , height: 200))
-//                        )
-//                            .offset(x: 0, y: 0)
-//                    
-//                    .frame(height: 200)
-//                    .offset(x: 0, y: -100)
-//
-//                }
-//                .frame(height: 200)
-//        
-//            }
-//        
-//    }
-//}
+/**
+ UNFINISHED!!
+ TODO: Move to native graphing instead of using library SwiftUICharts
+ */
 
 struct GraphLine: View {
+    
     var data: [(Double)]
     @Binding var frame: CGRect
 

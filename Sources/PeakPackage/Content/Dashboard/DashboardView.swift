@@ -9,13 +9,18 @@
 import SwiftUI
 import Introspect
 
+/**
+ #Title View
+ */
 public struct TitleView: View {
     
     var title: String
     var actionTitle: Text
     var action: () -> Void
     
-    public init(_ title : String, actionTitle: Text = Text(""), action: @escaping ()->Void = {return}){
+    public init(_ title : String,
+                actionTitle: Text = Text(""),
+                action: @escaping ()->Void = {return}){
         self.title = title
         self.actionTitle = actionTitle
         self.action = action
@@ -30,10 +35,14 @@ public struct TitleView: View {
                 }, label: {
                     actionTitle
                 })
-            }.frame(height: 50)
+            }
+            .frame(height: 50)
             .background(Color.clear)
             HStack {
-                Text(title).font(.largeTitle).bold().padding(.horizontal)
+                Text(title)
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.horizontal)
                 Spacer()
             }
             .background(Color.clear)
@@ -58,7 +67,7 @@ public struct Content_Dashboard : View {
 
 /**
  #Home View
- this is the dashboard view TODO: dashboard might be a more apt name
+ this is the dashboard view 
  */
 //MARK: Dashboard / HomeView
 public struct DashboardView: View {
@@ -69,39 +78,31 @@ public struct DashboardView: View {
     @State var showProfile = false
     
     public var body: some View {
-        
         NavigationView{
-            
             List{
-                
                 DashboardMessageShortView(manager: manager)
-                
                 Divider()
-                
-                LeadsShortView(parent: parent).listRowBackground(Color.clear)
-                
+                LeadsShortView(parent: parent)
+                    .listRowBackground(Color.clear)
                 Divider()
-                
-                AnalyticsShortView(parent: parent).listRowBackground(Color.clear)
-                
+                AnalyticsShortView(parent: parent)
+                    .listRowBackground(Color.clear)
                 Divider()
-                
-            //LIST end
             }
             .listStyle(SidebarListStyle())
-           .navigationBarTitle("Dashboard")
+            .navigationBarTitle("Dashboard")
             .navigationBarItems(trailing:
             Button(action:{
                 if defaults.admin{
-                self.showProfile = true
+                    self.showProfile = true
                 }
             }){
                 if defaults.admin{
-                Image(systemName: "person.crop.circle").imageScale(.large).foregroundColor(.darkAccent)
+                    Image(systemName: "person.crop.circle")
+                        .imageScale(.large)
+                        .foregroundColor(.darkAccent)
                 }
             })
-            
-        //NAVIGATION VIEW end
         }
         .background(Color.clear)
         .stackOnlyNavigationView()
@@ -141,35 +142,38 @@ public class DashboardManager : Manager {
 public struct DashboardMessageShortView : View{
     
     @State var manager : DashboardManager
-    //@State var showing = false
     @State var message : DashboardMessage?
     
     public var body: some View {
         HStack{
             Spacer()
             VStack{
-                
-                Text(message?.dashMessageTitle ?? "").font(.title3).bold().multilineTextAlignment(.center).foregroundColor(.white)
-                Text(message?.dashMessageBody ?? "").font(.body).foregroundColor(.white)
-                
-            }.padding(message != nil ? 30 : 0).cornerRadius(20).background(message != nil ? Color.main : Color.clear).onAppear{
-                
+                Text(message?.dashMessageTitle ?? "")
+                    .font(.title3)
+                    .bold()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+                Text(message?.dashMessageBody ?? "")
+                    .font(.body)
+                    .foregroundColor(.white)
+            }
+            .padding(message != nil ? 30 : 0)
+            .background(message != nil ? Color.main : Color.clear)
+            .cornerRadius(20)
+            .onAppear{
                 manager.loadMessage()
                 message = manager.message
-                
             }
             Spacer()
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "database")), perform: {
-            note in
-            
-            if let message = note.object as? DashboardMessage {
-                self.message = message
-            }
-            
+        .onReceive(
+            NotificationCenter.default.publisher(
+                for: Notification.Name(rawValue: "database")),
+            perform: {
+                note in
+                if let message = note.object as? DashboardMessage {
+                    self.message = message
+                }
         })
-        
-        
     }
-    
 }

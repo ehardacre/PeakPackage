@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+#warning("TODO unfinished view")
 struct WizardView: View {
     
     @State var pointer : CGPoint
@@ -17,7 +18,12 @@ struct WizardView: View {
         VStack{
             RoundedRectangle(cornerRadius: 20)
             Triangle()
-                .path(in: CGRect(x: pointer.x - triangleSize/2, y: pointer.y - triangleSize, width: triangleSize, height: triangleSize))
+                .path(in:
+                        CGRect(
+                            x: pointer.x - triangleSize/2,
+                            y: pointer.y - triangleSize,
+                            width: triangleSize,
+                            height: triangleSize))
                 .background(Color.red)
         }
     }
@@ -28,7 +34,6 @@ extension View {
     func wizard(showing: Binding<Bool>, frame: Binding<CGRect>) -> some View{
         return
             ZStack{
-                //TODO
                 self
             }
     }

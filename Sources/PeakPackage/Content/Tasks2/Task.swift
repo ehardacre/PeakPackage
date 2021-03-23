@@ -26,6 +26,21 @@ struct Task: Codable{
     var type: String
 }
 
+extension Task {
+    init(
+        id: String,
+        request: String,
+        date: String,
+        status: String,
+        type: String){
+        self.taskId = id
+        self.request = request
+        self.date = date
+        self.status = status
+        self.type = type
+    }
+}
+
 /**
 # Task Type
 This is used to label the type of the task
@@ -44,6 +59,7 @@ struct TaskType{
  */
 enum TaskStatus : String{
     case open = "2"
+    #warning("TODO: get id for inprogress tasks")
     case inProgress
     case complete = "5"
     case noStatus
@@ -86,10 +102,8 @@ extension Task {
      - Returns: (TaskCardView) returns a view for a task card corresponding to the task (self)
      */
     func convertToCard(with selectionManager: SelectionManager) -> TaskCardView{
-        
         //the request
         var request = self.request
-        
         //remove unnecessary information that is stored in kanban
         let split = request.firstIndex(of: ":") ?? nil
         var start = request.startIndex
@@ -97,10 +111,13 @@ extension Task {
             start = request.index(after: split!)
         }
         request = String(request[ start..<request.endIndex ])
-        
         let type = self.getType()
-        
         //create the card view
-        return TaskCardView(selectionManager: selectionManager, task: self, type: type, date: TaskManager.cleanDate(self.date), content: request)
+        return TaskCardView(
+            selectionManager: selectionManager,
+            task: self,
+            type: type,
+            date: TaskManager.cleanDate(self.date),
+            content: request)
     }
 }

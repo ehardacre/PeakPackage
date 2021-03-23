@@ -6,7 +6,6 @@ struct VisitPreviewConstants {
 
     static let cellHeight: CGFloat = 30
     static let cellPadding: CGFloat = 10
-
     static let previewTime: TimeInterval = 3
 
 }

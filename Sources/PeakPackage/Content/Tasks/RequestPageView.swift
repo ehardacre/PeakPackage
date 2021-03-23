@@ -18,10 +18,8 @@ struct RequestPageView: View {
     
     //the content view that controls this request page
     var taskMan : TaskManager
-    
     //the status of the tasks being shown
     var status : TaskStatus
-    
     //list of views for tasks
     var tasks : [TaskCardView] = []
     
@@ -31,7 +29,10 @@ struct RequestPageView: View {
      #Request Page View
         holds the whole view for task views
      */
-    init(taskMan: TaskManager, tasklist: [Task], status: TaskStatus) {
+    init(
+        taskMan: TaskManager,
+        tasklist: [Task],
+        status: TaskStatus) {
         self.taskMan = taskMan
         self.status = status
         tasks = convert(tasks: tasklist)
@@ -54,10 +55,12 @@ struct RequestPageView: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing){
-            
             //add the actual list with the task cards
-            RequestListView(taskMan: taskMan, selectionManager: selectionManager, status: status, tasks: tasks)
-            
+            RequestListView(
+                taskMan: taskMan,
+                selectionManager: selectionManager,
+                status: status,
+                tasks: tasks)
         }
     }
 }
@@ -70,58 +73,53 @@ struct RequestListView: View {
     //taskMan view to update
     var taskMan : TaskManager
     @ObservedObject var selectionManager : SelectionManager
-    
     //list of cards
     var status : TaskStatus
     @State var tasks : [TaskCardView]
-    
     //is the user making a new task
     @State var makingNewTask = false
-    
     //information about the service request
     @State var serviceDesc: String = ""
     @State var franchiseName: String = ""
-    
     @State var formTypes = [Form_Type]()
-    
     @State var refreshShowing = false
-    
     @State var navbarTitle = ""
-    
     @State var refreshing = false
     
     var body: some View {
         NavigationView{
             List{
-                //loop through task cards
-                ForEach(self.tasks, id: \.id) { task in
-                    //show task card
+                ForEach(self.tasks, id: \.id) {
+                    task in
                     task
                         .listRowBackground(Color.clear)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                        
                 }
                 .listRowBackground(Color.clear)
                 .listStyle(SidebarListStyle())
-                .environment(\.defaultMinListRowHeight, 120).padding(0.0)
-                
-            //LIST end
+                .environment(\.defaultMinListRowHeight, 120)
+                .padding(0.0)
             }
             .listStyle(SidebarListStyle())
-            .environment(\.defaultMinListRowHeight, 120).padding(0.0)
+            .environment(\.defaultMinListRowHeight, 120)
+            .padding(0.0)
             .navigationBarTitle(self.navbarTitle)
             //button for adding a new task
-                .navigationBarItems(trailing: Button(action: {
-                self.makingNewTask = true
-            }){
-                if self.status == TaskStatus.open {
-                    Text("+").bold().font(.title).foregroundColor(Color.darkAccent)
-                }
-            })
-            .background(Color.clear)
-            
-        //NAVIGATION VIEW end
-        }.background(Color.clear)
+                .navigationBarItems(
+                    trailing: Button(
+                        action: {
+                            self.makingNewTask = true
+                        }){
+                            if self.status == TaskStatus.open {
+                                Text("+")
+                                    .bold()
+                                    .font(.title)
+                                    .foregroundColor(Color.darkAccent)
+                            }
+                    })
+                    .background(Color.clear)
+        }
+        .background(Color.clear)
         .stackOnlyNavigationView()
         .onAppear{
             if status == TaskStatus.open {
@@ -138,25 +136,32 @@ struct RequestListView: View {
                 self.refreshing = false
             }
         }
-            
-        //showing the new task sheet
         .sheet(isPresented: $makingNewTask){
             VStack{
                 NavigationView{
-                    //AutoServeView(title: "New Service Request", franchise: self.franchiseName)
                     List{
-                        
-                        ForEach (self.formTypes, id: \.id) { formType in
-                            NavigationLink(destination: AutoServeView(title: formType.name, formId: formType.id, franchise: self.franchiseName)){
+                        ForEach (
+                            self.formTypes,
+                            id: \.id) {
+                            formType in
+                            NavigationLink(
+                                destination:
+                                    AutoServeView(title: formType.name,
+                                                  formId: formType.id,
+                                                  franchise: self.franchiseName)){
                                 Text(formType.name)
                             }
                         }
-                    
                     }
                     .onAppear{
                         let json = JsonFormat.getDynamicFormTypes(id: defaults.franchiseId()!).format()
-                        DatabaseDelegate.performRequest(with: json, ret: returnType.formtype, completion: { rex in
-                            self.formTypes = rex as! [Form_Type]
+                        #warning("TODO move to dbdelegate file")
+                        DatabaseDelegate.performRequest(
+                            with: json,
+                            ret: returnType.formtype,
+                            completion: {
+                                rex in
+                                self.formTypes = rex as! [Form_Type]
                         })
                     }
                     .navigationBarTitle("Request Service")
@@ -165,41 +170,42 @@ struct RequestListView: View {
                             Button(action: {
                                 self.makingNewTask = false
                             }){
-                                Text("Cancel").foregroundColor(Color.gray)
+                                Text("Cancel")
+                                    .foregroundColor(Color.gray)
                             }
                     )
                 }
                 
             }
-        }.onAppear(perform: {
-            self.franchiseName = defaults.franchiseName()!
+        }.onAppear(
+            perform: {
+                self.franchiseName = defaults.franchiseName()!
         })
     }
     
     //submits a new service request 
     func submitNewRequest(){
-        
         //get the information from defaults
         let name = defaults.getUsername()!
         let fname = franchiseName
         let fid = defaults.franchiseId()!
-
         //formatting the description based on info
         let reqDesc = "\(fname) (\(name)): \(serviceDesc)"
-        
         //format the json for a new task
         let json = JsonFormat.setTask(id: fid, value: reqDesc).format()
-        
+        #warning("TODO move to dbdelegate file")
         //actually submit the new task
-        DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {
-            rex in
-            
-            //if the return type is not correct then an error has occurred
-            if (rex as! String) != "Array"{
-                printr(DataError.failedRequest.rawValue, tag: printTags.error)
-            }
-            
-            self.taskMan.resetTasks()
+        DatabaseDelegate.performRequest(
+            with: json,
+            ret: returnType.string,
+            completion: {
+                rex in
+                //if the return type is not correct then an error has occurred
+                if (rex as! String) != "Array"{
+                    printr(DataError.failedRequest.rawValue,
+                           tag: printTags.error)
+                }
+                self.taskMan.resetTasks()
         })
     }
 }
