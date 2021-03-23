@@ -137,6 +137,68 @@ public class TaskManager2 : Manager{
         return cards.reversed()
     }
     
+    static func parseRequest(_ req: String) -> [TaskField]{
+        
+        printr(req)
+        var tempDetails : [TaskField] = []
+        let regex_title = "\\([^\\(]\\)"
+        let regex_detail = "\\[[^\\[]\\]"
+        //matches [ ... ] where the string inside doesn't have a new opening bracket
+        do {
+            //TITLE
+            let titleDetector = try NSDataDetector(pattern: regex_title)
+            let titlematches = titleDetector.matches(
+                in: req,
+                range: NSRange(req.startIndex..., in: req))
+            for match in titlematches {
+                let start = req.index(
+                    req.startIndex,
+                    offsetBy: match.range.lowerBound)
+                let end = req.index(
+                    req.startIndex,
+                    offsetBy: match.range.upperBound)
+                let range = start ..< end
+                let detail = req[range]
+                let info = detail
+                    .replacingOccurrences(of: ")", with: "")
+                    .replacingOccurrences(of: "(", with: "")
+                    .components(separatedBy: "for")
+                if info.count > 1{
+                    let tempType = String(info[0])
+                    let tempFran = String(info[1])
+                    tempDetails.append(TaskField(title: tempType, value: tempFran))
+                }
+            }
+            //DETAILS
+            let detector = try NSDataDetector(pattern: regex_detail)
+            let matches = detector.matches(
+                in: req,
+                range: NSRange(req.startIndex..., in: req))
+            for match in matches {
+                let start = req.index(
+                    req.startIndex,
+                    offsetBy: match.range.lowerBound)
+                let end = req.index(
+                    req.startIndex,
+                    offsetBy: match.range.upperBound)
+                let range = start ..< end
+                let detail = req[range]
+                let info = detail
+                    .replacingOccurrences(of: "]", with: "")
+                    .replacingOccurrences(of: "[", with: "")
+                    .split(separator: ":")
+                if info.count > 1{
+                    let title = String(info[0])
+                    let value = String(info[1])
+                    tempDetails.append(TaskField(title: title, value: value))
+                }
+            }
+        }catch{
+            
+        }
+        return tempDetails
+    }
+    
 }
 
 extension TaskManager2 {
@@ -168,5 +230,13 @@ extension TaskManager2 {
         }
         return temp
     }
+    
+}
+
+struct TaskField {
+    
+    var id = UUID()
+    var title : String
+    var value : String
     
 }
