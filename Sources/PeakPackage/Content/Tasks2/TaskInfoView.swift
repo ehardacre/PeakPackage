@@ -27,7 +27,10 @@ struct TaskInfoView: View {
             ForEach(infos, id: \.id){
                 info in
                 Text(info.title)
+                    .CardTitle()
                 Text(info.value)
+                    .Caption()
+                    .padding(.bottom, 10)
             }
         }
     }
