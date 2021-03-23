@@ -13,6 +13,7 @@ struct TaskInfoView: View {
     
     var task : Task
     var infos : [TaskField]
+    @State var taskState = 0
     
     init(task: Task) {
         self.task = task
@@ -21,9 +22,14 @@ struct TaskInfoView: View {
     
     var body: some View {
         VStack{
-            Text(task.type == "user_requested" ? "Requested" : "Complimentary")
-            Text(TaskManager2.cleanDate(task.date))
-            Divider().frame(width: 250)
+            Group{
+                Text(task.type == "user_requested" ?
+                        "Requested" : "Complimentary")
+                Text(TaskManager2.cleanDate(task.date))
+                Divider()
+                    .frame(width: 250)
+            }
+            Spacer()
             ForEach(infos, id: \.id){
                 info in
                 Text(info.title)
@@ -31,6 +37,17 @@ struct TaskInfoView: View {
                 Text(info.value)
                     .Caption()
                     .padding(.bottom, 10)
+            }
+            Spacer()
+            TaskStateManagerView(selection: $taskState).onAppear{
+                switch task.status{
+                case "2": //open
+                    taskState = 0
+                case "5": //complete
+                    taskState = 2
+                default:
+                    taskState = 1
+                }
             }
         }
     }
