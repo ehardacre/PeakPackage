@@ -14,6 +14,7 @@ struct TaskInfoView: View {
     var task : Task
     var infos : [TaskField]
     @State var taskState = 0
+    @State var prevTaskState = 0
     
     init(task: Task) {
         self.task = task
@@ -29,6 +30,7 @@ struct TaskInfoView: View {
                 Divider()
                     .frame(width: 250)
             }
+            .padding(.top, 20)
             Spacer()
             ForEach(infos, id: \.id){
                 info in
@@ -39,16 +41,26 @@ struct TaskInfoView: View {
                     .padding(.bottom, 10)
             }
             Spacer()
-            TaskStateManagerView(selection: $taskState).onAppear{
+            TaskStateManagerView(selection: $taskState)
+                .onAppear{
                 switch task.status{
                 case "2": //open
                     taskState = 0
+                    prevTaskState = 0
                 case "5": //complete
                     taskState = 2
+                    prevTaskState = 2
                 default:
                     taskState = 1
+                    prevTaskState = 1
                 }
             }
+                .onDisappear{
+                    printr("closing view:")
+                    if taskState != prevTaskState {
+                        printr("state changed")
+                    }
+                }
         }
     }
 }
