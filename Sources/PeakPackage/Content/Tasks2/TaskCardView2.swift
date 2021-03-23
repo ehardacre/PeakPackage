@@ -78,7 +78,7 @@ struct TaskCardView2: View {
             isPresented: $showMoreInfo,
             content: {
                 if self.task != nil {
-                    TaskDetails(task: self.task)
+                    TaskDetails(task: self.task!)
                 }
         })
     }
