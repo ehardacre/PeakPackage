@@ -26,11 +26,11 @@ struct TaskInfoView: View {
             Group{
                 Text(task.type == "user_requested" ?
                         "Requested" : "Complimentary")
+                    .padding(.top, 20)
                 Text(TaskManager2.cleanDate(task.date))
                 Divider()
                     .frame(width: 250)
             }
-            .padding(.top, 20)
             Spacer()
             ForEach(infos, id: \.id){
                 info in
@@ -43,22 +43,23 @@ struct TaskInfoView: View {
             Spacer()
             TaskStateManagerView(selection: $taskState)
                 .onAppear{
-                switch task.status{
-                case "2": //open
-                    taskState = 0
-                    prevTaskState = 0
-                case "5": //complete
-                    taskState = 2
-                    prevTaskState = 2
-                default:
-                    taskState = 1
-                    prevTaskState = 1
-                }
+                    printr(task.request)
+                    switch task.status{
+                    case "2": //open
+                        taskState = 0
+                        prevTaskState = 0
+                    case "5": //complete
+                        taskState = 2
+                        prevTaskState = 2
+                    default:
+                        taskState = 1
+                        prevTaskState = 1
+                    }
             }
                 .onDisappear{
-                    printr("closing view:")
                     if taskState != prevTaskState {
-                        printr("state changed")
+                        #warning("TODO update task in database")
+                        #warning("TODO notify client")
                     }
                 }
         }
