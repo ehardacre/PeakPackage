@@ -63,7 +63,7 @@ extension Button {
     
     func TrailingButton() -> some View {
         return self
-            .buttonStyle(PlainButtonStyle()) 
+            .buttonStyle(PlainButtonStyle())
             .padding(pads)
     }
 }

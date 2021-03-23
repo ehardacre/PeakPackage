@@ -89,16 +89,16 @@ struct TaskCardView: View {
                     }
                     .frame(width: geo.size.width, height: self.height)
                     .cornerRadius(10)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke((self.id == self.selectionManager.id) ?
-                                        Color.blue : Color.mid,
+                                        Color.main : Color.mid,
                                     lineWidth: (self.id == self.selectionManager.id) ?
                                         3 : 1))
                             .background(Color.clear)
                             .foregroundColor(Color.clear)
                     )
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     .onTapGesture(count: 1, perform: {
                         if self.id == self.selectionManager.id {
                             self.selectionManager.id = nil
