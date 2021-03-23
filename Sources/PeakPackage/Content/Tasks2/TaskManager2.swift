@@ -127,9 +127,9 @@ public class TaskManager2 : Manager{
      - Parameter tasks : the tasks to be converted to task card views
             TODO: make an extension of task
      */
-    func convert(tasks: [Task], selectionManager: SelectionManager) -> [TaskCardView] {
+    func convert(tasks: [Task], selectionManager: SelectionManager) -> [TaskCardView2] {
         //empty list of cards
-        var cards : [TaskCardView] = []
+        var cards : [TaskCardView2] = []
         //loop through tasks and individually convert them
         for task in tasks {
             cards.append(task.convertToCard(with: selectionManager))

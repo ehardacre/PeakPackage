@@ -10,9 +10,9 @@ import SwiftUI
 
 //MARK: Task Card View
 
-class SelectionManager: ObservableObject {
-    @Published var id : UUID?
-}
+//class SelectionManager: ObservableObject {
+//    @Published var id : UUID?
+//}
 
 struct TaskCardView: View {
     

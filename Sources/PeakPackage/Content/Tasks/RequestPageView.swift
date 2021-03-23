@@ -44,13 +44,15 @@ struct RequestPageView: View {
             TODO: make an extension of task
      */
     func convert(tasks: [Task]) -> [TaskCardView] {
-        //empty list of cards
-        var cards : [TaskCardView] = []
-        //loop through tasks and individually convert them
-        for task in tasks {
-            cards.append(task.convertToCard(with: selectionManager))
-        }
-        return cards.reversed()
+//        //empty list of cards
+//        var cards : [TaskCardView] = []
+//        //loop through tasks and individually convert them
+//        for task in tasks {
+//            cards.append(task.convertToCard(with: selectionManager))
+//        }
+//        return cards.reversed()
+        return []
+        //depricated
     }
     
     var body: some View {

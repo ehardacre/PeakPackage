@@ -101,7 +101,7 @@ extension Task {
      #Convert To Card
      - Returns: (TaskCardView) returns a view for a task card corresponding to the task (self)
      */
-    func convertToCard(with selectionManager: SelectionManager) -> TaskCardView{
+    func convertToCard(with selectionManager: SelectionManager) -> TaskCardView2{
         //the request
         var request = self.request
         //remove unnecessary information that is stored in kanban
@@ -113,7 +113,7 @@ extension Task {
         request = String(request[ start..<request.endIndex ])
         let type = self.getType()
         //create the card view
-        return TaskCardView(
+        return TaskCardView2(
             selectionManager: selectionManager,
             task: self,
             type: type,

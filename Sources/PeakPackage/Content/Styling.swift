@@ -29,11 +29,19 @@ extension Text {
             .foregroundColor(Color.darkAccent)
     }
     
+    func CardTitle() -> some View{
+        return self
+            .font(.headline)
+            .foregroundColor(.darkAccent)
+    }
+    
     func Caption() -> some View{
         return self
-            .font(.footnote)
+            .font(.caption)
             .foregroundColor(.darkAccent)
             .opacity(0.5)
+            .truncationMode(.tail)
+            .lineLimit(1)
     }
     
     func ButtonText() -> some View {

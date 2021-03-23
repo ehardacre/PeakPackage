@@ -15,8 +15,8 @@ struct TaskListView: View {
     @State var completeListOpen = false
     
     var taskManager : TaskManager2
-    var completedTasks : [TaskCardView] = []
-    var openTasks : [TaskCardView] = []
+    var completedTasks : [TaskCardView2] = []
+    var openTasks : [TaskCardView2] = []
     
     init(
         taskManager: TaskManager2,
