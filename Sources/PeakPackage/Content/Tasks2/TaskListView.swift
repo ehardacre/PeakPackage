@@ -34,8 +34,20 @@ struct TaskListView: View {
     var body: some View {
         List{
             //COmpleted Tasks
-            Text("Completed")
-                .SectionTitle()
+            HStack{
+                Text("Completed")
+                    .SectionTitle()
+                Spacer()
+                if !completedTasks.isEmpty{
+                    Button(action: {
+                        completeListOpen.toggle()
+                    }, label: {
+                        Text(completeListOpen ? "See Less" : "See More")
+                            .ColorButtonText()
+                    })
+                    .TrailingButton()
+                }
+            }
             if completedTasks.count > 0 {
                 if !completeListOpen {
                     completedTasks.first!
@@ -45,13 +57,6 @@ struct TaskListView: View {
                         task
                     }
                 }
-                Button(action: {
-                    completeListOpen.toggle()
-                }, label: {
-                    Text(completeListOpen ? "See Less" : "See More")
-                        .ButtonText()
-                })
-                .RoundRectButton()
             } else {
                 Text("No Completed Tasks")
                     .Caption()

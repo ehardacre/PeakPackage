@@ -15,15 +15,22 @@ struct TaskHeaderView: View {
     var body: some View {
         NavigationView{
             TaskListView(taskManager: taskManager, completedTasks: taskManager.completedTasks, openTasks: taskManager.openTasks)
+                .navigationBarTitle("Tasks")
+                .navigationBarItems(
+                    trailing: Button(action: {
+                        makingNewTask = true
+                    }, label: {
+                        Image(systemName: "plus")
+                            .foregroundColor(Color.darkAccent)
+                    }).TrailingButton()
+                )
         }
-        .navigationBarTitle("Tasks")
-        .navigationBarItems(
-            trailing: Button(action: {
-                
-            }, label: {
-                Image(systemName: "plus.rectangle.fill.on.rectangle.fill")
-                    .foregroundColor(Color.darkAccent)
-            }))
+        .stackOnlyNavigationView()
+        .sheet(
+            isPresented: $makingNewTask,
+            content: {
+                NewTaskPage()
+        })
     }
 }
 

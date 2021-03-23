@@ -17,6 +17,7 @@ extension List {
         return self
             .listRowBackground(Color.clear)
             .listStyle(SidebarListStyle())
+            .environment(\.defaultMinListRowHeight, 120)
     }
 }
 
@@ -40,6 +41,12 @@ extension Text {
             .bold()
             .foregroundColor(.darkAccent)
     }
+    
+    func ColorButtonText() -> some View {
+        return self
+            .bold()
+            .foregroundColor(.main)
+    }
 }
 
 extension Button {
@@ -56,10 +63,6 @@ extension Button {
     func TrailingButton() -> some View {
         return self
             .padding(pads)
-            .overlay(
-                RoundedRectangle(cornerRadius: corners)
-                    .stroke(Color.darkAccent, lineWidth: borderRadius)
-            )
     }
 }
 
