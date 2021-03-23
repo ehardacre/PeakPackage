@@ -52,6 +52,15 @@ extension Button {
             )
             .fullWidth()
     }
+    
+    func TrailingButton() -> some View {
+        return self
+            .padding(pads)
+            .overlay(
+                RoundedRectangle(cornerRadius: corners)
+                    .stroke(Color.darkAccent, lineWidth: borderRadius)
+            )
+    }
 }
 
 extension View {

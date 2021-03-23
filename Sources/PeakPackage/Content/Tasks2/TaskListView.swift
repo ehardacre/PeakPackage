@@ -40,7 +40,7 @@ struct TaskListView: View {
                 if !completeListOpen {
                     completedTasks.first!
                 } else {
-                    ForEach(completedTasks, id: \.id){
+                    ForEach(completedTasks.prefix(10), id: \.id){
                         task in
                         task
                     }
