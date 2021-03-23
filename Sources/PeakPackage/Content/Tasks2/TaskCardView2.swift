@@ -24,54 +24,63 @@ struct TaskCardView2: View {
     @State var showMoreInfo = false
     
     var body: some View {
-        if self.type.origin == TaskOrigin.complementary {
-            CardView(
-                id: id,
-                selectionManager: selectionManager,
-                color: Color.mid,
-                icon: Image(systemName: "bolt.fill"),
-                title: "Complimentary",
-                sub: self.date,
-                content: self.content,
-                showMoreInfo: $showMoreInfo)
-        } else {
-            if self.type.status == TaskStatus.complete {
-
-                CardView(
-                    id: id,
-                    selectionManager: selectionManager,
-                    color: Color.darkAccent,
-                    icon: Image(systemName: "checkmark.seal.fill"),
-                    iconColor: Color.main,
-                    title: "Requested",
-                    sub: self.date,
-                    content: self.content,
-                    showMoreInfo: $showMoreInfo)
-
-            } else if self.type.status == TaskStatus.inProgress {
-
+        ZStack{
+            if self.type.origin == TaskOrigin.complementary {
                 CardView(
                     id: id,
                     selectionManager: selectionManager,
                     color: Color.mid,
-                    icon: Image(systemName: "seal.fill"),
-                    title: "Requested",
+                    icon: Image(systemName: "bolt.fill"),
+                    title: "Complimentary",
                     sub: self.date,
                     content: self.content,
                     showMoreInfo: $showMoreInfo)
+            } else {
+                if self.type.status == TaskStatus.complete {
 
-            } else { //open
-                CardView(
-                    id: id,
-                    selectionManager: selectionManager,
-                    color: Color.mid,
-                    icon: Image(systemName: "seal"),
-                    title: "Requested",
-                    sub: self.date,
-                    content: self.content,
-                    showMoreInfo: $showMoreInfo)
+                    CardView(
+                        id: id,
+                        selectionManager: selectionManager,
+                        color: Color.darkAccent,
+                        icon: Image(systemName: "checkmark.seal.fill"),
+                        iconColor: Color.main,
+                        title: "Requested",
+                        sub: self.date,
+                        content: self.content,
+                        showMoreInfo: $showMoreInfo)
+
+                } else if self.type.status == TaskStatus.inProgress {
+
+                    CardView(
+                        id: id,
+                        selectionManager: selectionManager,
+                        color: Color.mid,
+                        icon: Image(systemName: "seal.fill"),
+                        title: "Requested",
+                        sub: self.date,
+                        content: self.content,
+                        showMoreInfo: $showMoreInfo)
+
+                } else { //open
+                    CardView(
+                        id: id,
+                        selectionManager: selectionManager,
+                        color: Color.mid,
+                        icon: Image(systemName: "seal"),
+                        title: "Requested",
+                        sub: self.date,
+                        content: self.content,
+                        showMoreInfo: $showMoreInfo)
+                }
             }
         }
+        .sheet(
+            isPresented: $showMoreInfo,
+            content: {
+                if self.task != nil {
+                    TaskDetails(task: self.task)
+                }
+        })
     }
 }
 
