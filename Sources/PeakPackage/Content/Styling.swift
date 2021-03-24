@@ -19,6 +19,12 @@ extension List {
             .listStyle(SidebarListStyle())
             .environment(\.defaultMinListRowHeight, 120)
     }
+    
+    func FormList() -> some View{
+        return self
+            .listRowBackground(Color.clear)
+            .listStyle(SidebarListStyle())
+    }
 }
 
 extension Text {

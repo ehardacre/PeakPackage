@@ -33,7 +33,10 @@ struct TaskHeaderView: View {
                 NewTaskPage(forms: [
                     AutoForm(title: "Add Service Page",
                              subtitle: "A service page added to your website",
-                             elements: []),
+                             elements: [
+                                AutoFormElement(label: "Service", prompt: "Enter the service you'd like to add", input: "ShortString"),
+                                AutoFormElement(label: "Custom Content", prompt: "Enter any custom content", input: "LongString")
+                            ]),
                     AutoForm(title: "Social Posts",
                              subtitle: "Design and posting of social posts",
                              elements: [])

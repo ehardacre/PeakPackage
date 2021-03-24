@@ -7,24 +7,6 @@
 
 import SwiftUI
 
-struct AutoForm {
-    
-    var id = UUID()
-    var title : String
-    var subtitle : String
-    var elements : [AutoFormElement]
-    
-}
-
-struct AutoFormElement {
-    
-    var id = UUID()
-    var label : String
-    var input : String
-    var output : String
-    
-}
-
 struct NewTaskPage: View {
     
     let selectionManager = SelectionManager()
