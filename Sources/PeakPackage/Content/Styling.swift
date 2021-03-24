@@ -24,6 +24,7 @@ extension List {
         return self
             .listRowBackground(Color.clear)
             .listStyle(SidebarListStyle())
+            .environment(\.defaultMinListRowHeight, 60)
     }
 }
 

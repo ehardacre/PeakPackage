@@ -28,8 +28,10 @@ struct AutoFormView: View {
                     }
                     
                     //allows margin for button
-                    EmptyView()
-                        .frame(height: 100)
+                    ForEach(0..<6, content: { _ in 
+                        EmptyView()
+                    })
+                
                 }
                 .FormList()
                 .navigationBarTitle(Text(form.title), displayMode: .inline)
