@@ -29,6 +29,11 @@ struct NewTaskPage: View {
                         sub: "",
                         content: form.subtitle,
                         showMoreInfo: $showForm)
+                        .sheet(
+                            isPresented: $showForm,
+                            content: {
+                                AutoFormView(form: form)
+                        })
                 }
             }
             .CleanList()
