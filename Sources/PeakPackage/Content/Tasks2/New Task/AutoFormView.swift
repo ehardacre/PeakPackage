@@ -26,6 +26,10 @@ struct AutoFormView: View {
                             .fullWidth()
                         element.inputView()
                     }
+                    
+                    //allows margin for button
+                    EmptyView()
+                        .frame(height: 100)
                 }
                 .FormList()
                 .navigationBarTitle(Text(form.title), displayMode: .inline)
@@ -44,6 +48,7 @@ struct AutoFormView: View {
                         }
                     })
                     .RoundRectButton()
+                    .padding(.bottom, 20)
                 }
             }
         }
