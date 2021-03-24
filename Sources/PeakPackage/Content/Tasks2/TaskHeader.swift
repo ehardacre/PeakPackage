@@ -29,7 +29,15 @@ struct TaskHeaderView: View {
         .sheet(
             isPresented: $makingNewTask,
             content: {
-                NewTaskPage()
+                #warning("TODO Load forms")
+                NewTaskPage(forms: [
+                    AutoForm(title: "Add Service Page",
+                             subtitle: "A service page added to your website",
+                             elements: []),
+                    AutoForm(title: "Social Posts",
+                             subtitle: "Design and posting of social posts",
+                             elements: [])
+                ])
         })
     }
 }

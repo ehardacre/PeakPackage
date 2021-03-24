@@ -26,8 +26,10 @@ struct TaskInfoView: View {
             Group{
                 Text(task.type == "user_requested" ?
                         "Requested" : "Complimentary")
+                    .CardTitle()
                     .padding(.top, 20)
                 Text(TaskManager2.cleanDate(task.date))
+                    .Caption()
                 Divider()
                     .frame(width: 250)
             }

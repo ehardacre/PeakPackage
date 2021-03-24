@@ -7,14 +7,74 @@
 
 import SwiftUI
 
+struct AutoForm {
+    
+    var id = UUID()
+    var title : String
+    var subtitle : String
+    var elements : [AutoFormElement]
+    
+}
+
+struct AutoFormElement {
+    
+    var id = UUID()
+    var label : String
+    var input : String
+    var output : String
+    
+}
+
 struct NewTaskPage: View {
+    
+    let selectionManager = SelectionManager()
+    
+    @Environment(\.presentationMode) var presentationMode
+    @State var forms : [AutoForm]
+    @State var showForm = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            List{
+                ForEach(forms, id: \.id){
+                    form in
+                    CardView(
+                        id: UUID(),
+                        selectionManager: selectionManager,
+                        color: Color.lightAccent,
+                        icon: Image(systemName: "plus"),
+                        title: form.title,
+                        sub: "",
+                        content: form.subtitle,
+                        showMoreInfo: $showForm)
+                }
+            }
+            .CleanList()
+            .navigationBarTitle(Text("Request"), displayMode: .inline)
+            .navigationBarItems(trailing:
+                Button(action: {
+                    #warning("TODO add task")
+                }, label: {
+                    if defaults.admin{
+                        Image(systemName: "plus.rectangle.fill")
+                            .foregroundColor(.darkAccent)
+                    }
+                })
+            )
+        }
+        .stackOnlyNavigationView()
     }
 }
 
 struct NewTaskPage_Previews: PreviewProvider {
     static var previews: some View {
-        NewTaskPage()
+        NewTaskPage(forms: [
+            AutoForm(title: "Add Service Page",
+                     subtitle: "A service page added to your website",
+                     elements: []),
+            AutoForm(title: "Social Posts",
+                     subtitle: "Design and posting of social posts",
+                     elements: [])
+        ])
     }
 }
