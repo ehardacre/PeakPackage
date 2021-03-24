@@ -13,6 +13,7 @@ struct AutoFormView: View {
     @Binding var showing : Bool
     var form : AutoForm
     @State var elementIDs : [UUID] = []
+    @State var loadedElementInputs : [UUID] = []
     
     var body: some View {
         NavigationView{
@@ -26,6 +27,9 @@ struct AutoFormView: View {
                         Text(element.label)
                             .CardTitle()
                             .fullWidth()
+                            .onAppear{
+                                elementIDs.append(element.id)
+                            }
                         element.inputView()
                     }
                 }
@@ -43,7 +47,9 @@ struct AutoFormView: View {
                 VStack{
                     Spacer()
                     Button(action: {
-                        #warning("TODO submit task")
+                        //collect data from views
+                        NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil)
+                        
                     }, label: {
                         HStack{
                             Image(systemName: "paperplane.circle.fill")
@@ -59,6 +65,29 @@ struct AutoFormView: View {
             }
         }
         .stackOnlyNavigationView()
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ElementValue")), perform: { obj in
+            var data = obj as! [String : Any]
+            if let id = data["id"] as? UUID,
+               let input = data["input"] as? Any,
+               let key = data["key"] as? String{
+                loadedElementInputs.append(id)
+                if inputEqualsFields(){
+                    printr("all fields have been collected")
+                }
+            }
+        })
+    }
+    
+    func inputEqualsFields() -> Bool{
+        if loadedElementInputs.count != elementIDs.count{
+            return false
+        }
+        for id in elementIDs {
+            if !loadedElementInputs.contains(id){
+                return false
+            }
+        }
+        return true
     }
 }
 

@@ -36,6 +36,9 @@ struct NewTaskPage: View {
                                     .introspectViewController {
                                         $0.isModalInPresentation = true
                                     }
+                                    .onDisappear{
+                                        selectionManager.id = nil
+                                    }
                         })
                 }
             }

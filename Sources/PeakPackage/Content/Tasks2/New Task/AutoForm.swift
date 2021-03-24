@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+let formPub = NotificationCenter.default.publisher(for: Notification.Name("FormSubmit"))
+
 struct AutoForm : Codable {
     
     var id = UUID()
@@ -32,14 +34,23 @@ extension AutoFormElement {
 
         switch self.input{
         case "ShortString":
-            return AnyView(TextInputCardView(placeholder: self.prompt))
+            return AnyView(TextInputCardView(
+                            id: self.id,
+                            title: self.label,
+                            placeholder: self.prompt))
         case "LongString":
-            return AnyView(TextInputCardView(numLines: 3, placeholder: self.prompt))
+            return AnyView(TextInputCardView(
+                            id: self.id,
+                            numLines: 3,
+                            title: self.label,
+                            placeholder: self.prompt))
         case "Int":
             return AnyView(EmptyView())
         case "Date":
             return AnyView(EmptyView())
         case "Multichoice":
+            return AnyView(EmptyView())
+        case "Image":
             return AnyView(EmptyView())
         default:
             return AnyView(EmptyView())
@@ -51,7 +62,9 @@ extension AutoFormElement {
 
 struct TextInputCardView : View{
     
+    var id : UUID
     @State var numLines = 1
+    @State var title : String
     @State var placeholder : String
     @State var input = ""
     
@@ -64,10 +77,12 @@ struct TextInputCardView : View{
                 }
             Text(placeholder)
                 .Caption()
-            
         }
         .frame(height: CGFloat(numLines) * 50)
         .cornerRadius(20)
+        .onReceive(formPub, perform: { _ in
+            NotificationCenter.default.post(name: Notification.Name("ElementValue"), object: ["input" :  input, "id" : id, "key" : title])
+        })
     }
 }
 
@@ -75,7 +90,7 @@ struct TextInputCardView_Preview : PreviewProvider{
     static var previews : some View{
         ZStack{
             Color.mid
-            TextInputCardView(placeholder: "Enter the service you'd like to add")
+            TextInputCardView(id: UUID(), placeholder: "Enter the service you'd like to add")
         }
     }
 }
