@@ -35,7 +35,9 @@ struct TaskHeaderView: View {
                              subtitle: "A service page added to your website",
                              elements: [
                                 AutoFormElement(label: "Service", prompt: "Enter the service you'd like to add", input: "ShortString"),
-                                AutoFormElement(label: "Custom Content", prompt: "Enter any custom content", input: "LongString")
+                                AutoFormElement(label: "Custom Content", prompt: "Enter any custom content", input: "LongString"),
+                                AutoFormElement(label: "Custom Content 2 ", prompt: "Enter any custom content", input: "LongString"),
+                                AutoFormElement(label: "Custom Content 3 ", prompt: "Enter any custom content", input: "LongString")
                             ]),
                     AutoForm(title: "Social Posts",
                              subtitle: "Design and posting of social posts",
