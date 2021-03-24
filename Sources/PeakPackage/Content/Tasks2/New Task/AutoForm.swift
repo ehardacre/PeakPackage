@@ -81,7 +81,9 @@ struct TextInputCardView : View{
         .frame(height: CGFloat(numLines) * 50)
         .cornerRadius(20)
         .onReceive(formPub, perform: { _ in
-            NotificationCenter.default.post(name: Notification.Name("ElementValue"), object: ["input" :  input, "id" : id, "key" : title])
+            NotificationCenter.default.post(
+                name: Notification.Name("ElementValue"),
+                object: ["input" :  input, "id" : id, "key" : title])
         })
     }
 }
@@ -90,7 +92,7 @@ struct TextInputCardView_Preview : PreviewProvider{
     static var previews : some View{
         ZStack{
             Color.mid
-            TextInputCardView(id: UUID(), placeholder: "Enter the service you'd like to add", title: "key")
+            TextInputCardView(id: UUID(), title: "key", placeholder: "Enter the service you'd like to add")
         }
     }
 }
