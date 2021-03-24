@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Introspect
 
 struct AutoFormView: View {
     
+    @Binding var showing : Bool
     var form : AutoForm
     @State var elementIDs : [UUID] = []
     
@@ -29,7 +31,15 @@ struct AutoFormView: View {
                 }
                 .FormList()
                 .navigationBarTitle(Text(form.title), displayMode: .inline)
-                
+                .navigationBarItems(leading:
+                                        Button(action: {
+                                            showing = false
+                                        }, label: {
+                                            Image(systemName: "arrowshape.turn.up.backward.fill")
+                                                .foregroundColor(.darkAccent)
+                                                .imageScale(.large)
+                                        })
+                )
                 VStack{
                     Spacer()
                     Button(action: {

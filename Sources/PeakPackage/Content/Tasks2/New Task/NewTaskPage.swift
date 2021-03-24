@@ -33,6 +33,9 @@ struct NewTaskPage: View {
                             isPresented: $showForm,
                             content: {
                                 AutoFormView(form: form)
+                                    .introspectViewController {
+                                        $0.isModalInPresentation = true
+                                    }
                         })
                 }
             }
