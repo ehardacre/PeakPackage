@@ -28,8 +28,9 @@ struct AutoFormView: View {
                     }
                     
                     //allows margin for button
-                    ForEach(0..<6, content: { _ in 
+                    ForEach(0..<6, content: { _ in
                         EmptyView()
+                            .frame(height: 60)
                     })
                 
                 }
