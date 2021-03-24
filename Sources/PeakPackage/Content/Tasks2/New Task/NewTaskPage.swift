@@ -32,7 +32,7 @@ struct NewTaskPage: View {
                         .sheet(
                             isPresented: $showForm,
                             content: {
-                                AutoFormView(form: form)
+                                AutoFormView(showing: $showForm, form: form)
                                     .introspectViewController {
                                         $0.isModalInPresentation = true
                                     }

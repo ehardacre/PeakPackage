@@ -64,7 +64,8 @@ struct AutoFormView: View {
 
 struct AutoFormView_Previews: PreviewProvider {
     static var previews: some View {
-        AutoFormView(form: AutoForm(
+        AutoFormView(showing: .constant(true),
+                     form: AutoForm(
                         title: "Service Page Addition",
                         subtitle: "A Service page will be added to your website",
                         elements: [
