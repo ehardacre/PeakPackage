@@ -85,7 +85,6 @@ struct ImageInputCardView : View {
     
     var body : some View{
         HStack{
-            Spacer()
             ScrollView(.horizontal){
                 ForEach(input, id: \.self){
                     image in
@@ -94,17 +93,18 @@ struct ImageInputCardView : View {
                             .resizable()
                             .scaledToFill()
                     }
-                    .frame(width: 50, height: 50)
+                    .frame(width: 70, height: 70)
                 }
                 
-                VStack{
+                Button(action: {
+                    showingPhotoLibrary = true
+                }){
                     Image(systemName: "plus")
                         .foregroundColor(Color.darkAccent)
                 }
-                .frame(width: 50, height: 50)
+                .frame(width: 70, height: 70)
                 .background(Color.darkAccent.opacity(0.1))
             }
-            Spacer()
         }
         .BasicContentCard()
         .sheet(isPresented: $showingPhotoLibrary) {
