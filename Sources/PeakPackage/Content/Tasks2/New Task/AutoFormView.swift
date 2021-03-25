@@ -102,13 +102,11 @@ struct AutoFormView: View {
                         printr(inputList)
                         submittingTask = false
                     }
-                }
-                
-                if let id = data["id"] as? UUID,
+                }else if let id = data["id"] as? UUID,
                    let input = data["input"] as? Any,
                    let key = data["key"] as? String{
                     loadedElementInputs.append(id)
-                    inputList[key] = input as! String
+                    inputList[key] = input as? String ?? ""
                     if inputEqualsFields(){
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
