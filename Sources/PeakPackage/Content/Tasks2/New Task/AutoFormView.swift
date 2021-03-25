@@ -89,6 +89,21 @@ struct AutoFormView: View {
             DispatchQueue.global().async {
                 semaphore.wait()
                 var data = obj.userInfo as! [String : Any]
+                
+                if let id = data["id"] as? UUID,
+                   let input = data["input"] as? [UIImage],
+                   let key = data["key"] as? String{
+                    #warning("TODO: submit images")
+                    loadedElementInputs.append(id)
+                    inputList[key] = "\(input.count) images submitted"
+                    if inputEqualsFields(){
+                        descriptionText = "Submitting Task..."
+                        printr("all fields collected")
+                        printr(inputList)
+                        submittingTask = false
+                    }
+                }
+                
                 if let id = data["id"] as? UUID,
                    let input = data["input"] as? Any,
                    let key = data["key"] as? String{
@@ -101,6 +116,7 @@ struct AutoFormView: View {
                         submittingTask = false
                     }
                 }
+                
                 semaphore.signal()
             }
         })

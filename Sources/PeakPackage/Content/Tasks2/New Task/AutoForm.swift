@@ -62,13 +62,72 @@ extension AutoFormElement {
                             prompt: self.prompt,
                             choices: MultiInputCardView.makeChoiceList(text: self.input)))
         case "Image":
-            return AnyView(EmptyView())
+            return AnyView(ImageInputCardView(
+                            id: UUID(),
+                            title: self.id,
+                            prompt: self.prompt,))
         default:
             return AnyView(EmptyView())
         }
 
     }
     
+}
+
+struct ImageInputCardView : View {
+    
+    var id : UUID
+    @State var title : String
+    @State var prompt : String
+    @State var input : [UIImage]
+    @State var showingPhotoLibrary = false
+    @State var selectedImage : UIImage = UIImage()
+    
+    var body : some View{
+        HStack{
+            Spacer()
+            ScrollView(.horizontal){
+                ForEach(input, id: \.self){
+                    image in
+                    VStack{
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                    }
+                    .frame(width: 50, height: 50)
+                }
+                
+                VStack{
+                    Image(systemName: "plus")
+                        .foregroundColor(Color.darkAccent)
+                }
+                .frame(width: 50, height: 50)
+                .background(Color.darkAccent.opacity(0.1))
+            }
+            Spacer()
+        }
+        .BasicContentCard()
+        .sheet(isPresented: $showingPhotoLibrary) {
+            ImagePicker(
+                selectedImage: self.$selectedImage,
+                onComplete: {
+                    input.append(self.selectedImage)
+                },
+                sourceType: .photoLibrary)
+        }
+        .onReceive(formPub, perform: { obj in
+            if let info = obj.userInfo{
+                if let collectedId = info["id"] as? UUID {
+                    if collectedId == id {
+                        NotificationCenter.default.post(
+                            name: Notification.Name("ElementValue"),
+                            object: nil,
+                            userInfo: ["input" :  input, "id" : id, "key" : title])
+                    }
+                }
+            }
+        })
+    }
 }
 
 struct MultiInputCardView : View {
@@ -80,7 +139,9 @@ struct MultiInputCardView : View {
     @State var choices : [String]
     
     var body : some View{
-        HStack{
+        VStack{
+            Text(prompt)
+                .Caption()
             Picker(
                 selection: $input,
                 label: Text(""),
