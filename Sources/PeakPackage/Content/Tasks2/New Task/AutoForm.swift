@@ -86,24 +86,27 @@ struct ImageInputCardView : View {
     var body : some View{
         HStack{
             ScrollView(.horizontal){
-                ForEach(input, id: \.self){
-                    image in
-                    VStack{
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
+                HStack{
+                    ForEach(input, id: \.self){
+                        image in
+                        VStack{
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                        }
+                        .frame(width: 70, height: 70)
+                        EmptyView().frame(width: 10)
+                    }
+                    
+                    Button(action: {
+                        showingPhotoLibrary = true
+                    }){
+                        Image(systemName: "plus")
+                            .foregroundColor(Color.darkAccent)
                     }
                     .frame(width: 70, height: 70)
+                    .background(Color.darkAccent.opacity(0.1))
                 }
-                
-                Button(action: {
-                    showingPhotoLibrary = true
-                }){
-                    Image(systemName: "plus")
-                        .foregroundColor(Color.darkAccent)
-                }
-                .frame(width: 70, height: 70)
-                .background(Color.darkAccent.opacity(0.1))
             }
         }
         .BasicContentCard()
