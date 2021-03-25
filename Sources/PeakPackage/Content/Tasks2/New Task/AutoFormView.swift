@@ -41,8 +41,10 @@ struct AutoFormView: View {
                         submittingTask = true
                         descriptionText = "Collecting Response..."
                         for id in elementIDs {
-                            semaphore.wait()
-                            NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": id])
+                            DispatchQueue.global().async {
+                                semaphore.wait()
+                                NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": id])
+                            }
                         }
                         
                     }, label: {
@@ -89,12 +91,14 @@ struct AutoFormView: View {
             if let id = data["id"] as? UUID,
                let input = data["input"] as? Any,
                let key = data["key"] as? String{
-                loadedElementInputs.append(id)
-                semaphore.signal()
-                if inputEqualsFields(){
-                    descriptionText = "Submitting Task..."
-                    printr("all fields collected")
-                    submittingTask = false
+                DispatchQueue.global().async {
+                    loadedElementInputs.append(id)
+                    semaphore.signal()
+                    if inputEqualsFields(){
+                        descriptionText = "Submitting Task..."
+                        printr("all fields collected")
+                        submittingTask = false
+                    }
                 }
             }
         })
