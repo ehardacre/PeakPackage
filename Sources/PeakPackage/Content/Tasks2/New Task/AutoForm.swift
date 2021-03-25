@@ -79,6 +79,7 @@ struct TextInputCardView : View{
         ZStack{
             TextEditor(text: $input)
                 .cornerRadius(20)
+                .multilineTextAlignment(numLines == 1 ? .center : .leading)
                 .onTapGesture {
                     self.placeholder = ""
                 }
