@@ -16,6 +16,7 @@ struct AutoFormView: View {
     @State var loadedElementInputs : [UUID] = []
     @State var inputList : [String:String] = [:]
     @State var submittingTask = false
+    @State var choosingFranchise = false
     @State var descriptionText = "Completing Form..."
     let semaphore = DispatchSemaphore(value: 1)
     @ObservedObject var franchiseManager = FranchiseSelectionManager()
@@ -27,13 +28,6 @@ struct AutoFormView: View {
                     Text(form.subtitle)
                         .Caption()
                         .fullWidth()
-                    
-                    if defaults.admin {
-                        FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
-                            .onAppear{
-                                franchiseManager.loadProfiles()
-                            }
-                    }
                     
                     ForEach(form.elements, id: \.id){
                         element in
@@ -49,6 +43,9 @@ struct AutoFormView: View {
                         //collect data from views
                         loadedElementInputs.removeAll()
                         submittingTask = true
+                        if defaults.admin {
+                            choosingFranchise = true
+                        }
                         descriptionText = "Collecting Response..."
                         for id in elementIDs {
                             NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": id])
@@ -89,6 +86,14 @@ struct AutoFormView: View {
                     .frame(minWidth: 250)
                     .background(Color.lightAccent)
                     .cornerRadius(20)
+                }
+                
+                if choosingFranchise {
+                    FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
+                        .onAppear{
+                            #warning("TODO: add profiles for peak studios app")
+                            franchiseManager.loadProfiles()
+                        }
                 }
             }
         }
