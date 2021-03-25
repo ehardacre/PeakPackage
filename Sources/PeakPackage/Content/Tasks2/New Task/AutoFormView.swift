@@ -14,6 +14,7 @@ struct AutoFormView: View {
     var form : AutoForm
     @State var elementIDs : [UUID] = []
     @State var loadedElementInputs : [UUID] = []
+    @State var inputList : [(String,String)] = []
     @State var submittingTask = false
     @State var descriptionText = "Completing Form..."
     let semaphore = DispatchSemaphore(value: 1)
@@ -92,9 +93,11 @@ struct AutoFormView: View {
                    let input = data["input"] as? Any,
                    let key = data["key"] as? String{
                     loadedElementInputs.append(id)
+                    inputList.append((key,input as! String))
                     if inputEqualsFields(){
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
+                        printr(inputList)
                         submittingTask = false
                     }
                 }
