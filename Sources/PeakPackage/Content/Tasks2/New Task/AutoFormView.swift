@@ -66,7 +66,7 @@ struct AutoFormView: View {
         }
         .stackOnlyNavigationView()
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ElementValue")), perform: { obj in
-            var data = obj as! [String : Any]
+            var data = obj.userInfo as! [String : Any]
             if let id = data["id"] as? UUID,
                let input = data["input"] as? Any,
                let key = data["key"] as? String{

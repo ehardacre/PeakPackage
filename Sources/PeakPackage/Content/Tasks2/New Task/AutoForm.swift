@@ -83,7 +83,8 @@ struct TextInputCardView : View{
         .onReceive(formPub, perform: { _ in
             NotificationCenter.default.post(
                 name: Notification.Name("ElementValue"),
-                object: ["input" :  input, "id" : id, "key" : title])
+                object: nil,
+                userInfo: ["input" :  input, "id" : id, "key" : title])
         })
     }
 }
