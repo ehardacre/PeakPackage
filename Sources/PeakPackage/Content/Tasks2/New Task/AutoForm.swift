@@ -92,7 +92,10 @@ struct TextInputCardView_Preview : PreviewProvider{
     static var previews : some View{
         ZStack{
             Color.mid
-            TextInputCardView(id: UUID(), title: "key", placeholder: "Enter the service you'd like to add")
+            TextInputCardView(
+                id: UUID(),
+                title: "key",
+                placeholder: "Enter the service you'd like to add")
         }
     }
 }
