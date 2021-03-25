@@ -14,6 +14,8 @@ struct AutoFormView: View {
     var form : AutoForm
     @State var elementIDs : [UUID] = []
     @State var loadedElementInputs : [UUID] = []
+    @State var submittingTask = false
+    @State var descriptionText = "Completing Form..."
     
     var body: some View {
         NavigationView{
@@ -32,22 +34,10 @@ struct AutoFormView: View {
                             }
                         element.inputView()
                     }
-                }
-                .FormList()
-                .navigationBarTitle(Text(form.title), displayMode: .inline)
-                .navigationBarItems(leading:
-                                        Button(action: {
-                                            showing = false
-                                        }, label: {
-                                            Image(systemName: "arrowshape.turn.up.backward.fill")
-                                                .foregroundColor(.darkAccent)
-                                                .imageScale(.large)
-                                        })
-                )
-                VStack{
-                    Spacer()
                     Button(action: {
                         //collect data from views
+                        submittingTask = true
+                        descriptionText = "Collecting Response..."
                         NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil)
                         
                     }, label: {
@@ -62,6 +52,28 @@ struct AutoFormView: View {
                     .RoundRectButton()
                     .padding(.bottom, 20)
                 }
+                .FormList()
+                .navigationBarTitle(Text(form.title), displayMode: .inline)
+                .navigationBarItems(leading:
+                                        Button(action: {
+                                            showing = false
+                                        }, label: {
+                                            Image(systemName: "arrowshape.turn.up.backward.fill")
+                                                .foregroundColor(.darkAccent)
+                                                .imageScale(.large)
+                                        })
+                )
+            
+                if submittingTask {
+                    HStack{
+                        ProgressView()
+                        Text(descriptionText)
+                            .Caption()
+                    }
+                    .frame(minWidth: 250)
+                    .background(Color.lightAccent)
+                    .cornerRadius(20)
+                }
             }
         }
         .stackOnlyNavigationView()
@@ -72,7 +84,7 @@ struct AutoFormView: View {
                let key = data["key"] as? String{
                 loadedElementInputs.append(id)
                 if inputEqualsFields(){
-                    printr("all fields have been collected")
+                    descriptionText = "Submitting Task..."
                 }
             }
         })
