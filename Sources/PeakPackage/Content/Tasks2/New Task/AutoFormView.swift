@@ -18,6 +18,7 @@ struct AutoFormView: View {
     @State var submittingTask = false
     @State var descriptionText = "Completing Form..."
     let semaphore = DispatchSemaphore(value: 1)
+    @ObservedObject var franchiseManager = FranchiseSelectionManager()
     
     var body: some View {
         NavigationView{
@@ -26,6 +27,14 @@ struct AutoFormView: View {
                     Text(form.subtitle)
                         .Caption()
                         .fullWidth()
+                    
+                    if defaults.admin {
+                        FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
+                            .onAppear{
+                                franchiseManager.loadProfiles()
+                            }
+                    }
+                    
                     ForEach(form.elements, id: \.id){
                         element in
                         Text(element.label)
@@ -93,7 +102,8 @@ struct AutoFormView: View {
                 if let id = data["id"] as? UUID,
                    let input = data["input"] as? [UIImage],
                    let key = data["key"] as? String{
-                    #warning("TODO: submit images")
+                    #warning("TODO: upload images to wp uploads")
+                    #warning("TODO: post links with task description")
                     loadedElementInputs.append(id)
                     inputList[key] = "\(input.count) images submitted"
                     if inputEqualsFields(){
@@ -114,7 +124,6 @@ struct AutoFormView: View {
                         submittingTask = false
                     }
                 }
-                
                 semaphore.signal()
             }
         })
