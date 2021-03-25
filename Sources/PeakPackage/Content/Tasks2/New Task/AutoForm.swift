@@ -80,11 +80,17 @@ struct TextInputCardView : View{
         }
         .frame(height: CGFloat(numLines) * 50)
         .cornerRadius(20)
-        .onReceive(formPub, perform: { _ in
-            NotificationCenter.default.post(
-                name: Notification.Name("ElementValue"),
-                object: nil,
-                userInfo: ["input" :  input, "id" : id, "key" : title])
+        .onReceive(formPub, perform: { obj in
+            if let info = obj.userInfo{
+                if let collectedId = info["id"] as? UUID {
+                    if collectedId == id {
+                        NotificationCenter.default.post(
+                            name: Notification.Name("ElementValue"),
+                            object: nil,
+                            userInfo: ["input" :  input, "id" : id, "key" : title])
+                    }
+                }
+            }
         })
     }
 }

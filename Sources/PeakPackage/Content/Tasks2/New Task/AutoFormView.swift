@@ -16,6 +16,7 @@ struct AutoFormView: View {
     @State var loadedElementInputs : [UUID] = []
     @State var submittingTask = false
     @State var descriptionText = "Completing Form..."
+    let semaphore = DispatchSemaphore(value: 1)
     
     var body: some View {
         NavigationView{
@@ -39,7 +40,10 @@ struct AutoFormView: View {
                         loadedElementInputs.removeAll()
                         submittingTask = true
                         descriptionText = "Collecting Response..."
-                        NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil)
+                        for id in elementIDs {
+                            semaphore.wait()
+                            NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": id])
+                        }
                         
                     }, label: {
                         HStack{
@@ -86,11 +90,10 @@ struct AutoFormView: View {
                let input = data["input"] as? Any,
                let key = data["key"] as? String{
                 loadedElementInputs.append(id)
+                semaphore.signal()
                 if inputEqualsFields(){
                     descriptionText = "Submitting Task..."
                     submittingTask = false
-                }else{
-                    descriptionText = "Input Incomplete..."
                 }
             }
         })
