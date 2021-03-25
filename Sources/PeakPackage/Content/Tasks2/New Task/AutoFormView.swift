@@ -68,6 +68,7 @@ struct AutoFormView: View {
                 if submittingTask {
                     VStack{
                         ProgressView()
+                            .padding(.bottom, 20)
                         Text(descriptionText)
                             .Caption()
                     }
@@ -88,6 +89,8 @@ struct AutoFormView: View {
                 if inputEqualsFields(){
                     descriptionText = "Submitting Task..."
                     submittingTask = false
+                }else{
+                    descriptionText = "Input Incomplete..."
                 }
             }
         })
