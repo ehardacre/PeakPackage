@@ -36,6 +36,7 @@ struct AutoFormView: View {
                     }
                     Button(action: {
                         //collect data from views
+                        loadedElementInputs.removeAll()
                         submittingTask = true
                         descriptionText = "Collecting Response..."
                         NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil)
@@ -86,6 +87,7 @@ struct AutoFormView: View {
                 loadedElementInputs.append(id)
                 if inputEqualsFields(){
                     descriptionText = "Submitting Task..."
+                    submittingTask = false
                 }
             }
         })
