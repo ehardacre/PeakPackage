@@ -93,6 +93,7 @@ struct AutoFormView: View {
                 semaphore.signal()
                 if inputEqualsFields(){
                     descriptionText = "Submitting Task..."
+                    printr("all fields collected")
                     submittingTask = false
                 }
             }
