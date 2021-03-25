@@ -116,6 +116,7 @@ struct MultiInputCardView : View {
     
     func makeChoiceList(){
         var start = multiInputText.firstIndex(of: "(") ?? multiInputText.startIndex
+        start = multiInputText.index(after: start)
         var end = multiInputText.lastIndex(of: ")") ?? multiInputText.endIndex
         var listString = String(multiInputText[start..<end])
         var list = listString.components(separatedBy: ",")
