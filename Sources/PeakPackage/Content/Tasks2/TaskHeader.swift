@@ -38,7 +38,8 @@ struct TaskHeaderView: View {
                                 AutoFormElement(label: "Custom Content", prompt: "Enter any custom content", input: "LongString"),
                                 AutoFormElement(label: "Integer Input", prompt: "Enter a number", input: "Int"),
                                 AutoFormElement(label: "Date Input", prompt: "When will it start?", input: "Date"),
-                                AutoFormElement(label: "Multi-Input", prompt: "Pick your choice", input: "Multichoice(choice 1,choice 2, choice 3)")
+                                AutoFormElement(label: "Multi-Input", prompt: "Pick your choice", input: "Multichoice(choice 1,choice 2, choice 3)"),
+                                AutoFormElement(label: "Image Input", prompt: "pick an image", input: "Image")
                             ]),
                     AutoForm(title: "Social Posts",
                              subtitle: "Design and posting of social posts",
