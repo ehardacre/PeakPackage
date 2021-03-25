@@ -65,11 +65,12 @@ struct AutoFormView: View {
                 )
             
                 if submittingTask {
-                    HStack{
+                    VStack{
                         ProgressView()
                         Text(descriptionText)
                             .Caption()
                     }
+                    .padding(20)
                     .frame(minWidth: 250)
                     .background(Color.lightAccent)
                     .cornerRadius(20)
