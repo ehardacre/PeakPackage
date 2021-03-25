@@ -51,7 +51,10 @@ extension AutoFormElement {
                             placeholder: self.prompt,
                             integer: true))
         case "Date":
-            return AnyView(EmptyView())
+            return AnyView(DateInputCardView(
+                            id: self.id,
+                            title: self.label,
+                            prompt: self.prompt))
         case let str where str.contains("Multichoice"):
             return AnyView(EmptyView())
         case "Image":
@@ -62,6 +65,42 @@ extension AutoFormElement {
 
     }
     
+}
+
+struct DateInputCardView : View {
+    
+    var id : UUID
+    @State var title : String
+    @State var prompt : String
+    @State var input : Date = Date()
+    
+    var body : some View {
+        HStack{
+            Text(prompt)
+                .Caption()
+            DatePicker("", selection: $input, displayedComponents: .date)
+        }
+        .padding(20)
+        .cornerRadius(20)
+        .onReceive(formPub, perform: { obj in
+            if let info = obj.userInfo{
+                if let collectedId = info["id"] as? UUID {
+                    if collectedId == id {
+                        NotificationCenter.default.post(
+                            name: Notification.Name("ElementValue"),
+                            object: nil,
+                            userInfo: ["input" :  parseInputDate(), "id" : id, "key" : title])
+                    }
+                }
+            }
+        })
+    }
+    
+    func parseInputDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yMd"
+        return formatter.string(from: input)
+    }
 }
 
 //MARK: TextInputCard

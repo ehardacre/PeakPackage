@@ -37,6 +37,7 @@ struct TaskHeaderView: View {
                                 AutoFormElement(label: "Service", prompt: "Enter the service you'd like to add", input: "ShortString"),
                                 AutoFormElement(label: "Custom Content", prompt: "Enter any custom content", input: "LongString"),
                                 AutoFormElement(label: "Integer Input", prompt: "Enter a number", input: "Int"),
+                                AutoFormElement(label: "Date Input", prompt: "When will it start?", input: "Date")
                             ]),
                     AutoForm(title: "Social Posts",
                              subtitle: "Design and posting of social posts",
