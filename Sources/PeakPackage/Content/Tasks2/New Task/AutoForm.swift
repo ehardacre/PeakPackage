@@ -60,7 +60,7 @@ extension AutoFormElement {
                             id: self.id,
                             title: self.label,
                             prompt: self.prompt,
-                            multiInputText: self.input))
+                            choices: MultiInputCardView.makeChoiceList(text: self.input)))
         case "Image":
             return AnyView(EmptyView())
         default:
@@ -76,9 +76,8 @@ struct MultiInputCardView : View {
     var id : UUID
     @State var title : String
     @State var prompt : String
-    @State var multiInputText : String
     @State var input = 0
-    @State var choices : [String] = []
+    @State var choices : [String]
     
     var body : some View{
         HStack{
@@ -97,9 +96,6 @@ struct MultiInputCardView : View {
                 .padding(.horizontal, 30)
         }
         .BasicContentCard()
-        .onAppear{
-            makeChoiceList()
-        }
         .onReceive(formPub, perform: { obj in
             if let info = obj.userInfo{
                 if let collectedId = info["id"] as? UUID {
@@ -114,13 +110,13 @@ struct MultiInputCardView : View {
         })
     }
     
-    func makeChoiceList(){
-        var start = multiInputText.firstIndex(of: "(") ?? multiInputText.startIndex
-        start = multiInputText.index(after: start)
-        var end = multiInputText.lastIndex(of: ")") ?? multiInputText.endIndex
-        var listString = String(multiInputText[start..<end])
+    static func makeChoiceList(text: String) -> [String]{
+        var start = text.firstIndex(of: "(") ?? text.startIndex
+        start = text.index(after: start)
+        var end = text.lastIndex(of: ")") ?? text.endIndex
+        var listString = String(text[start..<end])
         var list = listString.components(separatedBy: ",")
-        choices = list
+        return list
     }
 
 }
