@@ -93,4 +93,11 @@ extension View {
         }
     }
     
+    func BasicContentCard() -> some View {
+        return self
+            .background(Color.lightAccent)
+            .padding(pads)
+            .cornerRadius(corners)
+    }
+    
 }

@@ -56,7 +56,11 @@ extension AutoFormElement {
                             title: self.label,
                             prompt: self.prompt))
         case let str where str.contains("Multichoice"):
-            return AnyView(EmptyView())
+            return AnyView(MultiInputCardView(
+                            id: self.id,
+                            title: self.label,
+                            prompt: self.prompt,
+                            multiInputText: self.input))
         case "Image":
             return AnyView(EmptyView())
         default:
@@ -65,6 +69,59 @@ extension AutoFormElement {
 
     }
     
+}
+
+struct MultiInputCardView : View {
+    
+    var id : UUID
+    @State var title : String
+    @State var prompt : String
+    @State var multiInputText : String
+    @State var input = 0
+    @State var choices : [String] = []
+    
+    var body : some View{
+        HStack{
+            Picker(
+                selection: $input,
+                label: Text(""),
+                content: {
+                //display each of the duration choices
+                ForEach(0 ..< choices.count){
+                    i in
+                    Text(self.choices[i])
+                }
+            })
+                .pickerStyle(SegmentedPickerStyle())
+                .frame(height: 50)
+                .padding(.horizontal, 30)
+        }
+        .BasicContentCard()
+        .onAppear{
+            makeChoiceList()
+        }
+        .onReceive(formPub, perform: { obj in
+            if let info = obj.userInfo{
+                if let collectedId = info["id"] as? UUID {
+                    if collectedId == id {
+                        NotificationCenter.default.post(
+                            name: Notification.Name("ElementValue"),
+                            object: nil,
+                            userInfo: ["input" :  choices[input], "id" : id, "key" : title])
+                    }
+                }
+            }
+        })
+    }
+    
+    func makeChoiceList(){
+        var start = multiInputText.firstIndex(of: "(") ?? multiInputText.startIndex
+        var end = multiInputText.lastIndex(of: ")") ?? multiInputText.endIndex
+        var listString = String(multiInputText[start..<end])
+        var list = listString.components(separatedBy: ",")
+        choices = list
+    }
+
 }
 
 struct DateInputCardView : View {
@@ -80,8 +137,7 @@ struct DateInputCardView : View {
                 .Caption()
             DatePicker("", selection: $input, displayedComponents: .date)
         }
-        .padding(20)
-        .cornerRadius(20)
+        .BasicContentCard()
         .onReceive(formPub, perform: { obj in
             if let info = obj.userInfo{
                 if let collectedId = info["id"] as? UUID {
@@ -131,7 +187,7 @@ struct TextInputCardView : View{
                 .Caption()
         }
         .frame(height: CGFloat(numLines) * 50)
-        .cornerRadius(20)
+        .BasicContentCard()
         .onReceive(formPub, perform: { obj in
             if let info = obj.userInfo{
                 if let collectedId = info["id"] as? UUID {
