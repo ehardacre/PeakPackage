@@ -45,10 +45,14 @@ extension AutoFormElement {
                             title: self.label,
                             placeholder: self.prompt))
         case "Int":
-            return AnyView(EmptyView())
+            return AnyView(TextInputCardView(
+                            id: self.id,
+                            title: self.label,
+                            placeholder: self.prompt,
+                            integer: true))
         case "Date":
             return AnyView(EmptyView())
-        case "Multichoice":
+        case let str where str.contains("Multichoice"):
             return AnyView(EmptyView())
         case "Image":
             return AnyView(EmptyView())
@@ -60,6 +64,8 @@ extension AutoFormElement {
     
 }
 
+//MARK: TextInputCard
+
 struct TextInputCardView : View{
     
     var id : UUID
@@ -67,6 +73,7 @@ struct TextInputCardView : View{
     @State var title : String
     @State var placeholder : String
     @State var input = ""
+    @State var integer = false
     
     var body : some View {
         ZStack{
@@ -75,6 +82,11 @@ struct TextInputCardView : View{
                 .onTapGesture {
                     self.placeholder = ""
                 }
+                .if(
+                    integer,
+                    content: {
+                        $0.keyboardType(.numberPad)
+                    })
             Text(placeholder)
                 .Caption()
         }
@@ -106,3 +118,4 @@ struct TextInputCardView_Preview : PreviewProvider{
         }
     }
 }
+
