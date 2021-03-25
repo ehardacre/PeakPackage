@@ -63,9 +63,9 @@ extension AutoFormElement {
                             choices: MultiInputCardView.makeChoiceList(text: self.input)))
         case "Image":
             return AnyView(ImageInputCardView(
-                            id: UUID(),
-                            title: self.id,
-                            prompt: self.prompt,))
+                            id: self.id,
+                            title: self.label,
+                            prompt: self.prompt))
         default:
             return AnyView(EmptyView())
         }
@@ -79,7 +79,7 @@ struct ImageInputCardView : View {
     var id : UUID
     @State var title : String
     @State var prompt : String
-    @State var input : [UIImage]
+    @State var input : [UIImage] = []
     @State var showingPhotoLibrary = false
     @State var selectedImage : UIImage = UIImage()
     
