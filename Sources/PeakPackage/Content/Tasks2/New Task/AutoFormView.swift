@@ -41,10 +41,7 @@ struct AutoFormView: View {
                         submittingTask = true
                         descriptionText = "Collecting Response..."
                         for id in elementIDs {
-                            DispatchQueue.main.async {
-                                semaphore.wait()
-                                NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": id])
-                            }
+                            NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": id])
                         }
                         
                     }, label: {
@@ -87,19 +84,21 @@ struct AutoFormView: View {
         }
         .stackOnlyNavigationView()
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ElementValue")), perform: { obj in
-            var data = obj.userInfo as! [String : Any]
-            if let id = data["id"] as? UUID,
-               let input = data["input"] as? Any,
-               let key = data["key"] as? String{
-                loadedElementInputs.append(id)
-                DispatchQueue.main.async {
-                    semaphore.signal()
+            
+            DispatchQueue.global().async {
+                semaphore.wait()
+                var data = obj.userInfo as! [String : Any]
+                if let id = data["id"] as? UUID,
+                   let input = data["input"] as? Any,
+                   let key = data["key"] as? String{
+                    loadedElementInputs.append(id)
+                    if inputEqualsFields(){
+                        descriptionText = "Submitting Task..."
+                        printr("all fields collected")
+                        submittingTask = false
+                    }
                 }
-                if inputEqualsFields(){
-                    descriptionText = "Submitting Task..."
-                    printr("all fields collected")
-                    submittingTask = false
-                }
+                semaphore.signal()
             }
         })
     }
