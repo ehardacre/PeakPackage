@@ -39,6 +39,14 @@ struct AutoFormView: View {
                             }
                         element.inputView()
                     }
+                    if defaults.admin{
+                        FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
+                            .frame(height: 300)
+                            .onAppear{
+                                #warning("TODO: add profiles for peak studios app")
+                                franchiseManager.loadProfiles()
+                            }
+                    }
                     Button(action: {
                         //collect data from views
                         loadedElementInputs.removeAll()
@@ -86,14 +94,6 @@ struct AutoFormView: View {
                     .frame(minWidth: 250)
                     .background(Color.lightAccent)
                     .cornerRadius(20)
-                }
-                
-                if choosingFranchise {
-                    FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
-                        .onAppear{
-                            #warning("TODO: add profiles for peak studios app")
-                            franchiseManager.loadProfiles()
-                        }
                 }
             }
         }
