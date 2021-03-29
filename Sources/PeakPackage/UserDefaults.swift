@@ -89,7 +89,7 @@ struct defaults {
      get's the topic for this user for firebase notifications
      */
     static func getTopics() -> String{
-        let url = franchiseURL
+        let url = defaults.franchiseURL()
         var mainTopic = "unregistered"
         if url != nil{
             mainTopic = url!.replacingOccurrences(of: "https://", with: "")
