@@ -42,6 +42,7 @@ struct AutoFormView: View {
                     if defaults.admin{
                         FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
                             .frame(height: 300)
+                            .cornerRadius(20)
                             .onAppear{
                                 #warning("TODO: add profiles for peak studios app")
                                 franchiseManager.loadProfiles()
