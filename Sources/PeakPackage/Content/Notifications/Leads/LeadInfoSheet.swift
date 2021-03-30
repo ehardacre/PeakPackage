@@ -39,6 +39,7 @@ struct LeadInfoSheet: View {
             ZStack{
                 if annotations.count == 0 {
                     Text("No Address Found")
+                        .Caption()
                         .padding(20)
                         .background(Color.white.opacity(0.5))
                         .cornerRadius(20.0)
