@@ -48,6 +48,7 @@ struct defaults {
     private static let url_key = "franchiseURL"
     private static let temp_url_key = "tempURL"
     private static let temp_name_key = "tempName"
+    private static let temp_id_key = "tempId"
     static var urlChanged = false
     private static let name_key = "franchiseName"
     private static let email_key = "email"
@@ -134,6 +135,9 @@ struct defaults {
     }
     
     static func franchiseId() -> String? {
+        if urlChanged {
+            return UserDefaults.standard.string(forKey: temp_id_key)
+        }
         return UserDefaults.standard.string(forKey: franchise_key)
     }
     
@@ -169,11 +173,12 @@ struct defaults {
     }
     
     static func setFranchiseURL(_ url: String){UserDefaults.standard.set(url, forKey: url_key)}
-    static func setTempFranchise(_ url: String, _ name: String){
+    static func setTempFranchise(_ url: String, _ name: String, _ id: String){
         if admin{
             urlChanged = true
             UserDefaults.standard.set(url, forKey: temp_url_key)
             UserDefaults.standard.set(name, forKey: temp_name_key)
+            UserDefaults.standard.set(id, forKey: temp_id_key)
         }
     }
     

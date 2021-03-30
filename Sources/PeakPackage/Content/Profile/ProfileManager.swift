@@ -35,7 +35,7 @@ public class ProfileManager : Manager {
             let generator = UINotificationFeedbackGenerator()
             generator.notificationOccurred(.success)
             id = newID
-            defaults.setTempFranchise(newURL,newName)
+            defaults.setTempFranchise(newURL,newName,newID)
         }
         printr("profile changed")
         NotificationCenter.default.post(

@@ -118,8 +118,6 @@ extension DatabaseDelegate {
     }
     
     static func getOpenLeads(completion: @escaping (Any) -> Void){
-        let topic = defaults.getTopics()
-        printr("topic: " + topic)
         let json_new = JsonFormat.getLeads_nhance(type: "open", id: defaults.franchiseId()!).format()
         DatabaseDelegate.performRequest(with: json_new, ret: returnType.leads, completion: { rex in
            completion(rex)
@@ -127,7 +125,6 @@ extension DatabaseDelegate {
     }
     
     static func getAcceptedLeads(completion: @escaping (Any) -> Void){
-        let topic = defaults.getTopics()
         let json_acc = JsonFormat.getLeads_nhance(type: "accepted", id: defaults.franchiseId()!).format()
         DatabaseDelegate.performRequest(with: json_acc, ret: returnType.leads, completion: { rex in
             completion(rex)
@@ -135,7 +132,6 @@ extension DatabaseDelegate {
     }
     
     static func getScheduledLeads(completion: @escaping (Any) -> Void){
-        let topic = defaults.getTopics()
         let json_sch = JsonFormat.getLeads_nhance(type: "scheduled", id: defaults.franchiseId()!).format()
         DatabaseDelegate.performRequest(with: json_sch, ret: returnType.leads, completion: { rex in
             completion(rex)
