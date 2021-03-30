@@ -87,7 +87,9 @@ public class NotificationManager : Manager {
     }
     
     func loadNotifications(){
-        let topic = defaults.getTopics()
+        printr("reloading leads")
+        loaded = false
+        loading = [false,false,false]
         if defaults.getApplicationType() == .NHanceConnect{
             DatabaseDelegate.getOpenLeads(
                 completion: {

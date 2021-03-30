@@ -229,10 +229,8 @@ struct LeadsView_single : View {
         }
         .stackOnlyNavigationView()
         .pullToRefresh(isShowing: $refreshing){
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                notificationMan.loadNotifications()
-                self.refreshing = false
-            }
+            notificationMan.loadNotifications()
+            self.refreshing = false
         }
     }
 }

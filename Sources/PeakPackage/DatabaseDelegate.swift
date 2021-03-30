@@ -119,6 +119,7 @@ extension DatabaseDelegate {
     
     static func getOpenLeads(completion: @escaping (Any) -> Void){
         let topic = defaults.getTopics()
+        printr("topic: " + topic)
         let json_new = JsonFormat.getLeads_nhance(type: "open", id: defaults.franchiseId()!).format()
         DatabaseDelegate.performRequest(with: json_new, ret: returnType.leads, completion: { rex in
            completion(rex)
