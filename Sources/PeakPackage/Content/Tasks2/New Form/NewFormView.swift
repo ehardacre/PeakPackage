@@ -147,32 +147,7 @@ struct AddOptionsToMultiView : View{
     @State var newOptionText = ""
     
     var body : some View {
-        ZStack{
-            HStack{
-                Spacer()
-                if addingNewOption {
-                    TextField("New Option", text: $newOptionText)
-                        .padding(20)
-                        .cornerRadius(20)
-                }
-                Button(action: {
-                    if !addingNewOption {
-                        addingNewOption = true
-                    }else{
-                        addingNewOption = false
-                        options.append(newOptionText)
-                        newOptionText = ""
-                    }
-                }, label: {
-                    Image(systemName: !addingNewOption ?
-                        "plus.circle.fill" :
-                        "checkmark.circle.fill")
-                        .foregroundColor(Color.darkAccent)
-                        .imageScale(.large)
-                })
-                .TrailingButton()
-            }
-            
+        VStack{
             List{
                 ForEach(options, id: \.self){
                     opt in
@@ -182,6 +157,21 @@ struct AddOptionsToMultiView : View{
             }
             .CleanList(rowH: 30)
             .listRowBackground(Color.darkAccent.opacity(0.1))
+            
+            HStack{
+                TextField("New Option", text: $newOptionText)
+                    .padding(20)
+                    .cornerRadius(20)
+                Button(action: {
+                        options.append(newOptionText)
+                        newOptionText = ""
+                }, label: {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(Color.darkAccent)
+                        .imageScale(.large)
+                })
+                .TrailingButton()
+            }
         }
         .frame(height: 200)
     }
