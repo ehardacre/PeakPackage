@@ -75,11 +75,11 @@ struct NewFormElement : View {
                 //display each of the duration choices
                 ForEach(0 ..< elementOptions.count){
                     i in
-                    Text(self.elementOptions[i].string())
+                    Image(systemName: self.elementOptions[i].imageName())
                 }
             })
                 .pickerStyle(SegmentedPickerStyle())
-                .frame(height: 50)
+                .frame(height: 100)
                 .padding(.horizontal, 30)
         }
         .BasicContentCard()

@@ -95,6 +95,25 @@ enum AutoFormInputType{
         }
     }
     
+    func imageName() -> String {
+        switch self{
+        case .Multichoice(let _):
+            return "list.bullet.rectangle"
+        case .ShortString:
+            return "bubble.left"
+        case .LongString:
+            return "plus.bubble"
+        case .Int:
+            return "number.square"
+        case .Date:
+            return "calendar"
+        case .Image:
+            return "photo"
+        default:
+            return ""
+        }
+    }
+    
     private func multichoice(with options: [String]) -> String {
         if options.isEmpty {
             return "Multichoice"
