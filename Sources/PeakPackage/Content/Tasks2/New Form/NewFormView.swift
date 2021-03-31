@@ -160,5 +160,8 @@ struct AddOptionsToMultiView : View{
             })
             .fullWidth()
         }
+        .CleanList()
+        .listRowBackground(Color.darkAccent.opacity(0.1))
+        .frame(height: 200)
     }
 }
