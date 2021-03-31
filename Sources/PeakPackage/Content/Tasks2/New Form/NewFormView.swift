@@ -41,6 +41,7 @@ struct NewFormView : View {
                 .onMove(perform: move)
                 
                 HStack{
+                    Spacer()
                     Button(action: {
                         isEditable.toggle()
                     }, label: {
@@ -58,6 +59,16 @@ struct NewFormView : View {
                             .foregroundColor(Color.darkAccent)
                     })
                     .RoundRectButton_NotCentered()
+                    Spacer()
+                    
+                    Button(action: {
+                        #warning("TODO: submit form")
+                    }, label: {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(Color.darkAccent)
+                    })
+                    .TrailingButton()
+                    Spacer()
                 }
             }
             .CleanList()
@@ -80,6 +91,8 @@ struct NewFormElement : View {
     
     let id = UUID()
     @Binding var isEditable : Bool
+    @State var title = ""
+    @State var subtitle = ""
     @State var input = 0
     let elementOptions = [
         AutoFormInputType.ShortString,
@@ -88,6 +101,8 @@ struct NewFormElement : View {
         AutoFormInputType.Date,
         AutoFormInputType.Image,
         AutoFormInputType.Multichoice(options: [])]
+    let positionOfMultichoice = 5
+    @State var optionsForMultiview : [String] = []
     
     var body : some View {
         VStack{
@@ -109,16 +124,41 @@ struct NewFormElement : View {
                 .frame(height: 50)
                 .padding(.horizontal, 30)
             
-//            HStack{
-//                Spacer()
-//                Image(systemName: "ellipsis.circle.fill")
-//                    .onTapGesture {
-//                        withAnimation {
-//                            isEditable = true
-//                        }
-//                    }
-//            }
+            TextField("title of field", text: $title)
+                .padding(20)
+                .cornerRadius(20)
+            
+            TextField("subtitle of field", text: $subtitle)
+                .padding(20)
+                .cornerRadius(20)
+            
+            if input == positionOfMultichoice {
+                AddOptionsToMultiView(options: $optionsForMultiview)
+            }
         }
         .BasicContentCard()
+    }
+}
+
+struct AddOptionsToMultiView : View{
+    
+    @Binding var options : [String]
+    
+    var body : some View {
+        List{
+            ForEach(options, id: \.self){
+                opt in
+                Text(opt)
+                    .Caption()
+            }
+            
+            Button(action: {
+                options.append("option \(options.count + 1)")
+            }, label: {
+                Image(systemName: "plus")
+                    .foregroundColor(Color.darkAccent)
+            })
+            .fullWidth()
+        }
     }
 }
