@@ -13,6 +13,7 @@ let formPub = NotificationCenter.default.publisher(for: Notification.Name("FormS
 struct AutoForm : Codable {
     
     var id = UUID()
+    var admin : Bool?
     var title : String
     var subtitle : String
     var elements : [AutoFormElement]
@@ -30,48 +31,14 @@ struct AutoFormElement : Codable {
 
 extension AutoFormElement {
     
-    func inputView() -> AnyView {
-
-        switch self.input{
-        case "ShortString":
-            return AnyView(TextInputCardView(
-                            id: self.id,
-                            title: self.label,
-                            placeholder: self.prompt))
-        case "LongString":
-            return AnyView(TextInputCardView(
-                            id: self.id,
-                            numLines: 3,
-                            title: self.label,
-                            placeholder: self.prompt))
-        case "Int":
-            return AnyView(TextInputCardView(
-                            id: self.id,
-                            title: self.label,
-                            placeholder: self.prompt,
-                            integer: true))
-        case "Date":
-            return AnyView(DateInputCardView(
-                            id: self.id,
-                            title: self.label,
-                            prompt: self.prompt))
-        case let str where str.contains("Multichoice"):
-            return AnyView(MultiInputCardView(
-                            id: self.id,
-                            title: self.label,
-                            prompt: self.prompt,
-                            choices: MultiInputCardView.makeChoiceList(text: self.input)))
-        case "Image":
-            return AnyView(ImageInputCardView(
-                            id: self.id,
-                            title: self.label,
-                            prompt: self.prompt))
-        default:
-            return AnyView(EmptyView())
-        }
-
+    init(label: String, prompt: String, input: AutoFormInputType){
+        self = AutoFormElement(label: label, prompt: prompt, input: input.string())
     }
     
+    func inputView() -> AnyView {
+        let type = AutoFormInputType(type: self.input)
+        return type.view(id: self.id, label: self.label, prompt: self.prompt)
+    }
 }
 
 struct ImageInputCardView : View {

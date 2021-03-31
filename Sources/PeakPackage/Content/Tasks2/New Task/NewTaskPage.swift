@@ -14,17 +14,22 @@ struct NewTaskPage: View {
     @Environment(\.presentationMode) var presentationMode
     @State var forms : [AutoForm]
     @State var showForm = false
+    @State var creatingNewForm = false
     
     var body: some View {
         NavigationView{
             List{
-                ForEach(forms, id: \.id){
+                ForEach(sortFormsforAdmin(), id: \.id){
                     form in
                     CardView(
                         id: UUID(),
                         selectionManager: selectionManager,
                         color: Color.lightAccent,
-                        icon: Image(systemName: "plus"),
+                        icon:
+                        Image(systemName:
+                                (form.admin ?? false) ?
+                                "person.crop.circle.fill.badge.checkmark" :
+                                "plus"),
                         title: form.title,
                         sub: "",
                         content: form.subtitle,
@@ -46,7 +51,7 @@ struct NewTaskPage: View {
             .navigationBarTitle(Text("Request"), displayMode: .inline)
             .navigationBarItems(trailing:
                 Button(action: {
-                    #warning("TODO add task")
+                    creatingNewForm = true
                 }, label: {
                     if defaults.admin{
                         Image(systemName: "plus.rectangle.fill")
@@ -56,6 +61,19 @@ struct NewTaskPage: View {
             )
         }
         .stackOnlyNavigationView()
+        .sheet(isPresented: $creatingNewForm, content: {
+            NewFormView()
+        })
+    }
+    
+    private func sortFormsforAdmin() -> [AutoForm]{
+        return forms.sorted {
+            adminToInt(admin: $0.admin ?? false) < adminToInt(admin: $1.admin ?? false)
+        }
+    }
+    
+    private func adminToInt(admin : Bool) -> Int {
+        return admin ? 1 : 0
     }
 }
 
@@ -65,7 +83,8 @@ struct NewTaskPage_Previews: PreviewProvider {
             AutoForm(title: "Add Service Page",
                      subtitle: "A service page added to your website",
                      elements: []),
-            AutoForm(title: "Social Posts",
+            AutoForm(admin: true,
+                     title: "Social Posts",
                      subtitle: "Design and posting of social posts",
                      elements: [])
         ])
