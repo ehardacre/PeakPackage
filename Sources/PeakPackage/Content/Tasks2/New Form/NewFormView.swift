@@ -11,6 +11,7 @@ import SwiftUI
 struct NewFormView : View {
     
     @State var elements : [NewFormElement] = []
+    @State var isEditable = false
     
     var body : some View {
         NavigationView{
@@ -36,7 +37,13 @@ struct NewFormView : View {
                 ForEach(elements, id: \.id){
                     el in
                     el
+                        .onLongPressGesture {
+                            withAnimation {
+                                self.isEditable = true
+                            }
+                        }
                 }
+                .onMove(perform: move)
                 
                 Button(action: {
                     elements.append(NewFormElement())
@@ -46,10 +53,18 @@ struct NewFormView : View {
                 })
                 .RoundRectButton()
             }
+            .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
             .navigationTitle("New Form")
         }
         .stackOnlyNavigationView()
     }
+    
+    func move(from source: IndexSet, to destination: Int) {
+            elements.move(fromOffsets: source, toOffset: destination)
+            withAnimation {
+                isEditable = false
+            }
+        }
 }
 
 struct NewFormElement : View {
@@ -68,6 +83,8 @@ struct NewFormElement : View {
         VStack{
             Text("Type:")
                 .CardTitle()
+            Text(elementOptions[input].string())
+                .Caption()
             Picker(
                 selection: $input,
                 label: Text(""),
@@ -79,7 +96,7 @@ struct NewFormElement : View {
                 }
             })
                 .pickerStyle(SegmentedPickerStyle())
-                .frame(height: 100)
+                .frame(height: 50)
                 .padding(.horizontal, 30)
         }
         .BasicContentCard()
