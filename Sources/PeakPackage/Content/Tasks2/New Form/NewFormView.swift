@@ -37,16 +37,11 @@ struct NewFormView : View {
                 ForEach(elements, id: \.id){
                     el in
                     el
-                        .onLongPressGesture {
-                            withAnimation {
-                                self.isEditable = true
-                            }
-                        }
                 }
                 .onMove(perform: move)
                 
                 Button(action: {
-                    elements.append(NewFormElement())
+                    elements.append(NewFormElement(isEditable: $isEditable))
                 }, label: {
                     Image(systemName: "plus")
                         .foregroundColor(Color.darkAccent)
@@ -70,6 +65,7 @@ struct NewFormView : View {
 struct NewFormElement : View {
     
     let id = UUID()
+    @Binding isEditable : Bool
     @State var input = 0
     let elementOptions = [
         AutoFormInputType.ShortString,
@@ -98,6 +94,16 @@ struct NewFormElement : View {
                 .pickerStyle(SegmentedPickerStyle())
                 .frame(height: 50)
                 .padding(.horizontal, 30)
+            
+            HStack{
+                Spacer()
+                Image(systemName: "ellipsis.circle.fill")
+                    .onTapGesture {
+                        withAnimation {
+                            isEditable = true
+                        }
+                    }
+            }
         }
         .BasicContentCard()
     }
