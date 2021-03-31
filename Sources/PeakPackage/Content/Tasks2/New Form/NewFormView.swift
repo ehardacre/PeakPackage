@@ -38,7 +38,7 @@ struct NewFormView : View {
                     el in
                     el
                 }
-                .onMove(perform: move)
+//                .onMove(perform: move)
                 
                 Button(action: {
                     elements.append(NewFormElement(isEditable: $isEditable))
@@ -48,18 +48,20 @@ struct NewFormView : View {
                 })
                 .RoundRectButton()
             }
-            .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
+            .CleanList()
+//            .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
+            .environment(\.editMode, .constant(.active))
             .navigationTitle("New Form")
         }
         .stackOnlyNavigationView()
     }
     
-    func move(from source: IndexSet, to destination: Int) {
-            elements.move(fromOffsets: source, toOffset: destination)
-            withAnimation {
-                isEditable = false
-            }
-        }
+//    func move(from source: IndexSet, to destination: Int) {
+//            elements.move(fromOffsets: source, toOffset: destination)
+//            withAnimation {
+//                isEditable = false
+//            }
+//        }
 }
 
 struct NewFormElement : View {
@@ -95,15 +97,15 @@ struct NewFormElement : View {
                 .frame(height: 50)
                 .padding(.horizontal, 30)
             
-            HStack{
-                Spacer()
-                Image(systemName: "ellipsis.circle.fill")
-                    .onTapGesture {
-                        withAnimation {
-                            isEditable = true
-                        }
-                    }
-            }
+//            HStack{
+//                Spacer()
+//                Image(systemName: "ellipsis.circle.fill")
+//                    .onTapGesture {
+//                        withAnimation {
+//                            isEditable = true
+//                        }
+//                    }
+//            }
         }
         .BasicContentCard()
     }
