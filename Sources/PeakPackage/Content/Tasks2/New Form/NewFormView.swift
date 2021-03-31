@@ -143,25 +143,46 @@ struct NewFormElement : View {
 struct AddOptionsToMultiView : View{
     
     @Binding var options : [String]
+    @State var addingNewOption = false
+    @State var newOptionText = ""
     
     var body : some View {
-        List{
-            ForEach(options, id: \.self){
-                opt in
-                Text(opt)
-                    .Caption()
+        ZStack{
+            HStack{
+                Spacer()
+                if addingNewOption {
+                    TextField("New Option", text: $newOptionText)
+                        .padding(20)
+                        .cornerRadius(20)
+                }
+                Button(action: {
+                    if !addingNewOption {
+                        addingNewOption = true
+                    }else{
+                        addingNewOption = false
+                        options.append(newOptionText)
+                        newOptionText = ""
+                    }
+                }, label: {
+                    Image(systemName: !addingNewOption ?
+                        "plus.circle.fill" :
+                        "checkmark.circle.fill")
+                        .foregroundColor(Color.darkAccent)
+                        .imageScale(.large)
+                })
+                .TrailingButton()
             }
             
-            Button(action: {
-                options.append("option \(options.count + 1)")
-            }, label: {
-                Image(systemName: "plus")
-                    .foregroundColor(Color.darkAccent)
-            })
-            .fullWidth()
+            List{
+                ForEach(options, id: \.self){
+                    opt in
+                    Text(opt)
+                        .Caption()
+                }
+            }
+            .CleanList(rowH: 30)
+            .listRowBackground(Color.darkAccent.opacity(0.1))
         }
-        .CleanList()
-        .listRowBackground(Color.darkAccent.opacity(0.1))
         .frame(height: 200)
     }
 }

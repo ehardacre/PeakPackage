@@ -13,11 +13,11 @@ fileprivate let pads: CGFloat = 15.0
 fileprivate let borderRadius : CGFloat = 2.0
 
 extension List {
-    func CleanList() -> some View{
+    func CleanList(rowH : CGFloat = 120) -> some View{
         return self
             .listRowBackground(Color.clear)
             .listStyle(SidebarListStyle())
-            .environment(\.defaultMinListRowHeight, 120)
+            .environment(\.defaultMinListRowHeight, rowH)
     }
     
     func FormList() -> some View{
