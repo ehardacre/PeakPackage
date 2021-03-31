@@ -65,7 +65,7 @@ struct NewFormView : View {
 struct NewFormElement : View {
     
     let id = UUID()
-    @Binding isEditable : Bool
+    @Binding var isEditable : Bool
     @State var input = 0
     let elementOptions = [
         AutoFormInputType.ShortString,
