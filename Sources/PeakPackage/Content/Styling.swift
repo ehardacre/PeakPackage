@@ -76,6 +76,16 @@ extension Button {
             .fullWidth()
     }
     
+    func RoundRectButton_NotCentered() -> some View {
+        return self
+            .padding(pads)
+            .overlay(
+                RoundedRectangle(cornerRadius: corners)
+                    .stroke(Color.darkAccent, lineWidth: borderRadius)
+            )
+            .buttonStyle(PlainButtonStyle())
+    }
+    
     func TrailingButton() -> some View {
         return self
             .buttonStyle(PlainButtonStyle())

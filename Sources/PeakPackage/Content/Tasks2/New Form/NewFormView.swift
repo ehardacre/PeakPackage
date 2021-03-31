@@ -40,25 +40,25 @@ struct NewFormView : View {
                 }
                 .onMove(perform: move)
                 
-                
-                Button(action: {
-                    isEditable.toggle()
-                }, label: {
-                    Image(systemName: isEditable ? "pencil.slash" : "pencil")
-                        .foregroundColor(Color.darkAccent.opacity(isEditable ? 0.5 : 1.0))
-                })
-                .buttonStyle(PlainButtonStyle())
-                .padding(20)
-                
-                Button(action: {
-                    elements.append(NewFormElement(isEditable: $isEditable))
-                }, label: {
-                    Image(systemName: "plus")
-                        .foregroundColor(Color.darkAccent)
-                })
-                .RoundRectButton()
-                .buttonStyle(PlainButtonStyle())
-                
+                HStack{
+                    Button(action: {
+                        isEditable.toggle()
+                    }, label: {
+                        Image(systemName: isEditable ? "pencil.slash" : "pencil")
+                            .foregroundColor(Color.darkAccent.opacity(isEditable ? 0.5 : 1.0))
+                            .imageScale(.large)
+                    })
+                    .TrailingButton()
+                    .padding(20)
+                    
+                    Button(action: {
+                        elements.append(NewFormElement(isEditable: $isEditable))
+                    }, label: {
+                        Image(systemName: "plus")
+                            .foregroundColor(Color.darkAccent)
+                    })
+                    .RoundRectButton_NotCentered()
+                }
             }
             .CleanList()
             .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
