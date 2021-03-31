@@ -11,7 +11,7 @@ import SwiftUI
 struct NewFormView : View {
     
     @State var elements : [NewFormElement] = []
-    @State var isEditable = true
+    @State var isEditable = false
     
     var body : some View {
         NavigationView{
@@ -40,13 +40,23 @@ struct NewFormView : View {
                 }
                 .onMove(perform: move)
                 
-                Button(action: {
-                    elements.append(NewFormElement(isEditable: $isEditable))
-                }, label: {
-                    Image(systemName: "plus")
-                        .foregroundColor(Color.darkAccent)
-                })
-                .RoundRectButton()
+                HStack{
+                    Button(action: {
+                        isEditable.toggle()
+                    }, label: {
+                        Image(systemName: isEditable ? "pencil.slash" : "pencil")
+                            .foregroundColor(Color.darkAccent.opacity(isEditable ? 0.5 : 1.0))
+                    })
+                    .padding(20)
+                    
+                    Button(action: {
+                        elements.append(NewFormElement(isEditable: $isEditable))
+                    }, label: {
+                        Image(systemName: "plus")
+                            .foregroundColor(Color.darkAccent)
+                    })
+                    .RoundRectButton()
+                }
             }
             .CleanList()
             .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
