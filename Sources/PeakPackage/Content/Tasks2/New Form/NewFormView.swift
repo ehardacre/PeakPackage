@@ -11,7 +11,7 @@ import SwiftUI
 struct NewFormView : View {
     
     @State var elements : [NewFormElement] = []
-    @State var isEditable = false
+    @State var isEditable = true
     
     var body : some View {
         NavigationView{
@@ -38,7 +38,7 @@ struct NewFormView : View {
                     el in
                     el
                 }
-//                .onMove(perform: move)
+                .onMove(perform: move)
                 
                 Button(action: {
                     elements.append(NewFormElement(isEditable: $isEditable))
@@ -49,19 +49,19 @@ struct NewFormView : View {
                 .RoundRectButton()
             }
             .CleanList()
-//            .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
-            .environment(\.editMode, .constant(.active))
+            .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
+//            .environment(\.editMode, .constant(.active))
             .navigationTitle("New Form")
         }
         .stackOnlyNavigationView()
     }
     
-//    func move(from source: IndexSet, to destination: Int) {
-//            elements.move(fromOffsets: source, toOffset: destination)
+    func move(from source: IndexSet, to destination: Int) {
+            elements.move(fromOffsets: source, toOffset: destination)
 //            withAnimation {
 //                isEditable = false
 //            }
-//        }
+        }
 }
 
 struct NewFormElement : View {
