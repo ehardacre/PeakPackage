@@ -27,10 +27,14 @@ struct NewFormView : View {
             List{
                 
                 TextField("Title", text: $title)
+                    .background(Color.lightAccent)
                     .padding(20)
+                    .cornerRadius(20)
                 
                 TextField("Subtitle", text: $subtitle)
+                    .background(Color.lightAccent)
                     .padding(20)
+                    .cornerRadius(20)
                 
                 Picker(
                     selection: $picked,
@@ -73,7 +77,7 @@ struct NewFormView : View {
                     .RoundRectButton_NotCentered()
                     
                     Button(action: {
-                        #warning("TODO: submit form")
+                        gatherInformation()
                     }, label: {
                         Image(systemName: "checkmark")
                             .foregroundColor(Color.darkAccent)
