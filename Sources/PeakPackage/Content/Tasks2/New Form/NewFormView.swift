@@ -98,9 +98,11 @@ struct NewFormView : View {
             DispatchQueue.global().async {
                 semaphore.wait()
                 var data = obj.userInfo as! [String : Any]
+                printr("element returned")
                 if let id = data["id"] as? UUID,
                          let input = data["input"] as? AutoFormElement,
                          let key = data["key"] as? String{
+                    printr("element is an auto form element")
                     finalElements.append(input)
                     if loadedAllInputs {
                         var form = AutoForm(
@@ -110,6 +112,8 @@ struct NewFormView : View {
                             elements: finalElements)
                         submit(form: form)
                     }
+                }else{
+                    printr("element could not be cast as auto form element!;")
                 }
                 semaphore.signal()
             }
