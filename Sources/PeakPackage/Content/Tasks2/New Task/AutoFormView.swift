@@ -78,7 +78,7 @@ struct AutoFormView: View {
                                         Button(action: {
                                             showing = false
                                         }, label: {
-                                            Image(systemName: "arrowshape.turn.up.backward.fill")
+                                            Image(systemName: "chevron.backward")
                                                 .foregroundColor(.darkAccent)
                                                 .imageScale(.large)
                                         })
