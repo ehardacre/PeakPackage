@@ -55,20 +55,14 @@ struct NewTaskPage: View {
                 })
             )
             .sheet(item: $selectedForm, content: { newForm in
-                if showForm {
-                    AutoFormView(showing: $showForm, form: newForm)
-                        .introspectViewController {
-                            $0.isModalInPresentation = true
-                        }
-                        .onDisappear{
-                            selectionManager.id = nil
-                        }
-                }else{
-                    EmptyView()
-                        .onAppear{
-                            selectedForm = nil
-                        }
-                }
+                AutoFormView(form: newForm,
+                             dismissFunction: {
+                                selectionManager.id = nil
+                                selectedForm = nil
+                })
+                    .introspectViewController {
+                        $0.isModalInPresentation = true
+                    }
             })
         }
         .stackOnlyNavigationView()

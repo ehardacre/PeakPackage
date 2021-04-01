@@ -10,7 +10,6 @@ import Introspect
 
 struct AutoFormView: View {
     
-    @Binding var showing : Bool
     var form : AutoForm
     @State var elementIDs : [UUID] = []
     @State var loadedElementInputs : [UUID] = []
@@ -20,6 +19,7 @@ struct AutoFormView: View {
     @State var descriptionText = "Completing Form..."
     let semaphore = DispatchSemaphore(value: 1)
     @ObservedObject var franchiseManager = FranchiseSelectionManager()
+    @State var dismissFunction :  () -> Void = {return}
     
     var body: some View {
         NavigationView{
@@ -76,7 +76,7 @@ struct AutoFormView: View {
                 .navigationBarTitle(Text(form.title), displayMode: .inline)
                 .navigationBarItems(leading:
                                         Button(action: {
-                                            showing = false
+                                            dismissFunction()
                                         }, label: {
                                             Image(systemName: "chevron.backward")
                                                 .foregroundColor(.darkAccent)
@@ -150,7 +150,7 @@ struct AutoFormView: View {
 
 struct AutoFormView_Previews: PreviewProvider {
     static var previews: some View {
-        AutoFormView(showing: .constant(true),
+        AutoFormView(
                      form: AutoForm(
                         title: "Service Page Addition",
                         subtitle: "A Service page will be added to your website",
