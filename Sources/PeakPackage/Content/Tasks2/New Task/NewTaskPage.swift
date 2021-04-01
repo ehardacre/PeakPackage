@@ -36,6 +36,7 @@ struct NewTaskPage: View {
                             content: form.subtitle,
                             showMoreInfo: $showForm,
                             onSelection: {
+                                showForm = true
                                 selectedForm = form
                                 return
                             })
