@@ -36,8 +36,11 @@ struct NewTaskPage: View {
                             content: form.subtitle,
                             showMoreInfo: $showForm,
                             onSelection: {
-                                printr("new form chosen")
                                 selectedForm = form
+                                return
+                            },
+                            onDeselection: {
+                                selectedForm = nil
                                 return
                             })
                 }

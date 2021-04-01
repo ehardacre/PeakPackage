@@ -23,6 +23,7 @@ struct CardView: View {
     @State var content : String
     @Binding var showMoreInfo : Bool
     @State var onSelection : () -> Void = {return}
+    @State var onDeselection : () -> Void = {return}
     
     var body: some View {
         HStack{
@@ -67,6 +68,7 @@ struct CardView: View {
         .onTapGesture(count: 1, perform: {
             if self.id == self.selectionManager.id {
                 self.selectionManager.id = nil
+                onDeselection()
             }else{
                 let generator = UINotificationFeedbackGenerator()
                 generator.notificationOccurred(.success)
