@@ -10,6 +10,8 @@ import SwiftUI
 
 struct NewFormView : View {
     
+    @Binding var allforms : [AutoForm]
+    @Binding var showing : Bool
     @State var elements : [NewFormElement] = []
     @State var finalElements : [AutoFormElement] = []
     @State var isEditable = false
@@ -98,25 +100,18 @@ struct NewFormView : View {
             DispatchQueue.global().async {
                 semaphore.wait()
                 var data = obj.userInfo as! [String : Any]
-                printr("element returned")
                 if let id = data["id"] as? UUID,
                          let input = data["input"] as? AutoFormElement,
                          let key = data["key"] as? String{
-                    printr("element is an auto form element")
                     finalElements.append(input)
                     if loadedAllInputs {
-                        printr("all inputs loaded")
                         var form = AutoForm(
                             admin: picked == 0,
                             title: title,
                             subtitle: subtitle,
                             elements: finalElements)
                         submit(form: form)
-                    }else{
-                        printr("not all inputs")
                     }
-                }else{
-                    printr("element could not be cast as auto form element!;")
                 }
                 semaphore.signal()
             }
@@ -131,10 +126,11 @@ struct NewFormView : View {
         }
     
     func submit(form: AutoForm) {
-        printr("form submitting")
         printr(form)
         DatabaseDelegate.submitNewFormType(form: form, completion: {
             _ in
+            allforms.append(form)
+            showing = false
         })
     }
     
@@ -199,7 +195,6 @@ struct NewFormElement : View {
             if let info = obj.userInfo{
                 if let collectedId = info["id"] as? UUID {
                     if collectedId == id {
-                        printr("collecting element")
                         NotificationCenter.default.post(
                             name: Notification.Name("ElementValue"),
                             object: nil,

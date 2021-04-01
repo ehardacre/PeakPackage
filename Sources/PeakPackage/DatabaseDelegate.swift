@@ -12,7 +12,7 @@ import SwiftUI
 extension DatabaseDelegate {
     
     static func submitNewFormType(form: AutoForm, completion: @escaping (Any) -> Void){
-        #warning("TODO: incomplet")
+        completion("done")
     }
     
     static func getProfiles(completion: @escaping (Any) -> Void){

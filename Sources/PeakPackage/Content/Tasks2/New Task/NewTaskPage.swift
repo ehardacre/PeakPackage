@@ -62,7 +62,7 @@ struct NewTaskPage: View {
         }
         .stackOnlyNavigationView()
         .sheet(isPresented: $creatingNewForm, content: {
-            NewFormView()
+            NewFormView(allforms: $forms, showing: $creatingNewForm)
         })
     }
     
