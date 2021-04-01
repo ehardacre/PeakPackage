@@ -54,8 +54,8 @@ struct NewTaskPage: View {
                     }
                 })
             )
-            .sheet(item: $selectedForm, content: { _ in 
-                AutoFormView(showing: $showForm, form: selectedForm!)
+            .sheet(item: $selectedForm, content: { newForm in
+                AutoFormView(showing: $showForm, form: newForm)
                     .introspectViewController {
                         $0.isModalInPresentation = true
                     }
