@@ -105,12 +105,15 @@ struct NewFormView : View {
                     printr("element is an auto form element")
                     finalElements.append(input)
                     if loadedAllInputs {
+                        printr("all inputs loaded")
                         var form = AutoForm(
                             admin: picked == 0,
                             title: title,
                             subtitle: subtitle,
                             elements: finalElements)
                         submit(form: form)
+                    }else{
+                        printr("not all inputs")
                     }
                 }else{
                     printr("element could not be cast as auto form element!;")
@@ -128,6 +131,8 @@ struct NewFormView : View {
         }
     
     func submit(form: AutoForm) {
+        printr("form submitting")
+        printr(form)
         DatabaseDelegate.submitNewFormType(form: form, completion: {
             _ in
         })
