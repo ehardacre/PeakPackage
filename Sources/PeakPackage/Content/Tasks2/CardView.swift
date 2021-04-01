@@ -76,11 +76,6 @@ struct CardView: View {
             }
         })
     }
-    
-    func onSelection(_ completion : @escaping () -> Void) -> some View{
-        completionFunction = completion
-        return self
-    }
 }
 
 struct CardView_Previews: PreviewProvider {

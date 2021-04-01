@@ -22,23 +22,25 @@ struct NewTaskPage: View {
             List{
                 ForEach(sortFormsforAdmin(), id: \.id){
                     form in
-                    CardView(
-                        id: UUID(),
-                        selectionManager: selectionManager,
-                        color: Color.lightAccent,
-                        icon:
-                        Image(systemName:
-                                (form.admin ?? false) ?
-                                "person.crop.circle.fill.badge.checkmark" :
-                                "plus"),
-                        title: form.title,
-                        sub: "",
-                        content: form.subtitle,
-                        showMoreInfo: $showForm)
-                        .onSelection {
-                            printr("selected a new form")
-                            selectedForm = form
-                        }
+                    HStack{
+                        CardView(
+                            id: UUID(),
+                            selectionManager: selectionManager,
+                            color: Color.lightAccent,
+                            icon:
+                            Image(systemName:
+                                    (form.admin ?? false) ?
+                                    "person.crop.circle.fill.badge.checkmark" :
+                                    "plus"),
+                            title: form.title,
+                            sub: "",
+                            content: form.subtitle,
+                            showMoreInfo: $showForm)
+                    }
+                    .onTapGesture {
+                        printr("Selecting Form")
+                        selectedForm = form
+                    }
                 }
             }
             .CleanList()
@@ -53,17 +55,13 @@ struct NewTaskPage: View {
                     }
                 })
             )
-            .sheet(
-                isPresented: $showForm,
-                content: {
-                    if selectedForm != nil {
-                        AutoFormView(showing: $showForm, form: selectedForm!)
-                            .introspectViewController {
-                                $0.isModalInPresentation = true
-                            }
-                            .onDisappear{
-                                selectionManager.id = nil
-                            }
+            .sheet(item: $selectedForm, content: { _ in 
+                AutoFormView(showing: $showForm, form: selectedForm!)
+                    .introspectViewController {
+                        $0.isModalInPresentation = true
+                    }
+                    .onDisappear{
+                        selectionManager.id = nil
                     }
             })
         }

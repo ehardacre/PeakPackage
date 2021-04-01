@@ -10,7 +10,7 @@ import SwiftUI
 
 let formPub = NotificationCenter.default.publisher(for: Notification.Name("FormSubmit"))
 
-struct AutoForm : Codable {
+struct AutoForm : Codable , Identifiable {
     
     var id = UUID()
     var admin : Bool?
