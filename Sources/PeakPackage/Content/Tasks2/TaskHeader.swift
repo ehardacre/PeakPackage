@@ -41,7 +41,9 @@ struct TaskHeaderView: View {
                                 AutoFormElement(label: "Multi-Input", prompt: "Pick your choice", input: "Multichoice(choice 1,choice 2, choice 3)"),
                                 AutoFormElement(label: "Image Input", prompt: "pick an image", input: "Image")
                             ]),
-                    AutoForm(title: "Social Posts",
+                    AutoForm(
+                            admin: true,
+                            title: "Social Posts",
                              subtitle: "Design and posting of social posts",
                              elements: [])
                 ])

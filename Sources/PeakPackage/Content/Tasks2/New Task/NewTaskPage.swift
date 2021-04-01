@@ -15,6 +15,7 @@ struct NewTaskPage: View {
     @State var forms : [AutoForm]
     @State var showForm = false
     @State var creatingNewForm = false
+    @State var selectedForm : AutoForm? = nil
     
     var body: some View {
         NavigationView{
@@ -34,17 +35,9 @@ struct NewTaskPage: View {
                         sub: "",
                         content: form.subtitle,
                         showMoreInfo: $showForm)
-                        .sheet(
-                            isPresented: $showForm,
-                            content: {
-                                AutoFormView(showing: $showForm, form: form)
-                                    .introspectViewController {
-                                        $0.isModalInPresentation = true
-                                    }
-                                    .onDisappear{
-                                        selectionManager.id = nil
-                                    }
-                        })
+                        .onTapGesture {
+                            selectedForm = form
+                        }
                 }
             }
             .CleanList()
@@ -63,6 +56,19 @@ struct NewTaskPage: View {
         .stackOnlyNavigationView()
         .sheet(isPresented: $creatingNewForm, content: {
             NewFormView(allforms: $forms, showing: $creatingNewForm)
+        })
+        .sheet(
+            isPresented: $showForm,
+            content: {
+                if selectedForm != nil{
+                    AutoFormView(showing: $showForm, form: selectedForm!)
+                        .introspectViewController {
+                            $0.isModalInPresentation = true
+                        }
+                        .onDisappear{
+                            selectionManager.id = nil
+                        }
+                }
         })
     }
     
