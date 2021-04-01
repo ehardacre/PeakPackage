@@ -36,6 +36,8 @@ struct NewTaskPage: View {
                         content: form.subtitle,
                         showMoreInfo: $showForm)
                         .onTapGesture {
+                            printr(form)
+                            showForm = true
                             selectedForm = form
                         }
                 }
@@ -52,23 +54,23 @@ struct NewTaskPage: View {
                     }
                 })
             )
+            .sheet(
+                isPresented: $showForm,
+                content: {
+                    if selectedForm != nil {
+                        AutoFormView(showing: $showForm, form: selectedForm!)
+                            .introspectViewController {
+                                $0.isModalInPresentation = true
+                            }
+                            .onDisappear{
+                                selectionManager.id = nil
+                            }
+                    }
+            })
         }
         .stackOnlyNavigationView()
         .sheet(isPresented: $creatingNewForm, content: {
             NewFormView(allforms: $forms, showing: $creatingNewForm)
-        })
-        .sheet(
-            isPresented: $showForm,
-            content: {
-                if selectedForm != nil{
-                    AutoFormView(showing: $showForm, form: selectedForm!)
-                        .introspectViewController {
-                            $0.isModalInPresentation = true
-                        }
-                        .onDisappear{
-                            selectionManager.id = nil
-                        }
-                }
         })
     }
     
