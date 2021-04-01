@@ -22,7 +22,6 @@ struct NewTaskPage: View {
             List{
                 ForEach(sortFormsforAdmin(), id: \.id){
                     form in
-                    HStack{
                         CardView(
                             id: UUID(),
                             selectionManager: selectionManager,
@@ -35,12 +34,12 @@ struct NewTaskPage: View {
                             title: form.title,
                             sub: "",
                             content: form.subtitle,
-                            showMoreInfo: $showForm)
-                    }
-                    .onTapGesture {
-                        printr("Selecting Form")
-                        selectedForm = form
-                    }
+                            showMoreInfo: $showForm,
+                            onSelection: {
+                                printr("new form chosen")
+                                selectedForm = form
+                                return
+                            })
                 }
             }
             .CleanList()
