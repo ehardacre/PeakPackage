@@ -190,6 +190,7 @@ struct NewFormElement : View {
             if let info = obj.userInfo{
                 if let collectedId = info["id"] as? UUID {
                     if collectedId == id {
+                        printr("collecting element")
                         NotificationCenter.default.post(
                             name: Notification.Name("ElementValue"),
                             object: nil,
@@ -202,11 +203,13 @@ struct NewFormElement : View {
     
     func asAutoFormElement() -> AutoFormElement{
         if input == positionOfMultichoice{
+            printr("returning multiview")
             return AutoFormElement(
                 label: title,
                 prompt: subtitle,
                 input: AutoFormInputType.Multichoice(options: optionsForMultiview))
         }else{
+            printr("returning not multiview")
             return AutoFormElement(
                 label: title,
                 prompt: subtitle,
