@@ -38,10 +38,6 @@ struct NewTaskPage: View {
                             onSelection: {
                                 selectedForm = form
                                 return
-                            },
-                            onDeselection: {
-                                selectedForm = nil
-                                return
                             })
                 }
             }
@@ -58,13 +54,20 @@ struct NewTaskPage: View {
                 })
             )
             .sheet(item: $selectedForm, content: { newForm in
-                AutoFormView(showing: $showForm, form: newForm)
-                    .introspectViewController {
-                        $0.isModalInPresentation = true
-                    }
-                    .onDisappear{
-                        selectionManager.id = nil
-                    }
+                if showForm {
+                    AutoFormView(showing: $showForm, form: newForm)
+                        .introspectViewController {
+                            $0.isModalInPresentation = true
+                        }
+                        .onDisappear{
+                            selectionManager.id = nil
+                        }
+                }else{
+                    EmptyView()
+                        .onAppear{
+                            selectedForm = nil
+                        }
+                }
             })
         }
         .stackOnlyNavigationView()
