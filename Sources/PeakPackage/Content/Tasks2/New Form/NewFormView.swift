@@ -27,13 +27,13 @@ struct NewFormView : View {
             List{
                 
                 TextField("Title", text: $title)
-                    .background(Color.lightAccent)
                     .padding(20)
+                    .background(Color.lightAccent)
                     .cornerRadius(20)
                 
                 TextField("Subtitle", text: $subtitle)
-                    .background(Color.lightAccent)
                     .padding(20)
+                    .background(Color.lightAccent)
                     .cornerRadius(20)
                 
                 Picker(
@@ -83,6 +83,7 @@ struct NewFormView : View {
                             .foregroundColor(Color.darkAccent)
                     })
                     .TrailingButton()
+                    .padding(20)
                     Spacer()
                 }
             }
@@ -123,8 +124,9 @@ struct NewFormView : View {
         }
     
     func submit(form: AutoForm) {
-        printr("submitting form: ")
-        printr(form)
+        DatabaseDelegate.submitNewFormType(form: form, completion: {
+            _ in
+        })
     }
     
     func gatherInformation(){
