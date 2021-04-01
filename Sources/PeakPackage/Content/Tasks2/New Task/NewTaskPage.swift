@@ -35,9 +35,8 @@ struct NewTaskPage: View {
                         sub: "",
                         content: form.subtitle,
                         showMoreInfo: $showForm)
-                        .onTapGesture {
-                            printr(form)
-                            showForm = true
+                        .onSelection {
+                            printr("selected a new form")
                             selectedForm = form
                         }
                 }

@@ -22,6 +22,7 @@ struct CardView: View {
     @State var sub : String
     @State var content : String
     @Binding var showMoreInfo : Bool
+    @State var completionFunction : () -> Void = {return}
     
     var body: some View {
         HStack{
@@ -71,8 +72,14 @@ struct CardView: View {
                 generator.notificationOccurred(.success)
                 self.selectionManager.id = self.id
                 self.showMoreInfo = true
+                self.completionFunction()
             }
         })
+    }
+    
+    func onSelection(_ completion : @escaping () -> Void) -> some View{
+        completionFunction = completion
+        return self
     }
 }
 
