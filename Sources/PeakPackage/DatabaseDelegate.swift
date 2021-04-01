@@ -11,6 +11,10 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func submitNewFormType(form: AutoForm, completion: @escaping (Any) -> Void){
+        #warning("TODO: incomplet")
+    }
+    
     static func getProfiles(completion: @escaping (Any) -> Void){
         var json = JsonFormat.getProfiles.format()
         DatabaseDelegate.performRequest(with: json, ret: .franchiseList, completion: {

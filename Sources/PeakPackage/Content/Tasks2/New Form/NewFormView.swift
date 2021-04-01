@@ -11,28 +11,40 @@ import SwiftUI
 struct NewFormView : View {
     
     @State var elements : [NewFormElement] = []
+    @State var finalElements : [AutoFormElement] = []
     @State var isEditable = false
+    @State var title = ""
+    @State var subtitle = ""
+    let pickerOpt = ["Complimentary","User Requested"]
+    @State var picked = 0
+    let semaphore = DispatchSemaphore(value: 1)
+    var loadedAllInputs : Bool {
+        return finalElements.count == elements.count
+    }
     
     var body : some View {
         NavigationView{
             List{
-                AutoFormElement(
-                    label: "Title",
-                    prompt: "Title for Form",
-                    input: "ShortString")
-                    .inputView()
                 
-                AutoFormElement(
-                    label: "Subtitle",
-                    prompt: "Subtitle for Form",
-                    input: "ShortString")
-                    .inputView()
+                TextField("Title", text: $title)
+                    .padding(20)
                 
-                AutoFormElement(
-                    label: "Form Type",
-                    prompt: "",
-                    input: "Multichoice(Complimentary,User Requested)")
-                    .inputView()
+                TextField("Subtitle", text: $subtitle)
+                    .padding(20)
+                
+                Picker(
+                    selection: $picked,
+                    label: Text(""),
+                    content: {
+                    //display each of the duration choices
+                    ForEach(0 ..< pickerOpt.count){
+                        i in
+                        Text(self.pickerOpt[i])
+                    }
+                })
+                    .pickerStyle(SegmentedPickerStyle())
+                    .frame(height: 50)
+                    .padding(.horizontal, 30)
                 
                 ForEach(elements, id: \.id){
                     el in
@@ -59,7 +71,6 @@ struct NewFormView : View {
                             .foregroundColor(Color.darkAccent)
                     })
                     .RoundRectButton_NotCentered()
-                    Spacer()
                     
                     Button(action: {
                         #warning("TODO: submit form")
@@ -77,6 +88,27 @@ struct NewFormView : View {
             .navigationTitle("New Form")
         }
         .stackOnlyNavigationView()
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ElementValue")), perform: { obj in
+            
+            DispatchQueue.global().async {
+                semaphore.wait()
+                var data = obj.userInfo as! [String : Any]
+                if let id = data["id"] as? UUID,
+                         let input = data["input"] as? AutoFormElement,
+                         let key = data["key"] as? String{
+                    finalElements.append(input)
+                    if loadedAllInputs {
+                        var form = AutoForm(
+                            admin: picked == 0,
+                            title: title,
+                            subtitle: subtitle,
+                            elements: finalElements)
+                        submit(form: form)
+                    }
+                }
+                semaphore.signal()
+            }
+        })
     }
     
     func move(from source: IndexSet, to destination: Int) {
@@ -85,6 +117,17 @@ struct NewFormView : View {
 //                isEditable = false
 //            }
         }
+    
+    func submit(form: AutoForm) {
+        printr("submitting form: ")
+        printr(form)
+    }
+    
+    func gatherInformation(){
+        for el in elements {
+            NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": el.id])
+        }
+    }
 }
 
 struct NewFormElement : View {
@@ -128,7 +171,7 @@ struct NewFormElement : View {
                 .padding(20)
                 .cornerRadius(20)
             
-            TextField("subtitle of field", text: $subtitle)
+            TextField("prompt of field", text: $subtitle)
                 .padding(20)
                 .cornerRadius(20)
             
@@ -137,6 +180,32 @@ struct NewFormElement : View {
             }
         }
         .BasicContentCard()
+        .onReceive(formPub, perform: { obj in
+            if let info = obj.userInfo{
+                if let collectedId = info["id"] as? UUID {
+                    if collectedId == id {
+                        NotificationCenter.default.post(
+                            name: Notification.Name("ElementValue"),
+                            object: nil,
+                            userInfo: ["input" :  asAutoFormElement(), "id" : id, "key" : title])
+                    }
+                }
+            }
+        })
+    }
+    
+    func asAutoFormElement() -> AutoFormElement{
+        if input == positionOfMultichoice{
+            return AutoFormElement(
+                label: title,
+                prompt: subtitle,
+                input: AutoFormInputType.Multichoice(options: optionsForMultiview))
+        }else{
+            return AutoFormElement(
+                label: title,
+                prompt: subtitle,
+                input: elementOptions[input])
+        }
     }
 }
 

@@ -20,6 +20,16 @@ struct AutoForm : Codable {
     
 }
 
+extension AutoForm {
+    
+    init(admin : Bool = false, title : String, subtitle : String, elements : [AutoFormElement]) {
+        self.admin = admin
+        self.title = title
+        self.subtitle = subtitle
+        self.elements = elements
+    }
+}
+
 struct AutoFormElement : Codable {
     
     var id = UUID()
