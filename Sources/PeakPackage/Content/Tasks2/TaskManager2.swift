@@ -16,8 +16,27 @@ public class TaskManager2 : Manager{
     @Published var tasks = [Task]()
     @Published var completedTasks = [Task]()
     @Published var openTasks = [Task]()
+    @Published var forms = [AutoForm]()
 
     public override init(){}
+    
+    func loadForms(){
+        if !forms.isEmpty{
+            return
+        }
+        if defaults.admin {
+            DatabaseDelegate.getAdminForms(completion: {
+                rex in
+                let adminforms = rex as! [AutoForm]
+                self.forms.append(contentsOf: adminforms)
+            })
+        }
+        DatabaseDelegate.getUserForms(completion: {
+            rex in
+            let userforms = rex as! [AutoForm]
+            self.forms.append(contentsOf: userforms)
+        })
+    }
     
     func loadTasks(){
         if !tasks.isEmpty {

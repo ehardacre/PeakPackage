@@ -11,8 +11,39 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func getUserForms(completion: @escaping (Any) -> Void){
+        if defaults.getApplicationType() == .PeakClients {
+            let json = JsonFormat.getForms(visability: "peak").format()
+            DatabaseDelegate.performRequest(with: json, ret: .form, completion: {
+                rex in
+                completion(rex)
+            })
+        }else if defaults.getApplicationType() == .NHanceConnect{
+            let json = JsonFormat.getForms(visability: "nhance").format()
+            DatabaseDelegate.performRequest(with: json, ret: .form, completion: {
+                rex in
+                completion(rex)
+            })
+        }
+    }
+    
+    static func getAdminForms(completion: @escaping (Any) -> Void){
+        let json = JsonFormat.getForms(visability: "admin").format()
+        DatabaseDelegate.performRequest(with: json, ret: .form, completion: {
+            rex in
+            completion(rex)
+        })
+    }
+    
+    static func submitListOfElements(elements: [AutoFormElement], completion: @escaping (Any) -> Void){
+        
+    }
+    
     static func submitNewFormType(form: AutoForm, completion: @escaping (Any) -> Void){
-        completion("done")
+        if defaults.getApplicationType() == .PeakClients {
+            let json = JsonFormat.submitForm(title: form.title, subtitle: form.subtitle, visability: form.vis, elements: [])
+            #warning("TODO : figure out how to send elements")
+        }
     }
     
     static func getProfiles(completion: @escaping (Any) -> Void){
@@ -168,6 +199,24 @@ extension DatabaseDelegate {
         
     }
     
+    static func updateTask(completion: @escaping (Any) -> Void){
+        #warning("TODO")
+        if defaults.getApplicationType() == .PeakClients{
+             
+        }else{
+            
+        }
+    }
+    
+    static func sendTask(completion: @escaping (Any) -> Void){
+        #warning("TODO")
+        if defaults.getApplicationType() == .PeakClients{
+            
+        }else{
+            
+        }
+    }
+    
     static func getTasks(completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients{
             let json = JsonFormat.getTasks(id: defaults.franchiseId()!).format()
@@ -294,10 +343,8 @@ struct DatabaseDelegate {
         var rex : Any?
         //switch for the return type to determine which type to cast as
         switch type {
-        case returnType.formtype:
-            rex = try? JSONDecoder().decode([Form_Type].self, from: data)
         case returnType.form:
-            rex = try? JSONDecoder().decode([Form_Element].self, from: data)
+            rex = try? JSONDecoder().decode([AutoForm].self, from: data)
         case returnType.taskList:
             rex = try? JSONDecoder().decode([Task].self, from: data)
         case returnType.franchiseList:

@@ -181,6 +181,7 @@ public struct ContentView: View {
                     seoManager.loadRankings()
                     if defaults.getApplicationType() == .PeakClients{
                         taskManager.loadTasks()
+                        taskManager.loadForms()
                         appointmentManager.loadAppointments()
                         appointmentManager.loadTodaysVisits()
                     }

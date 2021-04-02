@@ -28,7 +28,7 @@ struct NewTaskPage: View {
                             color: Color.lightAccent,
                             icon:
                             Image(systemName:
-                                    (form.admin ?? false) ?
+                                    (form.vis) == "admin" ?
                                     "person.crop.circle.fill.badge.checkmark" :
                                     "plus"),
                             title: form.title,
@@ -73,12 +73,8 @@ struct NewTaskPage: View {
     
     private func sortFormsforAdmin() -> [AutoForm]{
         return forms.sorted {
-            adminToInt(admin: $0.admin ?? false) < adminToInt(admin: $1.admin ?? false)
+            $0.vis < $1.vis
         }
-    }
-    
-    private func adminToInt(admin : Bool) -> Int {
-        return admin ? 1 : 0
     }
 }
 
@@ -88,7 +84,7 @@ struct NewTaskPage_Previews: PreviewProvider {
             AutoForm(title: "Add Service Page",
                      subtitle: "A service page added to your website",
                      elements: []),
-            AutoForm(admin: true,
+            AutoForm(visibility: "admin",
                      title: "Social Posts",
                      subtitle: "Design and posting of social posts",
                      elements: [])

@@ -106,7 +106,7 @@ struct NewFormView : View {
                     finalElements.append(input)
                     if loadedAllInputs {
                         var form = AutoForm(
-                            admin: picked == 0,
+                            visibility: picked == 0 ? "admin" : nil,
                             title: title,
                             subtitle: subtitle,
                             elements: finalElements)

@@ -41,6 +41,12 @@ enum JsonKeys : String{
     case seo_organicranking_key = "organic_ranking"
     case seo_site_key = "from_site"
     case seo_get_key = "get_ranks_url"
+    //dynamic forms for tasks (currently just on peak)
+    case get_forms_key = "get_dynamic_forms"
+    case submit_form_key = "new_form_title"
+    case submit_form_subkey = "new_form_subtitle"
+    case submit_form_visibility_key = "new_form_admin"
+    case submit_form_elements_key = "new_form_elements"
     
     //MARK: PEAK CLIENTS
     //keys for recieving calls from the app
@@ -117,6 +123,10 @@ public enum JsonFormat {
     //seo
     case setSEORankings(url: String, keyword: String, mapRanking: String, organicRanking: String, site: String)
     case getSEORankings(url: String)
+    //dynamic forms for tasks (currently just on peak)
+    //visabilities include: "admin","peak","nhance"
+    case getForms(visability: String)
+    case submitForm(title: String, subtitle: String, visability: String, elements: [String])
     
     
     //MARK: PEAK CLIENTS
@@ -197,6 +207,14 @@ public enum JsonFormat {
                       JsonKeys.seo_site_key.rawValue: site]
         case .getSEORankings(let url):
             retVal = [JsonKeys.seo_get_key.rawValue: url]
+        case .getForms(let visability):
+            retVal = [JsonKeys.get_forms_key.rawValue: visability]
+        case .submitForm(let title, let subtitle, let visability, let elements):
+            retVal = [JsonKeys.submit_form_key.rawValue: title,
+                      JsonKeys.submit_form_subkey.rawValue: subtitle,
+                      JsonKeys.submit_form_visibility_key.rawValue: visability,
+                      JsonKeys.submit_form_elements_key.rawValue: elements]
+            
         
         
         //MARK: PEAK CLIENTS

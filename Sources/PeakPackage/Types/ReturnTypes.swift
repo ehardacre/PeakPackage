@@ -95,6 +95,7 @@ struct DashboardMessage: Codable{
 typealias Order = Lead
 
 //MARK: AutoServeForms
+#warning("DEPRECATED - TODO: remove")
 
 enum AutoServeType{
    

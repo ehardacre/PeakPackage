@@ -13,7 +13,7 @@ let formPub = NotificationCenter.default.publisher(for: Notification.Name("FormS
 struct AutoForm : Codable , Identifiable {
     
     var id = UUID()
-    var admin : Bool?
+    var vis : String
     var title : String
     var subtitle : String
     var elements : [AutoFormElement]
@@ -22,8 +22,16 @@ struct AutoForm : Codable , Identifiable {
 
 extension AutoForm {
     
-    init(admin : Bool = false, title : String, subtitle : String, elements : [AutoFormElement]) {
-        self.admin = admin
+    init(visibility : String? = nil, title : String, subtitle : String, elements : [AutoFormElement]) {
+        if visibility == nil {
+            if defaults.getApplicationType() == .PeakClients {
+                self.vis = "peak"
+            }else{
+                self.vis = "nhance"
+            }
+        }else{
+            self.vis = visibility!
+        }
         self.title = title
         self.subtitle = subtitle
         self.elements = elements
