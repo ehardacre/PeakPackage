@@ -47,11 +47,11 @@ extension DatabaseDelegate {
             performRequest(with: json, ret: .string, completion: {
                 _ in
                 completed += 1
+                if completed == elements.count {
+                    printr("completed submitting elements")
+                    completion("done")
+                }
             })
-            if completed == elements.count {
-                printr("completed submitting elements")
-                completion("done")
-            }
         }
     }
     
