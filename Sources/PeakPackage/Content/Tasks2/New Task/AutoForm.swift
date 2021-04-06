@@ -12,11 +12,16 @@ let formPub = NotificationCenter.default.publisher(for: Notification.Name("FormS
 
 struct AutoForm : Codable , Identifiable {
 
-    var id : UUID? = UUID()
+    var id : UUID
     var vis : String
     var title : String
     var subtitle : String
     var elements : [AutoFormElement]
+    
+    init(vis: String, title: String, subtitle: String, elements: [AutoFormElement]){
+        self = AutoForm(vis: vis, title: title, subtitle: subtitle, elements: elements)
+        id = UUID()
+    }
     
 }
 
@@ -35,12 +40,13 @@ extension AutoForm {
         self.title = title
         self.subtitle = subtitle
         self.elements = elements
+        self.id = UUID()
     }
 }
 
 struct AutoFormElement : Codable {
     
-    var id : UUID? = UUID()
+    var id : UUID
     var label : String
     var prompt : String
     var input : String
@@ -49,13 +55,17 @@ struct AutoFormElement : Codable {
 
 extension AutoFormElement {
     
+    init(label: String, prompt: String, input: String){
+        self = AutoFormElement(id: UUID(), label: label, prompt: prompt, input: input)
+    }
+    
     init(label: String, prompt: String, input: AutoFormInputType){
         self = AutoFormElement(label: label, prompt: prompt, input: input.string())
     }
     
     func inputView() -> AnyView {
         let type = AutoFormInputType(type: self.input)
-        return type.view(id: self.id ?? UUID(), label: self.label, prompt: self.prompt)
+        return type.view(id: id, label: self.label, prompt: self.prompt)
     }
 }
 

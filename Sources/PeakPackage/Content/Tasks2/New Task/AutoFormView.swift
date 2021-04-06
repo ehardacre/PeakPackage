@@ -35,7 +35,7 @@ struct AutoFormView: View {
                             .CardTitle()
                             .fullWidth()
                             .onAppear{
-                                elementIDs.append(element.id!)
+                                elementIDs.append(element.id)
                             }
                         element.inputView()
                     }
