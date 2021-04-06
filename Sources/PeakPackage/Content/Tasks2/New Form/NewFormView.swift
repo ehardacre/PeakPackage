@@ -130,6 +130,7 @@ struct NewFormView : View {
         printr(form)
         DatabaseDelegate.submitNewFormType(form: form, completion: {
             _ in
+            printr("done adding form")
             allforms.append(form)
             showing = false
         })
