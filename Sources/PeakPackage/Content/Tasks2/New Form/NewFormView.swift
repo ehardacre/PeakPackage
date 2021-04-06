@@ -96,7 +96,7 @@ struct NewFormView : View {
         }
         .stackOnlyNavigationView()
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ElementValue")), perform: { obj in
-            
+            printr("element value returned")
             DispatchQueue.global().async {
                 semaphore.wait()
                 var data = obj.userInfo as! [String : Any]
@@ -105,6 +105,7 @@ struct NewFormView : View {
                          let key = data["key"] as? String{
                     finalElements.append(input)
                     if loadedAllInputs {
+                        printr("all elements found")
                         var form = AutoForm(
                             visibility: picked == 0 ? "admin" : nil,
                             title: title,
@@ -135,6 +136,7 @@ struct NewFormView : View {
     }
     
     func gatherInformation(){
+        printr("sending out notification for info")
         for el in elements {
             NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": el.id])
         }
