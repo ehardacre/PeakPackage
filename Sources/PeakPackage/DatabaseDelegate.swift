@@ -49,6 +49,7 @@ extension DatabaseDelegate {
                 completed += 1
             })
             if completed == elements.count {
+                printr("completed submitting elements")
                 completion("done")
             }
         }
