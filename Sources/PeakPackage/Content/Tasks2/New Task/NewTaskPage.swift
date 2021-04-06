@@ -15,7 +15,7 @@ struct NewTaskPage: View {
     @State var forms : [AutoForm]
     @State var showForm = false
     @State var creatingNewForm = false
-    @State var selectedForm : AutoForm? = nil
+    @State var selectedForm : visibleAutoForm? = nil
     
     var body: some View {
         NavigationView{
@@ -71,17 +71,18 @@ struct NewTaskPage: View {
         })
     }
     
-    private func sortFormsforAdmin() -> [AutoForm]{
+    private func sortFormsforAdmin() -> [visibleAutoForm]{
         return forms.sorted {
             $0.vis < $1.vis
-        }
+        }.map({$0.visibleForm()})
     }
 }
 
 struct NewTaskPage_Previews: PreviewProvider {
     static var previews: some View {
         NewTaskPage(forms: [
-            AutoForm(title: "Add Service Page",
+            AutoForm(visibility: nil,
+                     title: "Add Service Page",
                      subtitle: "A service page added to your website",
                      elements: []),
             AutoForm(visibility: "admin",

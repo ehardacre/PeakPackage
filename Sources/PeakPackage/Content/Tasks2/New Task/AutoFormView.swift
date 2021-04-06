@@ -10,7 +10,7 @@ import Introspect
 
 struct AutoFormView: View {
     
-    var form : AutoForm
+    var form : visibleAutoForm
     @State var elementIDs : [UUID] = []
     @State var loadedElementInputs : [UUID] = []
     @State var inputList : [String:String] = [:]
@@ -152,11 +152,11 @@ struct AutoFormView_Previews: PreviewProvider {
     static var previews: some View {
         AutoFormView(
                      form: AutoForm(
-                        title: "Service Page Addition",
+                        vis: "admin", title: "Service Page Addition",
                         subtitle: "A Service page will be added to your website",
                         elements: [
                             AutoFormElement(label: "Service", prompt: "Enter the service you'd like to add", input: "ShortString"),
                             AutoFormElement(label: "Custom Content", prompt: "Enter any custom content", input: "LongString")
-                        ]))
+                        ]).visibleForm())
     }
 }

@@ -10,22 +10,53 @@ import SwiftUI
 
 let formPub = NotificationCenter.default.publisher(for: Notification.Name("FormSubmit"))
 
-struct AutoForm : Codable , Identifiable {
+struct AutoForm : Codable {
 
-    var id : UUID
     var vis : String
     var title : String
     var subtitle : String
     var elements : [AutoFormElement]
     
-    init(vis: String, title: String, subtitle: String, elements: [AutoFormElement]){
-        self = AutoForm(vis: vis, title: title, subtitle: subtitle, elements: elements)
-        id = UUID()
-    }
-    
 }
 
 extension AutoForm {
+    
+    init(visibility: String?, title: String, subtitle: String, elements: [AutoFormElement]){
+        var tempVis = ""
+        if visibility == nil {
+            if defaults.getApplicationType() == .NHanceConnect {
+                tempVis = "nhance"
+            }else{
+                tempVis = "peak"
+            }
+        }else{
+            tempVis = visibility!
+        }
+        self = AutoForm(vis: tempVis, title: title, subtitle: subtitle, elements: elements)
+    }
+    
+    func visibleForm() -> visibleAutoForm{
+        return visibleAutoForm(form: self)
+    }
+}
+
+struct visibleAutoForm : Identifiable {
+    
+    var id = UUID()
+    var vis : String
+    var title : String
+    var subtitle : String
+    var elements : [visibleAutoFormElement]
+    
+    init(form: AutoForm){
+        vis = form.vis
+        title = form.title
+        subtitle = form.subtitle
+        elements = form.elements.map({$0.visibleElement()})
+    }
+}
+
+extension visibleAutoForm {
     
     init(visibility : String? = nil, title : String, subtitle : String, elements : [AutoFormElement]) {
         if visibility == nil {
@@ -39,14 +70,13 @@ extension AutoForm {
         }
         self.title = title
         self.subtitle = subtitle
-        self.elements = elements
+        self.elements = elements.map({$0.visibleElement()})
         self.id = UUID()
     }
 }
 
 struct AutoFormElement : Codable {
     
-    var id : UUID
     var label : String
     var prompt : String
     var input : String
@@ -55,12 +85,27 @@ struct AutoFormElement : Codable {
 
 extension AutoFormElement {
     
-    init(label: String, prompt: String, input: String){
-        self = AutoFormElement(id: UUID(), label: label, prompt: prompt, input: input)
-    }
-    
     init(label: String, prompt: String, input: AutoFormInputType){
         self = AutoFormElement(label: label, prompt: prompt, input: input.string())
+    }
+    
+    func visibleElement() -> visibleAutoFormElement{
+        return visibleAutoFormElement(element: self)
+    }
+    
+}
+
+struct visibleAutoFormElement {
+    
+    var id = UUID()
+    var label : String
+    var prompt : String
+    var input : String
+    
+    init(element : AutoFormElement){
+        label = element.label
+        prompt = element.prompt
+        input = element.input
     }
     
     func inputView() -> AnyView {
