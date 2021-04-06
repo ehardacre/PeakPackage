@@ -11,8 +11,8 @@ import SwiftUI
 let formPub = NotificationCenter.default.publisher(for: Notification.Name("FormSubmit"))
 
 struct AutoForm : Codable , Identifiable {
-    
-    var id = UUID()
+
+    var id : UUID? = UUID()
     var vis : String
     var title : String
     var subtitle : String
@@ -40,7 +40,7 @@ extension AutoForm {
 
 struct AutoFormElement : Codable {
     
-    var id = UUID()
+    var id : UUID? = UUID()
     var label : String
     var prompt : String
     var input : String
@@ -55,7 +55,7 @@ extension AutoFormElement {
     
     func inputView() -> AnyView {
         let type = AutoFormInputType(type: self.input)
-        return type.view(id: self.id, label: self.label, prompt: self.prompt)
+        return type.view(id: self.id!, label: self.label, prompt: self.prompt)
     }
 }
 
