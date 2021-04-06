@@ -137,8 +137,12 @@ struct NewFormView : View {
     
     func gatherInformation(){
         printr("sending out notification for info")
-        for el in elements {
-            NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": el.id])
+        if elements.count == 0 {
+            #warning("show error for adding no option")
+        }else{
+            for el in elements {
+                NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": el.id])
+            }
         }
     }
 }

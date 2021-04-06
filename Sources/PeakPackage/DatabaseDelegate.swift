@@ -59,7 +59,7 @@ extension DatabaseDelegate {
             let json = JsonFormat.submitForm(title: form.title, subtitle: form.subtitle, visability: form.vis).format()
             performRequest(with: json, ret: .string, completion: {
                 rex in
-                let formID = rex as! String
+                let formID = (rex as! String).replacingOccurrences(of: "\r\n", with: "")
                 submitListOfElements(elements: form.elements, formId: formID, completion: {
                     rex in
                     completion(rex)
