@@ -220,8 +220,8 @@ public enum JsonFormat {
         case .submitFormElement(let formID, let label, let prompt, let input):
             retVal = [JsonKeys.submit_form_elements_key.rawValue: formID,
                       JsonKeys.submit_form_element_label.rawValue: label,
-                      JsonKeys.submit_form_element_prompt: prompt,
-                      JsonKeys.submit_form_element_input: input]
+                      JsonKeys.submit_form_element_prompt.rawValue: prompt,
+                      JsonKeys.submit_form_element_input.rawValue: input]
         
         
         //MARK: PEAK CLIENTS
