@@ -47,6 +47,8 @@ extension DatabaseDelegate {
             performRequest(with: json, ret: .string, completion: {
                 _ in
                 completed += 1
+                printr("completed" + String(completed))
+                printr("element count: " + String(elements.count))
                 if completed == elements.count {
                     printr("completed submitting elements")
                     completion("done")
