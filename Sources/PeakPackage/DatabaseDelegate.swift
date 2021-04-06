@@ -35,14 +35,36 @@ extension DatabaseDelegate {
         })
     }
     
-    static func submitListOfElements(elements: [AutoFormElement], completion: @escaping (Any) -> Void){
-        
+    static func submitListOfElements(elements: [AutoFormElement], formId: String, completion: @escaping (Any) -> Void){
+        var completed = 0
+        for element in elements {
+            let json = JsonFormat.submitFormElement(
+                formID: formId,
+                label: element.label,
+                prompt: element.prompt,
+                input: element.input)
+                .format()
+            performRequest(with: json, ret: .string, completion: {
+                _ in
+                completed += 1
+            })
+            if completed == elements.count {
+                completion("done")
+            }
+        }
     }
     
     static func submitNewFormType(form: AutoForm, completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients {
-            let json = JsonFormat.submitForm(title: form.title, subtitle: form.subtitle, visability: form.vis, elements: [])
-            #warning("TODO : figure out how to send elements")
+            let json = JsonFormat.submitForm(title: form.title, subtitle: form.subtitle, visability: form.vis).format()
+            performRequest(with: json, ret: .string, completion: {
+                rex in
+                let formID = rex as! String
+                submitListOfElements(elements: form.elements, formId: formID, completion: {
+                    rex in
+                    completion(rex)
+                })
+            })
         }
     }
     

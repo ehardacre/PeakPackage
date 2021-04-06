@@ -46,7 +46,10 @@ enum JsonKeys : String{
     case submit_form_key = "new_form_title"
     case submit_form_subkey = "new_form_subtitle"
     case submit_form_visibility_key = "new_form_admin"
-    case submit_form_elements_key = "new_form_elements"
+    case submit_form_elements_key = "new_form_element_formID"
+    case submit_form_element_label = "new_form_element_label"
+    case submit_form_element_prompt = "new_form_element_prompt"
+    case submit_form_element_input = "new_form_element_input"
     
     //MARK: PEAK CLIENTS
     //keys for recieving calls from the app
@@ -126,7 +129,8 @@ public enum JsonFormat {
     //dynamic forms for tasks (currently just on peak)
     //visabilities include: "admin","peak","nhance"
     case getForms(visability: String)
-    case submitForm(title: String, subtitle: String, visability: String, elements: [String])
+    case submitForm(title: String, subtitle: String, visability: String)
+    case submitFormElement(formID: String, label: String, prompt: String, input: String)
     
     
     //MARK: PEAK CLIENTS
@@ -209,12 +213,15 @@ public enum JsonFormat {
             retVal = [JsonKeys.seo_get_key.rawValue: url]
         case .getForms(let visability):
             retVal = [JsonKeys.get_forms_key.rawValue: visability]
-        case .submitForm(let title, let subtitle, let visability, let elements):
+        case .submitForm(let title, let subtitle, let visability):
             retVal = [JsonKeys.submit_form_key.rawValue: title,
                       JsonKeys.submit_form_subkey.rawValue: subtitle,
-                      JsonKeys.submit_form_visibility_key.rawValue: visability,
-                      JsonKeys.submit_form_elements_key.rawValue: elements]
-            
+                      JsonKeys.submit_form_visibility_key.rawValue: visability]
+        case .submitFormElement(let formID, let label, let prompt, let input):
+            retVal = [JsonKeys.submit_form_elements_key.rawValue: formID,
+                      JsonKeys.submit_form_element_label.rawValue: label,
+                      JsonKeys.submit_form_element_prompt: prompt,
+                      JsonKeys.submit_form_element_input: input]
         
         
         //MARK: PEAK CLIENTS
