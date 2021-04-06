@@ -55,7 +55,7 @@ extension AutoFormElement {
     
     func inputView() -> AnyView {
         let type = AutoFormInputType(type: self.input)
-        return type.view(id: self.id!, label: self.label, prompt: self.prompt)
+        return type.view(id: self.id ?? UUID(), label: self.label, prompt: self.prompt)
     }
 }
 
