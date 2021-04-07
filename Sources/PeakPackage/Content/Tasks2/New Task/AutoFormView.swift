@@ -151,6 +151,8 @@ struct AutoFormView: View {
                     _ in
                     submittingTask = false
                 })
+            }else{
+                submittingTask = false
             }
         })
     }
