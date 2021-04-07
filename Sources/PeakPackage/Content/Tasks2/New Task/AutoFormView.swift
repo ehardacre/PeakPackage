@@ -140,7 +140,7 @@ struct AutoFormView: View {
         //format inputs into string
         var taskString = ""
         for key in inputs.keys {
-            taskString += "[\(key):\(inputs[key])]"
+            taskString += "[\(key):\(inputs[key] ?? "")]"
         }
         
         DatabaseDelegate.sendTask(taskInfo: taskString, completion: {
