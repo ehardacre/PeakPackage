@@ -64,13 +64,14 @@ public class TaskManager2 : Manager{
                 if !tasksContains(
                     taskList: openTasks,
                     task: t) {
-                    openTasks.insert(t, at: 0)
+                    openTasks.append(t)
                 }
             } else {
                 if !tasksContains(
                     taskList: openTasks,
                     task: t) {
-                    openTasks.append(t)
+                    
+                    openTasks.insert(t, at: 0)
                 }
             }
         }
