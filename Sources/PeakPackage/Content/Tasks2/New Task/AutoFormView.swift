@@ -10,6 +10,8 @@ import Introspect
 
 struct AutoFormView: View {
     
+    
+    @Environment(\.presentationMode) var presentationMode
     var form : visibleAutoForm
     @State var elementIDs : [UUID] = []
     @State var loadedElementInputs : [UUID] = []
@@ -150,9 +152,11 @@ struct AutoFormView: View {
                 DatabaseDelegate.sendImages(images: imagesToSubmit, taskId: id, completion: {
                     _ in
                     submittingTask = false
+                    presentationMode.wrappedValue.dismiss()
                 })
             }else{
                 submittingTask = false
+                presentationMode.wrappedValue.dismiss()
             }
         })
     }
