@@ -75,6 +75,7 @@ enum JsonKeys : String{
     case form_key = "dynamicform_key"
     case form_type_key = "dynamicform_type_key"
     case image_send_key = "imageData"
+    case image_send_task = "image_taskID"
     //key for converting kanban id to wp id
     case id_key = "id_key"
     //Leads
@@ -143,7 +144,9 @@ public enum JsonFormat {
     //Task Operations
     case getTasks(id: String)
     case setTask(id: String, value: String)
+    #warning("DEPRECATED")
     case setTaskWithImage(id: String, value: String, image: String)
+    case sendImagesforTask(taskId: String, imageData: String)
     //id is the id of the form we're trying to get
     case getDynamicForm(id: String)
     case getDynamicFormTypes(id: String)
@@ -235,8 +238,12 @@ public enum JsonFormat {
             //create task for id
         case .setTask(let id, let value):
             retVal = [JsonKeys.tasks_key.rawValue: id, JsonKeys.tasks_value.rawValue: value]
+            #warning("DEPRECATED")
         case .setTaskWithImage(let id, let value, let image):
             retVal = [JsonKeys.tasks_key.rawValue: id, JsonKeys.tasks_value.rawValue: value, JsonKeys.image_send_key.rawValue: image]
+        case .sendImagesforTask(let taskId, let imageData):
+            retVal = [JsonKeys.image_send_key.rawValue: imageData,
+                      JsonKeys.image_send_task.rawValue: taskId]
             //get appointments for user id
         case .getAppointments(let id):
             retVal = [JsonKeys.appt_key.rawValue: id]

@@ -11,6 +11,17 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func sendImages(images: [UIImage], taskId: String, completion: @escaping (Any) -> Void){
+        let encodedImages = images.map({$0.toBase64() ?? "nil"})
+        for imageStr in encodedImages{
+            let json = JsonFormat.sendImagesforTask(taskId: taskId, imageData: imageStr).format()
+            DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
+                _ in
+                printr("image uploaded")
+            })
+        }
+    }
+    
     static func getUserForms(completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients {
             let json = JsonFormat.getForms(visability: "peak").format()
@@ -229,16 +240,12 @@ extension DatabaseDelegate {
         }
     }
     
-    static func sendTask(taskInfo: [String:String], completion: @escaping (Any) -> Void){
+    static func sendTask(taskInfo: String, completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients{
-            var taskString = ""
-            for key in taskInfo.keys {
-                taskString += "[\(key):\(taskInfo[key])]"
-            }
-            let json = JsonFormat.setTask(id: defaults.franchiseId()!, value: taskString).format()
+            let json = JsonFormat.setTask(id: defaults.franchiseId()!, value: taskInfo).format()
             DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                 rex in
-                completion(rex)
+                completion(rex) //rex is the task ID
             })
         }else{
             

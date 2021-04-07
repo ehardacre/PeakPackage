@@ -20,6 +20,7 @@ struct AutoFormView: View {
     let semaphore = DispatchSemaphore(value: 1)
     @ObservedObject var franchiseManager = FranchiseSelectionManager()
     @State var dismissFunction :  () -> Void = {return}
+    @State var imagesToSubmit : [UIImage] = []
     
     var body: some View {
         NavigationView{
@@ -116,10 +117,7 @@ struct AutoFormView: View {
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
                         printr(inputList)
-                        DatabaseDelegate.sendTask(taskInfo: inputList, completion: {
-                            _ in
-                        })
-                        submittingTask = false
+                        sendInTask(inputs: inputList)
                     }
                 }else if let id = data["id"] as? UUID,
                    let input = data["input"] as? Any,
@@ -130,10 +128,29 @@ struct AutoFormView: View {
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
                         printr(inputList)
-                        submittingTask = false
+                        sendInTask(inputs: inputList)
                     }
                 }
                 semaphore.signal()
+            }
+        })
+    }
+    
+    func sendInTask(inputs: [String:String]){
+        //format inputs into string
+        var taskString = ""
+        for key in inputs.keys {
+            taskString += "[\(key):\(inputs[key])]"
+        }
+        
+        DatabaseDelegate.sendTask(taskInfo: taskString, completion: {
+            rex in
+            let id = rex as! String
+            if imagesToSubmit.count > 0 {
+                DatabaseDelegate.sendImages(images: imagesToSubmit, taskId: id, completion: {
+                    _ in
+                    submittingTask = false
+                })
             }
         })
     }
