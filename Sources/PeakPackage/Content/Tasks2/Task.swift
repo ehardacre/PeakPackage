@@ -103,24 +103,51 @@ extension Task {
      */
     func convertToCard(with selectionManager: SelectionManager) -> TaskCardView2{
         //the request
+        
         var request = self.request
+        var franchise = defaults.franchiseName() ?? ""
         
-        //the first item is the information about task in franchise
-        let split = request.firstIndex(of: ":") ?? nil
-        let end = request.firstIndex(of: "]") ?? nil
-        var start = request.startIndex
-        if split != nil && end != nil{
-            start = request.index(after: split!)
-            request = String(request[ start...split! ])
-        }
-        request = request.replacingOccurrences(of: ":", with: "")
+        let end = request.firstIndex(of: "]")
+        let start = request.firstIndex(of: "[")
         
-        //franchise
-        var franchise = defaults.franchiseName()
-        if defaults.admin && end != nil && split != nil{
-            franchise = String(request[ split!...end! ])
+        if end != nil && start != nil {
+            
+            request = String(request[(start ?? request.startIndex) ... (end ?? request.endIndex)])
+            request
+                .replacingOccurrences(of: "]", with: "")
+                .replacingOccurrences(of: "[", with: "")
+            let info = request.split(separator: ":")
+            
+            if info.count > 1{
+                
+                request = String(info[0])
+                
+                if defaults.admin {
+                    franchise = String(info[1])
+                }
+                
+            }
+            
         }
-        franchise = franchise?.replacingOccurrences(of: "]", with: "")
+        
+        request = request + " for " + franchise
+        
+//        //the first item is the information about task in franchise
+//        let split = request.firstIndex(of: ":") ?? nil
+//        let end = request.firstIndex(of: "]") ?? nil
+//        var start = request.startIndex
+//        if split != nil && end != nil{
+//            start = request.index(after: split!)
+//            request = String(request[ start...split! ])
+//        }
+//        request = request.replacingOccurrences(of: ":", with: "")
+//
+//        //franchise
+//        var franchise = defaults.franchiseName()
+//        if defaults.admin && end != nil && split != nil{
+//            franchise = String(request[ split!...end! ])
+//        }
+//        franchise = franchise?.replacingOccurrences(of: "]", with: "")
         
         let type = self.getType()
         //create the card view
@@ -129,7 +156,7 @@ extension Task {
             task: self,
             type: type,
             date: TaskManager.cleanDate(self.date),
-            content: request + " for " + (franchise ?? ""))
+            content: request )
     }
     
     
