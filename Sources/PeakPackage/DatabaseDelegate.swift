@@ -47,10 +47,7 @@ extension DatabaseDelegate {
             performRequest(with: json, ret: .string, completion: {
                 _ in
                 completed += 1
-                printr("completed" + String(completed))
-                printr("element count: " + String(elements.count))
                 if completed == elements.count {
-                    printr("completed submitting elements")
                     completion("done")
                 }
             })
@@ -225,18 +222,24 @@ extension DatabaseDelegate {
     }
     
     static func updateTask(completion: @escaping (Any) -> Void){
-        #warning("TODO")
         if defaults.getApplicationType() == .PeakClients{
-             
+            
         }else{
             
         }
     }
     
-    static func sendTask(completion: @escaping (Any) -> Void){
-        #warning("TODO")
+    static func sendTask(taskInfo: [String:String], completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients{
-            
+            var taskString = ""
+            for key in taskInfo.keys {
+                taskString += "[\(key):\(taskInfo[key])]"
+            }
+            let json = JsonFormat.setTask(id: defaults.franchiseId()!, value: taskString).format()
+            DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
+                rex in
+                completion(rex)
+            })
         }else{
             
         }

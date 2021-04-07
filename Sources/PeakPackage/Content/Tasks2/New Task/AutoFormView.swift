@@ -116,6 +116,9 @@ struct AutoFormView: View {
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
                         printr(inputList)
+                        DatabaseDelegate.sendTask(taskInfo: inputList, completion: {
+                            _ in
+                        })
                         submittingTask = false
                     }
                 }else if let id = data["id"] as? UUID,

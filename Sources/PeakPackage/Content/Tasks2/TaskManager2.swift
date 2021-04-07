@@ -160,17 +160,17 @@ public class TaskManager2 : Manager{
         
         var tempDetails : [TaskField] = []
         
-        var headersections = req
-            .split(separator: ")")[0]
-            .replacingOccurrences(of: "(", with: "")
-            .replacingOccurrences(of: ")", with: "")
-            .components(separatedBy: "for")
-        if headersections.count > 1 {
-            let headerField = TaskField(
-                title: String(headersections[0]),
-                value: String(headersections[1]))
-            tempDetails.append(headerField)
-        }
+//        var headersections = req
+//            .split(separator: ")")[0]
+//            .replacingOccurrences(of: "(", with: "")
+//            .replacingOccurrences(of: ")", with: "")
+//            .components(separatedBy: "for")
+//        if headersections.count > 1 {
+//            let headerField = TaskField(
+//                title: String(headersections[0]),
+//                value: String(headersections[1]))
+//            tempDetails.append(headerField)
+//        }
         
         var parts = req.components(separatedBy: "[")
         for part in parts{
