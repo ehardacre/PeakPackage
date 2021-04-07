@@ -111,14 +111,14 @@ extension Task {
         var start = request.startIndex
         if split != nil && end != nil{
             start = request.index(after: split!)
-            request = String(request[ start..<split! ])
+            request = String(request[ start...split! ])
         }
         request = request.replacingOccurrences(of: ":", with: "")
         
         //franchise
         var franchise = defaults.franchiseName()
         if defaults.admin && end != nil && split != nil{
-            franchise = String(request[ split!..<end! ])
+            franchise = String(request[ split!...end! ])
         }
         franchise = franchise?.replacingOccurrences(of: "]", with: "")
         
