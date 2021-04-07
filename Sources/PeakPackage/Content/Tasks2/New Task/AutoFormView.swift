@@ -138,7 +138,7 @@ struct AutoFormView: View {
     
     func sendInTask(inputs: [String:String]){
         //format inputs into string
-        var taskString = ""
+        var taskString = "[\(form.title):\(defaults.franchiseName() ?? "")]"
         for key in inputs.keys {
             taskString += "[\(key):\(inputs[key] ?? "")]"
         }

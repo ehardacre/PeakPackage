@@ -104,13 +104,24 @@ extension Task {
     func convertToCard(with selectionManager: SelectionManager) -> TaskCardView2{
         //the request
         var request = self.request
-        //remove unnecessary information that is stored in kanban
+        
+        //the first item is the information about task in franchise
         let split = request.firstIndex(of: ":") ?? nil
+        let end = request.firstIndex(of: "]") ?? nil
         var start = request.startIndex
-        if split != nil{
+        if split != nil && end != nil{
             start = request.index(after: split!)
+            request = String(request[ start..<split! ])
         }
-        request = String(request[ start..<request.endIndex ])
+        request = request.replacingOccurrences(of: ":", with: "")
+        
+        //franchise
+        var franchise = defaults.franchiseName()
+        if defaults.admin && end != nil && split != nil{
+            franchise = String(request[ split!..<end! ])
+        }
+        franchise = franchise?.replacingOccurrences(of: "]", with: "")
+        
         let type = self.getType()
         //create the card view
         return TaskCardView2(
@@ -118,7 +129,7 @@ extension Task {
             task: self,
             type: type,
             date: TaskManager.cleanDate(self.date),
-            content: request)
+            content: request + " for " + (franchise ?? ""))
     }
     
     
