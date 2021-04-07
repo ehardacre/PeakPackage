@@ -232,9 +232,13 @@ extension DatabaseDelegate {
         
     }
     
-    static func updateTask(completion: @escaping (Any) -> Void){
+    static func updateTask(taskId: String, taskStatus: TaskStatus, completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients{
-            
+            let json = JsonFormat.updateTaskStatus(taskId: taskId, status: taskStatus.rawValue).format()
+            DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
+                _ in
+                completion("done")
+            })
         }else{
             
         }

@@ -58,6 +58,8 @@ enum JsonKeys : String{
     //keys for a service request
     case tasks_key = "tasks" //this is where the user id will be stored
     case tasks_value = "request"
+    case tasks_update_key = "task_update"
+    case tasks_update_status = "task_update_status"
     //keys for changing and getting user data
     case userData_key = "user"
     case newAddress_key = "street_address_1" //these are the keys used in wp_usermeta
@@ -144,6 +146,7 @@ public enum JsonFormat {
     //Task Operations
     case getTasks(id: String)
     case setTask(id: String, value: String)
+    case updateTaskStatus(taskId: String, status: String)
     #warning("DEPRECATED")
     case setTaskWithImage(id: String, value: String, image: String)
     case sendImagesforTask(taskId: String, imageData: String)
@@ -238,6 +241,9 @@ public enum JsonFormat {
             //create task for id
         case .setTask(let id, let value):
             retVal = [JsonKeys.tasks_key.rawValue: id, JsonKeys.tasks_value.rawValue: value]
+        case .updateTaskStatus(let taskId, let status):
+            retVal = [JsonKeys.tasks_update_key.rawValue: taskId,
+                      JsonKeys.tasks_update_status.rawValue: status]
             #warning("DEPRECATED")
         case .setTaskWithImage(let id, let value, let image):
             retVal = [JsonKeys.tasks_key.rawValue: id, JsonKeys.tasks_value.rawValue: value, JsonKeys.image_send_key.rawValue: image]

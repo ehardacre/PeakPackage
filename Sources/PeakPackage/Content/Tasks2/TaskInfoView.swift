@@ -15,6 +15,7 @@ struct TaskInfoView: View {
     var infos : [TaskField]
     @State var taskState = 0
     @State var prevTaskState = 0
+    let taskStatuses = [TaskStatus.open, TaskStatus.inProgress, TaskStatus.complete]
     
     init(task: Task) {
         self.task = task
@@ -60,8 +61,10 @@ struct TaskInfoView: View {
             }
                 .onDisappear{
                     if taskState != prevTaskState {
-                        #warning("TODO update task in database")
-                        #warning("TODO notify client")
+                        DatabaseDelegate.updateTask(taskId: task.taskId, taskStatus: taskStatuses[taskState], completion: {
+                            _ in
+                            #warning("reload tasks")
+                        })
                     }
                 }
         }

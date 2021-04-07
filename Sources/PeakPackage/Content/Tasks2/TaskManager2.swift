@@ -64,17 +64,18 @@ public class TaskManager2 : Manager{
                 if !tasksContains(
                     taskList: openTasks,
                     task: t) {
-                    openTasks.append(t)
+                    openTasks.insert(t, at: 0)
                 }
             } else {
                 if !tasksContains(
                     taskList: openTasks,
                     task: t) {
-                    
-                    openTasks.insert(t, at: 0)
+                    openTasks.append(t)
                 }
             }
         }
+        //for correct date ordering
+        openTasks.reverse()
     }
     
     func tasksContains(taskList: [Task], task: Task) -> Bool{

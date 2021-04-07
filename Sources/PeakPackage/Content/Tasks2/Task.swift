@@ -59,8 +59,7 @@ struct TaskType{
  */
 enum TaskStatus : String{
     case open = "2"
-    #warning("TODO: get id for inprogress tasks")
-    case inProgress
+    case inProgress = "3"
     case complete = "5"
     case noStatus
     case anyStatus
