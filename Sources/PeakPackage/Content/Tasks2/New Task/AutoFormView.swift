@@ -21,7 +21,7 @@ struct AutoFormView: View {
     @State var descriptionText = "Completing Form..."
     let semaphore = DispatchSemaphore(value: 1)
     @ObservedObject var franchiseManager = FranchiseSelectionManager()
-    @State var profiles : [Franchise] = []
+    @State var profilesLoaded = false
     @State var dismissFunction :  () -> Void = {return}
     @State var imagesToSubmit : [UIImage] = []
     
@@ -43,17 +43,12 @@ struct AutoFormView: View {
                             }
                         element.inputView()
                     }
-                    if defaults.admin{
+                    if defaults.admin && profilesLoaded{
                         FranchiseSelectionView(profiles: profiles, profileManager: franchiseManager)
                             .frame(height: 300)
                             .cornerRadius(20)
-//                            .onAppear{
-//                                franchiseManager.loadProfiles()
-//                            }
                             .onReceive(NotificationCenter.default.publisher(for: Notification.Name("FranchiseListLoaded")), perform: { note in
-                                printr("franchises loaded")
                                 if let list = note.object as? [Franchise] {
-                                    printr("its a list of franchises")
                                     profiles = list
                                 }
                             })
