@@ -47,9 +47,6 @@ struct AutoFormView: View {
                         FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
                             .frame(height: 300)
                             .cornerRadius(20)
-                            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("FranchiseListLoaded")), perform: { note in
-                                profilesLoaded = true
-                            })
                     }
                     Button(action: {
                         //collect data from views
@@ -133,6 +130,9 @@ struct AutoFormView: View {
                 }
                 semaphore.signal()
             }
+        })
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("FranchiseListLoaded")), perform: { note in
+            profilesLoaded = true
         })
     }
     
