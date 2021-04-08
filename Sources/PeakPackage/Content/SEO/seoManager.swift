@@ -46,6 +46,7 @@ public class SEOManager : Manager {
     public override init(){}
     
     func loadRankings(){
+        printr("loading SEO!!!!")
         DatabaseDelegate.getSEORankings(
             completion: {
             rex in
