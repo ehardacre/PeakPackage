@@ -48,7 +48,9 @@ struct AutoFormView: View {
                             .frame(height: 300)
                             .cornerRadius(20)
                             .onReceive(NotificationCenter.default.publisher(for: Notification.Name("FranchiseListLoaded")), perform: { note in
+                                printr("franchises loaded")
                                 if let list = note.object as? [Franchise] {
+                                    printr("its a list of franchises")
                                     profiles = list
                                 }
                             })
