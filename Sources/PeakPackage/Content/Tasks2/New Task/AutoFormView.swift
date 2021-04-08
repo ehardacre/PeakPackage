@@ -48,7 +48,6 @@ struct AutoFormView: View {
                             .cornerRadius(20)
                             .onAppear{
                                 #warning("TODO: add profiles for peak studios app")
-                                franchiseManager.loadProfiles()
                             }
                     }
                     Button(action: {

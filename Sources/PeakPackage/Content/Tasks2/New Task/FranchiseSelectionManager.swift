@@ -12,7 +12,12 @@ public class FranchiseSelectionManager : Manager {
     @Published var profiles : [Franchise] = []
     @Published var ids : [String] = []
     
-    public override init() {}
+    public override init() {
+        
+        super.init()
+        loadProfiles()
+        
+    }
     
     func loadProfiles(){
         DatabaseDelegate.getProfiles(
