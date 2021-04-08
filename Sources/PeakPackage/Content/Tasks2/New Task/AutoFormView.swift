@@ -44,13 +44,11 @@ struct AutoFormView: View {
                         element.inputView()
                     }
                     if defaults.admin && profilesLoaded{
-                        FranchiseSelectionView(profiles: profiles, profileManager: franchiseManager)
+                        FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
                             .frame(height: 300)
                             .cornerRadius(20)
                             .onReceive(NotificationCenter.default.publisher(for: Notification.Name("FranchiseListLoaded")), perform: { note in
-                                if let list = note.object as? [Franchise] {
-                                    profiles = list
-                                }
+                                profilesLoaded = true
                             })
                     }
                     Button(action: {
