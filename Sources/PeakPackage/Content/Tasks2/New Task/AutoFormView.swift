@@ -47,6 +47,9 @@ struct AutoFormView: View {
                         FranchiseSelectionView(profiles: profiles, profileManager: franchiseManager)
                             .frame(height: 300)
                             .cornerRadius(20)
+//                            .onAppear{
+//                                franchiseManager.loadProfiles()
+//                            }
                             .onReceive(NotificationCenter.default.publisher(for: Notification.Name("FranchiseListLoaded")), perform: { note in
                                 printr("franchises loaded")
                                 if let list = note.object as? [Franchise] {
