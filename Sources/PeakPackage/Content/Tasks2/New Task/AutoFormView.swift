@@ -21,6 +21,7 @@ struct AutoFormView: View {
     @State var descriptionText = "Completing Form..."
     let semaphore = DispatchSemaphore(value: 1)
     @ObservedObject var franchiseManager = FranchiseSelectionManager()
+    @State var profiles : [Franchise] = []
     @State var dismissFunction :  () -> Void = {return}
     @State var imagesToSubmit : [UIImage] = []
     
@@ -43,12 +44,14 @@ struct AutoFormView: View {
                         element.inputView()
                     }
                     if defaults.admin{
-                        FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
+                        FranchiseSelectionView(profiles: profiles, profileManager: franchiseManager)
                             .frame(height: 300)
                             .cornerRadius(20)
-                            .onAppear{
-                                #warning("TODO: add profiles for peak studios app")
-                            }
+                            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("FranchiseListLoaded")), perform: { note in
+                                if let list = note.object as? [Franchise] {
+                                    profiles = list
+                                }
+                            })
                     }
                     Button(action: {
                         //collect data from views

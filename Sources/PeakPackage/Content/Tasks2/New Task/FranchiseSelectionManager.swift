@@ -24,6 +24,7 @@ public class FranchiseSelectionManager : Manager {
             completion: {
             rex in
             self.profiles = rex as! [Franchise]
+                NotificationCenter.default.post(name: Notification.Name("FranchiseListLoaded"), object: self.profiles, userInfo: nil)
         })
     }
     
