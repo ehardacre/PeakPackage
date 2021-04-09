@@ -62,7 +62,7 @@ public class SEOManager : Manager {
             self.calculateChange()
             if self.rankings.count == 0{
                 printr("there's nothing in the database, scrape the web")
-                rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
+                self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
             }
         })
     }
