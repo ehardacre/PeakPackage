@@ -143,15 +143,17 @@ struct AutoFormView: View {
             taskString += "[\(key):\(inputs[key] ?? "")]"
         }
         
-        DatabaseDelegate.sendTask(taskInfo: taskString, completion: {
+        DatabaseDelegate.sendTask(ids: franchiseManager.ids, taskInfo: taskString, completion: {
             rex in
             let id = rex as! String
             if imagesToSubmit.count > 0 {
+                
                 DatabaseDelegate.sendImages(images: imagesToSubmit, taskId: id, completion: {
                     _ in
                     submittingTask = false
                     presentationMode.wrappedValue.dismiss()
                 })
+                
             }else{
                 submittingTask = false
                 presentationMode.wrappedValue.dismiss()

@@ -244,13 +244,23 @@ extension DatabaseDelegate {
         }
     }
     
-    static func sendTask(taskInfo: String, completion: @escaping (Any) -> Void){
+    static func sendTask(ids: [String], taskInfo: String, completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients{
-            let json = JsonFormat.setTask(id: defaults.franchiseId()!, value: taskInfo).format()
-            DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
-                rex in
-                completion(rex) //rex is the task ID
-            })
+            if defaults.admin {
+                for id in ids {
+                    let json = JsonFormat.setTask(id: id, value: taskInfo).format()
+                    DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
+                        rex in
+                        completion(rex) //rex is the task ID
+                    })
+                }
+            }else{
+                let json = JsonFormat.setTask(id: defaults.franchiseId()!, value: taskInfo).format()
+                DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
+                    rex in
+                    completion(rex) //rex is the task ID
+                })
+            }
         }else{
             
         }
