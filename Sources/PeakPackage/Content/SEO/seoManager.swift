@@ -36,10 +36,10 @@ struct viewableSearchResult{
         //not super elegant
         printr(organic_rank)
         printr(Int(organic_rank))
-        if Int(organic_rank) ?? -1 == -1 {
-            return false
-        }else if Int(other.organic_rank) ?? -1 == -1{
+        if Int(organic_rank) == -1 {
             return true
+        }else if Int(other.organic_rank) ?? -1 == -1{
+            return false
         }
         return Int(organic_rank) ?? 100 > Int(other.organic_rank) ?? 100
     }
