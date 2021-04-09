@@ -24,6 +24,7 @@ struct AutoFormView: View {
     @State var profilesLoaded = false
     @State var dismissFunction :  () -> Void = {return}
     @State var imagesToSubmit : [UIImage] = []
+    let imageSendSemaphore = DispatchSemaphore(value: 1)
     
     var body: some View {
         NavigationView{
@@ -145,6 +146,8 @@ struct AutoFormView: View {
         
         DatabaseDelegate.sendTask(ids: franchiseManager.ids, taskInfo: taskString, completion: {
             rex in
+            
+            imageSendSemaphore.wait()
             let id = rex as! String
             if imagesToSubmit.count > 0 {
                 
@@ -158,6 +161,7 @@ struct AutoFormView: View {
                 submittingTask = false
                 presentationMode.wrappedValue.dismiss()
             }
+            imageSendSemaphore.signal()
         })
     }
     
