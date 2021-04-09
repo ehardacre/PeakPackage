@@ -63,7 +63,6 @@ public class SEOManager : Manager {
     public override init(){}
     
     func loadRankings(){
-        DispatchQueue.global().async {
             DatabaseDelegate.getSEORankings(
                 completion: {
                 rex in
@@ -72,11 +71,12 @@ public class SEOManager : Manager {
                     self.calculateChange()
                     if self.rankings.count == 0{
                         printr("there's nothing in the database, scrape the web")
-                        self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
+                        DispatchQueue.global().async {
+                            self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
+                        }
                     }
                     self.sortRankings()
             })
-        }
     }
     
     func sortRankings(){
