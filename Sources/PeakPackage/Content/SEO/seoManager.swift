@@ -73,9 +73,14 @@ public class SEOManager : Manager {
                         printr("there's nothing in the database, scrape the web")
                         DispatchQueue.global().async {
                             self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
+                            self.sortRankings()
+                            DispatchQueue.main.async {
+                                NotificationCenter.default.post(name: Notification.Name("SEORankingsDoneScraping"), object: nil)
+                            }
                         }
+                    }else{
+                        self.sortRankings()
                     }
-                    self.sortRankings()
             })
     }
     

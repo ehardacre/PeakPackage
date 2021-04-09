@@ -25,6 +25,7 @@ struct seoView: View {
     
     @State var manager : SEOManager
     @ObservedObject var selectionManager = SelectionManager()
+    @State var loaded = false
     
     private let upSymbol = "arrow.up.circle.fill"
     private let downSymbol = "arrow.down.circle.fill"
@@ -33,7 +34,7 @@ struct seoView: View {
     var body: some View {
         NavigationView{
             List{
-                if manager.rankings.count > 0{
+                if manager.rankings.count > 0 || loaded{
                     ForEach(manager.rankings, id: \.id){
                         rank in
                         seoCardView(
@@ -46,12 +47,13 @@ struct seoView: View {
                     HStack{
                         Spacer()
                         VStack{
-                            Text("Not enough data")
+                            ProgressView()
+                            Text("Loading SEO Rankings...")
                                 .bold()
                                 .foregroundColor(.darkAccent)
                                 .font(.footnote)
                                 .padding(.top, 20)
-                            Text("Check in next week to view your site's SEO rankings")
+                            Text("This can sometimes take a few minutes")
                                 .font(.footnote)
                                 .foregroundColor(.darkAccent)
                         }
@@ -63,5 +65,8 @@ struct seoView: View {
             .navigationTitle("SEO Rankings")
         }
         .stackOnlyNavigationView()
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("SEORankingsDoneScraping")), perform: { _ in
+            loaded = true
+        })
     }
 }
