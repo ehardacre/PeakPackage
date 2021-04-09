@@ -53,7 +53,7 @@ struct seoView: View {
                                 .foregroundColor(.darkAccent)
                                 .font(.footnote)
                                 .padding(.top, 20)
-                            Text("This can sometimes take a few minutes")
+                            Text("This can take a few minutes")
                                 .font(.footnote)
                                 .foregroundColor(.darkAccent)
                         }
