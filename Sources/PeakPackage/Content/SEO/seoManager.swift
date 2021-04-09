@@ -30,7 +30,7 @@ struct viewableSearchResult{
     var maps_rank : String 
     var change : Bool?
     var change_maps : Bool?
-    
+
 }
 
 public class SEOManager : Manager {
@@ -53,18 +53,19 @@ public class SEOManager : Manager {
     public override init(){}
     
     func loadRankings(){
-        printr("loading SEO!!!!")
-        DatabaseDelegate.getSEORankings(
-            completion: {
-            rex in
-            let rankList = rex as! [SearchRankingforTime]
-            self.weekbyweek = rankList
-            self.calculateChange()
-            if self.rankings.count == 0{
-                printr("there's nothing in the database, scrape the web")
-                self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
-            }
-        })
+        DispatchQueue.main.async {
+            DatabaseDelegate.getSEORankings(
+                completion: {
+                rex in
+                let rankList = rex as! [SearchRankingforTime]
+                self.weekbyweek = rankList
+                self.calculateChange()
+                if self.rankings.count == 0{
+                    printr("there's nothing in the database, scrape the web")
+                    self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
+                }
+            })
+        }
     }
     
     func weekbyweek(for term: String) -> [viewableSearchResult]{

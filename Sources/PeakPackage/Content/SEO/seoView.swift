@@ -59,9 +59,7 @@ struct seoView: View {
                     }
                 }
             }
-            .environment(\.defaultMinListRowHeight, 120)
-            .padding(0.0)
-            .listStyle(SidebarListStyle())
+            .CleanList()
             .navigationTitle("SEO Rankings")
         }
     }
