@@ -66,7 +66,7 @@ struct seoCardView: View {
                                                     organicUp = true
                                                 }
                                         }
-                                        Text(rank.organic_rank)
+                                        Text(rank.organic_rank == "-1" ? "-" : rank.organic_rank)
                                             .font(.footnote)
                                             .bold()
                                             .foregroundColor(Color.darkAccent)
@@ -95,7 +95,7 @@ struct seoCardView: View {
                                                 .imageScale(.large)
                                                 .foregroundColor(Color.red)
                                         }
-                                        Text(rank.maps_rank)
+                                        Text(rank.maps_rank == "-1" ? "-" : rank.maps_rank)
                                             .font(.footnote)
                                             .bold()
                                             .foregroundColor(Color.darkAccent)
