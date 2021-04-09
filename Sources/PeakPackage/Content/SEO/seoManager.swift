@@ -17,8 +17,8 @@ struct scrapedSearchResult{
     func toViewable() -> viewableSearchResult {
         return viewableSearchResult(
             term: self.term,
-            organic_rank: organic_ranking != nil ? String(organic_ranking!) : "-",
-            maps_rank: map_ranking != nil ? String(map_ranking!) : "_")
+            organic_rank: (organic_ranking != nil || organic_ranking == -1) ? String(organic_ranking!) : "-",
+            maps_rank: (map_ranking != nil || map_ranking == -1) ? String(map_ranking!) : "_")
     }
 }
 
