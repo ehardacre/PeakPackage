@@ -34,7 +34,12 @@ struct viewableSearchResult{
     func greaterThan(_ other: viewableSearchResult) -> Bool {
         #warning("TODO: only taking organic rank into account")
         //not super elegant
-        return Int(organic_rank) ?? -100 > Int(other.organic_rank) ?? -100
+        if organic_rank == "-1" {
+            return false
+        }else if other.organic_rank == "-1"{
+            return true
+        }
+        return Int(organic_rank) ?? 100 > Int(other.organic_rank) ?? 100
     }
 }
 
