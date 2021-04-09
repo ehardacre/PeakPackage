@@ -13,6 +13,13 @@ struct scrapedSearchResult{
     var term : String
     var map_ranking : Int?
     var organic_ranking : Int?
+    
+    func toViewable() -> viewableSearchResult {
+        return viewableSearchResult(
+            term: self.term,
+            organic_rank: organic_ranking != nil ? String(organic_ranking!) : "-",
+            maps_rank: map_ranking != nil ? String(map_ranking!) : "_")
+    }
 }
 
 struct viewableSearchResult{
@@ -53,6 +60,10 @@ public class SEOManager : Manager {
             let rankList = rex as! [SearchRankingforTime]
             self.weekbyweek = rankList
             self.calculateChange()
+            if self.rankings.count == 0{
+                printr("there's nothing in the database, scrape the web")
+                rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
+            }
         })
     }
     
@@ -140,9 +151,12 @@ public class SEOManager : Manager {
         }
     }
     
-    static func scrapeRankings(){
+    static func scrapeRankings(forDatabase: Bool = false) -> [scrapedSearchResult]{
         let list = findRankings(for: terms)
-        setRankings(for: list)
+        if forDatabase{
+            setRankings(for: list)
+        }
+        return list
     }
     
     static func setRankings(for results: [scrapedSearchResult]){

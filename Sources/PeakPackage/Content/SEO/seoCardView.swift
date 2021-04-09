@@ -22,6 +22,8 @@ struct seoCardView: View {
     @ObservedObject var manager : SEOManager
     @State var rank : viewableSearchResult
     @State var showMoreInfo = false
+    @State var organicUp = false
+    @State var mapsUp = false
     
     var body: some View {
         //UI elements
@@ -32,66 +34,83 @@ struct seoCardView: View {
                 .frame(height: self.height)
                 .overlay(
                     HStack{
+                        GeometryReader{
+                            smallGeo in
                         //displaying the content on the card
                             VStack(alignment: .leading) {
                                 Spacer()
                                 Text(rank.term)
                                     .font(.headline)
-                                    .foregroundColor(.darkAccent)
-                                    .padding(.top, 20)
+                                    .foregroundColor(.main)
+                                    .underline()
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 20)
                                     .padding(.leading, 20)
-                                HStack{
-                                    if rank.change == nil {
-                                        Image(
-                                            systemName: noChange)
-                                            .imageScale(.large)
+                                HStack(spacing: 0){
+                                    HStack{
+                                        Spacer()
+                                        if rank.change == nil {
+                                            Image(
+                                                systemName: noChange)
+                                                .imageScale(.large)
+                                                .foregroundColor(Color.darkAccent)
+                                                .opacity(0.2)
+                                        } else if rank.change! {
+                                            Image(systemName: downSymbol)
+                                                .imageScale(.large)
+                                                .foregroundColor(Color.red)
+                                        } else {
+                                            Image(systemName: upSymbol)
+                                                .imageScale(.large)
+                                                .foregroundColor(Color.green).onAppear{
+                                                    organicUp = true
+                                                }
+                                        }
+                                        Text(rank.organic_rank)
+                                            .font(.footnote)
+                                            .bold()
                                             .foregroundColor(Color.darkAccent)
-                                            .opacity(0.2)
-                                    } else if rank.change! {
-                                        Image(systemName: downSymbol)
-                                            .imageScale(.large)
-                                            .foregroundColor(Color.red)
-                                    } else {
-                                        Image(systemName: upSymbol)
-                                            .imageScale(.large)
-                                            .foregroundColor(Color.green)
-                                    }
-                                    Text(rank.organic_rank)
-                                        .font(.footnote)
-                                        .bold()
-                                        .foregroundColor(Color.darkAccent)
-                                    Text("Organic Rank")
-                                        .font(.footnote)
-                                        .foregroundColor(Color.darkAccent)
-                                        .opacity(0.5)
-                                    Spacer()
-                                    if rank.change_maps == nil {
-                                        Image(systemName: noChange)
-                                            .imageScale(.large)
+                                        Text("Organic Rank")
+                                            .font(.footnote)
                                             .foregroundColor(Color.darkAccent)
-                                            .opacity(0.2)
-                                    } else if rank.change_maps! {
-                                        Image(systemName: upSymbol)
-                                            .imageScale(.large)
-                                            .foregroundColor(Color.green)
-                                    } else {
-                                        Image(systemName: downSymbol)
-                                            .imageScale(.large)
-                                            .foregroundColor(Color.red)
+                                        Spacer()
                                     }
-                                    Text(rank.maps_rank)
-                                        .font(.footnote)
-                                        .bold()
-                                        .foregroundColor(Color.darkAccent)
-                                    Text("Maps Rank")
-                                        .font(.footnote)
-                                        .foregroundColor(Color.darkAccent)
-                                        .opacity(0.5)
+                                    .background((organicUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
+                                    .edgesIgnoringSafeArea(.bottom)
+                                    
+                                    
+                                    HStack{
+                                        Spacer()
+                                        if rank.change_maps == nil {
+                                            Image(systemName: noChange)
+                                                .imageScale(.large)
+                                                .foregroundColor(Color.darkAccent)
+                                                .opacity(0.2)
+                                        } else if rank.change_maps! {
+                                            Image(systemName: upSymbol)
+                                                .imageScale(.large)
+                                                .foregroundColor(Color.green)
+                                        } else {
+                                            Image(systemName: downSymbol)
+                                                .imageScale(.large)
+                                                .foregroundColor(Color.red)
+                                        }
+                                        Text(rank.maps_rank)
+                                            .font(.footnote)
+                                            .bold()
+                                            .foregroundColor(Color.darkAccent)
+                                        Text("Maps Rank")
+                                            .font(.footnote)
+                                            .foregroundColor(Color.darkAccent)
+                                        Spacer()
+                                    }
+                                    .background((mapsUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
+                                    .edgesIgnoringSafeArea(.bottom)
                                 }
-                                .padding(20)
                                 Spacer()
                             }
                         Spacer()
+                        }
                     }
                     .frame(width: geo.size.width, height: self.height)
                     .cornerRadius(10)
@@ -126,5 +145,12 @@ struct seoCardView: View {
                         manager: manager,
                         searchTerm: rank.term)
             })
+    }
+}
+
+struct seoCardView_Preview: PreviewProvider{
+    
+    static var previews : some View{
+        seoCardView(selectionManager: SelectionManager(), manager: SEOManager(), rank: viewableSearchResult(term: "Cabinet Refinishing", organic_rank: "2", maps_rank: "5"))
     }
 }

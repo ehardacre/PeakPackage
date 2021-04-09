@@ -82,7 +82,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotification
         
         if let payload = userInfo["message"] as? NSString{
             if payload.contains("seoRanking"){
-                SEOManager.scrapeRankings()
+                SEOManager.scrapeRankings(forDatabase: true)
                 printr("scraping for Rankings...")
             }
         }
