@@ -62,5 +62,6 @@ struct seoView: View {
             .CleanList()
             .navigationTitle("SEO Rankings")
         }
+        .stackOnlyNavigationView()
     }
 }

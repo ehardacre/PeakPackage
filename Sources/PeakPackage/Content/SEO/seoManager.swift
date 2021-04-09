@@ -30,7 +30,19 @@ struct viewableSearchResult{
     var maps_rank : String 
     var change : Bool?
     var change_maps : Bool?
-
+    
+    func greaterThan(_ other: viewableSearchResult) -> Bool {
+        #warning("TODO: only taking organic rank into account")
+        if organic_rank == "-1" && other.organic_rank == "-1"{
+            return false
+        }else if organic_rank == "-1" && other.organic_rank != "-1"{
+            return false
+        }else if other.organic_rank == "-1" && organic_rank != "-1" {
+            return true
+        }else{
+            return Int(organic_rank) ?? 0 > Int(other.organic_rank) ?? 0
+        }
+    }
 }
 
 public class SEOManager : Manager {
@@ -57,15 +69,20 @@ public class SEOManager : Manager {
             DatabaseDelegate.getSEORankings(
                 completion: {
                 rex in
-                let rankList = rex as! [SearchRankingforTime]
-                self.weekbyweek = rankList
-                self.calculateChange()
-                if self.rankings.count == 0{
-                    printr("there's nothing in the database, scrape the web")
-                    self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
-                }
+                    let rankList = rex as! [SearchRankingforTime]
+                    self.weekbyweek = rankList
+                    self.calculateChange()
+                    if self.rankings.count == 0{
+                        printr("there's nothing in the database, scrape the web")
+                        self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
+                    }
+                    sortRankings()
             })
         }
+    }
+    
+    func sortRankings(){
+        rankings.sort(by: {$0.greaterThan($1)})
     }
     
     func weekbyweek(for term: String) -> [viewableSearchResult]{
