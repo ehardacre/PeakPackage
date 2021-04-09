@@ -34,8 +34,6 @@ struct viewableSearchResult{
     func greaterThan(_ other: viewableSearchResult) -> Bool {
         #warning("TODO: only taking organic rank into account")
         //not super elegant
-        printr(organic_rank)
-        printr(Int(organic_rank))
         if Int(organic_rank) == -1 {
             return true
         }else if Int(other.organic_rank) ?? -1 == -1{
@@ -65,7 +63,7 @@ public class SEOManager : Manager {
     public override init(){}
     
     func loadRankings(){
-        DispatchQueue.main.async {
+        DispatchQueue.global().async {
             DatabaseDelegate.getSEORankings(
                 completion: {
                 rex in
