@@ -35,6 +35,7 @@ struct viewableSearchResult{
         #warning("TODO: only taking organic rank into account")
         //not super elegant
         printr(organic_rank)
+        printr(Int(organic_rank))
         if Int(organic_rank) ?? -1 == -1 {
             return false
         }else if Int(other.organic_rank) ?? -1 == -1{
