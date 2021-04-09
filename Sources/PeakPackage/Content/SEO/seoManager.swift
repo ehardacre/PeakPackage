@@ -76,7 +76,7 @@ public class SEOManager : Manager {
                         printr("there's nothing in the database, scrape the web")
                         self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
                     }
-                    sortRankings()
+                    self.sortRankings()
             })
         }
     }
