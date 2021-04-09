@@ -33,15 +33,8 @@ struct viewableSearchResult{
     
     func greaterThan(_ other: viewableSearchResult) -> Bool {
         #warning("TODO: only taking organic rank into account")
-        if organic_rank == "-1" && other.organic_rank == "-1"{
-            return false
-        }else if organic_rank == "-1" && other.organic_rank != "-1"{
-            return false
-        }else if other.organic_rank == "-1" && organic_rank != "-1" {
-            return true
-        }else{
-            return Int(organic_rank) ?? 0 > Int(other.organic_rank) ?? 0
-        }
+        //not super elegant
+        return Int(organic_rank) ?? 100 > Int(other.organic_rank) ?? 100
     }
 }
 
@@ -83,6 +76,7 @@ public class SEOManager : Manager {
     
     func sortRankings(){
         rankings.sort(by: {$0.greaterThan($1)})
+        rankings.reverse()
     }
     
     func weekbyweek(for term: String) -> [viewableSearchResult]{
