@@ -251,7 +251,7 @@ public class SEOManager : Manager {
         }
         var mapRank = -1
         let mapSection = matches(
-            for: "(hours or services may differ * more businesses|choose area filters list open now top rated)",
+            for: "(hours or services may differ * more businesses|choose area filters list open now top rated * more businesses)",
             in: html).first ?? ""
         let mapsLinks = mapSection.components(separatedBy: "call")
         printr("found \(mapsLinks.count) maps links")
