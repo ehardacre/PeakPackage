@@ -209,6 +209,7 @@ public class SEOManager : Manager {
         }
         return searchArray
     }
+    
 
     static func matches(
         for regex: String,
@@ -250,9 +251,10 @@ public class SEOManager : Manager {
         }
         var mapRank = -1
         let mapSection = matches(
-            for: "hours or services may differ * more businesses",
+            for: "(hours or services may differ * more businesses|choose area filters list open now top rated)",
             in: html).first ?? ""
         let mapsLinks = mapSection.components(separatedBy: "call")
+        printr("found \(mapsLinks.count) maps links")
         for index in 0..<mapsLinks.count{
             let result = mapsLinks[index]
             if result.contains(str){
