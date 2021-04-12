@@ -250,16 +250,19 @@ public class SEOManager : Manager {
             }
         }
         var mapRank = -1
-        let mapSection = matches(
+        if let mapSection = matches(
             for: "(hours or services may differ * more businesses|choose area filters list open now top rated * more businesses)",
-            in: html).first ?? ""
-        let mapsLinks = mapSection.components(separatedBy: "call")
-        printr("found \(mapsLinks.count) maps links")
-        for index in 0..<mapsLinks.count{
-            let result = mapsLinks[index]
-            if result.contains(str){
-                mapRank = index + 1
+                in: html).first {
+            let mapsLinks = mapSection.components(separatedBy: "call")
+            printr("found \(mapsLinks.count) maps links")
+            for index in 0..<mapsLinks.count{
+                let result = mapsLinks[index]
+                if result.contains(str){
+                    mapRank = index + 1
+                }
             }
+        }else{
+            printr("no maps links found")
         }
         return scrapedSearchResult(
             term: tempterm,
