@@ -204,7 +204,7 @@ struct popUpWebView : View {
     var body : some View {
         NavigationView{
             if urlStr != nil {
-                WebView(request: URLRequest(url: URL(string: urlStr!)!))
+                WebView(url: URL(string: urlStr!)!)
             }else{
                 Text("Unable to load webpage.")
                     .Caption()
@@ -216,14 +216,20 @@ struct popUpWebView : View {
 
 struct WebView : UIViewRepresentable {
     
-    let request: URLRequest
-    
-    func makeUIView(context: Context) -> WKWebView  {
-        return WKWebView()
+    let url: URL
+
+    func makeUIView(context: UIViewRepresentableContext<WebView>) -> WKWebView {
+        let webview = WKWebView()
+
+        let request = URLRequest(url: self.url, cachePolicy: .returnCacheDataElseLoad)
+        webview.load(request)
+
+        return webview
     }
-    
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        uiView.load(request)
+
+    func updateUIView(_ webview: WKWebView, context: UIViewRepresentableContext<WebView>) {
+        let request = URLRequest(url: self.url, cachePolicy: .returnCacheDataElseLoad)
+        webview.load(request)
     }
     
 }
