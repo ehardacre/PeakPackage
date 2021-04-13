@@ -46,13 +46,13 @@ public struct ContentView: View {
     @State var profileChanged = false
     
     //data managers
-    @ObservedObject var analyticsManager : AnalyticsManager
-    @ObservedObject var notificationManager : NotificationManager
-    @ObservedObject var dashboardManager : DashboardManager
-    @ObservedObject var taskManager : TaskManager2
-    @ObservedObject var appointmentManager : AppointmentManager
-    @ObservedObject var seoManager : SEOManager
-    @ObservedObject var profileManager : ProfileManager
+    @StateObject var analyticsManager : AnalyticsManager
+    @StateObject var notificationManager : NotificationManager
+    @StateObject var dashboardManager : DashboardManager
+    @StateObject var taskManager : TaskManager2
+    @StateObject var appointmentManager : AppointmentManager
+    @StateObject var seoManager : SEOManager
+    @StateObject var profileManager : ProfileManager
     
     public init(tabs : [tabs],
                 _ analytics : AnalyticsManager,
@@ -64,13 +64,13 @@ public struct ContentView: View {
                 _ profile : ProfileManager) {
 
         _availableTabs = State(initialValue: tabs)
-        analyticsManager = analytics
-        notificationManager = notifications
-        dashboardManager = dashboard
-        taskManager = task
-        appointmentManager = appointments
-        seoManager = seo
-        profileManager = profile
+        _analyticsManager = StateObject(wrappedValue: analytics)
+        _notificationManager = StateObject(wrappedValue: notifications)
+        _dashboardManager = StateObject(wrappedValue: dashboard)
+        _taskManager = StateObject(wrappedValue: task)
+        _appointmentManager = StateObject(wrappedValue: appointments)
+        _seoManager = StateObject(wrappedValue: seo)
+        _profileManager = StateObject(wrappedValue: profile)
         
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none

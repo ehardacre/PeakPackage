@@ -123,7 +123,7 @@ extension View {
 
 public class DashboardManager : Manager {
     
-    @StateObject var message : DashboardMessage?
+    @Published var message : DashboardMessage?
     
     public override init(){}
     
