@@ -168,7 +168,7 @@ extension DatabaseDelegate {
     
     static func getDashboardMessage(completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients{
-            //TODO: probably gotta put something in the url
+            #warning("TODO: probably gotta put something in the url")
             let json = JsonFormat.getDashboardMessage(url: "").format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
                 rex in

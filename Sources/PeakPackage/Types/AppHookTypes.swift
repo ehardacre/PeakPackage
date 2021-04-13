@@ -25,7 +25,7 @@ enum JsonKeys : String{
     case twofactor_contact = "contact"
     //get the message shown on the dashboard
     case dashboard_key = "dashboard_message"
-    case dashboard_url_key = "dashboard_check_url"
+    case dashboard_check_key = "dashboard_check_url"
     //notification values
     case add_notification_key = "device_id"
     case add_notification_cat_key = "notification_category"
@@ -197,7 +197,7 @@ public enum JsonFormat {
             retVal = [JsonKeys.twofactor_type.rawValue: type,
                 JsonKeys.twofactor_contact.rawValue: contact]
         case .getDashboardMessage(let url):
-            retVal = [JsonKeys.dashboard_key.rawValue: "true", JsonKeys.dashboard_url_key.rawValue: url]
+            retVal = [JsonKeys.dashboard_key.rawValue: "true", JsonKeys.dashboard_check_key.rawValue: url]
         case .setNotificationToken(let token, let category):
             retVal = [JsonKeys.add_notification_key.rawValue: token,
                       JsonKeys.add_notification_cat_key.rawValue: category]
