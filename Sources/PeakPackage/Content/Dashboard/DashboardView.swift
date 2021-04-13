@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Introspect
+import WebKit
 
 /**
  #Title View
@@ -144,6 +145,7 @@ public struct DashboardMessageShortView : View{
     
     @State var manager : DashboardManager
     @State var message : DashboardMessage?
+    @State var showWebView = false
     
     public var body: some View {
         HStack{
@@ -157,6 +159,11 @@ public struct DashboardMessageShortView : View{
                 Text(message?.dashMessageBody ?? "")
                     .font(.body)
                     .foregroundColor(.white)
+                HStack{
+                    Spacer()
+                    Image(systemName: "arrowshape.turn.up.right.circle.fill")
+                        .foregroundColor(Color.lightAccent)
+                }
             }
             .padding(30)
             .background(Color.main)
@@ -164,8 +171,14 @@ public struct DashboardMessageShortView : View{
             .onAppear{
                 message = manager.message
             }
+            .onTapGesture {
+                
+            }
             Spacer()
         }
+        .sheet(isPresented: $showWebView, content: {
+            WebView(request: URLRequest(url: URL(string: "https://www.nhance.com/")!))
+        })
         .onReceive(
             NotificationCenter.default.publisher(
                 for: Notification.Name(rawValue: "database")),
@@ -176,9 +189,23 @@ public struct DashboardMessageShortView : View{
                     self.message = message
                 }
         })
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
-            printr("reseting message in view", tag: printTags.error)
-            self.message = manager.message
-        })
+//        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
+//            printr("reseting message in view", tag: printTags.error)
+//            self.message = manager.message
+//        })
     }
+}
+
+struct WebView : UIViewRepresentable {
+    
+    let request: URLRequest
+    
+    func makeUIView(context: Context) -> WKWebView  {
+        return WKWebView()
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.load(request)
+    }
+    
 }
