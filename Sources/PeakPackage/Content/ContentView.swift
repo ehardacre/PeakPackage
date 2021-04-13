@@ -174,6 +174,7 @@ public struct ContentView: View {
                         profileChanged = true
                         profileName = defaults.franchiseName() ?? ""
                     }
+                    dashboardManager.loadMessage()
                     profileManager.loadProfiles()
                     analyticsManager.loadAnalytics(for: .Day)
                     analyticsManager.loadAnalytics(for: .Week)

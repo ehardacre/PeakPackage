@@ -161,7 +161,6 @@ public struct DashboardMessageShortView : View{
             .background(Color.main)
             .cornerRadius(20)
             .onAppear{
-                manager.loadMessage()
                 message = manager.message
             }
             Spacer()
