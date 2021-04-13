@@ -14,7 +14,7 @@ struct seoCardView: View {
     private let downSymbol = "arrow.down.circle.fill"
     private let noChange = "circle.fill"
     //height of the row
-    var height : CGFloat = 105
+    var height : CGFloat = 120
     
     //needs an id as an identifier for list
     var id = UUID()
@@ -104,7 +104,7 @@ struct seoCardView: View {
                                             .foregroundColor(Color.darkAccent)
                                         Spacer()
                                     }
-                                    .background((mapsUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
+//                                    .background((mapsUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
                                     .edgesIgnoringSafeArea(.bottom)
                                 }
                                 Spacer()
