@@ -128,9 +128,11 @@ public class DashboardManager : Manager {
     public override init(){}
     
     public func loadMessage(){
+        printr("manager reloading message")
         message = nil
         DatabaseDelegate.getDashboardMessage(){
-            rex in
+            rex in"
+            printr("message loaded manager")
             let mes = rex as! DashboardMessage
             self.message = mes
             NotificationCenter.default.post(Notification(name: Notification.Name("dashboardMessageLoaded")))
@@ -169,11 +171,13 @@ public struct DashboardMessageShortView : View{
                 for: Notification.Name(rawValue: "database")),
             perform: {
                 note in
+                printr("reseting message in view database call")
                 if let message = note.object as? DashboardMessage {
                     self.message = message
                 }
         })
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
+            printr("reseting message in view")
             self.message = manager.message
         })
     }
