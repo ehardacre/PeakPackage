@@ -172,7 +172,7 @@ public struct DashboardMessageShortView : View{
                 message = manager.message
             }
             .onTapGesture {
-                
+                showWebView = true
             }
             Spacer()
         }
