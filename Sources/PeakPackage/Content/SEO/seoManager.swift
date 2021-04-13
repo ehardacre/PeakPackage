@@ -200,7 +200,7 @@ public class SEOManager : Manager {
             let url_str = baseURL + term
             guard let url = URL(string: url_str) else { continue }
             let body = parseHTML(url: url).lowercased()
-            printr(body, tag: printTags.error)
+            //printr(body, tag: printTags.error)
             #warning("TODO remove hard reference to nhance")
             searchArray.append(getSearchPosition(
                                 of: "nhance",
@@ -255,7 +255,7 @@ public class SEOManager : Manager {
             for: "near * more places",
                 in: html).first {
             let mapsLinks = mapSection.components(separatedBy: "call")
-            printr("found \(mapsLinks.count) maps links")
+            //printr("found \(mapsLinks.count) maps links")
             for index in 0..<mapsLinks.count{
                 let result = mapsLinks[index]
                 if result.contains(str){

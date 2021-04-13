@@ -171,8 +171,8 @@ public struct DashboardMessageShortView : View{
                 for: Notification.Name(rawValue: "database")),
             perform: {
                 note in
-                printr("reseting message in view database call", tag: printTags.error)
                 if let message = note.object as? DashboardMessage {
+                    printr("reseting message in view database call", tag: printTags.error)
                     self.message = message
                 }
         })
