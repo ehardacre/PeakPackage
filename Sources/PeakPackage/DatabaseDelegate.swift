@@ -179,7 +179,7 @@ extension DatabaseDelegate {
             if defaults.admin && !defaults.urlChanged{
                 url = ""
             }
-            printr("db del getting dashboard message")
+            printr("db del getting dashboard message", tag: printTags.error)
             let json = JsonFormat.getDashboardMessage(url: url).format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
                 rex in
