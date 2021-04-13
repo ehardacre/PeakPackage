@@ -14,7 +14,7 @@ struct seoCardView: View {
     private let downSymbol = "arrow.down.circle.fill"
     private let noChange = "circle.fill"
     //height of the row
-    var height : CGFloat = 120
+    var height : CGFloat = 105
     
     //needs an id as an identifier for list
     var id = UUID()
@@ -37,15 +37,17 @@ struct seoCardView: View {
                         GeometryReader{
                             smallGeo in
                         //displaying the content on the card
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 0) {
                                 Spacer()
-                                Text(rank.term)
-                                    .font(.headline)
-                                    .foregroundColor(.main)
-                                    .underline()
-                                    .padding(.top, 10)
-                                    .padding(.bottom, 20)
-                                    .padding(.leading, 20)
+                                HStack{
+                                    Text(rank.term)
+                                        .font(.headline)
+                                        .foregroundColor(.main)
+                                        .underline()
+                                        .padding(.bottom, 20)
+                                }
+                                .padding(20)
+                                .frame(height: smallGeo.size.height/2)
                                 HStack(spacing: 0){
                                     HStack{
                                         Spacer()
@@ -75,7 +77,8 @@ struct seoCardView: View {
                                             .foregroundColor(Color.darkAccent)
                                         Spacer()
                                     }
-                                    .background((organicUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
+//                                    .background((organicUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
+                                    .background(Color.main.frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
                                     .edgesIgnoringSafeArea(.bottom)
                                     
                                     
