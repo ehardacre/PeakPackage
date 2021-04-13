@@ -131,7 +131,7 @@ public class DashboardManager : Manager {
         printr("manager reloading message")
         message = nil
         DatabaseDelegate.getDashboardMessage(){
-            rex in"
+            rex in
             printr("message loaded manager", tag: printTags.error)
             let mes = rex as! DashboardMessage
             self.message = mes
