@@ -162,7 +162,6 @@ public struct DashboardMessageShortView : View{
                 HStack{
                     Spacer()
                     Image(systemName: "arrowshape.turn.up.right.circle.fill")
-                        .resizable()
                         .imageScale(.large)
                         .foregroundColor(Color.lightAccent)
                 }
@@ -201,13 +200,10 @@ public struct DashboardMessageShortView : View{
 struct popUpWebView : View {
     
     @State var urlStr : String?
-    @State var loading = true
 
     var body : some View {
         NavigationView{
-            if loading{
-                ProgressView()
-            }else if urlStr != nil {
+            if urlStr != nil {
                 WebView(request: URLRequest(url: URL(string: urlStr!)!))
             }else{
                 Text("Unable to load webpage.")
@@ -215,9 +211,6 @@ struct popUpWebView : View {
             }
         }
         .stackOnlyNavigationView()
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("WebPageLoaded")), perform: { _ in
-            loading = false
-        })
     }
 }
 
@@ -231,7 +224,6 @@ struct WebView : UIViewRepresentable {
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
         uiView.load(request)
-        NotificationCenter.default.post(Notification(name: Notification.Name("WebPageLoaded")))
     }
     
 }
