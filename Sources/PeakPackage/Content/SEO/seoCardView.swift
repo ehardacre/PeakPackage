@@ -77,8 +77,7 @@ struct seoCardView: View {
                                             .foregroundColor(Color.darkAccent)
                                         Spacer()
                                     }
-//                                    .background((organicUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
-                                    .background(Color.main.frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
+                                    .background((organicUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
                                     .edgesIgnoringSafeArea(.bottom)
                                     
                                     
