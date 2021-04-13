@@ -204,7 +204,10 @@ struct popUpWebView : View {
     var body : some View {
         NavigationView{
             if urlStr != nil {
-                WebView(url: URL(string: urlStr!)!)
+                ZStack{
+                    ProgressView()
+                    WebView(url: URL(string: urlStr!)!)
+                }
             }else{
                 Text("Unable to load webpage.")
                     .Caption()
