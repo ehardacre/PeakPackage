@@ -113,7 +113,6 @@ public struct DashboardView: View {
                 }
         }
     }
-    
 }
 
 extension View {
@@ -129,6 +128,7 @@ public class DashboardManager : Manager {
     public override init(){}
     
     public func loadMessage(){
+        message = nil
         DatabaseDelegate.getDashboardMessage(){
             rex in
             let mes = rex as! DashboardMessage
