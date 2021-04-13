@@ -89,6 +89,7 @@ struct LeadInformation : Codable{
 struct DashboardMessage: Codable{
     var dashMessageTitle : String
     var dashMessageBody : String
+    var dashMessageLink : String
 }
 
 //an order from woocommerce has the same fields as Lead
