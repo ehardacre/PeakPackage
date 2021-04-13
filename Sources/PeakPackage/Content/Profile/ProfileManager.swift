@@ -31,6 +31,7 @@ public class ProfileManager : Manager {
         
         if id == newID {
             id = nil
+            defaults.urlChanged = false
         }else{
             let generator = UINotificationFeedbackGenerator()
             generator.notificationOccurred(.success)

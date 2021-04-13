@@ -101,6 +101,7 @@ public struct ContentView: View {
                                 to: "1",
                                 newURL: "test2018",
                                 newName: "admin")
+                            defaults.urlChanged = false
                             profileChanged = false
                     }){
                         Image(systemName: "xmark")
