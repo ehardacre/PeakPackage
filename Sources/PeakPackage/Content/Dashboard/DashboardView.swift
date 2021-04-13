@@ -157,8 +157,8 @@ public struct DashboardMessageShortView : View{
                     .font(.body)
                     .foregroundColor(.white)
             }
-            .padding(message != nil ? 30 : 0)
-            .background(message != nil ? Color.main : Color.clear)
+            .padding(30)
+            .background(Color.main)
             .cornerRadius(20)
             .onAppear{
                 manager.loadMessage()
