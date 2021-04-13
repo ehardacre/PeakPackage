@@ -263,7 +263,7 @@ public class SEOManager : Manager {
                 }
             }
         }else{
-            printr("no maps links found")
+            //printr("no maps links found")
         }
         return scrapedSearchResult(
             term: tempterm,
