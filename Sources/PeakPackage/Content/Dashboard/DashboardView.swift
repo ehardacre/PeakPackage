@@ -200,20 +200,33 @@ public struct DashboardMessageShortView : View{
 struct popUpWebView : View {
     
     @State var urlStr : String?
+    @State var loading = true
 
     var body : some View {
         NavigationView{
-            ZStack{
                 if urlStr != nil {
-                    WebView(url: URL(string: urlStr!)!)
+                    ZStack{
+                        WebView(url: URL(string: urlStr!)!)
+                        if loading {
+                            ProgressView()
+                                .onAppear{
+                                    delayLoad()
+                                }
+                        }
+                    }
                 }else{
                     Text("Unable to load webpage.")
                         .Caption()
                 }
-            }
-            .navigationTitle("Loading...")
         }
         .stackOnlyNavigationView()
+    }
+    
+    private func delayLoad() {
+        // Delay of 7.5 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            loading = false
+        }
     }
 }
 
