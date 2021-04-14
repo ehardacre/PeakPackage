@@ -151,22 +151,27 @@ public struct DashboardMessageShortView : View{
         HStack{
             Spacer()
             VStack{
-                Text(message?.dashMessageTitle ?? "")
-                    .font(.title3)
-                    .bold()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.white)
-                Text(message?.dashMessageBody ?? "")
-                    .font(.body)
-                    .foregroundColor(.white)
+                VStack{
+                    Text(message?.dashMessageTitle ?? "")
+                        .font(.title3)
+                        .bold()
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.white)
+                    Text(message?.dashMessageBody ?? "")
+                        .font(.body)
+                        .foregroundColor(.white)
+                }
+                .padding(20)
                 HStack{
                     Spacer()
                     Image(systemName: "arrowshape.turn.up.right.circle.fill")
                         .imageScale(.large)
                         .foregroundColor(Color.lightAccent)
+                        .edgesIgnoringSafeArea(.bottom)
+                        .edgesIgnoringSafeArea(.trailing)
                 }
             }
-            .padding(30)
+            .padding(10)
             .background(Color.main)
             .cornerRadius(20)
             .onAppear{
@@ -194,6 +199,13 @@ public struct DashboardMessageShortView : View{
 //            printr("reseting message in view", tag: printTags.error)
 //            self.message = manager.message
 //        })
+    }
+}
+
+struct DashboardMessageShortView_Preview : PreviewProvider {
+    
+    static var previews: some View {
+        DashboardMessageShortView(manager: DashboardManager(), message: DashboardMessage(dashMessageTitle: "Welcome", dashMessageBody: "This is the nhance app, it's great!", dashMessageLink: ""), showWebView: false)
     }
 }
 
