@@ -153,13 +153,9 @@ public struct DashboardMessageShortView : View{
             VStack{
                 VStack{
                     Text(message?.dashMessageTitle ?? "")
-                        .font(.title3)
-                        .bold()
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.white)
+                        .CardTitle()
                     Text(message?.dashMessageBody ?? "")
-                        .font(.body)
-                        .foregroundColor(.white)
+                        .Caption()
                 }
                 .padding(20)
                 
