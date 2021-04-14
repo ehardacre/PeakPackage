@@ -61,7 +61,7 @@ extension Text {
         return self
             .font(.caption)
             .foregroundColor(.lightAccent)
-            .opacity(0.5)
+            .opacity(0.8)
             .truncationMode(.tail)
             .lineLimit(1)
     }
