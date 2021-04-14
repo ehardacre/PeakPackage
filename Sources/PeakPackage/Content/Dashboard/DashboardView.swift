@@ -185,15 +185,15 @@ public struct DashboardMessageShortView : View{
     @State private var selection = 0
     
     @State var manager : DashboardManager
-    @State var messages : [DashboardMessage] = []
+    @State var messages : [DashboardMessage] = [DashboardMessage(dashMessageTitle: "", dashMessageBody: "Loading...", dashMessageLink: "")]
     @State var showWebView = false
     
     public var body: some View {
         HStack{
             Spacer()
             TabView(selection: $selection){
-                ForEach(0..<4){ i in
-                    DashboardMessageCardView(message: DashboardMessage(dashMessageTitle: "content", dashMessageBody: "this is content", dashMessageLink: ""))
+                ForEach(0..<messages.count){ i in
+                    DashboardMessageCardView(message: messages[i])
                         .padding(.bottom, 20)
                 }
             }
