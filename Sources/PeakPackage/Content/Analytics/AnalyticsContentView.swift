@@ -36,10 +36,10 @@ public struct Content_Analytics_multiPage : PublicFacingContent{
                     analyticsMan: manager as! AnalyticsManager)
                     .onAppear{
                         //load month and year when week is opened
-                        (manager as! AnalyticsManager)
-                            .loadAnalytics(for: .Month)
-                        (manager as! AnalyticsManager)
-                            .loadAnalytics(for: .Year)
+//                        (manager as! AnalyticsManager)
+//                            .loadAnalytics(for: .Month)
+//                        (manager as! AnalyticsManager)
+//                            .loadAnalytics(for: .Year)
                     }
             default:
                 //should never be called
