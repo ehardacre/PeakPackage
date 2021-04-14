@@ -196,30 +196,31 @@ public struct DashboardMessageShortView : View{
     @State var messages : [DashboardMessage] = []
     
     public var body: some View {
-        
-        TabView(selection: $selection){
-            ForEach(0..<messages.count){ i in
-                DashboardMessageCardView(message: messages[i])
-            }
-        }
-        .tabViewStyle(PageTabViewStyle())
-        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-        .onReceive(timer, perform: { _ in
-            withAnimation{
-                print("selection is",selection)
-                selection = selection < (messages ?? []).count ? selection + 1 : 0
-            }
-        })
-        .onReceive(
-            NotificationCenter.default.publisher(
-                for: Notification.Name(rawValue: "database")),
-            perform: {
-                note in
-                if let messages = note.object as? [DashboardMessage] {
-                    printr("reseting message in view database call", tag: printTags.error)
-                    self.messages = messages
+        LazyHStack{
+            TabView(selection: $selection){
+                ForEach(0..<messages.count){ i in
+                    DashboardMessageCardView(message: messages[i])
                 }
-        })
+            }
+            .tabViewStyle(PageTabViewStyle())
+            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+            .onReceive(timer, perform: { _ in
+                withAnimation{
+                    print("selection is",selection)
+                    selection = selection < (messages ?? []).count ? selection + 1 : 0
+                }
+            })
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: Notification.Name(rawValue: "database")),
+                perform: {
+                    note in
+                    if let messages = note.object as? [DashboardMessage] {
+                        printr("reseting message in view database call", tag: printTags.error)
+                        self.messages = messages
+                    }
+            })
+        }
 //        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
 //            printr("reseting message in view", tag: printTags.error)
 //            self.message = manager.message
