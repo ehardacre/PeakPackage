@@ -198,8 +198,9 @@ public struct DashboardMessageShortView : View{
     public var body: some View {
         LazyHStack{
             TabView(selection: $selection){
-                ForEach(0..<messages.count){ i in
-                    DashboardMessageCardView(message: messages[i])
+                ForEach(0..<4){ i in
+                   // DashboardMessageCardView(message: messages[i])
+                    Text("this is content")
                 }
             }
             .tabViewStyle(PageTabViewStyle())
