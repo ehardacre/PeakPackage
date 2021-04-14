@@ -151,39 +151,40 @@ public struct DashboardMessageCardView : View {
         HStack{
             Spacer()
             VStack{
-                VStack{
-                    Text(message.dashMessageTitle)
-                        .CardTitle_light()
-                        .foregroundColor(.lightAccent)
-                    Text(message.dashMessageBody)
-                        .Caption_light()
-                }
-                .padding(20)
-                
-                if message.dashMessageLink != "" {
-                    HStack{
-                        Spacer()
-                        Image(systemName: "arrowshape.turn.up.right.circle.fill")
-                            .imageScale(.large)
-                            .foregroundColor(Color.lightAccent)
-                            .edgesIgnoringSafeArea(.bottom)
-                            .edgesIgnoringSafeArea(.trailing)
-                    }
-                }
+//                VStack{
+//                    Text(message.dashMessageTitle)
+//                        .CardTitle_light()
+//                        .foregroundColor(.lightAccent)
+//                    Text(message.dashMessageBody)
+//                        .Caption_light()
+//                }
+//                .padding(20)
+//
+//                if message.dashMessageLink != "" {
+//                    HStack{
+//                        Spacer()
+//                        Image(systemName: "arrowshape.turn.up.right.circle.fill")
+//                            .imageScale(.large)
+//                            .foregroundColor(Color.lightAccent)
+//                            .edgesIgnoringSafeArea(.bottom)
+//                            .edgesIgnoringSafeArea(.trailing)
+//                    }
+//                }
+                Text("this is content")
             }
             .padding(10)
             .background(Color.main)
             .cornerRadius(20)
-            .onTapGesture {
-                if message.dashMessageLink != "" {
-                    showWebView = true
-                }
-            }
+//            .onTapGesture {
+//                if message.dashMessageLink != "" {
+//                    showWebView = true
+//                }
+//            }
             Spacer()
         }
-        .sheet(isPresented: $showWebView, content: {
-            popUpWebView(urlStr: message.dashMessageLink)
-        })
+//        .sheet(isPresented: $showWebView, content: {
+//            popUpWebView(urlStr: message.dashMessageLink)
+//        })
     }
 }
 
@@ -201,8 +202,7 @@ public struct DashboardMessageShortView : View{
             TabView(selection: $selection){
                 ForEach(0..<4){ i in
                    // DashboardMessageCardView(message: messages[i])
-                    Text("this is content")
-                        .frame(height: 100)
+                    DashboardMessageCardView(message: DashboardMessage(dashMessageTitle: "", dashMessageBody: "", dashMessageLink: ""))
                 }
             }
             .tabViewStyle(PageTabViewStyle())
