@@ -198,12 +198,12 @@ public struct DashboardMessageShortView : View{
     public var body: some View {
         
         TabView(selection: $selection){
-            ForEach(messages, id: \.dashMessageTitle){ mes in
-                DashboardMessageCardView(message: mes)
+            ForEach(0..<messages.count){ i in
+                DashboardMessageCardView(message: messages[i])
             }
         }
         .tabViewStyle(PageTabViewStyle())
-        //.indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
         .onReceive(timer, perform: { _ in
             withAnimation{
                 print("selection is",selection)
