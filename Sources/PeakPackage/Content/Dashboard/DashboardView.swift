@@ -187,12 +187,13 @@ public struct DashboardMessageShortView : View{
     @State var manager : DashboardManager
     @State var messages : [DashboardMessage] = []
     @State var showWebView = false
+    @State var loading = true
     
     public var body: some View {
         HStack{
             Spacer()
             TabView(selection: $selection){
-                if messages.count != 0 {
+                if !loading {
                     ForEach(0..<messages.count){ i in
                             DashboardMessageCardView(message: messages[i])
                                 .padding(.bottom, 20)
@@ -211,15 +212,21 @@ public struct DashboardMessageShortView : View{
                     selection = selection < (messages ?? []).count ? selection + 1 : 0
                 }
             })
-            .onReceive(
-                NotificationCenter.default.publisher(
-                    for: Notification.Name(rawValue: "database")),
-                perform: {
-                    note in
-                    if let messages = note.object as? [DashboardMessage] {
-                        printr("reseting message in view database call", tag: printTags.error)
-                        self.messages = messages
-                    }
+//            .onReceive(
+//                NotificationCenter.default.publisher(
+//                    for: Notification.Name(rawValue: "database")),
+//                perform: {
+//                    note in
+//                    if let messages = note.object as? [DashboardMessage] {
+//                        printr("reseting message in view database call", tag: printTags.error)
+//                        self.messages = messages
+//                        self.loading = false
+//                    }
+//            })
+            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
+                printr("reseting message in view", tag: printTags.error)
+                self.messages = manager.messages
+                self.loading = false
             })
             .onTapGesture {
                 if messages[selection].dashMessageLink != "" {
@@ -231,10 +238,6 @@ public struct DashboardMessageShortView : View{
             })
             Spacer()
         }
-//        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
-//            printr("reseting message in view", tag: printTags.error)
-//            self.message = manager.message
-//        })
     }
 }
 
