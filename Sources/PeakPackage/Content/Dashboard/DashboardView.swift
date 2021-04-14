@@ -163,6 +163,7 @@ public struct DashboardMessageShortView : View{
                 }
                 .padding(20)
                 
+                
                 HStack{
                     Spacer()
                     Image(systemName: "arrowshape.turn.up.right.circle.fill")
