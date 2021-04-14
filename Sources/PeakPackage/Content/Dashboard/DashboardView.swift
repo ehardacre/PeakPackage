@@ -196,19 +196,20 @@ public struct DashboardMessageShortView : View{
     @State var messages : [DashboardMessage]?
     
     public var body: some View {
-        TabView(selection: $selection){
-            ForEach(messages ?? [], id: \.dashMessageTitle){ message in
-                DashboardMessageCardView(message: message)
-            }
-        }
-        .tabViewStyle(PageTabViewStyle())
-        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-        .onReceive(timer, perform: { _ in
-            withAnimation{
-                print("selection is",selection)
-                selection = selection < (messages ?? []).count ? selection + 1 : 0
-            }
-        })
+//        TabView(selection: $selection){
+//            ForEach(messages ?? [], id: \.dashMessageTitle){ message in
+//                DashboardMessageCardView(message: message)
+//            }
+//        }
+//        .tabViewStyle(PageTabViewStyle())
+//        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+//        .onReceive(timer, perform: { _ in
+//            withAnimation{
+//                print("selection is",selection)
+//                selection = selection < (messages ?? []).count ? selection + 1 : 0
+//            }
+//        })
+        Text("this is a test")
         .onReceive(
             NotificationCenter.default.publisher(
                 for: Notification.Name(rawValue: "database")),
