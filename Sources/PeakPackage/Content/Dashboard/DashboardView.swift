@@ -198,6 +198,9 @@ public struct DashboardMessageShortView : View{
                                 .padding(.bottom, 20)
                         
                     }
+                }else{
+                    Text("loading...")
+                        .Caption()
                 }
             }
             .tabViewStyle(PageTabViewStyle())
