@@ -174,16 +174,8 @@ public struct DashboardMessageCardView : View {
             .padding(10)
             .background(Color.main)
             .cornerRadius(20)
-//            .onTapGesture {
-//                if message.dashMessageLink != "" {
-//                    showWebView = true
-//                }
-//            }
             Spacer()
         }
-//        .sheet(isPresented: $showWebView, content: {
-//            popUpWebView(urlStr: message.dashMessageLink)
-//        })
     }
 }
 
@@ -194,13 +186,13 @@ public struct DashboardMessageShortView : View{
     
     @State var manager : DashboardManager
     @State var messages : [DashboardMessage] = []
+    @State var showWebView = false
     
     public var body: some View {
         HStack{
             Spacer()
             TabView(selection: $selection){
                 ForEach(0..<4){ i in
-                   // DashboardMessageCardView(message: messages[i])
                     DashboardMessageCardView(message: DashboardMessage(dashMessageTitle: "content", dashMessageBody: "this is content", dashMessageLink: ""))
                         .padding(.bottom, 20)
                 }
@@ -222,6 +214,14 @@ public struct DashboardMessageShortView : View{
                         printr("reseting message in view database call", tag: printTags.error)
                         self.messages = messages
                     }
+            })
+            .onTapGesture {
+                if messages[selection].dashMessageLink != "" {
+                    showWebView = true
+                }
+            }
+            .sheet(isPresented: $showWebView, content: {
+                popUpWebView(urlStr: messages[selection].dashMessageLink)
             })
             Spacer()
         }
