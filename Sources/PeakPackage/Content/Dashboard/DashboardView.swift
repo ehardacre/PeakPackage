@@ -124,43 +124,43 @@ extension View {
 
 public class DashboardManager : Manager {
     
-    @Published var message : DashboardMessage?
+    @Published var messages : [DashboardMessage] = []
     
     public override init(){}
     
     public func loadMessage(){
         printr("manager reloading message")
-        message = nil
+        messages = []
         DatabaseDelegate.getDashboardMessage(){
             rex in
             printr("message loaded manager", tag: printTags.error)
-            let mes = rex as! DashboardMessage
-            self.message = mes
+            let mes = rex as! [DashboardMessage]
+            self.messages = mes
             NotificationCenter.default.post(Notification(name: Notification.Name("dashboardMessageLoaded")))
         }
     }
 }
 
-public struct DashboardMessageShortView : View{
+public struct DashboardMessageCardView : View {
+
+    @State var message : DashboardMessage
     
-    @State var manager : DashboardManager
-    @State var message : DashboardMessage?
     @State var showWebView = false
     
-    public var body: some View {
+    public var body : some View {
         HStack{
             Spacer()
             VStack{
                 VStack{
-                    Text(message?.dashMessageTitle ?? "")
+                    Text(message.dashMessageTitle)
                         .CardTitle_light()
                         .foregroundColor(.lightAccent)
-                    Text(message?.dashMessageBody ?? "")
+                    Text(message.dashMessageBody)
                         .Caption_light()
                 }
                 .padding(20)
                 
-                if message != nil && message?.dashMessageLink != "" {
+                if message.dashMessageLink != "" {
                     HStack{
                         Spacer()
                         Image(systemName: "arrowshape.turn.up.right.circle.fill")
@@ -174,40 +174,55 @@ public struct DashboardMessageShortView : View{
             .padding(10)
             .background(Color.main)
             .cornerRadius(20)
-            .onAppear{
-                message = manager.message
-            }
             .onTapGesture {
-                if message?.dashMessageLink != "" {
+                if message.dashMessageLink != "" {
                     showWebView = true
                 }
             }
             Spacer()
         }
         .sheet(isPresented: $showWebView, content: {
-            popUpWebView(urlStr: message?.dashMessageLink)
+            popUpWebView(urlStr: message.dashMessageLink)
+        })
+    }
+}
+
+public struct DashboardMessageShortView : View{
+    
+    public let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    @State private var selection = 0
+    
+    @State var manager : DashboardManager
+    @State var messages : [DashboardMessage]?
+    
+    public var body: some View {
+        TabView(selection: $selection){
+            ForEach(messages ?? [], id: \.dashMessageTitle){ message in
+                DashboardMessageCardView(message: message)
+            }
+        }
+        .tabViewStyle(PageTabViewStyle())
+        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+        .onReceive(timer, perform: { _ in
+            withAnimation{
+                print("selection is",selection)
+                selection = selection < (messages ?? []).count ? selection + 1 : 0
+            }
         })
         .onReceive(
             NotificationCenter.default.publisher(
                 for: Notification.Name(rawValue: "database")),
             perform: {
                 note in
-                if let message = note.object as? DashboardMessage {
+                if let messages = note.object as? [DashboardMessage] {
                     printr("reseting message in view database call", tag: printTags.error)
-                    self.message = message
+                    self.messages = messages
                 }
         })
 //        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
 //            printr("reseting message in view", tag: printTags.error)
 //            self.message = manager.message
 //        })
-    }
-}
-
-struct DashboardMessageShortView_Preview : PreviewProvider {
-    
-    static var previews: some View {
-        DashboardMessageShortView(manager: DashboardManager(), message: DashboardMessage(dashMessageTitle: "Welcome", dashMessageBody: "This is the nhance app, it's great!", dashMessageLink: ""), showWebView: false)
     }
 }
 
