@@ -163,14 +163,15 @@ public struct DashboardMessageShortView : View{
                 }
                 .padding(20)
                 
-                
-                HStack{
-                    Spacer()
-                    Image(systemName: "arrowshape.turn.up.right.circle.fill")
-                        .imageScale(.large)
-                        .foregroundColor(Color.lightAccent)
-                        .edgesIgnoringSafeArea(.bottom)
-                        .edgesIgnoringSafeArea(.trailing)
+                if message != nil && message?.dashMessageLink != "" {
+                    HStack{
+                        Spacer()
+                        Image(systemName: "arrowshape.turn.up.right.circle.fill")
+                            .imageScale(.large)
+                            .foregroundColor(Color.lightAccent)
+                            .edgesIgnoringSafeArea(.bottom)
+                            .edgesIgnoringSafeArea(.trailing)
+                    }
                 }
             }
             .padding(10)
@@ -180,7 +181,9 @@ public struct DashboardMessageShortView : View{
                 message = manager.message
             }
             .onTapGesture {
-                showWebView = true
+                if message?.dashMessageLink != "" {
+                    showWebView = true
+                }
             }
             Spacer()
         }
