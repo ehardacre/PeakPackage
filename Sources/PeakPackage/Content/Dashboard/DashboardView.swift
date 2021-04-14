@@ -196,11 +196,13 @@ public struct DashboardMessageShortView : View{
     @State var messages : [DashboardMessage] = []
     
     public var body: some View {
-        LazyHStack{
+        HStack{
+            Spacer()
             TabView(selection: $selection){
                 ForEach(0..<4){ i in
                    // DashboardMessageCardView(message: messages[i])
                     Text("this is content")
+                        .frame(height: 100)
                 }
             }
             .tabViewStyle(PageTabViewStyle())
@@ -221,6 +223,7 @@ public struct DashboardMessageShortView : View{
                         self.messages = messages
                     }
             })
+            Spacer()
         }
 //        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
 //            printr("reseting message in view", tag: printTags.error)
