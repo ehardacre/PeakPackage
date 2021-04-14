@@ -51,6 +51,21 @@ extension Text {
             .lineLimit(1)
     }
     
+    func CardTitle_light() -> some View{
+        return self
+            .font(.headline)
+            .foregroundColor(.lightAccent)
+    }
+    
+    func Caption_light() -> some View{
+        return self
+            .font(.caption)
+            .foregroundColor(.lightAccent)
+            .opacity(0.5)
+            .truncationMode(.tail)
+            .lineLimit(1)
+    }
+    
     func ButtonText() -> some View {
         return self
             .bold()
