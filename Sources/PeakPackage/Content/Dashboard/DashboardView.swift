@@ -162,6 +162,7 @@ public struct DashboardMessageShortView : View{
                         .foregroundColor(.white)
                 }
                 .padding(20)
+                
                 HStack{
                     Spacer()
                     Image(systemName: "arrowshape.turn.up.right.circle.fill")
