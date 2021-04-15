@@ -162,6 +162,8 @@ public struct DashboardMessageShortView : View{
                 if message != nil && message?.dashMessageLink != "" {
                     HStack{
                         Spacer()
+                        Text("See More")
+                            .Caption_light()
                         Image(systemName: "arrowshape.turn.up.right.circle.fill")
                             .imageScale(.large)
                             .foregroundColor(Color.lightAccent)
