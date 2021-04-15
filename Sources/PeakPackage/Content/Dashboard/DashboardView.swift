@@ -141,26 +141,25 @@ public class DashboardManager : Manager {
     }
 }
 
-public struct DashboardMessageCardView : View {
-
-    @Binding var message : DashboardMessage?
+public struct DashboardMessageShortView : View{
     
+    @State var manager : DashboardManager
+    @State var message : DashboardMessage?
     @State var showWebView = false
     
-    public var body : some View {
+    public var body: some View {
         HStack{
             Spacer()
             VStack{
                 VStack{
-                    Text(message!.dashMessageTitle)
-                        .CardTitle_light()
-                        .foregroundColor(.lightAccent)
-                    Text(message!.dashMessageBody)
-                        .Caption_light()
+                    Text(message?.dashMessageTitle ?? "")
+                        .CardTitle()
+                    Text(message?.dashMessageBody ?? "")
+                        .Caption()
                 }
                 .padding(20)
-
-                if message!.dashMessageLink != "" {
+                
+                if message != nil && message?.dashMessageLink != "" {
                     HStack{
                         Spacer()
                         Image(systemName: "arrowshape.turn.up.right.circle.fill")
@@ -174,72 +173,33 @@ public struct DashboardMessageCardView : View {
             .padding(10)
             .background(Color.main)
             .cornerRadius(20)
-            Spacer()
-        }
-    }
-}
-
-public struct DashboardMessageShortView : View{
-    
-    public let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
-    @State private var selection = 0
-    
-    @State var manager : DashboardManager
-    @State var message : DashboardMessage?
-    @State var showWebView = false
-    
-    public var body: some View {
-        HStack{
-            
-//            TabView(selection: $selection){
-//                if !loading {
-//                    ForEach(0..<messages.count){ i in
-//                            DashboardMessageCardView(message: messages[i])
-//                                .padding(.bottom, 20)
-//
-//                    }
-//                }else{
-//                    Text("loading...")
-//                        .Caption()
-//                }
-//            }
-//            .tabViewStyle(PageTabViewStyle())
-//            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-//            .onReceive(timer, perform: { _ in
-//                withAnimation{
-//                    print("selection is",selection)
-//                    selection = selection < messages.count ? selection + 1 : 0
-//                }
-//            })
-            if message != nil {
-                DashboardMessageCardView(message: $message)
-                    .onTapGesture {
-                        if message!.dashMessageLink != "" {
-                            showWebView = true
-                        }
-                    }
-            }
-        }
-            .onReceive(
-                NotificationCenter.default.publisher(
-                    for: Notification.Name(rawValue: "database")),
-                perform: {
-                    note in
-                    if let message = note.object as? DashboardMessage {
-                        printr("reseting message in view database call", tag: printTags.error)
-                        self.message = message
-                    }
-            })
-            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
-                printr("reseting message in view", tag: printTags.error)
-                self.message = manager.message
-            })
-            .sheet(isPresented: $showWebView, content: {
-                popUpWebView(urlStr: message!.dashMessageLink)
-            })
             .onAppear{
                 message = manager.message
             }
+            .onTapGesture {
+                if message?.dashMessageLink != "" {
+                    showWebView = true
+                }
+            }
+            Spacer()
+        }
+        .sheet(isPresented: $showWebView, content: {
+            popUpWebView(urlStr: message?.dashMessageLink)
+        })
+        .onReceive(
+            NotificationCenter.default.publisher(
+                for: Notification.Name(rawValue: "database")),
+            perform: {
+                note in
+                if let message = note.object as? DashboardMessage {
+                    printr("reseting message in view database call", tag: printTags.error)
+                    self.message = message
+                }
+        })
+//        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("dashboardMessageLoaded")), perform: { _ in
+//            printr("reseting message in view", tag: printTags.error)
+//            self.message = manager.message
+//        })
     }
 }
 
