@@ -130,7 +130,6 @@ public class DashboardManager : Manager {
     
     public func loadMessage(){
         printr("manager reloading message")
-        message = nil
         DatabaseDelegate.getDashboardMessage(){
             rex in
             printr("message loaded manager", tag: printTags.error)
