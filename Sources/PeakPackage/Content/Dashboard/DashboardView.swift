@@ -143,7 +143,7 @@ public class DashboardManager : Manager {
 
 public struct DashboardMessageCardView : View {
 
-    @State var message : DashboardMessage
+    @Binding var message : DashboardMessage?
     
     @State var showWebView = false
     
@@ -152,15 +152,15 @@ public struct DashboardMessageCardView : View {
             Spacer()
             VStack{
                 VStack{
-                    Text(message.dashMessageTitle)
+                    Text(message!.dashMessageTitle)
                         .CardTitle_light()
                         .foregroundColor(.lightAccent)
-                    Text(message.dashMessageBody)
+                    Text(message!.dashMessageBody)
                         .Caption_light()
                 }
                 .padding(20)
 
-                if message.dashMessageLink != "" {
+                if message!.dashMessageLink != "" {
                     HStack{
                         Spacer()
                         Image(systemName: "arrowshape.turn.up.right.circle.fill")
@@ -212,7 +212,7 @@ public struct DashboardMessageShortView : View{
 //                }
 //            })
             if message != nil {
-                DashboardMessageCardView(message: message!)
+                DashboardMessageCardView(message: $message)
                     .onTapGesture {
                         if message!.dashMessageLink != "" {
                             showWebView = true
