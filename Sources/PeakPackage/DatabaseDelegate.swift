@@ -412,7 +412,7 @@ struct DatabaseDelegate {
         case returnType.leads:
             rex = try? JSONDecoder().decode([Lead].self, from: data)
         case returnType.dashboardMessage:
-            rex = try? JSONDecoder().decode([DashboardMessage].self, from: data)
+            rex = try? JSONDecoder().decode(DashboardMessage.self, from: data)
         case returnType.searchRank:
             rex = try? JSONDecoder().decode([SearchRankingforTime].self, from: data)
         default:
