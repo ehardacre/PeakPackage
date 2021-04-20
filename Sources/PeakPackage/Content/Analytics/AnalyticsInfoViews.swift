@@ -185,6 +185,8 @@ struct AnalyticsInfoView : View {
     //sort the analytics so that the visitors section appears first
     func sortDisplayAnalytics() -> [ComparisonObject]{
         var temp : [ComparisonObject] = []
+        printr("Values!!")
+        printr(values)
         for val in values{
             if (val.key ?? "").contains("Visitors") {
                 temp.insert(val, at: 0)
