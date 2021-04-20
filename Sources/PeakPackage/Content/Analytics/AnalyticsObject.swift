@@ -299,14 +299,12 @@ struct GA_TotalsForAllResults_PPC : Codable {
     
     func showingAdData() -> Bool {
         return
-            (gaadClicks != nil && gaadCost != nil && gacostPerConversion != nil) ||
-            defaults.getApplicationType() == .PeakClients
+            (gaadClicks != nil && gaadCost != nil && gacostPerConversion != nil)
     }
     
     func showingSessionData() -> Bool{
         return
-            (gasessionsWithEvent != nil && gasessions != nil) ||
-            defaults.getApplicationType() == .NHanceConnect
+            (gasessionsWithEvent != nil && gasessions != nil)
     }
     
 }
