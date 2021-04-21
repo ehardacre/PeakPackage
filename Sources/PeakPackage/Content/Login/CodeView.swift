@@ -28,6 +28,7 @@ struct CodeView: View {
     var body: some View {
         VStack{
             Header(viewRouter: viewRouter)
+            Spacer()
             //if show error highlight the instructions
             if defaults.admin {
                 Text(adminpass_prompt)
