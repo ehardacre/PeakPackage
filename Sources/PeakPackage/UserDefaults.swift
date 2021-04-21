@@ -46,6 +46,8 @@ struct defaults {
     private static let username_key = "username"
     private static let franchise_key = "franchiseID"
     private static let url_key = "franchiseURL"
+    private static let location_key = "franchiseLoc"
+    private static let temp_location_key = "tempLoc"
     private static let temp_url_key = "tempURL"
     private static let temp_name_key = "tempName"
     private static let temp_id_key = "tempId"
@@ -112,6 +114,16 @@ struct defaults {
     
     static func getUsername() -> String?{
         return UserDefaults.standard.string(forKey: username_key)
+    }
+    
+    static func franchiseLocationforSEO() -> String?{
+        var location : String?
+        if urlChanged{
+            location = UserDefaults.standard.string(forKey: temp_location_key)
+        }else{
+            location = UserDefaults.standard.string(forKey: location_key)
+        }
+        return location
     }
     
     /**

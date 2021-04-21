@@ -19,6 +19,7 @@ public enum tabs : Int{
     case calendar = 3
     case seo = 4
     case tasks = 5
+    case social = 6
 }
 
 protocol PublicFacingContent : View{
@@ -53,6 +54,7 @@ public struct ContentView: View {
     @StateObject var appointmentManager : AppointmentManager
     @StateObject var seoManager : SEOManager
     @StateObject var profileManager : ProfileManager
+    @StateObject var socialManager : SocialManager
     
     public init(tabs : [tabs],
                 _ analytics : AnalyticsManager,
@@ -61,7 +63,8 @@ public struct ContentView: View {
                 _ task : TaskManager2,
                 _ appointments : AppointmentManager,
                 _ seo : SEOManager,
-                _ profile : ProfileManager) {
+                _ profile : ProfileManager,
+                _ social : SocialManager) {
 
         _availableTabs = State(initialValue: tabs)
         _analyticsManager = StateObject(wrappedValue: analytics)
@@ -71,6 +74,7 @@ public struct ContentView: View {
         _appointmentManager = StateObject(wrappedValue: appointments)
         _seoManager = StateObject(wrappedValue: seo)
         _profileManager = StateObject(wrappedValue: profile)
+        _socialManager = StateObject(wrappedValue: social)
         
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none
@@ -143,6 +147,8 @@ public struct ContentView: View {
                             parent: self)
                     }else if tab == tabs.seo{
                         Content_SEO(manager: seoManager)
+                    }else if tab == tabs.social{
+                        Content_Social(manager: socialManager)
                     }
                 }
                 .padding(.top, profileChanged ? -50 : 0)

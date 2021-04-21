@@ -40,6 +40,7 @@ struct Franchise: Codable{
     var franchiseTitle: String
     var franchiseURL: String
     var twoFactor: String
+    var location: String?
 }
 
 /**
