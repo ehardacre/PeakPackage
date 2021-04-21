@@ -149,6 +149,7 @@ struct LoginView: View {
         .sheet(isPresented: $showCodeView){
             CodeView(
                 viewRouter: self.viewRouter,
+                contact: self.email,
                 expectedCode: defaults.expectedCode,
                 name: firstname + " " + lastname,
                 franchise: self.franchise!)
@@ -159,42 +160,34 @@ struct LoginView: View {
      #Look for franchise in database
      */
     func checkForUser(){
-        #warning("TODO move to dbdelegate")
-        let json: [String: Any] =
-            JsonFormat.getUserFromEmail(email: email)
-            .format()
-        DatabaseDelegate.performRequest(
-            with: json,
-            ret: returnType.franchiseList,
-            completion:
-                {
-                    rex in
-                    do {
-                        if (rex as! [Franchise]).count == 0 {
-                            self.showErrorNoUser = true
-                            throw ContentError.noUser
-                        }else{
-                            if UIDevice.current.userInterfaceIdiom != .pad {
-                                self.showActionSheet = true
-                            }else{
-                                self.showActionSheet_ipad = true
-                            }
-                            self.franchise = (rex as! [Franchise])[0]
-                            if (self.franchise!.franchiseId == defaults.admin_id){
-                                defaults.admin = true
-                            }
-                            self.expectedCode = franchise!.twoFactor
-                            defaults.expectedCode = self.expectedCode
-                        }
-                        
-                    } catch ContentError.noUser {
-                        printr(ContentError.noUser.rawValue,
-                               tag: printTags.error)
-                    } catch {
-                        printr(InternalError.unknownError,
-                               tag: printTags.error)
+        DatabaseDelegate.getUserForLogin(email: email, completion: {
+            rex in
+            do {
+                if (rex as! [Franchise]).count == 0 {
+                    self.showErrorNoUser = true
+                    throw ContentError.noUser
+                }else{
+                    if UIDevice.current.userInterfaceIdiom != .pad {
+                        self.showActionSheet = true
+                    }else{
+                        self.showActionSheet_ipad = true
                     }
-                })
+                    self.franchise = (rex as! [Franchise])[0]
+                    if (self.franchise!.franchiseId == defaults.admin_id){
+                        defaults.admin = true
+                    }
+                    self.expectedCode = franchise!.twoFactor
+                    defaults.expectedCode = self.expectedCode
+                }
+                
+            } catch ContentError.noUser {
+                printr(ContentError.noUser.rawValue,
+                       tag: printTags.error)
+            } catch {
+                printr(InternalError.unknownError,
+                       tag: printTags.error)
+            }
+        })
     }
 }
 

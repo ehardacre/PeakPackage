@@ -17,11 +17,13 @@ struct CodeView: View {
     @ObservedObject var viewRouter: ViewRouter
     
     //the code that the user enters and code expected
+    @State var contact = ""
     @State var codeInput = ""
     @State var expectedCode = ""
     @State var name = ""
     //show error with code
     @State var showError = false
+    @State var codeResent = false
     //franchise information
     @State var franchise : Franchise
     
@@ -88,15 +90,26 @@ struct CodeView: View {
                         .frame(width: 200)
                 }
                 
-                //try again button
-                Button(action:{
-                    #warning("TODO send a new code")
-                }){
-                    Text("Didn't recieve a code? Try again.")
-                        .foregroundColor(Color.blue)
-                        .font(.footnote)
-                        .padding(.all)
+                if !codeResent {
+                    //try again button
+                    Button(action:{
+                        DatabaseDelegate.resendCode(code: expectedCode, contact: contact, completion: {
+                            rex in 
+                            codeResent = true
+                        })
+                    }){
+                        Text("Didn't recieve a code? Try again.")
+                            .foregroundColor(Color.main)
+                            .font(.footnote)
+                            .padding(.all)
+                    }
+                } else {
+                   Text("The code was sent again.")
+                    .foregroundColor(Color.darkAccent)
+                    .font(.footnote)
+                    .padding(.all)
                 }
+                
                 Spacer()
             }
     }

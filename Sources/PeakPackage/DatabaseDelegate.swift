@@ -11,6 +11,28 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func resendCode(code: String, contact: String, completion: @escaping (Any) -> Void){
+        let json: [String: Any] = JsonFormat.resendTwoFactor(contact: contact, code: code).format()
+        DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
+            rex in
+            completion(rex)
+        })
+    }
+    
+    static func getUserForLogin(email: String, completion: @escaping (Any) -> Void){
+        let json: [String: Any] =
+            JsonFormat.getUserFromEmail(email: email)
+            .format()
+        DatabaseDelegate.performRequest(
+            with: json,
+            ret: returnType.franchiseList,
+            completion:
+                {
+                    rex in
+                    completion(rex)
+                })
+    }
+    
     static func sendImages(images: [UIImage], taskId: String, completion: @escaping (Any) -> Void){
         let encodedImages = images.map({$0.toBase64() ?? "nil"})
         for imageStr in encodedImages{
