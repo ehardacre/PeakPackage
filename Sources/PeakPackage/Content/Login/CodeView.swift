@@ -26,75 +26,80 @@ struct CodeView: View {
     @State var franchise : Franchise
     
     var body: some View {
-        VStack{
-            Header(viewRouter: viewRouter)
-            Spacer()
-            //if show error highlight the instructions
-            if defaults.admin {
-                Text(adminpass_prompt)
-            }else if showError{
-                Text(pass_prompt)
-                    .font(.footnote)
-                    .foregroundColor(Color.red)
-            }else{
-                Text(pass_prompt)
-                    .font(.footnote)
+        ZStack{
+            VStack{
+                Header(viewRouter: viewRouter)
+                Spacer()
             }
-            TextField("Code", text: $codeInput)
-                .keyboardType(.numberPad)
-                .padding(.all)
-                .multilineTextAlignment(.center)
-            Divider()
-                .frame(width: 300)
-            //check that code input is proper length
-            if codeInput.count == 5{
-                //highlight submit button
-                Button(action:
-                        {
-                            self.checkCode()
-                        })
-                {
-                    Text("Submit")
-                        .foregroundColor(Color.blue)
+            VStack{
+                Spacer()
+                //if show error highlight the instructions
+                if defaults.admin {
+                    Text(adminpass_prompt)
+                }else if showError{
+                    Text(pass_prompt)
+                        .font(.footnote)
+                        .foregroundColor(Color.red)
+                }else{
+                    Text(pass_prompt)
+                        .font(.footnote)
                 }
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.blue)
-                        .frame(width: 200)
-                )
-                .frame(width: 200)
-            }else{
-                //gray out submit button
-                Button(action:
-                        {
-                    self.showError = true
-                        })
-                {
-                    Text("Submit")
-                        .foregroundColor(Color.gray)
-                }
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.gray)
-                        .frame(width: 200)
-                )
-                    .opacity(0.5)
-                    .frame(width: 200)
-            }
-            
-            //try again button
-            Button(action:{
-                #warning("TODO send a new code")
-            }){
-                Text("Didn't recieve a code? Try again.")
-                    .foregroundColor(Color.blue)
-                    .font(.footnote)
+                TextField("Code", text: $codeInput)
+                    .keyboardType(.numberPad)
                     .padding(.all)
+                    .multilineTextAlignment(.center)
+                Divider()
+                    .frame(width: 300)
+                //check that code input is proper length
+                if codeInput.count == 5{
+                    //highlight submit button
+                    Button(action:
+                            {
+                                self.checkCode()
+                            })
+                    {
+                        Text("Submit")
+                            .foregroundColor(Color.blue)
+                    }
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.blue)
+                            .frame(width: 200)
+                    )
+                    .frame(width: 200)
+                }else{
+                    //gray out submit button
+                    Button(action:
+                            {
+                        self.showError = true
+                            })
+                    {
+                        Text("Submit")
+                            .foregroundColor(Color.gray)
+                    }
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.gray)
+                            .frame(width: 200)
+                    )
+                        .opacity(0.5)
+                        .frame(width: 200)
+                }
+                
+                //try again button
+                Button(action:{
+                    #warning("TODO send a new code")
+                }){
+                    Text("Didn't recieve a code? Try again.")
+                        .foregroundColor(Color.blue)
+                        .font(.footnote)
+                        .padding(.all)
+                }
+                Spacer()
             }
-            Spacer()
-        }
+    }
     }
     
     /**
