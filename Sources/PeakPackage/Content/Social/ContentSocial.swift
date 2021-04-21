@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public struct Content_Social : PublicFacingContent {
     
@@ -16,7 +17,7 @@ public struct Content_Social : PublicFacingContent {
     }
     
     public var body : some View {
-        seoView(manager: manager as! SocialManager)
+        EmptyView()
     }
     
 }
