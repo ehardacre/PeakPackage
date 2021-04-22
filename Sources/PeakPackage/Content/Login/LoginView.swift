@@ -49,7 +49,7 @@ struct LoginView: View {
                 LoginFields_Nhance(
                     email: $email,
                     showActionSheet_ipad: $showActionSheet_ipad)
-            }else if defaults.getApplicationType() == .PeakClients(.any) {
+            }else if defaults.getApplicationType() == .PeakClients(.any){
                 LoginFields_Peak(
                     firstname: $firstname,
                     lastname: $lastname,
@@ -173,9 +173,7 @@ struct LoginView: View {
                         self.showActionSheet_ipad = true
                     }
                     self.franchise = (rex as! [Franchise])[0]
-                    if (self.franchise!.franchiseId == defaults.admin_id){
-                        defaults.admin = true
-                    }
+                    setAppType()
                     self.expectedCode = franchise!.twoFactor
                     defaults.expectedCode = self.expectedCode
                 }
@@ -188,6 +186,21 @@ struct LoginView: View {
                        tag: printTags.error)
             }
         })
+    }
+    
+    func setAppType(){
+        if (self.franchise!.franchiseId == defaults.admin_id){
+            defaults.admin = true
+            if defaults.getApplicationType() == .PeakClients(.any){
+                defaults.setApplicationType(.PeakClients(.admin))
+            }
+        }else if (self.franchise!.franchiseId == defaults.woocommerce_id) &&
+                    defaults.getApplicationType() == .PeakClients(.any){
+            defaults.woocommerce = true
+            defaults.setApplicationType(.PeakClients(.unspilt))
+        }else if defaults.getApplicationType() == .PeakClients(.any){
+            defaults.setApplicationType(.PeakClients(.chemdry))
+        }
     }
 }
 

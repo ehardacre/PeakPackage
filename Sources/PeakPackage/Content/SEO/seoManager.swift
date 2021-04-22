@@ -55,6 +55,14 @@ public class SEOManager : Manager {
     //needs a public
     public override init(){}
     
+    static func getSubjectOfSearch() -> String {
+        if defaults.getApplicationType() == .NHanceConnect {
+            return "nhance"
+        } else if defaults.getApplicationType() == .PeakClients(.admin) {
+            return ""
+        }
+        return ""
+    }
     static func getSearchTerms() -> [String] {
         if defaults.getApplicationType() == .PeakClients(.admin){
             return ["internet marketing",
@@ -149,7 +157,7 @@ public class SEOManager : Manager {
         } else if weekbyweek.count > 1 {
             let first = weekbyweek.first!
             let last = weekbyweek.last!
-            let timeframe = Int(last.week.digits)
+//            let timeframe = Int(last.week.digits)
             for searchTerm in first.list{
                 for searchTerm2 in last.list{
                     if searchTerm.keyword == searchTerm2.keyword{
@@ -157,9 +165,9 @@ public class SEOManager : Manager {
                         //Calculating organic change
                         if searchTerm.organic_ranking != nil &&
                             searchTerm2.organic_ranking != nil{
-                            //both have rankings
-                            var rank1 = Int(searchTerm.organic_ranking!) ?? 0
-                            var rank2 = Int(searchTerm2.organic_ranking!) ?? 0
+                            //both hlet rankings
+                            let rank1 = Int(searchTerm.organic_ranking!) ?? 0
+                            let rank2 = Int(searchTerm2.organic_ranking!) ?? 0
                             change = rank1 == rank2 ? nil : rank1 > rank2
                         }else if searchTerm.organic_ranking == nil &&
                             searchTerm2.organic_ranking == nil{
@@ -175,8 +183,8 @@ public class SEOManager : Manager {
                         //Calculating maps change
                         if searchTerm.maps_ranking != nil &&
                             searchTerm2.maps_ranking != nil {
-                            var rank1 = Int(searchTerm.maps_ranking!) ?? 0
-                            var rank2 = Int(searchTerm2.maps_ranking!) ?? 0
+                            let rank1 = Int(searchTerm.maps_ranking!) ?? 0
+                            let rank2 = Int(searchTerm2.maps_ranking!) ?? 0
                             mapsChange = rank1 == rank2 ? nil : rank1 > rank2
                         }else if searchTerm.maps_ranking == nil &&
                             searchTerm2.maps_ranking == nil{
@@ -229,7 +237,7 @@ public class SEOManager : Manager {
             let url_str = baseURL + term
             guard let url = URL(string: url_str) else { continue }
             let body = parseHTML(url: url).lowercased()
-            //printr(body, tag: printTags.error)
+            printr(body, tag: printTags.error)
             #warning("TODO remove hard reference to nhance")
             searchArray.append(getSearchPosition(
                                 of: "nhance",
