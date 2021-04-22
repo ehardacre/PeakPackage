@@ -62,7 +62,7 @@ public class SEOManager : Manager {
         if defaults.getApplicationType() == .NHanceConnect {
             return "nhance"
         } else if defaults.getApplicationType() == .PeakClients(.admin) {
-            return "peak"
+            return "peakstudios"
         } else if defaults.getApplicationType() == .PeakClients(.chemdry) {
             return "chemdry"
         }
