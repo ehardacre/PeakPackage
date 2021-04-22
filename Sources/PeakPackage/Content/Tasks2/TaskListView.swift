@@ -25,10 +25,12 @@ struct TaskListView: View {
         self.taskManager = taskManager
         self.completedTasks = taskManager.convert(
             tasks: completedTasks,
-            selectionManager: selectionManager)
+            selectionManager: selectionManager,
+            taskManager: taskManager)
         self.openTasks = taskManager.convert(
             tasks: openTasks,
-            selectionManager: selectionManager)
+            selectionManager: selectionManager,
+            taskManager: taskManager)
     }
     
     var body: some View {

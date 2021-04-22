@@ -11,6 +11,45 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func setNotificationTokens(){
+        if defaults.getApplicationType() == .NHanceConnect{
+            let json = JsonFormat.setNotificationToken(
+                token: defaults.getNotificationToken()!,
+                category: "nhance"+defaults.franchiseId()!)
+                .format()
+            DatabaseDelegate.performRequest(
+                with: json,
+                ret: returnType.string,
+                completion:
+                    {
+                        rex in
+                    })
+            let json2 = JsonFormat.setNotificationToken(
+                token: defaults.getNotificationToken()!,
+                category: "nhancebackground")
+                .format()
+            DatabaseDelegate.performRequest(
+                with: json2,
+                ret: returnType.string,
+                completion:
+                    {
+                        rex in
+                    })
+        }else if defaults.getApplicationType() == .PeakClients(.any){
+            let json = JsonFormat.setNotificationToken(
+                token: defaults.getNotificationToken()!,
+                category: "peak"+defaults.franchiseId()!)
+                .format()
+            DatabaseDelegate.performRequest(
+                with: json,
+                ret: returnType.string,
+                completion:
+                    {
+                        rex in
+                    })
+        }
+    }
+    
     static func resendCode(code: String, contact: String, completion: @escaping (Any) -> Void){
         let json: [String: Any] = JsonFormat.resendTwoFactor(contact: contact, code: code).format()
         DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
@@ -45,7 +84,7 @@ extension DatabaseDelegate {
     }
     
     static func getUserForms(completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients {
+        if defaults.getApplicationType() == .PeakClients(.any) {
             let json = JsonFormat.getForms(visability: "peak").format()
             DatabaseDelegate.performRequest(with: json, ret: .form, completion: {
                 rex in
@@ -88,7 +127,7 @@ extension DatabaseDelegate {
     }
     
     static func submitNewFormType(form: AutoForm, completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients {
+        if defaults.getApplicationType() == .PeakClients(.any) {
             let json = JsonFormat.submitForm(title: form.title, subtitle: form.subtitle, visability: form.vis).format()
             performRequest(with: json, ret: .string, completion: {
                 rex in
@@ -102,7 +141,7 @@ extension DatabaseDelegate {
     }
     
     static func getProfiles(completion: @escaping (Any) -> Void){
-        var json = JsonFormat.getProfiles.format()
+        let json = JsonFormat.getProfiles.format()
         DatabaseDelegate.performRequest(with: json, ret: .franchiseList, completion: {
             rex in
             completion(rex)
@@ -113,7 +152,7 @@ extension DatabaseDelegate {
         var url = defaults.franchiseURL() ?? ""
         if defaults.getApplicationType() == .NHanceConnect{
             url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
-        }else if defaults.getApplicationType() == .PeakClients{
+        }else if defaults.getApplicationType() == .PeakClients(.any){
             //idk what to do here
         }
         
@@ -133,7 +172,7 @@ extension DatabaseDelegate {
         }else if defaults.getApplicationType() == .NHanceConnect{
             site = "nhance"
             url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
-        }else if defaults.getApplicationType() == .PeakClients{
+        }else if defaults.getApplicationType() == .PeakClients(.any){
             //idk what to do here
         }
         let json = JsonFormat.setSEORankings(url: url, keyword: keyword, mapRanking: String.fromInt(mapRanking)!, organicRanking: String.fromInt(organicRanking)!, site: site).format()
@@ -173,7 +212,7 @@ extension DatabaseDelegate {
     }
     
     static func getAppointments(completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients{
+        if defaults.getApplicationType() == .PeakClients(.any){
             //format the json for the request
             let json = JsonFormat.getAppointments(id: defaults.franchiseId()!).format()
             //perform the database operation
@@ -189,8 +228,7 @@ extension DatabaseDelegate {
     }
     
     static func getDashboardMessage(completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients{
-            #warning("TODO: probably gotta put something in the url")
+        if defaults.getApplicationType() == .PeakClients(.any){
             let json = JsonFormat.getDashboardMessage(url: "").format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
                 rex in
@@ -260,7 +298,7 @@ extension DatabaseDelegate {
     }
     
     static func updateTask(taskId: String, taskStatus: TaskStatus, completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients{
+        if defaults.getApplicationType() == .PeakClients(.any){
             let json = JsonFormat.updateTaskStatus(taskId: taskId, status: taskStatus.rawValue).format()
             DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                 _ in
@@ -272,7 +310,7 @@ extension DatabaseDelegate {
     }
     
     static func sendTask(ids: [String], taskInfo: String, completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients{
+        if defaults.getApplicationType() == .PeakClients(.any){
             if defaults.admin {
                 for id in ids {
                     let json = JsonFormat.setTask(id: id, value: taskInfo).format()
@@ -294,7 +332,7 @@ extension DatabaseDelegate {
     }
     
     static func getTasks(completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients{
+        if defaults.getApplicationType() == .PeakClients(.any){
             let json = JsonFormat.getTasks(id: defaults.franchiseId()!).format()
             //perform data base request
             DatabaseDelegate.performRequest(with: json, ret: returnType.taskList, completion: {

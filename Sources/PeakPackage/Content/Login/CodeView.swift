@@ -134,43 +134,7 @@ struct CodeView: View {
             defaults.franchiseName(value: self.franchise.franchiseTitle)
             defaults.setFranchiseURL(self.franchise.franchiseURL)
             if defaults.getNotificationToken() != nil{
-                if defaults.getApplicationType() == .NHanceConnect{
-                    #warning("TODO move all to db delegate")
-                    let json = JsonFormat.setNotificationToken(
-                        token: defaults.getNotificationToken()!,
-                        category: "nhance"+defaults.franchiseId()!)
-                        .format()
-                    DatabaseDelegate.performRequest(
-                        with: json,
-                        ret: returnType.string,
-                        completion:
-                            {
-                                rex in
-                            })
-                    let json2 = JsonFormat.setNotificationToken(
-                        token: defaults.getNotificationToken()!,
-                        category: "nhancebackground")
-                        .format()
-                    DatabaseDelegate.performRequest(
-                        with: json2,
-                        ret: returnType.string,
-                        completion:
-                            {
-                                rex in
-                            })
-                }else if defaults.getApplicationType() == .PeakClients{
-                    let json = JsonFormat.setNotificationToken(
-                        token: defaults.getNotificationToken()!,
-                        category: "peak"+defaults.franchiseId()!)
-                        .format()
-                    DatabaseDelegate.performRequest(
-                        with: json,
-                        ret: returnType.string,
-                        completion:
-                            {
-                                rex in
-                            })
-                }
+                DatabaseDelegate.setNotificationTokens()
             }else{
                 printr("Notification Token Nil")
             }

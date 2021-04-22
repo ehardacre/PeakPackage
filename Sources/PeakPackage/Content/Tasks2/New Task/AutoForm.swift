@@ -60,7 +60,7 @@ extension visibleAutoForm {
     
     init(visibility : String? = nil, title : String, subtitle : String, elements : [AutoFormElement]) {
         if visibility == nil {
-            if defaults.getApplicationType() == .PeakClients {
+            if defaults.getApplicationType() == .PeakClients(.any){
                 self.vis = "peak"
             }else{
                 self.vis = "nhance"

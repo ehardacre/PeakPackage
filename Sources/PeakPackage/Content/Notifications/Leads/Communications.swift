@@ -14,18 +14,18 @@ struct Communications{
     
     static func makeCall(to phone: String){
         let extras = CharacterSet(charactersIn: "-() ")
-        var cleanString = phone.replaceCharactersFromSet(
+        let cleanString = phone.replaceCharactersFromSet(
             characterSet: extras,
             replacementString: "")
         let tel = "tel://"
-        var formattedString = tel + cleanString
+        let formattedString = tel + cleanString
         let url: NSURL = URL(string: formattedString)! as NSURL
         UIApplication.shared.open(url as URL)
     }
     
     static func makeText(to phone: String){
         let extras = CharacterSet(charactersIn: "-() ")
-        var cleanString = phone.replaceCharactersFromSet(
+        let cleanString = phone.replaceCharactersFromSet(
             characterSet: extras,
             replacementString: "")
         let sms : String = "sms:+1\(cleanString)&body="
@@ -48,7 +48,7 @@ struct Communications{
                 if match.resultType == .phoneNumber {
                     let range = Range(match.range, in: content)
                     if range != nil{
-                        return content.substring(with: range!)
+                        return String(content[range!])
                     }else{
                         return nil
                     }
@@ -63,13 +63,13 @@ struct Communications{
     static func findEmail(in content : String) -> String?{
         let regex = try! NSRegularExpression(
             pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+")
-        var match = regex.firstMatch(
+        let match = regex.firstMatch(
             in: content,
             range: NSRange(content.startIndex..., in: content))
         if match != nil {
             let range = Range(match!.range, in: content)
             if range != nil{
-                return content.substring(with: range!)
+                return String(content[range!])
             }else{
                 return nil
             }
@@ -89,7 +89,7 @@ struct Communications{
                 if match.resultType == .address {
                     let range = Range(match.range, in: content)
                     if range != nil{
-                        return content.substring(with: range!)
+                        return String(content[range!])
                     }else{
                         return nil
                     }
@@ -113,7 +113,7 @@ struct Communications{
                 if match.resultType == .link {
                     let range = Range(match.range, in: content)
                     if range != nil{
-                        photoURLs.append(content.substring(with: range!))
+                        photoURLs.append(String(content[range!]))
                     }else{
                         return photoURLs
                     }

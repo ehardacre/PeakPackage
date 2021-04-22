@@ -131,7 +131,7 @@ public struct ContentView: View {
                         if defaults.getApplicationType() == .NHanceConnect {
                             Content_Leads_multiPage(
                                 manager: notificationManager)
-                        }else if defaults.getApplicationType() == .PeakClients {
+                        }else if defaults.getApplicationType() == .PeakClients(.any) {
                             Content_Leads_singlePageSectioned(
                                 manager: notificationManager)
                         }
@@ -188,7 +188,7 @@ public struct ContentView: View {
                     analyticsManager.loadAnalytics(for: .Month)
                     analyticsManager.loadAnalytics(for: .Year)
                     notificationManager.loadNotifications()
-                    if defaults.getApplicationType() == .PeakClients{
+                    if defaults.getApplicationType() == .PeakClients(.any){
                         taskManager.loadTasks()
                         taskManager.loadForms()
                         appointmentManager.loadAppointments()

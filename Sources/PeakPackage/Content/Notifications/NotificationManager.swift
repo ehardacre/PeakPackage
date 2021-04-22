@@ -116,7 +116,7 @@ public class NotificationManager : Manager {
                     self.loading[2] = true
                     self.loaded = self.checkForLoading()
             })
-        }else if defaults.getApplicationType() == .PeakClients{
+        }else if defaults.getApplicationType() == .PeakClients(.any){
             DatabaseDelegate.getPeakLeads(
                 completion:{
                 rex in

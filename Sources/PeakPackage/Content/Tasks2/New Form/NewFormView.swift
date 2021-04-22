@@ -99,14 +99,14 @@ struct NewFormView : View {
             printr("element value returned")
             DispatchQueue.global().async {
                 semaphore.wait()
-                var data = obj.userInfo as! [String : Any]
-                if let id = data["id"] as? UUID,
+                let data = obj.userInfo as! [String : Any]
+                if let _ = data["id"] as? UUID,
                          let input = data["input"] as? AutoFormElement,
-                         let key = data["key"] as? String{
+                         let _ = data["key"] as? String{
                     finalElements.append(input)
                     if loadedAllInputs {
                         printr("all elements found")
-                        var form = AutoForm(
+                        let form = AutoForm(
                             visibility: picked == 0 ? "admin" : nil,
                             title: title,
                             subtitle: subtitle,

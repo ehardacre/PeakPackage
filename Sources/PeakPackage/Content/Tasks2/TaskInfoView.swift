@@ -11,14 +11,16 @@ import SwiftUI
 
 struct TaskInfoView: View {
     
+    @State var manager : TaskManager2
     var task : Task
     var infos : [TaskField]
     @State var taskState = 0
     @State var prevTaskState = 0
     let taskStatuses = [TaskStatus.open, TaskStatus.inProgress, TaskStatus.complete]
     
-    init(task: Task) {
+    init(manager: TaskManager2, task: Task) {
         self.task = task
+        _manager = State(initialValue: manager)
         infos = TaskManager2.parseRequest(task.request)
     }
     
@@ -63,7 +65,7 @@ struct TaskInfoView: View {
                     if taskState != prevTaskState {
                         DatabaseDelegate.updateTask(taskId: task.taskId, taskStatus: taskStatuses[taskState], completion: {
                             _ in
-                            #warning("reload tasks")
+                            manager.reloadTasks()
                         })
                     }
                 }
@@ -73,6 +75,6 @@ struct TaskInfoView: View {
 
 struct TaskInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskInfoView(task: Task(id: "1", request: "(Service Page Addition for admin) Details include [Service Title: Test Service] [Custom Content: Testing new Teams update]", date: "2021-03-23 12:00:00", status: "open", type: "user_requested"))
+        TaskInfoView(manager: TaskManager2(), task: Task(id: "1", request: "(Service Page Addition for admin) Details include [Service Title: Test Service] [Custom Content: Testing new Teams update]", date: "2021-03-23 12:00:00", status: "open", type: "user_requested"))
     }
 }

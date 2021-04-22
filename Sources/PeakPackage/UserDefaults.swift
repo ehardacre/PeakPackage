@@ -10,9 +10,47 @@ import Foundation
 import UIKit
 import SwiftUI
 
-public enum ApplicationType {
-    case PeakClients
+public enum ApplicationType : Equatable{
+    case PeakClients(ClientTypes = ClientTypes.any)
+    public enum ClientTypes {
+        case any
+        case admin
+        case chemdry
+        case unspilt
+    }
     case NHanceConnect
+    case ChemDryConnect
+    
+    public static func ==(l: ApplicationType, r: ApplicationType) -> Bool{
+        switch (l,r){
+        case (.PeakClients(.any), .PeakClients(.any)):
+            return true
+        case (.PeakClients(.any), .PeakClients(.admin)):
+            return true
+        case (.PeakClients(.any), .PeakClients(.chemdry)):
+            return true
+        case (.PeakClients(.any), .PeakClients(.unspilt)):
+            return true
+        case (.PeakClients(.admin), .PeakClients(.any)):
+            return true
+        case (.PeakClients(.chemdry), .PeakClients(.any)):
+            return true
+        case (.PeakClients(.unspilt), .PeakClients(.any)):
+            return true
+        case (.PeakClients(.admin), .PeakClients(.admin)):
+            return true
+        case (.PeakClients(.chemdry), .PeakClients(.chemdry)):
+            return true
+        case (.PeakClients(.unspilt), .PeakClients(.unspilt)):
+            return true
+        case (.NHanceConnect, .NHanceConnect):
+            return true
+        case (.ChemDryConnect, .ChemDryConnect):
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 //MARK: User Defaults
@@ -270,16 +308,14 @@ struct defaults {
 
     static func allSet() -> Bool {
         var all = signedIn(exists: true)
-        if try! defaults.getApplicationType() == .NHanceConnect {
+        if defaults.getApplicationType() == .NHanceConnect {
             
-        }else if try! defaults.getApplicationType() == .PeakClients {
+        }else if defaults.getApplicationType() == .PeakClients(.any) {
             all = username(exists: true) && franchiseId(exists: true) && franchiseName(exists: true)
         }else{
             return false
         }
         return all
-        //TODO: add all variables that need to be set
-        #warning("TODO: add all variables that need to be set on sign in.")
     }
 }
 

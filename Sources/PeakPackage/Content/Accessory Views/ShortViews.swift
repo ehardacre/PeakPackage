@@ -84,7 +84,7 @@ struct LeadsShortView : View {
                 perform: {
                     note in
             
-                    if let leads = note.object as? [Lead] {
+                    if (note.object as? [Lead]) != nil {
                         lead = parent
                             .notificationManager
                             .todaysScheduled()
@@ -185,7 +185,7 @@ struct DashboardAnalytics: View {
             perform: {
                 note in
         
-                if let analytics = note.object as? [Analytics] {
+                if (note.object as? [Analytics]) != nil {
                     dataSource = analyticsMan.today
                 }
         })

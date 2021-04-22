@@ -45,11 +45,11 @@ struct LoginView: View {
         VStack{
             Header(viewRouter: viewRouter, back: false)
             Spacer()
-            if try! defaults.getApplicationType() == .NHanceConnect {
+            if defaults.getApplicationType() == .NHanceConnect {
                 LoginFields_Nhance(
                     email: $email,
                     showActionSheet_ipad: $showActionSheet_ipad)
-            }else if try! defaults.getApplicationType() == .PeakClients {
+            }else if defaults.getApplicationType() == .PeakClients(.any) {
                 LoginFields_Peak(
                     firstname: $firstname,
                     lastname: $lastname,

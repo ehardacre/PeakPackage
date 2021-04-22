@@ -97,7 +97,7 @@ enum AutoFormInputType{
     
     func databaseID() -> String {
         switch self {
-        case .Multichoice(let options):
+        case .Multichoice( _):
             return "6"
         case .ShortString:
             return "1"
@@ -116,7 +116,7 @@ enum AutoFormInputType{
     
     func imageName() -> String {
         switch self{
-        case .Multichoice(let _):
+        case .Multichoice( _):
             return "list.bullet.rectangle"
         case .ShortString:
             return "bubble.left"

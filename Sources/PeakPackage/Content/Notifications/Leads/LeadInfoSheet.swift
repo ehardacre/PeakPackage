@@ -73,7 +73,7 @@ struct LeadInfoSheet: View {
                 }
                 #warning("TODO all of this broken")
                 if images.count != 0 &&
-                    defaults.getApplicationType() != .PeakClients{
+                    defaults.getApplicationType() != .PeakClients(.any){
                     ScrollView(.horizontal){
                         HStack{
                             ForEach(images, id: \.id){ image in
@@ -171,7 +171,7 @@ struct LeadInfoSheet: View {
                 BottomBar_NHance(
                     email: email,
                     phoneNumber: phoneNumber)
-            }else if defaults.getApplicationType() == .PeakClients{
+            }else if defaults.getApplicationType() == .PeakClients(.any){
                 BottomBar_Peak(
                     id: lead.notification_id,
                     state_str: lead.notification_state,

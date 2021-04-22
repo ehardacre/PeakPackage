@@ -100,7 +100,7 @@ extension Task {
      #Convert To Card
      - Returns: (TaskCardView) returns a view for a task card corresponding to the task (self)
      */
-    func convertToCard(with selectionManager: SelectionManager) -> TaskCardView2{
+    func convertToCard(with selectionManager: SelectionManager, and taskManager: TaskManager2) -> TaskCardView2{
         //the request
         
         var request = self.request
@@ -152,6 +152,7 @@ extension Task {
         //create the card view
         return TaskCardView2(
             selectionManager: selectionManager,
+            taskManager: taskManager,
             task: self,
             type: type,
             date: TaskManager.cleanDate(self.date),

@@ -45,22 +45,51 @@ struct viewableSearchResult{
 
 public class SEOManager : Manager {
     #warning("TODO change terms based on app type")
-    static var terms = ["cabinet refinishing",
-                        "cabinet refinisher",
-                        "cabinet painting",
-                        "cabinet painter",
-                        "cabinet refacing",
-                        "cabinet door replacement",
-                        "floor refinishing",
-                        "floor sanding",
-                        "cabinet color change",
-                        "custom color cabinets"]
+    static var terms : [String] {
+        return getSearchTerms()
+    }
     
     @Published var rankings : [viewableSearchResult] = []
     @Published var weekbyweek : [SearchRankingforTime] = []
     
     //needs a public
     public override init(){}
+    
+    static func getSearchTerms() -> [String] {
+        if defaults.getApplicationType() == .PeakClients(.admin){
+            return ["internet marketing",
+                    "franchise marketing",
+                    "chem dry marketing",
+                    "seo solutions",
+                    "franchise web solutions",
+                    "website development"]
+        }else if defaults.getApplicationType() == .NHanceConnect {
+            return ["cabinet refinishing",
+                    "cabinet refinisher",
+                    "cabinet painting",
+                    "cabinet painter",
+                    "cabinet refacing",
+                    "cabinet door replacement",
+                    "floor refinishing",
+                    "floor sanding",
+                    "cabinet color change",
+                    "custom color cabinets"]
+        }else if defaults.getApplicationType() == .ChemDryConnect ||
+                    defaults.getApplicationType() == .PeakClients(.chemdry){
+            return ["carpet cleaning",
+                    "carpet cleaner",
+                    "rug cleaning",
+                    "pet odor removal",
+                    "put urine stain removal",
+                    "furniture cleaning",
+                    "carpet stain removal",
+                    "tile cleaning",
+                    "chem dry",
+                    "upholstery cleaning"]
+        }
+        
+        return []
+    }
     
     func loadRankings(){
             DatabaseDelegate.getSEORankings(

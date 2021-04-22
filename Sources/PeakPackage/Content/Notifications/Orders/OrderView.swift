@@ -104,7 +104,7 @@ extension OrderCardView {
         dateFormatter.dateFormat = "yyyy-MM-ddHH:mm:ss"
         var date = dateFormatter.date(from:str_date)!
         date = date.toLocalTime()
-        var dateString = date.dayOfWeekWithMonthAndDay
+        let dateString = date.dayOfWeekWithMonthAndDay
         return dateString
     }
     
@@ -113,7 +113,7 @@ extension OrderCardView {
         dateFormatter.dateFormat = "yyyy-MM-ddHH:mm:ss"
         var date = dateFormatter.date(from:str_date)!
         date = date.toLocalTime()
-        var dateString = date.timeOnlyWithPadding
+        let dateString = date.timeOnlyWithPadding
         return dateString
     }
 }

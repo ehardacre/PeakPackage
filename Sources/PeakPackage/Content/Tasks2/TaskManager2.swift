@@ -50,6 +50,14 @@ public class TaskManager2 : Manager{
             })
     }
     
+    func reloadTasks(){
+        DatabaseDelegate.getTasks(completion: {
+            rex in
+            self.tasks = self.removeAppts(tasks: rex as! [Task])
+            self.sortTasks()
+        })
+    }
+    
     ///sorts the tasks by completed to in progress to open
     func sortTasks(){
         for t in tasks {
@@ -148,12 +156,12 @@ public class TaskManager2 : Manager{
      - Parameter tasks : the tasks to be converted to task card views
             TODO: make an extension of task
      */
-    func convert(tasks: [Task], selectionManager: SelectionManager) -> [TaskCardView2] {
+    func convert(tasks: [Task], selectionManager: SelectionManager, taskManager: TaskManager2) -> [TaskCardView2] {
         //empty list of cards
         var cards : [TaskCardView2] = []
         //loop through tasks and individually convert them
         for task in tasks {
-            cards.append(task.convertToCard(with: selectionManager))
+            cards.append(task.convertToCard(with: selectionManager, and: taskManager))
         }
         return cards.reversed()
     }

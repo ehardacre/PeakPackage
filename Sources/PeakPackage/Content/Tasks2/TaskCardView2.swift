@@ -11,6 +11,7 @@ struct TaskCardView2: View {
     
     var id = UUID()
     @ObservedObject var selectionManager : SelectionManager
+    @State var taskManager : TaskManager2
     var task : Task? //allow nil for testing
     //the type of the task is passed as an argument
     var type : TaskType
@@ -78,7 +79,7 @@ struct TaskCardView2: View {
             isPresented: $showMoreInfo,
             content: {
                 if self.task != nil {
-                    TaskInfoView(task: self.task!)
+                    TaskInfoView(manager: taskManager, task: self.task!)
                         .onDisappear{
                             self.selectionManager.id = nil
                         }
@@ -91,6 +92,7 @@ struct TaskCardView2_Previews: PreviewProvider {
     static var previews: some View {
         TaskCardView2(
             selectionManager: SelectionManager(),
+            taskManager: TaskManager2(),
             task: nil,
             type: TaskType(
                 status: TaskStatus.inProgress,
