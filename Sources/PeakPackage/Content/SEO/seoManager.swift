@@ -245,6 +245,7 @@ public class SEOManager : Manager {
             let body = parseHTML(url: url).lowercased()
             printr(body, tag: printTags.error)
             #warning("TODO remove hard reference to nhance")
+            printr(subject)
             searchArray.append(getSearchPosition(
                                 of: subject,
                                 in: body,
