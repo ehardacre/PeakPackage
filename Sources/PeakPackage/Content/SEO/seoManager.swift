@@ -48,6 +48,9 @@ public class SEOManager : Manager {
     static var terms : [String] {
         return getSearchTerms()
     }
+    static var subject : String {
+        return getSubjectOfSearch()
+    }
     
     @Published var rankings : [viewableSearchResult] = []
     @Published var weekbyweek : [SearchRankingforTime] = []
@@ -59,7 +62,9 @@ public class SEOManager : Manager {
         if defaults.getApplicationType() == .NHanceConnect {
             return "nhance"
         } else if defaults.getApplicationType() == .PeakClients(.admin) {
-            return ""
+            return "peak"
+        } else if defaults.getApplicationType() == .PeakClients(.chemdry) {
+            return "chemdry"
         }
         return ""
     }
@@ -70,7 +75,8 @@ public class SEOManager : Manager {
                     "chem dry marketing",
                     "seo solutions",
                     "franchise web solutions",
-                    "website development"]
+                    "website development",
+                    "peak studios"]
         }else if defaults.getApplicationType() == .NHanceConnect {
             return ["cabinet refinishing",
                     "cabinet refinisher",
@@ -240,7 +246,7 @@ public class SEOManager : Manager {
             printr(body, tag: printTags.error)
             #warning("TODO remove hard reference to nhance")
             searchArray.append(getSearchPosition(
-                                of: "nhance",
+                                of: subject,
                                 in: body,
                                 searchTerm: term))
         }
