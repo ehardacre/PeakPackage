@@ -284,7 +284,7 @@ public class SEOManager : Manager {
         searchTerm: String)
     -> scrapedSearchResult{
         
-        let links = matches(for: "www.[^ ]*.com", in: html)
+        let links = matches(for: "http[^ ]*.com", in: html)
         let tempterm = searchTerm.replacingOccurrences(of: "+", with: " ")
         var organicRank = -1
         for index in 0..<links.count{
