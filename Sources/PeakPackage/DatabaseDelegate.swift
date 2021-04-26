@@ -152,8 +152,6 @@ extension DatabaseDelegate {
         var url = defaults.franchiseURL() ?? ""
         if defaults.getApplicationType() == .NHanceConnect{
             url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
-        }else if defaults.getApplicationType() == .PeakClients(.any){
-            //idk what to do here
         }
         
         let json = JsonFormat.getSEORankings(url: url).format()
@@ -172,8 +170,12 @@ extension DatabaseDelegate {
         }else if defaults.getApplicationType() == .NHanceConnect{
             site = "nhance"
             url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
-        }else if defaults.getApplicationType() == .PeakClients(.any){
-            //idk what to do here
+        }else if defaults.getApplicationType() == .PeakClients(.admin){
+            site = "peak"
+        }else if defaults.getApplicationType() == .PeakClients(.chemdry){
+            site = "peakchem"
+        }else if defaults.getApplicationType() == .ChemDryConnect{
+            site = "chemdry"
         }
         let json = JsonFormat.setSEORankings(url: url, keyword: keyword, mapRanking: String.fromInt(mapRanking)!, organicRanking: String.fromInt(organicRanking)!, site: site).format()
         
