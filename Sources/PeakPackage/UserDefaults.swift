@@ -63,6 +63,7 @@ struct defaults {
     //MARK: Stored Values for All
     
     private static var application : ApplicationType? = nil
+    private static var tempAppType : ApplicationType? = nil
     //these are the print logs stored for viewing by admin for debugging
     private static var logs = [String]()
     private static var loaded = false
@@ -111,7 +112,11 @@ struct defaults {
         if self.application == nil {
             fatalError("Application Type must be set")
         }
-        return self.application!
+        var app = application!
+        if urlChanged {
+            app = tempAppType ?? application!
+        }
+        return app
     }
     
     /**
@@ -229,6 +234,9 @@ struct defaults {
             UserDefaults.standard.set(url, forKey: temp_url_key)
             UserDefaults.standard.set(name, forKey: temp_name_key)
             UserDefaults.standard.set(id, forKey: temp_id_key)
+            if name.contains("Chem-Dry"){
+                tempAppType = .PeakClients(.chemdry)
+            }
         }
     }
     
@@ -246,10 +254,20 @@ struct defaults {
     
     static func franchiseId(value: String){
         UserDefaults.standard.set(value, forKey: franchise_key)
+        if value == admin_id && application == .PeakClients(.any) {
+            application = .PeakClients(.admin)
+            admin = true
+        }else if value == woocommerce_id && application == .PeakClients(.any) {
+            application = .PeakClients(.unspilt)
+            woocommerce = true
+        }
     }
 
     static func franchiseName(value: String){
         UserDefaults.standard.set(value, forKey: name_key)
+        if value.contains("Chem-Dry") && application == .PeakClients(.any){
+            application = .PeakClients(.chemdry)
+        }
     }
     
     static func username(value: String){
