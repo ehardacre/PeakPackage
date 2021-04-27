@@ -173,6 +173,8 @@ public struct ContentView: View {
                         for: Notification.Name(rawValue: "profileChanged"))
                 ){
                     note in
+                    var notecount = UserDefaults.standard.integer(forKey: "notificationcount") ?? 0
+                    printr(notecount, tag: printTags.error)
                     if note.object == nil ||
                         note.object as? Int == 1 ||
                         defaults.franchiseName() ?? "" == "admin"{
