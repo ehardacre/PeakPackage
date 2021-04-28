@@ -10,6 +10,7 @@ import CoreData
 import SwiftUI
 import UserNotifications
 import AVFoundation
+import BackgroundTasks
 
 public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate{
 
@@ -22,7 +23,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotification
         //ask for permissions
         registerForPushNotifications()
         application.registerForRemoteNotifications()
-        
         
         return true
     }
