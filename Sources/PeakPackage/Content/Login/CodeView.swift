@@ -133,11 +133,6 @@ struct CodeView: View {
             defaults.franchiseId(value: self.franchise.franchiseId)
             defaults.franchiseName(value: self.franchise.franchiseTitle)
             defaults.setFranchiseURL(self.franchise.franchiseURL)
-            if defaults.getNotificationToken() != nil{
-                DatabaseDelegate.setNotificationTokens()
-            }else{
-                printr("Notification Token Nil")
-            }
             //go to content
             viewRouter.currentPage = LoginPages.content
         }

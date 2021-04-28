@@ -163,6 +163,11 @@ public struct ContentView: View {
                     radius: 4, y: -4)
                 .frame(maxHeight: 70)
                 .onAppear{
+                    if defaults.getNotificationToken() != nil{
+                        DatabaseDelegate.setNotificationTokens()
+                    }else{
+                        printr("Notification Token Nil")
+                    }
                     NotificationCenter.default.post(
                         Notification(
                             name: Notification.Name("profileChanged"),
