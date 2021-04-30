@@ -29,10 +29,13 @@ struct CalendarView2: View {
                 TabView(selection: $selectedMonth) {
                     MonthView2(selectionMan: selectionMan, month: .last)
                         .tag(0)
+                        .padding(.bottom)
                     MonthView2(selectionMan: selectionMan, month: .current)
                         .tag(1)
+                        .padding(.bottom)
                     MonthView2(selectionMan: selectionMan, month: .next)
                         .tag(2)
+                        .padding(.bottom)
                 }
                 .frame(width: geo.size.width)
                 .tabViewStyle(PageTabViewStyle())
@@ -41,7 +44,7 @@ struct CalendarView2: View {
             //TestViewForDateChanging(selectionMan: selectionMan)
             
         }
-        .padding(.bottom, 30)
+        .padding(0)
     }
 }
 
