@@ -20,6 +20,7 @@ class CalendarSelectionManager : ObservableObject{
 
 struct CalendarView2: View {
     
+    @State var taskManager : TaskManager2
     @State var selectedMonth = 1
     @State var selectionMan = CalendarSelectionManager()
     
@@ -29,19 +30,18 @@ struct CalendarView2: View {
                 TabView(selection: $selectedMonth) {
                     MonthView2(selectionMan: selectionMan, month: .last)
                         .tag(0)
-                        .padding(.bottom)
                     MonthView2(selectionMan: selectionMan, month: .current)
                         .tag(1)
-                        .padding(.bottom)
                     MonthView2(selectionMan: selectionMan, month: .next)
                         .tag(2)
-                        .padding(.bottom)
                 }
                 .frame(width: geo.size.width)
                 .tabViewStyle(PageTabViewStyle())
             }
             
-            //TestViewForDateChanging(selectionMan: selectionMan)
+            TaskListView(taskManager: taskManager,
+                         completedTasks: taskManager.completedTasks,
+                         openTasks: taskManager.openTasks)
             
         }
         .padding(0)
