@@ -64,25 +64,25 @@ struct MonthView2: View{
     var body: some View {
         GeometryReader{ geo in
             VStack{
-                VStack{
-                    Text(month.getName())
-                        .CardTitle()
-                    LazyVGrid(columns: columns){
-                        ForEach(columnHeaders, id: \.self) { header in
-                            Text(header)
-                                .font(.footnote)
-                        }
-                        ForEach(month.getDays(selectionMan), id: \.id) { dateView in
-                            dateView
-                        }
+                Text(month.getName())
+                    .CardTitle()
+                LazyVGrid(columns: columns){
+                    ForEach(columnHeaders, id: \.self) { header in
+                        Text(header)
+                            .font(.footnote)
+                    }
+                    ForEach(month.getDays(selectionMan), id: \.id) { dateView in
+                        dateView
+                    }
+                    ForEach(0..<7, id: \.self) { _ in
+                        Text("").frame(height: 40) ///blank rows for spacing fix
                     }
                 }
-                .padding(20)
-                .frame(width: geo.size.width)
-                .background(Color.darkAccent.opacity(0.1))
-                .cornerRadius(20)
-                Spacer(minLength: 50)
             }
+            .padding(20)
+            .frame(width: geo.size.width)
+            .background(Color.darkAccent.opacity(0.1))
+            .cornerRadius(20)
         }
         .padding(20)
     }
