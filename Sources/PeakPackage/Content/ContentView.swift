@@ -139,8 +139,9 @@ public struct ContentView: View {
                         Content_Calendar(
                             manager: appointmentManager)
                     }else if tab == tabs.tasks{
-                        Content_Tasks2(
-                            manager: taskManager)
+                        //Content_Tasks2(
+                            //manager: taskManager)
+                        Content_TaskCalendar(manager: taskManager)
                     }else if tab == tabs.dashboard{
                         Content_Dashboard(
                             manager: dashboardManager,
