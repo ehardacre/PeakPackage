@@ -29,11 +29,15 @@ struct CalendarView2: View {
                 TabView(selection: $selectedMonth) {
                     MonthView2(selectionMan: selectionMan, month: .last)
                         .tag(0)
+                        .zIndex(1)
                     MonthView2(selectionMan: selectionMan, month: .current)
                         .tag(1)
+                        .zIndex(1)
                     MonthView2(selectionMan: selectionMan, month: .next)
                         .tag(2)
+                        .zIndex(1)
                 }
+                .zIndex(0)
                 .frame(width: geo.size.width)
                 .tabViewStyle(PageTabViewStyle())
             }
