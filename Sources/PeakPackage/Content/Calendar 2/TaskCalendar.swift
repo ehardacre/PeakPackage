@@ -32,10 +32,6 @@ struct TaskCalendar : View {
 //                             openTasks: taskManager.openTasks)
                 CalendarView2()
                 
-                VStack{
-                    Text("This is where tasks go")
-                }
-                .background(Color.lightAccent)
             }
     }
 }

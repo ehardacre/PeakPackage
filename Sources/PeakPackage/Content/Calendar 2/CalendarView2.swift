@@ -38,11 +38,37 @@ struct CalendarView2: View {
                 .tabViewStyle(PageTabViewStyle())
             }
             
-            VStack{
-                Text("This is where they go")
-            }
+            TestViewForDateChanging(selectionMan: selectionMan)
+            
         }
+        .padding(0)
     }
 }
 
+struct TestViewForDateChanging : View {
+    
+    @State var selectionMan : CalendarSelectionManager
+    @State var text = ""
+    
+    var body : some View {
+        VStack{
+            HStack{
+                Spacer()
+                Text(text)
+                Spacer()
+            }
+            Spacer()
+        }
+        .padding(20)
+        .background(Color.black.opacity(0.1))
+        .cornerRadius(20)
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { _ in
+            if selectionMan.selection == nil {
+                text = ""
+            }else{
+                text = "\(selectionMan.selection!.get(.month))/\(selectionMan.selection!.get(.day))"
+            }
+        })
+    }
+}
 
