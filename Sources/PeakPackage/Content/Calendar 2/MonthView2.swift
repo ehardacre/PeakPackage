@@ -74,7 +74,7 @@ struct MonthView2: View{
                     ForEach(month.getDays(selectionMan), id: \.id) { dateView in
                         dateView
                     }
-                    ForEach(columnHeaders, id: \.self) { _ in
+                    ForEach(0..<7, id: \.self) { _ in
                         Text("") ///blank rows for spacing fix
                     }
                 }
