@@ -26,15 +26,12 @@ struct TaskCalendar : View {
     @State var makingNewTask = false
 
     var body: some View {
-        GeometryReader{ geo in
-            VStack{
-            CalendarView2()
-                .frame(width: geo.size.width, height: geo.size.height/2)
-            TaskListView(taskManager: taskManager,
-                         completedTasks: taskManager.completedTasks,
-                         openTasks: taskManager.openTasks)
-                .frame(width: geo.size.width, height: geo.size.height/2)
+            ZStack{
+                TaskListView(taskManager: taskManager,
+                             completedTasks: taskManager.completedTasks,
+                             openTasks: taskManager.openTasks)
+                CalendarView2()
+                    
             }
-        }
     }
 }
