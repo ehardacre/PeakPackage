@@ -24,8 +24,6 @@ struct CalendarView2: View {
     @State var selectionMan = CalendarSelectionManager()
     
     var body: some View {
-        VStack{
-            Spacer()
             GeometryReader{ geo in
                 TabView(selection: $selectedMonth) {
                     MonthView2(selectionMan: selectionMan, month: .last)
@@ -38,8 +36,6 @@ struct CalendarView2: View {
                 .frame(width: geo.size.width)
                 .tabViewStyle(PageTabViewStyle())
             }
-            Spacer()
-        }
     }
 }
 

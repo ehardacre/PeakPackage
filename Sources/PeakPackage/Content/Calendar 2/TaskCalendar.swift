@@ -27,10 +27,14 @@ struct TaskCalendar : View {
 
     var body: some View {
         VStack{
+            GeometryReader{ geo in
             CalendarView2()
+                .frame(width: geo.size.width, height: geo.size.height/2)
             TaskListView(taskManager: taskManager,
                          completedTasks: taskManager.completedTasks,
                          openTasks: taskManager.openTasks)
+                .frame(width: geo.size.width, height: geo.size.height/2)
+            }
         }
     }
 }
