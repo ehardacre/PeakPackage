@@ -41,7 +41,7 @@ struct CalendarView2: View {
             //TestViewForDateChanging(selectionMan: selectionMan)
             
         }
-        .padding(0)
+        .padding(.bottom, 30)
     }
 }
 

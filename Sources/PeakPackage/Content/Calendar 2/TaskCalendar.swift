@@ -28,7 +28,6 @@ struct TaskCalendar : View {
     var body: some View {
         VStack{
             CalendarView2()
-                .padding(.bottom, 30)
             TaskListView(taskManager: taskManager,
                          completedTasks: taskManager.completedTasks,
                          openTasks: taskManager.openTasks)
