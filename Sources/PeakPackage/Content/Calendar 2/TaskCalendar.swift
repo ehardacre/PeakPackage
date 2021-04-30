@@ -28,6 +28,9 @@ struct TaskCalendar : View {
     var body: some View {
         VStack{
             CalendarView2()
+            TaskListView(taskManager: taskManager,
+                         completedTasks: taskManager.completedTasks,
+                         openTasks: taskManager.openTasks)
         }
     }
 }

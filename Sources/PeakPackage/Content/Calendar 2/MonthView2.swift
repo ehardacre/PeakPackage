@@ -65,6 +65,7 @@ struct MonthView2: View{
         GeometryReader{ geo in
             VStack{
                 Text(month.getName())
+                    .CardTitle()
                 LazyVGrid(columns: columns){
                     ForEach(columnHeaders, id: \.self) { header in
                         Text(header)
@@ -77,7 +78,7 @@ struct MonthView2: View{
             }
             .padding(20)
             .frame(width: geo.size.width)
-            .background(Color.black.opacity(0.1))
+            .background(Color.darkAccent.opacity(0.1))
             .cornerRadius(20)
         }
         .padding(20)

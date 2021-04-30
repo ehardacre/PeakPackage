@@ -26,6 +26,7 @@ struct DayView2 : View {
                     .frame(height: 40)
                     .overlay(
                         Text("\(day!.get(.day))")
+                            .CardTitle_light()
                     )
                     .onTapGesture {
                         selectionMan.selectDate(nil)
@@ -36,6 +37,7 @@ struct DayView2 : View {
                     .frame(height: 40)
                     .overlay(
                         Text("\(day!.get(.day))")
+                            .CardTitle()
                     )
                     .onTapGesture {
                         selectionMan.selectDate(day)
