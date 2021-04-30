@@ -16,18 +16,21 @@ public struct Content_TaskCalendar : PublicFacingContent {
     }
     
     public var body: some View {
-        CalendarView2(taskManager: manager as! TaskManager2)
+        TaskCalendar(taskManager: manager as! TaskManager2)
     }
 }
 
-//struct TaskCalendar : View {
-//    
-//    @State var taskManager : TaskManager2
-//    @State var makingNewTask = false
-//    
-//    var body: some View {
-//        VStack{
-//            CalendarView2(taskManager: taskManager)
-//        }
-//    }
-//}
+struct TaskCalendar : View {
+
+    @State var taskManager : TaskManager2
+    @State var makingNewTask = false
+
+    var body: some View {
+        VStack{
+            CalendarView2()
+            TaskListView(taskManager: taskManager,
+                         completedTasks: taskManager.completedTasks,
+                         openTasks: taskManager.openTasks)
+        }
+    }
+}
