@@ -36,6 +36,7 @@ struct CalendarView2: View {
             .frame(width: geo.size.width)
             .tabViewStyle(PageTabViewStyle())
         }
+        .padding(.bottom, 50)
     }
 }
 
