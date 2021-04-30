@@ -82,7 +82,6 @@ struct MonthView2: View{
             .cornerRadius(20)
         }
         .padding(20)
-        .padding(.bottom, 50)
     }
 
 }
