@@ -26,12 +26,16 @@ struct TaskCalendar : View {
     @State var makingNewTask = false
 
     var body: some View {
-            ZStack{
-                TaskListView(taskManager: taskManager,
-                             completedTasks: taskManager.completedTasks,
-                             openTasks: taskManager.openTasks)
+            VStack{
+//                TaskListView(taskManager: taskManager,
+//                             completedTasks: taskManager.completedTasks,
+//                             openTasks: taskManager.openTasks)
                 CalendarView2()
-                    
+                
+                VStack{
+                    Text("This is where tasks go")
+                }
+                .background(Color.lightAccent)
             }
     }
 }
