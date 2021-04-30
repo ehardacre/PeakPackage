@@ -80,7 +80,7 @@ struct MonthView2: View{
                 }
             }
             .padding(20)
-            .frame(width: geo.size.width, height: geo.size.height/2 + 50)
+            .frame(width: geo.size.width)
             .background(Color.darkAccent.opacity(0.1))
             .cornerRadius(20)
         }

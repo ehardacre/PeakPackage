@@ -34,7 +34,7 @@ struct CalendarView2: View {
                     MonthView2(selectionMan: selectionMan, month: .next)
                         .tag(2)
                 }
-                .frame(width: geo.size.width)
+                .frame(width: geo.size.width, height: geo.size.height/2 + 50)
                 .tabViewStyle(PageTabViewStyle())
             }
             
