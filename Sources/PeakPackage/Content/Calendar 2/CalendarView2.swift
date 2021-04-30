@@ -38,23 +38,24 @@ struct CalendarView2: View {
                 .tabViewStyle(PageTabViewStyle())
             }
             
-            TestViewForDateChanging(selectionMan: selectionMan)
+            byDateTaskView(selectionMan: selectionMan)
             
         }
         .padding(0)
     }
 }
 
-struct TestViewForDateChanging : View {
+struct byDateTaskView : View {
     
     @State var selectionMan : CalendarSelectionManager
-    @State var text = ""
+    @State var text = "today"
     
     var body : some View {
         VStack{
             HStack{
                 Spacer()
                 Text(text)
+                    .CardTitle()
                 Spacer()
             }
             Spacer()
@@ -64,9 +65,9 @@ struct TestViewForDateChanging : View {
         .cornerRadius(20)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { _ in
             if selectionMan.selection == nil {
-                text = ""
+                text = "today"
             }else{
-                text = "\(selectionMan.selection!.get(.month))/\(selectionMan.selection!.get(.day))"
+                text = "\(selectionMan.selection!.abbreviatedMonth) \(selectionMan.selection!.get(.day))"
             }
         })
     }
