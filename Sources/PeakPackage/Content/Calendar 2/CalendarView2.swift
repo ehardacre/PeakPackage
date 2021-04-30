@@ -24,19 +24,22 @@ struct CalendarView2: View {
     @State var selectionMan = CalendarSelectionManager()
     
     var body: some View {
-        GeometryReader{ geo in
-            TabView(selection: $selectedMonth) {
-                MonthView2(selectionMan: selectionMan, month: .last)
-                    .tag(0)
-                MonthView2(selectionMan: selectionMan, month: .current)
-                    .tag(1)
-                MonthView2(selectionMan: selectionMan, month: .next)
-                    .tag(2)
+        VStack{
+            Spacer()
+            GeometryReader{ geo in
+                TabView(selection: $selectedMonth) {
+                    MonthView2(selectionMan: selectionMan, month: .last)
+                        .tag(0)
+                    MonthView2(selectionMan: selectionMan, month: .current)
+                        .tag(1)
+                    MonthView2(selectionMan: selectionMan, month: .next)
+                        .tag(2)
+                }
+                .frame(width: geo.size.width)
+                .tabViewStyle(PageTabViewStyle())
             }
-            .frame(width: geo.size.width)
-            .tabViewStyle(PageTabViewStyle())
+            Spacer()
         }
-        .padding(.bottom, 50)
     }
 }
 
