@@ -23,23 +23,27 @@ struct CalendarView2: View {
     @State var taskManager : TaskManager2
     @State var selectedMonth = 1
     @State var selectionMan = CalendarSelectionManager()
+    @State var calendarShowing = false
     
     var body: some View {
         VStack{
-            GeometryReader{ geo in
-                TabView(selection: $selectedMonth) {
-                    MonthView2(selectionMan: selectionMan, month: .last)
-                        .tag(0)
-                    MonthView2(selectionMan: selectionMan, month: .current)
-                        .tag(1)
-                    MonthView2(selectionMan: selectionMan, month: .next)
-                        .tag(2)
+            
+            if calendarShowing {
+                GeometryReader{ geo in
+                    TabView(selection: $selectedMonth) {
+                        MonthView2(selectionMan: selectionMan, month: .last)
+                            .tag(0)
+                        MonthView2(selectionMan: selectionMan, month: .current)
+                            .tag(1)
+                        MonthView2(selectionMan: selectionMan, month: .next)
+                            .tag(2)
+                    }
+                    .frame(width: geo.size.width)
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 }
-                .frame(width: geo.size.width)
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             }
             
-            byDateTaskView(taskManager: taskManager, selectionMan: selectionMan)
+            byDateTaskView(taskManager: taskManager, selectionMan: selectionMan, calendarShowing: $calendarShowing)
             
         }
         .padding(0)
@@ -50,6 +54,7 @@ struct byDateTaskView : View {
     
     @State var taskManager : TaskManager2
     @State var selectionMan : CalendarSelectionManager
+    @Binding var calendarShowing : Bool
     @State var text = "today"
     @State var makingNewTask = false
     
@@ -59,10 +64,14 @@ struct byDateTaskView : View {
                 HStack{
                     Text(text)
                         .CardTitle()
+                    Image(systemName: calendarShowing ? "chevron.up" : "chevron.down")
                 }
                 .padding(10)
                 .background(Color.lightAccent)
                 .cornerRadius(10)
+                .onTapGesture {
+                    calendarShowing.toggle()
+                }
                 
                 Spacer()
                 
