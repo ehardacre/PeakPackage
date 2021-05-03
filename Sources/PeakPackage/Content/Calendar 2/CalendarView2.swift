@@ -89,7 +89,9 @@ struct byDateTaskView : View {
                 HStack{
                     Spacer()
                         Image(systemName: "calendar")
+                            .imageScale(.large)
                             .foregroundColor(.darkAccent)
+                            .padding(10)
                             .background(calendarShowing ? Color.lightAccent : Color.clear)
                             .cornerRadius(10)
                             .onTapGesture {
