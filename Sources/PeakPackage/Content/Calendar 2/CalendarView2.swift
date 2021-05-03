@@ -67,6 +67,9 @@ struct byDateTaskView : View {
                     .padding(10)
                     .background(Color.lightAccent)
                     .cornerRadius(10)
+                    .onTapGesture {
+                        selectionMan.selectDate(nil)
+                    }
                     
                     Spacer()
                     
