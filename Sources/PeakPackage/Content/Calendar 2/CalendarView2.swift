@@ -62,6 +62,9 @@ struct byDateTaskView : View {
                         .CardTitle()
                     Spacer()
                 }
+                .padding(10)
+                .background(Color.lightAccent)
+                .cornerRadius(10)
                 HStack{
                     Spacer()
                     Button(action: {
@@ -69,6 +72,7 @@ struct byDateTaskView : View {
                     }, label: {
                         Image(systemName: "plus.circle.fill")
                             .foregroundColor(.darkAccent)
+                            .imageScale(.large)
                     })
                 }
             }
