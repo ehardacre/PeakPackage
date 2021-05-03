@@ -55,27 +55,33 @@ struct byDateTaskView : View {
     
     var body : some View {
         VStack{
-            ZStack{
+            HStack{
                 HStack{
-                    Spacer()
                     Text(text)
                         .CardTitle()
-                    Spacer()
                 }
                 .padding(10)
                 .background(Color.lightAccent)
                 .cornerRadius(10)
-                HStack{
-                    Spacer()
-                    Button(action: {
-                        makingNewTask = true
-                    }, label: {
+                
+                Spacer()
+                
+                
+                Button(action: {
+                    makingNewTask = true
+                }, label: {
+                    HStack{
+                        Text("New Task")
+                            .CardTitle()
                         Image(systemName: "plus.circle.fill")
                             .foregroundColor(.darkAccent)
                             .imageScale(.large)
-                    })
-                }
+                    }
+                })
+                
+                
             }
+            
             Spacer()
         }
         .padding(20)
