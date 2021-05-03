@@ -96,6 +96,7 @@ struct byDateTaskView : View {
                             .cornerRadius(10)
                             .onTapGesture {
                                 calendarShowing.toggle()
+                                NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange")))
                             }
                     Spacer()
                 }
