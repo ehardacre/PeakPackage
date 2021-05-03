@@ -40,7 +40,7 @@ struct CalendarView2: View {
                 .frame(width: geo.size.width, height: calendarShowing ? geo.size.height/2 : 0)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
-                byDateTaskView(taskManager: taskManager, selectionMan: selectionMan, calendarShowing: $calendarShowing.animation())
+                byDateTaskView(taskManager: taskManager, selectionMan: selectionMan, calendarShowing: $calendarShowing)
                 
             }
             .padding(0)
@@ -95,8 +95,9 @@ struct byDateTaskView : View {
                             .background(calendarShowing ? Color.lightAccent : Color.clear)
                             .cornerRadius(10)
                             .onTapGesture {
-                                calendarShowing.toggle()
-                                NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange")))
+                                withAnimation{
+                                    calendarShowing.toggle()
+                                }
                             }
                     Spacer()
                 }

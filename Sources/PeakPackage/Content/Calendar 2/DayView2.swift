@@ -44,6 +44,13 @@ struct DayView2 : View {
                     }
             }
         }
+        .onAppear{
+            if selectionMan.selection == day {
+                selected = true
+            }else{
+                selected = false
+            }
+        }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { _ in
             if selectionMan.selection == day {
                 selected = true
