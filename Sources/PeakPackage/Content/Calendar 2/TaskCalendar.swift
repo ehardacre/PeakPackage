@@ -30,7 +30,7 @@ struct TaskCalendar : View {
 //                TaskListView(taskManager: taskManager,
 //                             completedTasks: taskManager.completedTasks,
 //                             openTasks: taskManager.openTasks)
-                CalendarView2()
+                CalendarView2(taskManager: taskManager)
                 
             }
     }

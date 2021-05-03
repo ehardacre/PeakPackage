@@ -20,6 +20,7 @@ class CalendarSelectionManager : ObservableObject{
 
 struct CalendarView2: View {
     
+    @State var taskManager : TaskManager2
     @State var selectedMonth = 1
     @State var selectionMan = CalendarSelectionManager()
     
@@ -38,7 +39,7 @@ struct CalendarView2: View {
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             }
             
-            byDateTaskView(selectionMan: selectionMan)
+            byDateTaskView(taskManager: taskManager, selectionMan: selectionMan)
             
         }
         .padding(0)
@@ -47,16 +48,29 @@ struct CalendarView2: View {
 
 struct byDateTaskView : View {
     
+    @State var taskManager : TaskManager2
     @State var selectionMan : CalendarSelectionManager
     @State var text = "today"
+    @State var makingNewTask = false
     
     var body : some View {
         VStack{
-            HStack{
-                Spacer()
-                Text(text)
-                    .CardTitle()
-                Spacer()
+            ZStack{
+                HStack{
+                    Spacer()
+                    Text(text)
+                        .CardTitle()
+                    Spacer()
+                }
+                HStack{
+                    Spacer()
+                    Button(action: {
+                        makingNewTask = true
+                    }, label: {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.darkAccent)
+                    })
+                }
             }
             Spacer()
         }
@@ -69,6 +83,11 @@ struct byDateTaskView : View {
             }else{
                 text = "\(selectionMan.selection!.abbreviatedMonth) \(selectionMan.selection!.get(.day))"
             }
+        })
+        .sheet(
+            isPresented: $makingNewTask,
+            content: {
+                NewTaskPage(forms: taskManager.forms)
         })
     }
 }
