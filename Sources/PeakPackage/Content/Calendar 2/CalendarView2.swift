@@ -35,7 +35,7 @@ struct CalendarView2: View {
                         .tag(2)
                 }
                 .frame(width: geo.size.width)
-                .tabViewStyle(PageTabViewStyle())
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             }
             
             byDateTaskView(selectionMan: selectionMan)
