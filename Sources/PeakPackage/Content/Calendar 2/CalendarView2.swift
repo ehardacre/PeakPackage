@@ -26,27 +26,25 @@ struct CalendarView2: View {
     @State var calendarShowing = false
     
     var body: some View {
-        VStack{
-            
-            if calendarShowing {
-                GeometryReader{ geo in
-                    TabView(selection: $selectedMonth) {
-                        MonthView2(selectionMan: selectionMan, month: .last)
-                            .tag(0)
-                        MonthView2(selectionMan: selectionMan, month: .current)
-                            .tag(1)
-                        MonthView2(selectionMan: selectionMan, month: .next)
-                            .tag(2)
-                    }
-                    .frame(width: geo.size.width)
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+        GeometryReader{ geo in
+            VStack{
+                
+                TabView(selection: $selectedMonth) {
+                    MonthView2(selectionMan: selectionMan, month: .last)
+                        .tag(0)
+                    MonthView2(selectionMan: selectionMan, month: .current)
+                        .tag(1)
+                    MonthView2(selectionMan: selectionMan, month: .next)
+                        .tag(2)
                 }
+                .frame(width: geo.size.width, height: calendarShowing ? geo.size.height/2 : 0)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                
+                byDateTaskView(taskManager: taskManager, selectionMan: selectionMan, calendarShowing: $calendarShowing.animation())
+                
             }
-            
-            byDateTaskView(taskManager: taskManager, selectionMan: selectionMan, calendarShowing: $calendarShowing)
-            
+            .padding(0)
         }
-        .padding(0)
     }
 }
 
@@ -60,35 +58,46 @@ struct byDateTaskView : View {
     
     var body : some View {
         VStack{
-            HStack{
+            ZStack{
                 HStack{
-                    Text(text)
-                        .CardTitle()
-                    Image(systemName: calendarShowing ? "chevron.up" : "chevron.down")
-                }
-                .padding(10)
-                .background(Color.lightAccent)
-                .cornerRadius(10)
-                .onTapGesture {
-                    calendarShowing.toggle()
-                }
-                
-                Spacer()
-                
-                
-                Button(action: {
-                    makingNewTask = true
-                }, label: {
                     HStack{
-                        Text("New Task")
+                        Text(text)
                             .CardTitle()
-                        Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.darkAccent)
-                            .imageScale(.large)
                     }
-                })
-                
-                
+                    .padding(10)
+                    .background(Color.lightAccent)
+                    .cornerRadius(10)
+                    
+                    Spacer()
+                    
+                    
+                    Button(action: {
+                        makingNewTask = true
+                    }, label: {
+                        HStack{
+                            Text("New Task")
+                                .CardTitle()
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.darkAccent)
+                                .imageScale(.large)
+                        }
+                    })
+                    
+                    
+                }
+            
+                HStack{
+                    Spacer()
+                        Image(systemName: "calendar")
+                            .foregroundColor(.darkAccent)
+                            .background(calendarShowing ? Color.lightAccent : Color.clear)
+                            .cornerRadius(10)
+                            .onTapGesture {
+                                calendarShowing.toggle()
+                            }
+                    Spacer()
+                }
+            
             }
             
             Spacer()
