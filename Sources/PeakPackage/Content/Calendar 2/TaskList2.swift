@@ -55,8 +55,8 @@ struct TaskListView2: View {
             }
         }
         .CleanList(rowH: 80)
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { obj in
-            var date = (obj as? Date) ?? Date()
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { note in
+            var date = (note["date"] as? Date) ?? Date()
             printr("changing tasks")
             printr(date)
             var newCompleted = taskManager.getCompleteTasks(for: date)

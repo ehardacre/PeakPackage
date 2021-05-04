@@ -14,7 +14,7 @@ class CalendarSelectionManager : ObservableObject{
     
     func selectDate(_ date: Date?){
         selection = date
-        NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange"),object: selection))
+        NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange"),userInfo: ["date": date])
     }
 }
 
