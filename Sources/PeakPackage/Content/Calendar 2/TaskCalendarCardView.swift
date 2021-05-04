@@ -115,7 +115,7 @@ struct ShortCardView: View {
             }
             VStack{
                 HStack{
-                    Text(title)
+                    Text(TaskManager2.parseRequest(content).first?.title ?? "Task")
                         .CardTitle()
                     Spacer()
                     Text(sub)
