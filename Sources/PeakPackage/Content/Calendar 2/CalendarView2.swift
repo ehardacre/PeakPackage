@@ -60,10 +60,6 @@ struct byDateTaskView : View {
         VStack{
             ZStack{
                 
-                
-                TaskListView(taskManager: taskManager, completedTasks: taskManager.completedTasks, openTasks: taskManager.openTasks)
-                
-                
                 HStack{
                     HStack{
                         Text(text)
@@ -111,6 +107,8 @@ struct byDateTaskView : View {
                 }
             
             }
+            
+            TaskListView(taskManager: taskManager, completedTasks: taskManager.completedTasks, openTasks: taskManager.openTasks)
             
             Spacer()
         }
