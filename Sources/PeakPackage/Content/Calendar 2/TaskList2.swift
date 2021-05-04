@@ -81,13 +81,3 @@ struct TaskListView2: View {
     }
 }
 
-struct TaskListView_Preview : PreviewProvider {
-    static var previews: some View{
-        TaskListView(
-            taskManager: TaskManager2(),
-            completedTasks: TaskManager2.generateCompleteTasks(num: 3),
-            openTasks: TaskManager2.generateOpenTasks(num: 10))
-    }
-}
-
-
