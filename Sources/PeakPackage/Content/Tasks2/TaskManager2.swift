@@ -175,12 +175,13 @@ public class TaskManager2 : Manager{
         return cards.reversed()
     }
     
+    //gets open tasks after a given date
     func getOpenTasks(for date: Date) -> [Task]{
         var tasklist : [Task] = []
         for task in openTasks {
             var taskdate = TaskManager2.stringDateToDate(task.date)
             var diff = Calendar.current.dateComponents([.day], from: taskdate, to: date)
-            if diff.day == 0 {
+            if diff.day ?? -1 >= 0 {
                 tasklist.append(task)
             }
         }
