@@ -89,6 +89,7 @@ struct byDateTaskView : View {
                     
                     
                 }
+                .padding(20)
             
                 HStack{
                     Spacer()
@@ -105,14 +106,16 @@ struct byDateTaskView : View {
                             }
                     Spacer()
                 }
+                .padding(20)
             
             }
             
-            TaskListView(taskManager: taskManager, completedTasks: taskManager.completedTasks, openTasks: taskManager.openTasks)
+            Divider().frame(width: 250)
+            
+            TaskListView2(taskManager: taskManager, completedTasks: taskManager.completedTasks, openTasks: taskManager.openTasks)
             
             Spacer()
         }
-        .padding(20)
         .background(Color.black.opacity(0.1))
         .cornerRadius(20)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { _ in
