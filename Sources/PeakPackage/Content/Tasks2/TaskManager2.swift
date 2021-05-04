@@ -132,6 +132,13 @@ public class TaskManager2 : Manager{
         return cleanedDate
     }
     
+    static func stringDateToDate(_ strdate: String) -> Date{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy"
+        let datedate = dateFormatter.date(from: strdate)
+        return datedate ?? Date()
+    }
+    
     /**
     # Reset Tasks
      forces a hard reset on the tasks
@@ -164,6 +171,30 @@ public class TaskManager2 : Manager{
             cards.append(task.convertToCard(with: selectionManager, and: taskManager))
         }
         return cards.reversed()
+    }
+    
+    func getOpenTasks(for date: Date) -> [Task]{
+        var tasklist : [Task] = []
+        for task in openTasks {
+            var taskdate = TaskManager2.stringDateToDate(task.date)
+            var diff = Calendar.current.dateComponents([.day], from: taskdate, to: date)
+            if diff.day == 0 {
+                tasklist.append(task)
+            }
+        }
+        return tasklist
+    }
+    
+    func getCompleteTasks(for date: Date) -> [Task]{
+        var tasklist : [Task] = []
+        for task in completedTasks {
+            var taskdate = TaskManager2.stringDateToDate(task.date)
+            var diff = Calendar.current.dateComponents([.day], from: taskdate, to: date)
+            if diff.day == 0 {
+                tasklist.append(task)
+            }
+        }
+        return tasklist
     }
     
     func convertForCalendar(tasks: [Task], selectionManager: SelectionManager, taskManager: TaskManager2) -> [TaskCalendarCardView]{

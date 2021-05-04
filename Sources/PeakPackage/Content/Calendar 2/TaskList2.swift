@@ -15,8 +15,8 @@ struct TaskListView2: View {
     @State var completeListOpen = false
     
     var taskManager : TaskManager2
-    var completedTasks : [TaskCalendarCardView] = []
-    var openTasks : [TaskCalendarCardView] = []
+    @State var completedTasks : [TaskCalendarCardView] = []
+    @State var openTasks : [TaskCalendarCardView] = []
     
     init(
         taskManager: TaskManager2,
@@ -55,6 +55,21 @@ struct TaskListView2: View {
             }
         }
         .CleanList(rowH: 80)
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { obj in
+            var date = (obj as? Date) ?? Date()
+            printr("changing tasks")
+            printr(date)
+            var newCompleted = taskManager.getCompleteTasks(for: date)
+            self.completedTasks = taskManager.convertForCalendar(
+                tasks: newCompleted,
+                selectionManager: selectionManager,
+                taskManager: taskManager)
+            var newOpen = taskManager.getCompleteTasks(for: date)
+            self.openTasks = taskManager.convertForCalendar(
+                tasks: newOpen,
+                selectionManager: selectionManager,
+                taskManager: taskManager)
+        })
     }
 }
 
