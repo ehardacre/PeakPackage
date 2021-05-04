@@ -137,7 +137,6 @@ public class TaskManager2 : Manager{
         //2020-10-13 18:07:12
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let datedate = dateFormatter.date(from: strdate)
-        printr("blah blah \(datedate)")
         return datedate ?? Date()
     }
     

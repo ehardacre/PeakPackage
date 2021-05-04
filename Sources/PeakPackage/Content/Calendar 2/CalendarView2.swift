@@ -110,7 +110,7 @@ struct byDateTaskView : View {
             
             }
             
-            TaskListView2(taskManager: taskManager, completedTasks: taskManager.completedTasks, openTasks: taskManager.openTasks)
+            TaskListView2(taskManager: taskManager, completedTasks: taskManager.getCompleteTasks(for: Date()), openTasks: taskManager.getOpenTasks(for: Date()))
                 .cornerRadius(20)
             
             Spacer()
