@@ -64,7 +64,7 @@ struct TaskListView2: View {
                 tasks: newCompleted,
                 selectionManager: selectionManager,
                 taskManager: taskManager)
-            var newOpen = taskManager.getCompleteTasks(for: date)
+            var newOpen = taskManager.getOpenTasks(for: date)
             self.openTasks = taskManager.convertForCalendar(
                 tasks: newOpen,
                 selectionManager: selectionManager,
