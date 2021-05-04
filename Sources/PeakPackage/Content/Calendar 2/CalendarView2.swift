@@ -110,8 +110,6 @@ struct byDateTaskView : View {
             
             }
             
-            Divider().frame(width: 250)
-            
             TaskListView2(taskManager: taskManager, completedTasks: taskManager.completedTasks, openTasks: taskManager.openTasks)
             
             Spacer()
