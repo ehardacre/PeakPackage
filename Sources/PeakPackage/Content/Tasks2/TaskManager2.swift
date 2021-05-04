@@ -133,10 +133,10 @@ public class TaskManager2 : Manager{
     }
     
     static func stringDateToDate(_ strdate: String) -> Date{
-        printr("blah blah \(strdate)")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-mm-dd hh:mm:ss"
         let datedate = dateFormatter.date(from: strdate)
+        printr("blah blah \(datedate ?? "")")
         return datedate ?? Date()
     }
     
