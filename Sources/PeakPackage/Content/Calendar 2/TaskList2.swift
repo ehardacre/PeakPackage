@@ -76,8 +76,8 @@ struct TaskListView2: View {
                     .Caption()
             }
         }
-        .background(Color.clear)
         .CleanList()
+        .background(Color.clear)
     }
 }
 
