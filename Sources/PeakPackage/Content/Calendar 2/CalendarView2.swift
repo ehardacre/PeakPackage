@@ -59,6 +59,11 @@ struct byDateTaskView : View {
     var body : some View {
         VStack{
             ZStack{
+                
+                
+                TaskListView(taskManager: taskManager, completedTasks: taskManager.completedTasks, openTasks: taskManager.openTasks)
+                
+                
                 HStack{
                     HStack{
                         Text(text)
