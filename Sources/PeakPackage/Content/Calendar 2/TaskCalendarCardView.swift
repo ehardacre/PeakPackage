@@ -117,7 +117,7 @@ struct ShortCardView: View {
                 HStack{
 //                    Text(TaskManager2.parseRequest(content).first?.title ?? "Task")
 //                        .CardTitle()
-                    Text(content)
+                    Text(getTaskType(from:content))
                         .CardTitle()
                     Spacer()
                     Text(sub)
@@ -150,5 +150,19 @@ struct ShortCardView: View {
                 onSelection()
             }
         })
+    }
+    
+    func getTaskType(from content: String) -> String{
+        
+        var parts = content.components(separatedBy: "]")
+        guard let titlesection = parts.first else {
+            return "Task"
+        }
+        var cleanedTitle = titlesection
+            .replacingOccurrences(of: "]", with: "")
+            .replacingOccurrences(of: "[", with: "")
+        cleanedTitle = cleanedTitle.components(separatedBy: "for").first ?? "Task"
+        return cleanedTitle
+        
     }
 }
