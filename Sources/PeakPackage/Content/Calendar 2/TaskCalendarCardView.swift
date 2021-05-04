@@ -120,8 +120,6 @@ struct ShortCardView: View {
                     Text(getTaskType(from:content))
                         .CardTitle()
                     Spacer()
-                    Text(sub)
-                        .CardTitle()
                 }
             }
             .padding(.horizontal, 10.0)

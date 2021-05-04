@@ -36,35 +36,13 @@ struct TaskListView2: View {
     var body: some View {
         List{
             //COmpleted Tasks
-            HStack{
-                Text("Completed")
-                    .SectionTitle()
-                Spacer()
-                if !completedTasks.isEmpty{
-                    Button(action: {
-                        completeListOpen.toggle()
-                    }, label: {
-                        Text(completeListOpen ? "See Less" : "See More")
-                            .ColorButtonText()
-                    })
-                    .TrailingButton()
-                }
+            ForEach(completedTasks, id: \.id){
+                task in
+                task
             }
-            if completedTasks.count > 0 {
-                if !completeListOpen {
-                    completedTasks.first!
-                } else {
-                    ForEach(completedTasks.prefix(10), id: \.id){
-                        task in
-                        task
-                    }
-                }
-            } else {
-                Text("No Completed Tasks")
-                    .Caption()
-            }
+            
             //Open Tasks
-            Text("Open")
+            Text("In Progress")
                 .SectionTitle()
             if openTasks.count > 0 {
                 ForEach(openTasks, id: \.id){
