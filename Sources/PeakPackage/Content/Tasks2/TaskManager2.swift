@@ -166,6 +166,17 @@ public class TaskManager2 : Manager{
         return cards.reversed()
     }
     
+    func convertForCalendar(tasks: [Task], selectionManager: SelectionManager, taskManager: TaskManager2) -> [TaskCalendarCardView]{
+        
+        var cards : [TaskCalendarCardView] = []
+        
+        for task in tasks {
+            cards.append(task.convertToCalendarCard(with: selectionManager, and: taskManager))
+        }
+        
+        return cards.reversed()
+    }
+    
     static func parseRequest(_ req: String) -> [TaskField]{
         
         var tempDetails : [TaskField] = []

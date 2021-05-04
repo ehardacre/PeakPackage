@@ -97,6 +97,51 @@ extension Task {
     }
     
     /**
+     #Convert to Calendar Card
+     */
+    func convertToCalendarCard(with selectionManager: SelectionManager, and taskManager: TaskManager2) -> TaskCalendarCardView{
+        
+        var request = self.request
+        var franchise = defaults.franchiseName() ?? ""
+        
+        let end = request.firstIndex(of: "]")
+        let start = request.firstIndex(of: "[")
+        
+        if end != nil && start != nil {
+            
+            request = String(request[(start ?? request.startIndex) ... (end ?? request.endIndex)])
+            request
+                .replacingOccurrences(of: "]", with: "")
+                .replacingOccurrences(of: "[", with: "")
+            let info = request.split(separator: ":")
+            
+            if info.count > 1{
+                
+                request = String(info[0])
+                
+                if defaults.admin {
+                    franchise = String(info[1])
+                }
+                
+            }
+            
+        }
+        
+        request = request + " for " + franchise
+        
+        let type = self.getType()
+        //create the card view
+        return TaskCalendarCardView(
+            selectionManager: selectionManager,
+            taskManager: taskManager,
+            task: self,
+            type: type,
+            date: TaskManager.cleanDate(self.date),
+            content: request )
+        
+    }
+    
+    /**
      #Convert To Card
      - Returns: (TaskCardView) returns a view for a task card corresponding to the task (self)
      */
