@@ -31,6 +31,11 @@ struct CalendarView2: View {
                 
                 TaskCalendarHeader(taskManager: taskManager, selectionMan: selectionMan, calendarShowing: $calendarShowing)
                 
+                Divider()
+                    .foregroundColor(Color.darkAccent)
+                    .frame(width: geo.size.width)
+                    .padding(0)
+                
                 TabView(selection: $selectedMonth) {
                     MonthView2(selectionMan: selectionMan, month: .last)
                         .tag(0)
@@ -117,7 +122,6 @@ struct TaskCalendarHeader : View {
             
             
         }
-        .padding(20)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { _ in
             if selectionMan.selection == nil {
                 text = "today"
