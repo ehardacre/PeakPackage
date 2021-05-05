@@ -44,11 +44,13 @@ struct CalendarView2: View {
                     MonthView2(selectionMan: selectionMan, month: .next)
                         .tag(2)
                 }
+                .padding(0)
                 .frame(width: geo.size.width, height: calendarShowing ? geo.size.height/2 : 0)
                 .opacity(calendarShowing ? 1 : 0)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
                 byDateTaskView(taskManager: taskManager)
+                    .padding(0)
                 
             }
             .padding(0)
