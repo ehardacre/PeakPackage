@@ -29,6 +29,8 @@ struct CalendarView2: View {
         GeometryReader{ geo in
             VStack{
                 
+                TaskCalendarHeader(taskManager: taskManager, selectionMan: selectionMan, calendarShowing: $calendarShowing)
+                
                 TabView(selection: $selectedMonth) {
                     MonthView2(selectionMan: selectionMan, month: .last)
                         .tag(0)
@@ -40,7 +42,7 @@ struct CalendarView2: View {
                 .frame(width: geo.size.width, height: calendarShowing ? geo.size.height/2 : 0)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
-                byDateTaskView(taskManager: taskManager, selectionMan: selectionMan, calendarShowing: $calendarShowing)
+                byDateTaskView(taskManager: taskManager)
                 
             }
             .padding(0)
@@ -51,58 +53,9 @@ struct CalendarView2: View {
 struct byDateTaskView : View {
     
     @State var taskManager : TaskManager2
-    @State var selectionMan : CalendarSelectionManager
-    @Binding var calendarShowing : Bool
-    @State var text = "today"
-    @State var makingNewTask = false
     
     var body : some View {
         VStack{
-            ZStack{
-                
-                HStack{
-                    HStack{
-                        Text(text)
-                            .CardTitle()
-                    }
-                    .padding(10)
-                    .background(Color.lightAccent)
-                    .cornerRadius(10)
-                    .onTapGesture {
-                        selectionMan.selectDate(nil)
-                    }
-                    Image(systemName: "calendar")
-                        .imageScale(.large)
-                        .foregroundColor(.darkAccent)
-                        .padding(10)
-                        .background(calendarShowing ? Color.lightAccent : Color.clear)
-                        .cornerRadius(10)
-                        .onTapGesture {
-                            withAnimation{
-                                calendarShowing.toggle()
-                            }
-                        }
-                    
-                    Spacer()
-                    
-                    
-                    Button(action: {
-                        makingNewTask = true
-                    }, label: {
-                        HStack{
-                            Text("New Task")
-                                .CardTitle()
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundColor(.darkAccent)
-                                .imageScale(.large)
-                        }
-                    })
-                    
-                    
-                }
-                .padding(20)
-            
-            }
             
             TaskListView2(taskManager: taskManager, completedTasks: taskManager.getCompleteTasks(for: Date()), openTasks: taskManager.getOpenTasks(for: Date()))
                 .cornerRadius(20)
@@ -111,6 +64,59 @@ struct byDateTaskView : View {
         }
         .background(Color.black.opacity(0.1))
         .cornerRadius(20)
+    }
+}
+
+struct TaskCalendarHeader : View {
+    
+    @State var taskManager : TaskManager2
+    @State var selectionMan : CalendarSelectionManager
+    @Binding var calendarShowing : Bool
+    @State var text = "today"
+    @State var makingNewTask = false
+    
+    var body : some View {
+        HStack{
+            HStack{
+                Text(text)
+                    .CardTitle()
+            }
+            .padding(10)
+            .background(Color.lightAccent)
+            .cornerRadius(10)
+            .onTapGesture {
+                selectionMan.selectDate(nil)
+            }
+            Image(systemName: "calendar")
+                .imageScale(.large)
+                .foregroundColor(.darkAccent)
+                .padding(10)
+                .background(calendarShowing ? Color.lightAccent : Color.clear)
+                .cornerRadius(10)
+                .onTapGesture {
+                    withAnimation{
+                        calendarShowing.toggle()
+                    }
+                }
+            
+            Spacer()
+            
+            
+            Button(action: {
+                makingNewTask = true
+            }, label: {
+                HStack{
+                    Text("New Task")
+                        .CardTitle()
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.darkAccent)
+                        .imageScale(.large)
+                }
+            })
+            
+            
+        }
+        .padding(20)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { _ in
             if selectionMan.selection == nil {
                 text = "today"
