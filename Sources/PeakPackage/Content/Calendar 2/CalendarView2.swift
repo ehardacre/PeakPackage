@@ -27,7 +27,7 @@ struct CalendarView2: View {
     
     var body: some View {
         GeometryReader{ geo in
-            VStack{
+            VStack(spacing: 0){
                 
                 TaskCalendarHeader(taskManager: taskManager, selectionMan: selectionMan, calendarShowing: $calendarShowing)
                 
