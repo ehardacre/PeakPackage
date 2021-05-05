@@ -18,17 +18,16 @@ struct TaskListView2: View {
     @State var completedTasks : [TaskCalendarCardView] = []
     @State var openTasks : [TaskCalendarCardView] = []
     
-    init(
-        taskManager: TaskManager2,
-        completedTasks : [Task],
-        openTasks : [Task]){
+    init(taskManager: TaskManager2){
         self.taskManager = taskManager
+        var newCompleted = taskManager.getCompleteTasks(for: Date())
         self.completedTasks = taskManager.convertForCalendar(
-            tasks: completedTasks,
+            tasks: newCompleted,
             selectionManager: selectionManager,
             taskManager: taskManager)
+        var newOpen = taskManager.getOpenTasks(for: Date())
         self.openTasks = taskManager.convertForCalendar(
-            tasks: openTasks,
+            tasks: newOpen,
             selectionManager: selectionManager,
             taskManager: taskManager)
     }

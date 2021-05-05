@@ -65,7 +65,7 @@ struct byDateTaskView : View {
     var body : some View {
         VStack{
             
-            TaskListView2(taskManager: taskManager, completedTasks: taskManager.getCompleteTasks(for: Date()), openTasks: taskManager.getOpenTasks(for: Date()))
+            TaskListView2(taskManager: taskManager)
                 .cornerRadius(20)
             
             Spacer()
