@@ -39,7 +39,7 @@ struct CalendarView2: View {
                     MonthView2(selectionMan: selectionMan, month: .next)
                         .tag(2)
                 }
-                .frame(width: geo.size.width, height: calendarShowing ? geo.size.height/2 : -10)
+                .frame(width: geo.size.width, height: calendarShowing ? geo.size.height/2 : 0)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
                 byDateTaskView(taskManager: taskManager)
@@ -62,7 +62,7 @@ struct byDateTaskView : View {
             
             Spacer()
         }
-        .background(Color.black.opacity(0.1))
+        .background(Color.lightAccent)
         .cornerRadius(20)
     }
 }
