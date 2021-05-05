@@ -40,10 +40,9 @@ struct TaskListView2: View {
                 task in
                 task
             }
-            
-            //Open Tasks
-            Text("In Progress")
-                .SectionTitle()
+//            //Open Tasks
+//            Text("In Progress")
+//                .SectionTitle()
             if openTasks.count > 0 {
                 ForEach(openTasks, id: \.id){
                     task in
