@@ -40,6 +40,7 @@ struct CalendarView2: View {
                         .tag(2)
                 }
                 .frame(width: geo.size.width, height: calendarShowing ? geo.size.height/2 : 0)
+                .opacity(calendarShowing ? 1 : 0)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
                 byDateTaskView(taskManager: taskManager)
