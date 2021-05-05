@@ -20,7 +20,18 @@ struct TaskListView2: View {
     
     init(taskManager: TaskManager2){
         self.taskManager = taskManager
-        NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange"),object: Date()))
+        printr("getting tasks for list")
+        var newCompleted = taskManager.getCompleteTasks(for: Date())
+        self.completedTasks = taskManager.convertForCalendar(
+            tasks: newCompleted,
+            selectionManager: selectionManager,
+            taskManager: taskManager)
+        var newOpen = taskManager.getOpenTasks(for: Date())
+        self.openTasks = taskManager.convertForCalendar(
+            tasks: newOpen,
+            selectionManager: selectionManager,
+            taskManager: taskManager)
+        
     }
     
     var body: some View {

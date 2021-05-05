@@ -177,6 +177,7 @@ public class TaskManager2 : Manager{
     //gets open tasks after a given date
     func getOpenTasks(for date: Date) -> [Task]{
         var tasklist : [Task] = []
+        printr("in open tasks: \(openTasks.count)")
         for task in openTasks {
             var taskdate = TaskManager2.stringDateToDate(task.date)
             var diff = Calendar.current.dateComponents([.day], from: taskdate, to: date)
@@ -189,6 +190,7 @@ public class TaskManager2 : Manager{
     
     func getCompleteTasks(for date: Date) -> [Task]{
         var tasklist : [Task] = []
+        printr("in completed tasks: \(completedTasks.count)")
         for task in completedTasks {
             var taskdate = TaskManager2.stringDateToDate(task.date)
             var diff = Calendar.current.dateComponents([.day], from: taskdate, to: date)
