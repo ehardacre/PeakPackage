@@ -284,7 +284,7 @@ struct TimeInputCardView : View {
                         .CardTitle()
                 }
             }
-            Text(hourOpts[timeIndex]).Caption()
+            .pickerStyle(SegmentedPickerStyle())
             
         }
         .BasicContentCard()
