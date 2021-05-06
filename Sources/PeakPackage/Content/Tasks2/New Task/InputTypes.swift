@@ -63,7 +63,7 @@ enum AutoFormInputType{
                             title: label,
                             prompt: prompt))
         case .Time:
-            return AnyView(DateTimeInputCardView(
+            return AnyView(TimeInputCardView(
                             id: id,
                             title: label,
                             prompt: prompt))
