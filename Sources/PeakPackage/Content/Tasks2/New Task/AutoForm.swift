@@ -269,7 +269,7 @@ struct TimeInputCardView : View {
     
     @State var timeIndex : Int = 0
     
-    let hourOpts = ["11:00","11:30","12:00","12:30","1:00","1:30"]
+    let hourOpts = ["11:00 AM","11:30 AM","12:00 PM","12:30 PM","1:00 PM","1:30 PM","2:30 PM","3:00 PM","3:30 PM","4:00 PM","4:30 PM","5:00 PM","5:30 PM","6:00 PM","6:30 PM","7:00 PM","7:30 PM","8:00 PM","8:30 PM","9:00 PM"]
     
     var body : some View {
         HStack{
@@ -281,7 +281,7 @@ struct TimeInputCardView : View {
                 ForEach(hourOpts, id: \.self){
                     time in
                     Text(time)
-                        .Caption()
+                        .CardTitle()
                 }
             }
             Text(hourOpts[timeIndex]).Caption()
