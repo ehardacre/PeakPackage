@@ -260,18 +260,31 @@ struct DateInputCardView : View {
     }
 }
 
-struct DateTimeInputCardView : View {
+struct TimeInputCardView : View {
     
     var id : UUID
     @State var title : String
     @State var prompt : String
     @State var input : Date = Date()
     
+    @State var timeIndex : Int = 0
+    
+    let hourOpts = ["11:00","11:30","12:00","12:30","1:00","1:30"]
+    
     var body : some View {
         HStack{
-            Text(prompt)
-                .Caption()
-            DatePicker("", selection: $input, displayedComponents: [.date,.hourAndMinute])
+//            Text(prompt)
+//                .Caption()
+//            DatePicker("", selection: $input, displayedComponents: [.date,.hourAndMinute])
+            
+            Picker("Time:", selection: $timeIndex){
+                ForEach(hourOpts, id: \.self){
+                    time in
+                    Text(time)
+                        .Caption()
+                }
+            }
+            
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in
