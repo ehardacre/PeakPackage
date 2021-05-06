@@ -274,6 +274,8 @@ struct MyDatePicker: UIViewRepresentable {
         let picker = UIDatePicker()
         // listen to changes coming from the date picker, and use them to update the state variable
         picker.addTarget(context.coordinator, action: #selector(Coordinator.dateChanged), for: .valueChanged)
+        picker.maximumDate = Calendar.current.date(bySetting: .hour, value: 23, of: selection)
+        picker.minimumDate = Calendar.current.date(bySetting: .hour, value: 11, of: selection)
         return picker
     }
 
@@ -310,7 +312,7 @@ struct TimeInputCardView : View {
     var id : UUID
     @State var title : String
     @State var prompt : String
-    @State var input : Date = Date()
+    @State var input : Date = Calendar.current.date(bySetting: .minute, value: 0, of: Date())!
     
     @State var timeIndex : Int = 0
     
@@ -323,7 +325,7 @@ struct TimeInputCardView : View {
 //            DatePicker("", selection: $input, displayedComponents: [.date,.hourAndMinute])
             
             MyDatePicker(selection: $input, displayedComponents: .hourAndMinute)
-            
+                .frame(height: 50)
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in
