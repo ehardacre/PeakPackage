@@ -96,6 +96,8 @@ enum AutoFormInputType{
             return "Int"
         case .Date:
             return "Date"
+        case .Time:
+            return "Time"
         case .Image:
             return "Image"
         default:
@@ -115,6 +117,8 @@ enum AutoFormInputType{
             return "3"
         case .Date:
             return "4"
+        case .Time:
+            return "7"
         case .Image:
             return "5"
         default:
@@ -134,6 +138,8 @@ enum AutoFormInputType{
             return "number.square"
         case .Date:
             return "calendar"
+        case .Time:
+            return "clock.fill"
         case .Image:
             return "photo"
         default:
