@@ -284,6 +284,7 @@ struct TimeInputCardView : View {
                         .Caption()
                 }
             }
+            Text(hourOpts[timeIndex]).Caption()
             
         }
         .BasicContentCard()
