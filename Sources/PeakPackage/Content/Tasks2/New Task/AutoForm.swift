@@ -274,13 +274,13 @@ struct MyDatePicker: UIViewRepresentable {
         let picker = UIDatePicker()
         // listen to changes coming from the date picker, and use them to update the state variable
         picker.addTarget(context.coordinator, action: #selector(Coordinator.dateChanged), for: .valueChanged)
-        picker.maximumDate = Calendar.current.date(bySetting: .hour, value: 23, of: selection)
-        picker.minimumDate = Calendar.current.date(bySetting: .hour, value: 11, of: selection)
         return picker
     }
 
     func updateUIView(_ picker: UIDatePicker, context: UIViewRepresentableContext<MyDatePicker>) {
         picker.minuteInterval = minuteInterval
+        picker.maximumDate = Calendar.current.date(bySetting: .hour, value: 23, of: selection)
+        picker.minimumDate = Calendar.current.date(bySetting: .hour, value: 11, of: selection)
         picker.date = selection
 
         switch displayedComponents {
