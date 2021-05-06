@@ -255,7 +255,42 @@ struct DateInputCardView : View {
     
     func parseInputDate() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yMd"
+        formatter.dateFormat = "MM/dd/yyyy"
+        return formatter.string(from: input)
+    }
+}
+
+struct DateTimeInputCardView : View {
+    
+    var id : UUID
+    @State var title : String
+    @State var prompt : String
+    @State var input : Date = Date()
+    
+    var body : some View {
+        HStack{
+            Text(prompt)
+                .Caption()
+            DatePicker("", selection: $input, displayedComponents: [.date,.hourAndMinute])
+        }
+        .BasicContentCard()
+        .onReceive(formPub, perform: { obj in
+            if let info = obj.userInfo{
+                if let collectedId = info["id"] as? UUID {
+                    if collectedId == id {
+                        NotificationCenter.default.post(
+                            name: Notification.Name("ElementValue"),
+                            object: nil,
+                            userInfo: ["input" :  parseInputDate(), "id" : id, "key" : title])
+                    }
+                }
+            }
+        })
+    }
+    
+    func parseInputDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
         return formatter.string(from: input)
     }
 }

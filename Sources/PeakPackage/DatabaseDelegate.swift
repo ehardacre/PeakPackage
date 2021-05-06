@@ -11,6 +11,11 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    
+    static func getOpenAppointments(){
+        
+    }
+    
     static func setNotificationTokens(){
         if defaults.getApplicationType() == .NHanceConnect{
             let json = JsonFormat.setNotificationToken(

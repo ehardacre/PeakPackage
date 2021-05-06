@@ -13,6 +13,7 @@ enum AutoFormInputType{
     case LongString
     case Int
     case Date
+    case Time
     case Image
     case Multichoice(options : [String])
     
@@ -26,6 +27,8 @@ enum AutoFormInputType{
             self = .Int
         case "Date":
             self = .Date
+        case "Time":
+            self = .Time
         case "Image":
             self = .Image
         case let str where str.contains("Multichoice"):
@@ -56,6 +59,11 @@ enum AutoFormInputType{
                             integer: true))
         case .Date:
             return AnyView(DateInputCardView(
+                            id: id,
+                            title: label,
+                            prompt: prompt))
+        case .Time:
+            return AnyView(DateTimeInputCardView(
                             id: id,
                             title: label,
                             prompt: prompt))

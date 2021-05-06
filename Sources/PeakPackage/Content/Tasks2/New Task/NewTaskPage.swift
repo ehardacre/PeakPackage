@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+fileprivate var appointmentElements : [AutoFormElement] = [
+    AutoFormElement(label: "Time", prompt: "When would you like to meet?", input: .Time),
+    AutoFormElement(label: "Subject", prompt: "What would you like to meet about", input: .LongString)
+]
+fileprivate var appointmentForm = AutoForm(visibility: nil,
+                                           title: "Appointment", subtitle: "Schedule a Call with Peak Studios", elements: appointmentElements)
+fileprivate var visibleAppointmentForm = appointmentForm.visibleForm()
+
 struct NewTaskPage: View {
     
     let selectionManager = SelectionManager()
@@ -20,6 +28,32 @@ struct NewTaskPage: View {
     var body: some View {
         NavigationView{
             List{
+                
+                //appointments
+                CardView(
+                    id: UUID(),
+                    selectionManager: selectionManager,
+                    color: Color.lightAccent,
+                    icon:
+                        Image(systemName:
+                            "calendar"),
+                    title: appointmentForm.title,
+                    sub: "",
+                    content: appointmentForm.subtitle,
+                    showMoreInfo: $showForm,
+                    onSelection: {
+                        showForm = true
+                        selectedForm = visibleAppointmentForm
+                        return
+                    })
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20.0)
+                            .stroke(Color.main ,
+                                    lineWidth: 2)
+                            .background(Color.clear)
+                            .foregroundColor(Color.clear)
+                    )
+                
                 ForEach(sortFormsforAdmin(), id: \.id){
                     form in
                         CardView(
