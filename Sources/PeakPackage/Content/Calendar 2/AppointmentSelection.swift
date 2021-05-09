@@ -95,7 +95,7 @@ struct AppointmentSelectionView: View {
                                         Divider()
                                         HStack{
                                             Text(timeformatter.string(from: timeIntervalList[index]))
-                                                .Caption()
+                                                .CardTitle()
                                             Spacer()
                                         }
                                         Spacer()

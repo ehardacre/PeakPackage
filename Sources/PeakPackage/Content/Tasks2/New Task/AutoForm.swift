@@ -317,20 +317,20 @@ struct TimeInputCardView : View {
     var id : UUID
     @State var title : String
     @State var prompt : String
-    @State var input : Date = Calendar.current.date(bySetting: .minute, value: 0, of: Date())!
+    @State var inputStart : Date = Date()
+    @State var inputEnd : Date = Date()
     @State var showWarning = false
     @State var pickingTime = false
-    @State var timeIndex : Int = 0
-    
-    let hourOpts = ["11:00 AM","11:30 AM","12:00 PM","12:30 PM","1:00 PM","1:30 PM","2:30 PM","3:00 PM","3:30 PM","4:00 PM","4:30 PM","5:00 PM","5:30 PM","6:00 PM","6:30 PM","7:00 PM","7:30 PM","8:00 PM","8:30 PM","9:00 PM"]
     
     var body : some View {
         HStack{
+            Spacer()
             Button(action: {
                 pickingTime = true
             }, label: {
                 Text("Pick Time")
             })
+            Spacer()
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in
@@ -350,10 +350,10 @@ struct TimeInputCardView : View {
         })
     }
     
-    func parseInputDate() -> String {
+    func parseInputDate() -> (String,String) {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
-        return formatter.string(from: input)
+        return (formatter.string(from: inputStart), formatter.string(from: inputEnd))
     }
 }
 
