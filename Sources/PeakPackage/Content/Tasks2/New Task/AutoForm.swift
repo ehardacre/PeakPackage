@@ -350,10 +350,10 @@ struct TimeInputCardView : View {
                     HStack{
                         Spacer()
                         Text("Choose a Time:")
-                            .CardTitle()
+                            .CardTitle_light()
                         Spacer()
                     }
-                    .background(Color.lightAccent.shadow(radius: 5))
+                    .background(Color.darkAccent)
                     .frame(height: 50)
                     AppointmentSelectionView()
                 }
