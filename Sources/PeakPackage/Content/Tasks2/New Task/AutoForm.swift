@@ -355,6 +355,8 @@ struct TimeInputCardView : View {
                             .CardTitle()
                         Spacer()
                     }
+                    .frame(height: 100)
+                    Spacer()
                 }
                 .background(Color.lightAccent)
             }
