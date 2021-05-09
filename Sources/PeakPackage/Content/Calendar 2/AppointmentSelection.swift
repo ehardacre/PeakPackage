@@ -113,7 +113,7 @@ struct AppointmentSelectionView: View {
                                         }
                                     }
                                     .frame(height: rowH/2)
-                                    .padding(.leading, 50)
+                                    .padding(.leading, 60)
                                 }
                             }
                             .frame(height: rowH/2)

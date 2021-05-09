@@ -346,7 +346,18 @@ struct TimeInputCardView : View {
             }
         })
         .sheet(isPresented: $pickingTime, content: {
-            AppointmentSelectionView()
+            ZStack{
+                AppointmentSelectionView()
+                VStack{
+                    HStack{
+                        Spacer()
+                        Text("Choose a Time:")
+                            .CardTitle()
+                        Spacer()
+                    }
+                }
+                .background(Color.lightAccent)
+            }
         })
     }
     
