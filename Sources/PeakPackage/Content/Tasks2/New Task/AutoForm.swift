@@ -263,6 +263,7 @@ struct DateInputCardView : View {
 struct MyDatePicker: UIViewRepresentable {
 
     @Binding var selection: Date
+    @Binding var showWarning : Bool
     let minuteInterval: Int = 30
     let displayedComponents: DatePickerComponents
 
@@ -293,6 +294,10 @@ struct MyDatePicker: UIViewRepresentable {
         default:
             break
         }
+        
+        if Calendar.current.component(.hour, from: selection) < 11 || Calendar.current.component(.hour, from: selection) > 16 {
+            showWarning = true
+        }
     }
 
     class Coordinator {
@@ -313,19 +318,19 @@ struct TimeInputCardView : View {
     @State var title : String
     @State var prompt : String
     @State var input : Date = Calendar.current.date(bySetting: .minute, value: 0, of: Date())!
-    
+    @State var showWarning = false
+    @State var pickingTime = false
     @State var timeIndex : Int = 0
     
     let hourOpts = ["11:00 AM","11:30 AM","12:00 PM","12:30 PM","1:00 PM","1:30 PM","2:30 PM","3:00 PM","3:30 PM","4:00 PM","4:30 PM","5:00 PM","5:30 PM","6:00 PM","6:30 PM","7:00 PM","7:30 PM","8:00 PM","8:30 PM","9:00 PM"]
     
     var body : some View {
         HStack{
-//            Text(prompt)
-//                .Caption()
-//            DatePicker("", selection: $input, displayedComponents: [.date,.hourAndMinute])
-            
-            MyDatePicker(selection: $input, displayedComponents: .hourAndMinute)
-                .frame(height: 50)
+            Button(action: {
+                pickingTime = true
+            }, label: {
+                Text("Pick Time")
+            })
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in
@@ -339,6 +344,9 @@ struct TimeInputCardView : View {
                     }
                 }
             }
+        })
+        .sheet(isPresented: $pickingTime, content: {
+            AppointmentSelectionView()
         })
     }
     
