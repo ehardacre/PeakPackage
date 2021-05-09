@@ -95,6 +95,7 @@ struct AppointmentSelectionView: View {
                                         Divider()
                                         HStack{
                                             Text(timeformatter.string(from: timeIntervalList[index]))
+                                                .Caption()
                                             Spacer()
                                         }
                                         Spacer()
@@ -104,11 +105,11 @@ struct AppointmentSelectionView: View {
                                     //selection
                                     HStack{
                                         if selector.datesSelected.contains(index){
-                                            Color.blue.opacity(0.5)
+                                            Color.main.opacity(0.5)
                                         }else if selector.unavailableDates.contains(index){
-                                            Color.gray.opacity(0.5)
+                                            Color.darkAccent.opacity(0.2)
                                         }else{
-                                            Color.white.opacity(0.5)
+                                            Color.lightAccent.opacity(0.5)
                                         }
                                     }
                                     .frame(height: rowH/2)
@@ -140,11 +141,11 @@ struct AppointmentSelectionView: View {
                                     //selection
                                     HStack{
                                         if selector.datesSelected.contains(index){
-                                            Color.blue.opacity(0.5)
+                                            Color.main.opacity(0.5)
                                         }else if selector.unavailableDates.contains(index){
-                                            Color.gray.opacity(0.5)
+                                            Color.darkAccent.opacity(0.2)
                                         }else{
-                                            Color.white.opacity(0.5)
+                                            Color.lightAccent.opacity(0.5)
                                         }
                                     }
                                     .frame(height: rowH/2)
@@ -173,10 +174,10 @@ struct AppointmentSelectionView: View {
                     
                 },label:{
                     Text(confirmationText)
-                        .foregroundColor(Color.white)
+                        .CardTitle_light()
                 })
                 .padding(20)
-                .background(isTimeSelected ? Color.blue : Color.gray.opacity(0.5))
+                .background(isTimeSelected ? Color.main : Color.darkAccent.opacity(0.2))
                 .cornerRadius(20)
             }
             .padding(20)
