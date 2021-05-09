@@ -353,8 +353,7 @@ struct TimeInputCardView : View {
                             .CardTitle()
                         Spacer()
                     }
-                    .shadow(radius: 5)
-                    .background(Color.lightAccent)
+                    .background(Color.lightAccent.shadow(radius: 5))
                     .frame(height: 50)
                     AppointmentSelectionView()
                 }
