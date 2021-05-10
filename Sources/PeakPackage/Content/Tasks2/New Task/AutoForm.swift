@@ -281,6 +281,7 @@ struct TimeInputCardView : View {
                 Text(timeText)
             })
             .defaultDateSelectButton()
+            Spacer()
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in
