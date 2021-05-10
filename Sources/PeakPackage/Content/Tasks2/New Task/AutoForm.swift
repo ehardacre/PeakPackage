@@ -281,7 +281,7 @@ struct TimeInputCardView : View {
             }, label: {
                 Text(timeText)
             })
-            .RoundRectButton_NotCentered()
+            .defaultDateSelectButton()
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in

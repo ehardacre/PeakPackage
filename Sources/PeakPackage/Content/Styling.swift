@@ -101,6 +101,14 @@ extension Button {
             .buttonStyle(PlainButtonStyle())
     }
     
+    func defaultDateSelectButton() -> some View {
+        return self
+            .padding(5)
+            .background(Color.gray)
+            .foregroundColor(.blue)
+            .cornerRadius(2)
+    }
+    
     func TrailingButton() -> some View {
         return self
             .buttonStyle(PlainButtonStyle())
