@@ -260,78 +260,30 @@ struct DateInputCardView : View {
     }
 }
 
-struct MyDatePicker: UIViewRepresentable {
-
-    @Binding var selection: Date
-    @Binding var showWarning : Bool
-    let minuteInterval: Int = 30
-    let displayedComponents: DatePickerComponents
-
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
-    }
-
-    func makeUIView(context: UIViewRepresentableContext<MyDatePicker>) -> UIDatePicker {
-        let picker = UIDatePicker()
-        // listen to changes coming from the date picker, and use them to update the state variable
-        picker.addTarget(context.coordinator, action: #selector(Coordinator.dateChanged), for: .valueChanged)
-        return picker
-    }
-
-    func updateUIView(_ picker: UIDatePicker, context: UIViewRepresentableContext<MyDatePicker>) {
-        picker.minuteInterval = minuteInterval
-        picker.maximumDate = Calendar.current.date(bySetting: .hour, value: 23, of: selection)
-        picker.minimumDate = Calendar.current.date(bySetting: .hour, value: 11, of: selection)
-        picker.date = selection
-
-        switch displayedComponents {
-        case .hourAndMinute:
-            picker.datePickerMode = .time
-        case .date:
-            picker.datePickerMode = .date
-        case [.hourAndMinute, .date]:
-            picker.datePickerMode = .dateAndTime
-        default:
-            break
-        }
-        
-        if Calendar.current.component(.hour, from: selection) < 11 || Calendar.current.component(.hour, from: selection) > 16 {
-            showWarning = true
-        }
-    }
-
-    class Coordinator {
-        let datePicker: MyDatePicker
-        init(_ datePicker: MyDatePicker) {
-            self.datePicker = datePicker
-        }
-
-        @objc func dateChanged(_ sender: UIDatePicker) {
-            datePicker.selection = sender.date
-        }
-    }
-}
-
 struct TimeInputCardView : View {
     
     var id : UUID
     @State var title : String
     @State var prompt : String
+    @State var selectedDay : Date = Date()
     @State var inputStart : Date? = nil
     @State var inputEnd : Date? = nil
+    @State var timeText = "Pick Time"
     @State var showWarning = false
     @State var pickingTime = false
     
     var body : some View {
         HStack{
+            Text(prompt)
+                .Caption()
+            DatePicker("", selection: $selectedDay, displayedComponents: .date)
             Spacer()
             Button(action: {
                 pickingTime = true
             }, label: {
-                Text("Pick Time")
+                Text(timeText)
             })
-            .TrailingButton()
-            Spacer()
+            .RoundRectButton_NotCentered()
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in
@@ -357,7 +309,7 @@ struct TimeInputCardView : View {
                 .frame(height: 50)
                 .background(Color.lightAccent)
                 Divider().foregroundColor(Color.darkAccent)
-                AppointmentSelectionView(inputStartTime: $inputStart, inputEndTime: $inputEnd)
+                AppointmentSelectionView(inputStartTime: $inputStart, inputEndTime: $inputEnd, text: $timeText)
             }
         })
     }

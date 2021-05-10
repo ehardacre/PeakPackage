@@ -56,6 +56,7 @@ class appointmentSelector : ObservableObject {
 
 struct AppointmentSelectionView: View {
     
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var selector = appointmentSelector()
     
     var startTime = Calendar.current.date(bySettingHour: 11, minute: 0, second: 0, of: Date())!
@@ -67,14 +68,15 @@ struct AppointmentSelectionView: View {
     @State var isTimeSelected = false
     @Binding var inputStartTime : Date?
     @Binding var inputEndTime : Date?
-    
+    @Binding var timeText : String
     
     let rowH : CGFloat = 100
     
-    init(inputStartTime: Binding<Date?>, inputEndTime: Binding<Date?>){
+    init(inputStartTime: Binding<Date?>, inputEndTime: Binding<Date?>, text: Binding<String>){
         var time = startTime
         self._inputStartTime = inputStartTime
         self._inputEndTime = inputEndTime
+        self._timeText = text
         if time.distance(to: endTime) < 0{
             endTime = Calendar.current.date(byAdding: .day, value: 1, to: endTime)!
         }
@@ -179,6 +181,8 @@ struct AppointmentSelectionView: View {
                         var range = selector.addSelection(nil, from: timeIntervalList)
                         inputStartTime = range?.start
                         inputEndTime = range?.end
+                        timeText = confirmationText
+                        presentationMode.wrappedValue.dismiss()
                     }
                 },label:{
                     Text("Confirm \(confirmationText)")
