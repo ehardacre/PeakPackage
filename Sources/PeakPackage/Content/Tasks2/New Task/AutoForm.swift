@@ -274,8 +274,6 @@ struct TimeInputCardView : View {
     
     var body : some View {
         HStack{
-            Text(prompt)
-                .Caption()
             DatePicker("", selection: $selectedDay, displayedComponents: .date)
             Spacer()
             Button(action: {
