@@ -275,7 +275,6 @@ struct TimeInputCardView : View {
     var body : some View {
         HStack{
             DatePicker("", selection: $selectedDay, displayedComponents: .date)
-            Spacer()
             Button(action: {
                 pickingTime = true
             }, label: {
