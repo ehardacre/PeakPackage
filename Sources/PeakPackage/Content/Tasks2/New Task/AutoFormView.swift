@@ -43,6 +43,7 @@ struct AutoFormView: View {
                                 elementIDs.append(element.id)
                             }
                         element.inputView()
+                            .buttonStyle(PlainButtonStyle())
                     }
                     if defaults.admin && profilesLoaded{
                         FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
@@ -117,6 +118,12 @@ struct AutoFormView: View {
                         printr(inputList)
                         sendInTask(inputs: inputList)
                     }
+                }else if let id = data["id"] as? UUID,
+                         let input = data["input"] as? (String, String, String),
+                         let key = data ["key"] as? String{
+                    
+                    #warning("TODO")
+                
                 }else if let id = data["id"] as? UUID,
                    let input = data["input"] as? Any,
                    let key = data["key"] as? String{

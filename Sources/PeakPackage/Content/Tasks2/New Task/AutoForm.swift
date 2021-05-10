@@ -317,8 +317,8 @@ struct TimeInputCardView : View {
     var id : UUID
     @State var title : String
     @State var prompt : String
-    @State var inputStart : Date = Date()
-    @State var inputEnd : Date = Date()
+    @State var inputStart : Date? = nil
+    @State var inputEnd : Date? = nil
     @State var showWarning = false
     @State var pickingTime = false
     
@@ -330,6 +330,7 @@ struct TimeInputCardView : View {
             }, label: {
                 Text("Pick Time")
             })
+            .TrailingButton()
             Spacer()
         }
         .BasicContentCard()
@@ -356,15 +357,18 @@ struct TimeInputCardView : View {
                 .frame(height: 50)
                 .background(Color.lightAccent)
                 Divider().foregroundColor(Color.darkAccent)
-                AppointmentSelectionView()
+                AppointmentSelectionView(inputStartTime: $inputStart, inputEndTime: $inputEnd)
             }
         })
     }
     
-    func parseInputDate() -> (String,String) {
+    func parseInputDate() -> (String,String)? {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
-        return (formatter.string(from: inputStart), formatter.string(from: inputEnd))
+        formatter.dateFormat = "HH:mm"
+        if inputStart == nil || inputEnd == nil {
+            return nil
+        }
+        return (formatter.string(from: inputStart!), formatter.string(from: inputEnd!))
     }
 }
 

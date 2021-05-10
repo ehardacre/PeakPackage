@@ -14,27 +14,29 @@ class appointmentSelector : ObservableObject {
     @Published var unavailableDates : [Int] = [8,9,10]
     let interval = 30
     
-    func addSelection(_ selection: Int, from times: [Date]) -> (start: Date, end: Date)?{
-        var addedUp = false
-        if datesSelected.contains(selection){
-            datesSelected = [selection]
-        }else if unavailableDates.contains(selection) {
-            //do nothing
-        }else if datesSelected.contains(selection - 1){
-            addedUp = false
-            datesSelected.append(selection)
-        }else if datesSelected.contains(selection + 1){
-            addedUp = true
-            datesSelected.append(selection)
-        }else{
-            datesSelected = [selection]
-        }
-        datesSelected.sort()
-        if datesSelected.count > 4 {
-            if addedUp{
-                _ = datesSelected.removeLast()
+    func addSelection(_ selection: Int?, from times: [Date]) -> (start: Date, end: Date)?{
+        if selection != nil {
+            var addedUp = false
+            if datesSelected.contains(selection!){
+                datesSelected = [selection!]
+            }else if unavailableDates.contains(selection!) {
+                //do nothing
+            }else if datesSelected.contains(selection! - 1){
+                addedUp = false
+                datesSelected.append(selection!)
+            }else if datesSelected.contains(selection! + 1){
+                addedUp = true
+                datesSelected.append(selection!)
             }else{
-                _ = datesSelected.removeFirst()
+                datesSelected = [selection!]
+            }
+            datesSelected.sort()
+            if datesSelected.count > 4 {
+                if addedUp{
+                    _ = datesSelected.removeLast()
+                }else{
+                    _ = datesSelected.removeFirst()
+                }
             }
         }
         
@@ -61,16 +63,18 @@ struct AppointmentSelectionView: View {
     var test = Calendar.current.date(bySettingHour: 11, minute: 0, second: 0, of: Date())!
     var timeIntervalList : [Date] = []
     let timeformatter = DateFormatter()
-    @State var confirmationText = "no time selected"
+    @State var confirmationText = ""
     @State var isTimeSelected = false
-    @State var selectedTimes : [Date] = []
+    @Binding var inputStartTime : Date?
+    @Binding var inputEndTime : Date?
+    
     
     let rowH : CGFloat = 100
     
-    init(){
+    init(inputStartTime: Binding<Date?>, inputEndTime: Binding<Date?>){
         var time = startTime
-        print(startTime)
-        print(endTime)
+        self._inputStartTime = inputStartTime
+        self._inputEndTime = inputEndTime
         if time.distance(to: endTime) < 0{
             endTime = Calendar.current.date(byAdding: .day, value: 1, to: endTime)!
         }
@@ -171,9 +175,13 @@ struct AppointmentSelectionView: View {
             VStack{
                 Spacer()
                 Button(action: {
-                    
+                    if selector.datesSelected.count > 0 {
+                        var range = selector.addSelection(nil, from: timeIntervalList)
+                        inputStartTime = range?.start
+                        inputEndTime = range?.end
+                    }
                 },label:{
-                    Text(confirmationText)
+                    Text("Confirm \(confirmationText)")
                         .CardTitle_light()
                 })
                 .padding(20)
