@@ -57,10 +57,10 @@ class appointmentSelector : ObservableObject {
 struct AppointmentSelectionView: View {
     
     @ObservedObject var selector = appointmentSelector()
-    var startTime = Calendar.current.date(bySetting: .hour, value: 11, of: Date())!
+    
+    var startTime = Calendar.current.date(bySettingHour: 11, minute: 0, second: 0, of: Date())!
     var endTime =
-        Calendar.current.date(bySetting: .hour, value: 19, of: Date())!
-    var test = Calendar.current.date(bySettingHour: 11, minute: 0, second: 0, of: Date())!
+        Calendar.current.date(bySettingHour: 19, minute: 0, second: 0, of: Date())!
     var timeIntervalList : [Date] = []
     let timeformatter = DateFormatter()
     @State var confirmationText = ""
