@@ -104,7 +104,7 @@ extension Button {
     func defaultDateSelectButton() -> some View {
         return self
             .padding(7)
-            .background(Color.gray.opacity(0.2))
+            .background(Color.gray.opacity(0.1))
             .foregroundColor(.blue)
             .cornerRadius(4)
     }
