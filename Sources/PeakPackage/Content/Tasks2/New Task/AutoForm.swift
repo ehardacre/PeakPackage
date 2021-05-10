@@ -347,17 +347,17 @@ struct TimeInputCardView : View {
         })
         .sheet(isPresented: $pickingTime, content: {
             VStack(spacing: 0){
-                    HStack{
-                        Spacer()
-                        Text("Choose a Time:")
-                            .CardTitle()
-                        Spacer()
-                    }
-                    .frame(height: 50)
-                    .background(Color.lightAccent)
-                    .shadow(color: Color.darkAccent.opacity(0.5), radius: 5)
-                    AppointmentSelectionView()
+                HStack{
+                    Spacer()
+                    Text("Choose a Time:")
+                        .CardTitle()
+                    Spacer()
                 }
+                .frame(height: 50)
+                .background(Color.lightAccent)
+                Divider().foregroundColor(Color.darkAccent)
+                AppointmentSelectionView()
+            }
         })
     }
     
