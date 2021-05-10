@@ -103,10 +103,10 @@ extension Button {
     
     func defaultDateSelectButton() -> some View {
         return self
-            .padding(5)
-            .background(Color.gray)
+            .padding(7)
+            .background(Color(red: 238, green: 238, blue: 239, opacity: 1.0))
             .foregroundColor(.blue)
-            .cornerRadius(2)
+            .cornerRadius(5)
     }
     
     func TrailingButton() -> some View {
