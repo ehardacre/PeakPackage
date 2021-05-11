@@ -13,7 +13,12 @@ extension DatabaseDelegate {
     
     
     static func getOpenAppointments(){
+        #warning("TODO get open appointments")
+    }
+    
+    static func setAppointment(completion: @escaping (Any) -> Void){
         
+        completion("")
     }
     
     static func setNotificationTokens(){

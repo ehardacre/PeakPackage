@@ -89,7 +89,8 @@ struct NewTaskPage: View {
                 })
             )
             .sheet(item: $selectedForm, content: { newForm in
-                AutoFormView(form: newForm,
+                AutoFormView(appointmentForm: newForm.id == visibleAppointmentForm.id,
+                             form: newForm,
                              dismissFunction: {
                                 selectionManager.id = nil
                                 selectedForm = nil

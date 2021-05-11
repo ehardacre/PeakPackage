@@ -13,6 +13,7 @@ struct AutoFormView: View {
     
     @Environment(\.presentationMode) var presentationMode
     var form : visibleAutoForm
+    @State var appointmentForm = false
     @State var elementIDs : [UUID] = []
     @State var loadedElementInputs : [UUID] = []
     @State var inputList : [String:String] = [:]
@@ -116,14 +117,28 @@ struct AutoFormView: View {
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
                         printr(inputList)
-                        sendInTask(inputs: inputList)
+                        if appointmentForm {
+                            sendInAppointment(inputs: inputList)
+                        }else{
+                            sendInTask(inputs: inputList)
+                        }
                     }
                 }else if let id = data["id"] as? UUID,
                          let input = data["input"] as? (String, String, String),
                          let key = data ["key"] as? String{
                     
-                    printr("Appointment Scheduled between \(input.0) and \(input.1) on \(input.2)")
-                
+                    loadedElementInputs.append(id)
+                    inputList["time"] = "\(input.0)*\(input.1)*\(input.2)"
+                    if inputEqualsFields(){
+                        descriptionText = "Submitting Task..."
+                        printr("all fields collected")
+                        printr(inputList)
+                        if appointmentForm {
+                            sendInAppointment(inputs: inputList)
+                        }else{
+                            sendInTask(inputs: inputList)
+                        }
+                    }
                 }else if let id = data["id"] as? UUID,
                    let input = data["input"] as? Any,
                    let key = data["key"] as? String{
@@ -133,7 +148,11 @@ struct AutoFormView: View {
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
                         printr(inputList)
-                        sendInTask(inputs: inputList)
+                        if appointmentForm {
+                            sendInAppointment(inputs: inputList)
+                        }else{
+                            sendInTask(inputs: inputList)
+                        }
                     }
                 }
                 semaphore.signal()
@@ -142,6 +161,10 @@ struct AutoFormView: View {
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("FranchiseListLoaded")), perform: { note in
             profilesLoaded = true
         })
+    }
+    
+    func sendInAppointment(inputs: [String:String]){
+        printr("submitting appointment")
     }
     
     func sendInTask(inputs: [String:String]){
