@@ -122,7 +122,7 @@ struct AutoFormView: View {
                          let input = data["input"] as? (String, String, String),
                          let key = data ["key"] as? String{
                     
-                    #warning("TODO")
+                    printr("Appointment Scheduled between \(input.0) and \(input.1) on \(input.2)")
                 
                 }else if let id = data["id"] as? UUID,
                    let input = data["input"] as? Any,

@@ -311,13 +311,17 @@ struct TimeInputCardView : View {
         })
     }
     
-    func parseInputDate() -> (String,String)? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+    func parseInputDate() -> (String,String,String)? {
+        let timeformatter = DateFormatter()
+        timeformatter.dateFormat = "HH:mm:ss"
         if inputStart == nil || inputEnd == nil {
             return nil
         }
-        return (formatter.string(from: inputStart!), formatter.string(from: inputEnd!))
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy-MM-dd"
+        return (timeformatter.string(from: inputStart!),
+                timeformatter.string(from: inputEnd!),
+                dateformatter.string(from: selectedDay))
     }
 }
 
