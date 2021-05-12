@@ -8,7 +8,10 @@
 import Foundation
 import SwiftUI
 
+//This is a merged task manager and appointment manager
 public class TaskManager2 : Manager{
+    
+    static var defaultManager : TaskManager2 = TaskManager2()
     
     static var taskTypes = [TaskStatus.open , TaskStatus.complete]
     static var adminTaskTypes = ["Open Tasks", "Complete"]
@@ -17,8 +20,16 @@ public class TaskManager2 : Manager{
     @Published var completedTasks = [Task]()
     @Published var openTasks = [Task]()
     @Published var forms = [AutoForm]()
+    
+    //@Published var myAppointments : Appointment
+    @Published var unavailabaleTimeSlots : [appointmentTimeSlot] = []
+    static let timeSlotInterval = 30 
+    
 
-    public override init(){}
+    public override init(){
+        super.init()
+        TaskManager2.defaultManager = self
+    }
     
     func loadForms(){
         if !forms.isEmpty{
@@ -216,18 +227,6 @@ public class TaskManager2 : Manager{
         
         var tempDetails : [TaskField] = []
         
-//        var headersections = req
-//            .split(separator: ")")[0]
-//            .replacingOccurrences(of: "(", with: "")
-//            .replacingOccurrences(of: ")", with: "")
-//            .components(separatedBy: "for")
-//        if headersections.count > 1 {
-//            let headerField = TaskField(
-//                title: String(headersections[0]),
-//                value: String(headersections[1]))
-//            tempDetails.append(headerField)
-//        }
-        
         var parts = req.components(separatedBy: "[")
         for part in parts{
             var stripped = part
@@ -241,67 +240,15 @@ public class TaskManager2 : Manager{
         }
         
         return tempDetails
-        
-//        printr(req)
-//        var tempDetails : [TaskField] = []
-////        let regex_title = "\\([^\\(]\\)"
-////        let regex_detail = "\\[[^\\[]\\]"
-//        let regex_title = "www.[^ ]*.com"
-//        let regex_detail = "www.[^ ]*.com"
-//        //matches [ ... ] where the string inside doesn't have a new opening bracket
-//        do {
-//            //TITLE
-//            let titleDetector = try NSDataDetector(pattern: regex_title,options: [])
-//            let titlematches = titleDetector.matches(
-//                in: req,
-//                range: NSRange(req.startIndex..., in: req))
-//            for match in titlematches {
-//                let start = req.index(
-//                    req.startIndex,
-//                    offsetBy: match.range.lowerBound)
-//                let end = req.index(
-//                    req.startIndex,
-//                    offsetBy: match.range.upperBound)
-//                let range = start ..< end
-//                let detail = req[range]
-//                let info = detail
-//                    .replacingOccurrences(of: ")", with: "")
-//                    .replacingOccurrences(of: "(", with: "")
-//                    .components(separatedBy: "for")
-//                if info.count > 1{
-//                    let tempType = String(info[0])
-//                    let tempFran = String(info[1])
-//                    tempDetails.append(TaskField(title: tempType, value: tempFran))
-//                }
-//            }
-//            //DETAILS
-//            let detector = try NSDataDetector(pattern: regex_detail)
-//            let matches = detector.matches(
-//                in: req,
-//                range: NSRange(req.startIndex..., in: req))
-//            for match in matches {
-//                let start = req.index(
-//                    req.startIndex,
-//                    offsetBy: match.range.lowerBound)
-//                let end = req.index(
-//                    req.startIndex,
-//                    offsetBy: match.range.upperBound)
-//                let range = start ..< end
-//                let detail = req[range]
-//                let info = detail
-//                    .replacingOccurrences(of: "]", with: "")
-//                    .replacingOccurrences(of: "[", with: "")
-//                    .split(separator: ":")
-//                if info.count > 1{
-//                    let title = String(info[0])
-//                    let value = String(info[1])
-//                    tempDetails.append(TaskField(title: title, value: value))
-//                }
-//            }
-//        }catch{
-//
-//        }
-//        return tempDetails
+    }
+    
+    // MARK: Appoinment Functions
+    
+    func loadUnavailableAppointmentTimes(){
+        DatabaseDelegate.getUnavalableAppointments(completion: {
+            rex in
+            self.unavailabaleTimeSlots = rex as! [appointmentTimeSlot]
+        })
     }
     
 }

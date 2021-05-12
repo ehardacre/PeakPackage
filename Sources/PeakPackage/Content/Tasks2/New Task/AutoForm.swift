@@ -306,12 +306,13 @@ struct TimeInputCardView : View {
                 .frame(height: 50)
                 .background(Color.lightAccent)
                 Divider().foregroundColor(Color.darkAccent)
-                AppointmentSelectionView(inputStartTime: $inputStart, inputEndTime: $inputEnd, text: $timeText)
+                AppointmentSelectionView(taskManager: TaskManager2.defaultManager, inputStartTime: $inputStart, inputEndTime: $inputEnd, text: $timeText, selectedDate: selectedDay)
             }
         })
     }
     
     func parseInputDate() -> (String,String,String)? {
+        #warning("TODO: turn times to GMT for standardization")
         let timeformatter = DateFormatter()
         timeformatter.dateFormat = "HH:mm:ss"
         if inputStart == nil || inputEnd == nil {

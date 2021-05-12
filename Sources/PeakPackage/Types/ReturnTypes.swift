@@ -168,6 +168,42 @@ class SearchRanking : Codable{
     
 }
 
+class appointmentTimeSlot : Codable{
+    var date : String
+    var start : String
+    var end : String
+}
+
+extension appointmentTimeSlot{
+    
+    func getDate() -> Date? {
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: self.date)
+    }
+    
+    func getStartTime() -> Date? {
+        var formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter.date(from: self.start)
+    }
+    
+    func getEndTime() -> Date? {
+        var formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter.date(from: self.end)
+    }
+}
+
+class Appointment : Codable{
+    var id : String
+    var date : String
+    var start : String
+    var end : String
+    var description : String
+}
+
+
 /**
  # Return Type
  This enum keeps track of the different return types from the database so that they can be easily referenced
@@ -186,4 +222,5 @@ enum returnType {
     case string
     case dashboardMessage
     case searchRank
+    case appointmentTimeSlot
 }

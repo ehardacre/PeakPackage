@@ -11,8 +11,7 @@ import SwiftUI
 class appointmentSelector : ObservableObject {
     
     @Published var datesSelected : [Int] = []
-    @Published var unavailableDates : [Int] = [8,9,10]
-    let interval = 30
+    @Published var unavailableDates : [Int] = []
     
     func addSelection(_ selection: Int?, from times: [Date]) -> (start: Date, end: Date)?{
         if selection != nil {
@@ -44,12 +43,22 @@ class appointmentSelector : ObservableObject {
             let startIndex = datesSelected.first!
             let endIndex = datesSelected.last!
             let start = times[startIndex]
-            let end = Calendar.current.date(byAdding: .minute, value: interval/2, to: times[endIndex])!
+            let end = Calendar.current.date(byAdding: .minute, value: TaskManager2.timeSlotInterval/2, to: times[endIndex])!
             return (start: start, end: end)
         }
         
         return nil
         
+    }
+    
+    func addUnavailableTimes(timeSlots: [appointmentTimeSlot], startTime: Date){
+        for time in timeSlots {
+            if let date = time.getDate() {
+                let dis = startTime.distance(to: date)
+                let ind = (Int(dis)/TaskManager2.timeSlotInterval) - 1
+                unavailableDates.append(ind)
+            }
+        }
     }
     
 }
@@ -58,10 +67,10 @@ struct AppointmentSelectionView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var selector = appointmentSelector()
+    @State var taskManager : TaskManager2
     
-    var startTime = Calendar.current.date(bySettingHour: 11, minute: 0, second: 0, of: Date())!
-    var endTime =
-        Calendar.current.date(bySettingHour: 19, minute: 0, second: 0, of: Date())!
+    var startTime : Date
+    var endTime : Date
     var timeIntervalList : [Date] = []
     let timeformatter = DateFormatter()
     @State var confirmationText = ""
@@ -72,7 +81,10 @@ struct AppointmentSelectionView: View {
     
     let rowH : CGFloat = 100
     
-    init(inputStartTime: Binding<Date?>, inputEndTime: Binding<Date?>, text: Binding<String>){
+    init(taskManager: TaskManager2, inputStartTime: Binding<Date?>, inputEndTime: Binding<Date?>, text: Binding<String>, selectedDate: Date){
+        self._taskManager = .init(initialValue: taskManager)
+        startTime = Calendar.current.date(bySettingHour: 11, minute: 0, second: 0, of: selectedDate)!
+        endTime = Calendar.current.date(bySettingHour: 19, minute: 0, second: 0, of: selectedDate)!
         var time = startTime
         self._inputStartTime = inputStartTime
         self._inputEndTime = inputEndTime
@@ -82,9 +94,11 @@ struct AppointmentSelectionView: View {
         }
         while time.distance(to: endTime) > 0{
             timeIntervalList.append(time)
-            time = Calendar.current.date(byAdding: .minute, value: selector.interval/2, to: time) ?? time
+            time = Calendar.current.date(byAdding: .minute, value: TaskManager2.timeSlotInterval/2, to: time) ?? time
         }
         timeformatter.dateFormat = "hh:mm"
+        selector.addUnavailableTimes(timeSlots: taskManager.unavailabaleTimeSlots, startTime: startTime)
+        printr("appdaptap: \(taskManager.unavailabaleTimeSlots)")
     }
     
     var body: some View {

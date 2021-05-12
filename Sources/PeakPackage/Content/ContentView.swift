@@ -199,6 +199,7 @@ public struct ContentView: View {
                     if defaults.getApplicationType() == .PeakClients(.any){
                         taskManager.loadTasks()
                         taskManager.loadForms()
+                        taskManager.loadUnavailableAppointmentTimes()
                         appointmentManager.loadAppointments()
                         appointmentManager.loadTodaysVisits()
                     }

@@ -18,11 +18,6 @@ struct TaskListView2: View {
     @State var completedTasks : [TaskCalendarCardView] = []
     @State var openTasks : [TaskCalendarCardView] = []
     
-    init(taskManager: TaskManager2){
-        self.taskManager = taskManager
-        printr("getting tasks for list")
-    }
-    
     var body: some View {
         List{
             //COmpleted Tasks

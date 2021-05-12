@@ -70,6 +70,7 @@ enum JsonKeys : String{
     case newPhone_key = "phone_number" // do not change
     case newEmail_key = "public_franchise_email" // do not change
     //keys for getting and setting appointments
+    #warning("DEPRECATED")
     case appt_key = "appointments" //this is where the user id will be stored
     case appt_value = "appointment_reason"
     case appt_date = "appointment_date"
@@ -89,6 +90,8 @@ enum JsonKeys : String{
     case woo_leads_key = "get_unspilt_leads_topic_key"
     case woo_updateLeadsID_key = "update_unspilt_leads_id_key"
     case woo_updateLeadsState_key = "update_unspilt_leads_state_key"
+    //new appointment key
+    case unavailableTimeSlots_key = "getUnavailableTimeSlots"
     
     //MARK: N-HANCE CONNECT
     //keys for getting leads
@@ -161,6 +164,8 @@ public enum JsonFormat {
     //woo commerce leads
     case getLeads_woo(topic: String)
     case updateLeads_woo(id: String, state: String)
+    //new appointments
+    case getUnavailableAppoinmentSlots
     
     
     //MARK: N-HANCE CONNECT
@@ -288,6 +293,9 @@ public enum JsonFormat {
         case .updateLeads_woo(let id, let state):
             retVal = [JsonKeys.woo_updateLeadsID_key.rawValue: id,
                       JsonKeys.woo_updateLeadsState_key.rawValue: state]
+        //new appointment stuff
+        case .getUnavailableAppoinmentSlots:
+            retVal = [JsonKeys.unavailableTimeSlots_key.rawValue: "true"]
             
             
         //MARK: N-HANCE CONNECT

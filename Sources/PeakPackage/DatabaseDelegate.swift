@@ -12,8 +12,12 @@ import SwiftUI
 extension DatabaseDelegate {
     
     
-    static func getOpenAppointments(){
-        #warning("TODO get open appointments")
+    static func getUnavalableAppointments(completion: @escaping (Any) -> Void){
+        let json = JsonFormat.getUnavailableAppoinmentSlots.format()
+        DatabaseDelegate.performRequest(with: json, ret: returnType.appointmentTimeSlot, completion: {
+            rex in
+            completion(rex)
+        })
     }
     
     static func setAppointment(completion: @escaping (Any) -> Void){
@@ -487,6 +491,8 @@ struct DatabaseDelegate {
             rex = try? JSONDecoder().decode(DashboardMessage.self, from: data)
         case returnType.searchRank:
             rex = try? JSONDecoder().decode([SearchRankingforTime].self, from: data)
+        case returnType.appointmentTimeSlot:
+            rex = try? JSONDecoder().decode([appointmentTimeSlot].self, from: data)
         default:
             rex = String.init(data: data, encoding: .ascii)!
         }
