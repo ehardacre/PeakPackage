@@ -38,7 +38,7 @@ enum AutoFormInputType{
         }
     }
     
-    func view(id: UUID, label: String, prompt: String) -> AnyView {
+    func view(id: UUID, label: String, prompt: String, taskManager: TaskManager2) -> AnyView {
         switch self{
         case .ShortString:
             return AnyView(TextInputCardView(
@@ -64,7 +64,7 @@ enum AutoFormInputType{
                             prompt: prompt))
         case .Time:
             return AnyView(TimeInputCardView(
-                            id: id,
+                            id: id, taskManager: taskManager,
                             title: label,
                             prompt: prompt))
             //Multichoice(choice 1, choice 2)

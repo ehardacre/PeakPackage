@@ -12,6 +12,7 @@ struct AutoFormView: View {
     
     
     @Environment(\.presentationMode) var presentationMode
+    @State var taskManager : TaskManager2
     var form : visibleAutoForm
     @State var appointmentForm = false
     @State var elementIDs : [UUID] = []
@@ -43,7 +44,7 @@ struct AutoFormView: View {
                             .onAppear{
                                 elementIDs.append(element.id)
                             }
-                        element.inputView()
+                        element.inputView(taskManager: taskManager)
                             .buttonStyle(PlainButtonStyle())
                     }
                     if defaults.admin && profilesLoaded{
@@ -208,15 +209,15 @@ struct AutoFormView: View {
     }
 }
 
-struct AutoFormView_Previews: PreviewProvider {
-    static var previews: some View {
-        AutoFormView(
-                     form: AutoForm(
-                        vis: "admin", title: "Service Page Addition",
-                        subtitle: "A Service page will be added to your website",
-                        elements: [
-                            AutoFormElement(label: "Service", prompt: "Enter the service you'd like to add", input: "ShortString"),
-                            AutoFormElement(label: "Custom Content", prompt: "Enter any custom content", input: "LongString")
-                        ]).visibleForm())
-    }
-}
+//struct AutoFormView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AutoFormView(
+//                     form: AutoForm(
+//                        vis: "admin", title: "Service Page Addition",
+//                        subtitle: "A Service page will be added to your website",
+//                        elements: [
+//                            AutoFormElement(label: "Service", prompt: "Enter the service you'd like to add", input: "ShortString"),
+//                            AutoFormElement(label: "Custom Content", prompt: "Enter any custom content", input: "LongString")
+//                        ]).visibleForm())
+//    }
+//}

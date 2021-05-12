@@ -135,7 +135,7 @@ struct TaskCalendarHeader : View {
         .sheet(
             isPresented: $makingNewTask,
             content: {
-                NewTaskPage(forms: taskManager.forms)
+                NewTaskPage(taskManager: taskManager, forms: taskManager.forms)
         })
     }
 }

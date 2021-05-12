@@ -20,6 +20,7 @@ struct NewTaskPage: View {
     let selectionManager = SelectionManager()
     
     @Environment(\.presentationMode) var presentationMode
+    @State var taskManager : TaskManager2
     @State var forms : [AutoForm]
     @State var showForm = false
     @State var creatingNewForm = false
@@ -89,7 +90,7 @@ struct NewTaskPage: View {
                 })
             )
             .sheet(item: $selectedForm, content: { newForm in
-                AutoFormView(form: newForm, appointmentForm: newForm.id == visibleAppointmentForm.id,
+                AutoFormView(taskManager: taskManager, form: newForm, appointmentForm: newForm.id == visibleAppointmentForm.id,
                              dismissFunction: {
                                 selectionManager.id = nil
                                 selectedForm = nil
@@ -112,17 +113,17 @@ struct NewTaskPage: View {
     }
 }
 
-struct NewTaskPage_Previews: PreviewProvider {
-    static var previews: some View {
-        NewTaskPage(forms: [
-            AutoForm(visibility: nil,
-                     title: "Add Service Page",
-                     subtitle: "A service page added to your website",
-                     elements: []),
-            AutoForm(visibility: "admin",
-                     title: "Social Posts",
-                     subtitle: "Design and posting of social posts",
-                     elements: [])
-        ])
-    }
-}
+//struct NewTaskPage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NewTaskPage(forms: [
+//            AutoForm(visibility: nil,
+//                     title: "Add Service Page",
+//                     subtitle: "A service page added to your website",
+//                     elements: []),
+//            AutoForm(visibility: "admin",
+//                     title: "Social Posts",
+//                     subtitle: "Design and posting of social posts",
+//                     elements: [])
+//        ], taskManager: <#TaskManager2#>)
+//    }
+//}

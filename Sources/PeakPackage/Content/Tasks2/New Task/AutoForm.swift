@@ -108,9 +108,9 @@ struct visibleAutoFormElement {
         input = element.input
     }
     
-    func inputView() -> AnyView {
+    func inputView(taskManager: TaskManager2) -> AnyView {
         let type = AutoFormInputType(type: self.input)
-        return type.view(id: id, label: self.label, prompt: self.prompt)
+        return type.view(id: id, label: self.label, prompt: self.prompt, taskManager: taskManager)
     }
 }
 
@@ -263,6 +263,7 @@ struct DateInputCardView : View {
 struct TimeInputCardView : View {
     
     var id : UUID
+    @State var taskManager : TaskManager2
     @State var title : String
     @State var prompt : String
     @State var selectedDay : Date = Date()
@@ -306,7 +307,7 @@ struct TimeInputCardView : View {
                 .frame(height: 50)
                 .background(Color.lightAccent)
                 Divider().foregroundColor(Color.darkAccent)
-                AppointmentSelectionView(taskManager: ManagerDefaults.taskManager, inputStartTime: $inputStart, inputEndTime: $inputEnd, text: $timeText, selectedDate: selectedDay)
+                AppointmentSelectionView(taskManager: taskManager, inputStartTime: $inputStart, inputEndTime: $inputEnd, text: $timeText, selectedDate: selectedDay)
             }
         })
     }
