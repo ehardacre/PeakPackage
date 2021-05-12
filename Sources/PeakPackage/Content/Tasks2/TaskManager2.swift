@@ -8,8 +8,6 @@
 import Foundation
 import SwiftUI
 
-public var defaultTaskManager : TaskManager2 = TaskManager2()
-
 //This is a merged task manager and appointment manager
 public class TaskManager2 : Manager{
     
@@ -26,10 +24,7 @@ public class TaskManager2 : Manager{
     static let timeSlotInterval = 30 
     
 
-    public override init(){
-        super.init()
-        defaultTaskManager = self
-    }
+    public override init(){}
     
     func loadForms(){
         if !forms.isEmpty{

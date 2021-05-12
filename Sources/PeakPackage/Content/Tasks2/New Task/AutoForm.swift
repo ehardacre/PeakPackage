@@ -306,7 +306,7 @@ struct TimeInputCardView : View {
                 .frame(height: 50)
                 .background(Color.lightAccent)
                 Divider().foregroundColor(Color.darkAccent)
-                AppointmentSelectionView(taskManager: defaultTaskManager, inputStartTime: $inputStart, inputEndTime: $inputEnd, text: $timeText, selectedDate: selectedDay)
+                AppointmentSelectionView(taskManager: ManagerDefaults.taskManager, inputStartTime: $inputStart, inputEndTime: $inputEnd, text: $timeText, selectedDate: selectedDay)
             }
         })
     }
