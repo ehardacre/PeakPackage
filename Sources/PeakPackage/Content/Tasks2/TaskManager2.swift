@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
+public var defaultTaskManager : TaskManager2 = TaskManager2()
+
 //This is a merged task manager and appointment manager
 public class TaskManager2 : Manager{
-    
-    static var defaultManager : TaskManager2 = TaskManager2()
     
     static var taskTypes = [TaskStatus.open , TaskStatus.complete]
     static var adminTaskTypes = ["Open Tasks", "Complete"]
@@ -28,7 +28,7 @@ public class TaskManager2 : Manager{
 
     public override init(){
         super.init()
-        TaskManager2.defaultManager = self
+        defaultTaskManager = self
     }
     
     func loadForms(){
