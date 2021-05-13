@@ -67,7 +67,9 @@ extension Date {
     func toLocalTime() -> Date {
         let timezone = TimeZone.current
         let seconds = TimeInterval(timezone.secondsFromGMT(for: self))
-        printr(seconds)
+        if CFTimeZoneIsDaylightSavingTime(timezone, self) {
+            seconds = seconds + 3600
+        }
         return Date(timeInterval: seconds, since: self)
     }
     
