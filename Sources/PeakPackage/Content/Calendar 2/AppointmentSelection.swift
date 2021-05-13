@@ -55,7 +55,7 @@ class appointmentSelector : ObservableObject {
         
         for time in timeSlots {
             if let date = time.getDate(), let start = time.getStartTime(){
-                let newStart = Calendar.current.date(bySettingHour: startTime.get(.hour), minute: startTime.get(.minute), second: startTime.get(.second), of: date)
+                let newStart = Calendar.current.date(bySettingHour: startTime.get(.hour), minute: startTime.get(.minute), second: startTime.get(.second), of: date)!
                 printr(startTime)
                 printr(newStart)
                 let dis = startTime.distance(to: newStart)
