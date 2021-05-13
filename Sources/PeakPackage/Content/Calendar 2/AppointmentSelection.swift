@@ -98,7 +98,7 @@ struct AppointmentSelectionView: View {
             time = Calendar.current.date(byAdding: .minute, value: TaskManager2.timeSlotInterval/2, to: time) ?? time
         }
         timeformatter.dateFormat = "hh:mm"
-        timeformatter.timeZone = .current
+        timeformatter.timeZone = TimeZone(abbreviation: "PST")
         selector.addUnavailableTimes(timeSlots: taskManager.unavailabaleTimeSlots, startTime: startTime)
         printr(taskManager.unavailabaleTimeSlots.map({return "\($0.start) to \($0.end) on \($0.date)"}))
         printr(taskManager.unavailabaleTimeSlots.map({return "\($0.getStartTime()) to \($0.getEndTime()) on \($0.getDate())"}))
