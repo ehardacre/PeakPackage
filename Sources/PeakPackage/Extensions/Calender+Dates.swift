@@ -67,6 +67,7 @@ extension Date {
     func toLocalTime() -> Date {
         let timezone = TimeZone.current
         let seconds = TimeInterval(timezone.secondsFromGMT(for: self))
+        printr(seconds)
         return Date(timeInterval: seconds, since: self)
     }
     
