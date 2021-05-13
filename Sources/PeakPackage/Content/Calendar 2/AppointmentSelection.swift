@@ -84,8 +84,8 @@ struct AppointmentSelectionView: View {
     
     init(taskManager: TaskManager2, inputStartTime: Binding<Date?>, inputEndTime: Binding<Date?>, text: Binding<String>, selectedDate: Date){
         self._taskManager = .init(initialValue: taskManager)
-        startTime = Calendar.current.date(bySettingHour: 13, minute: 0, second: 0, of: selectedDate)!.addingTimeInterval(TimeInterval(TimeZone.current.secondsFromGMT())) //9AM EST
-        endTime = Calendar.current.date(bySettingHour: 21, minute: 0, second: 0, of: selectedDate)!.addingTimeInterval(TimeInterval(TimeZone.current.secondsFromGMT())) //5PM EST
+        startTime = Calendar.current.date(bySettingHour: 13, minute: 0, second: 0, of: selectedDate)!.addingTimeInterval(TimeInterval(TimeZone(abbreviation: "EST").secondsFromGMT())) //9AM EST
+        endTime = Calendar.current.date(bySettingHour: 21, minute: 0, second: 0, of: selectedDate)!.addingTimeInterval(TimeInterval(TimeZone(abbreviation: "EST").secondsFromGMT())) //5PM EST
         var time = startTime
         self._inputStartTime = inputStartTime
         self._inputEndTime = inputEndTime
