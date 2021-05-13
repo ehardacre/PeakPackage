@@ -99,7 +99,7 @@ struct AppointmentSelectionView: View {
         }
         timeformatter.dateFormat = "hh:mm"
         selector.addUnavailableTimes(timeSlots: taskManager.unavailabaleTimeSlots, startTime: startTime)
-        printr(taskManager.unavailabaleTimeSlots.map({return "\($0.start) to \($0.end) on \($0.date)"}))
+        printr(taskManager.unavailabaleTimeSlots.map({return "\($0.getStartTime()) to \($0.getEndTime()) on \($0.getDate())"}))
     }
     
     var body: some View {
