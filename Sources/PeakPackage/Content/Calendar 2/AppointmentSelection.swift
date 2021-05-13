@@ -54,14 +54,18 @@ class appointmentSelector : ObservableObject {
     func addUnavailableTimes(timeSlots: [appointmentTimeSlot], startTime: Date){
         
         for time in timeSlots {
-            if let date = time.getDate(), let start = time.getStartTime(){
+            if let date = time.getDate(), let start = time.getStartTime(), let end = time.getEndTime(){
                 let newStart = Calendar.current.date(bySettingHour: start.get(.hour), minute: start.get(.minute), second: start.get(.second), of: date)!.toGlobalTime()
+                let newEnd = Calendar.current.date(bySettingHour: end.get(.hour), minute: end.get(.minute), second: end.get(.second), of: date)!.toGlobalTime()
                 printr(startTime)
                 printr(newStart)
-                let dis = startTime.distance(to: newStart)/60
-                let ind = (Int(dis)/TaskManager2.timeSlotInterval) - 1
-                printr(ind)
-                unavailableDates.append(ind)
+                let disStart = startTime.distance(to: newStart)/60
+                let disEnd = startTime.distance(to: newEnd)/60
+                let indStart = (Int(disStart)/TaskManager2.timeSlotInterval) - 1
+                let indEnd = (Int(disEnd)/TaskManager2.timeSlotInterval) - 1
+                for i in indStart..<indEnd{
+                    unavailableDates.append(i)
+                }
             }
         }
     }
