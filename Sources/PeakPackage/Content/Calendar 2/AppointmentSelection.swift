@@ -57,6 +57,7 @@ class appointmentSelector : ObservableObject {
             if let date = time.getDate() {
                 let dis = startTime.distance(to: date)
                 let ind = (Int(dis)/TaskManager2.timeSlotInterval) - 1
+                printr(ind)
                 unavailableDates.append(ind)
             }
         }
