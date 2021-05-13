@@ -66,8 +66,8 @@ extension Date {
     // Convert UTC (or GMT) to local time
     func toLocalTime() -> Date {
         let timezone = TimeZone.current
-        let seconds = TimeInterval(timezone.secondsFromGMT(for: self))
-        if CFTimeZoneIsDaylightSavingTime(timezone, self) {
+        var seconds = TimeInterval(timezone.secondsFromGMT(for: self))
+        if timezone.isDaylightSavingTime() {
             seconds = seconds + 3600
         }
         return Date(timeInterval: seconds, since: self)
