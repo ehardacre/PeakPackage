@@ -178,9 +178,8 @@ extension appointmentTimeSlot{
     func getDate() -> Date? {
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        formatter.timeZone = TimeZone(abbreviation: "GMT")
-        return formatter.date(from: self.date)?.toLocalTime()
-        
+        return formatter.date(from: self.date)
+        #warning("TODO: sometimes this might need to be adjusted")
     }
     
     func getStartTime() -> Date? {
