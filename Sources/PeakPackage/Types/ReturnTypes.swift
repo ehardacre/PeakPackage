@@ -178,7 +178,7 @@ extension appointmentTimeSlot{
     func getDate() -> Date? {
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-//        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
         return formatter.date(from: self.date)?.toLocalTime()
         
     }
@@ -186,14 +186,14 @@ extension appointmentTimeSlot{
     func getStartTime() -> Date? {
         var formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-//        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
         return formatter.date(from: self.start)?.toLocalTime()
     }
     
     func getEndTime() -> Date? {
         var formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-//        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
         return formatter.date(from: self.end)?.toLocalTime()
     }
 }
