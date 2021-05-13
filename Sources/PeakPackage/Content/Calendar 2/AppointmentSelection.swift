@@ -52,6 +52,7 @@ class appointmentSelector : ObservableObject {
     }
     
     func addUnavailableTimes(timeSlots: [appointmentTimeSlot], startTime: Date){
+        
         for time in timeSlots {
             if let date = time.getDate() {
                 let dis = startTime.distance(to: date)
@@ -98,7 +99,7 @@ struct AppointmentSelectionView: View {
         }
         timeformatter.dateFormat = "hh:mm"
         selector.addUnavailableTimes(timeSlots: taskManager.unavailabaleTimeSlots, startTime: startTime)
-        printr("appdaptap: \(taskManager.unavailabaleTimeSlots)")
+        printr(taskManager.unavailabaleTimeSlots)
     }
     
     var body: some View {
