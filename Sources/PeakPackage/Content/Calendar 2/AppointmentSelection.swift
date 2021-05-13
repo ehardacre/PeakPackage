@@ -58,8 +58,9 @@ class appointmentSelector : ObservableObject {
                 let newStart = Calendar.current.date(bySettingHour: start.get(.hour), minute: start.get(.minute), second: start.get(.second), of: date)!.toGlobalTime()
                 printr(startTime)
                 printr(newStart)
-                let dis = startTime.distance(to: newStart)
+                let dis = startTime.distance(to: newStart)/60
                 let ind = (Int(dis)/TaskManager2.timeSlotInterval) - 1
+                printr(ind)
                 unavailableDates.append(ind)
             }
         }
