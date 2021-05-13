@@ -178,29 +178,22 @@ extension appointmentTimeSlot{
     func getDate() -> Date? {
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        //formatter.timeZone = TimeZone.current
-        if let retdate = formatter.date(from: self.date){
-            return retdate.addingTimeInterval(TimeInterval(0-TimeZone.current.secondsFromGMT()))
-        }
-        return nil
+        formatter.timeZone = TimeZone.current
+        return formatter.date(from: self.date)
     }
     
     func getStartTime() -> Date? {
         var formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-        if let retdate = formatter.date(from: self.start){
-            return retdate.addingTimeInterval(TimeInterval(0-TimeZone.current.secondsFromGMT()))
-        }
-        return nil
+        formatter.timeZone = .current
+        return formatter.date(from: self.start)
     }
     
     func getEndTime() -> Date? {
         var formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-        if let retdate = formatter.date(from: self.end){
-            return retdate.addingTimeInterval(TimeInterval(0-TimeZone.current.secondsFromGMT()))
-        }
-        return nil
+        formatter.timeZone = .current
+        return formatter.date(from: self.end)
     }
 }
 
