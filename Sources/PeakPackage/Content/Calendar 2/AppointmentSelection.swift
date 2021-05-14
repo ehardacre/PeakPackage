@@ -57,11 +57,13 @@ class appointmentSelector : ObservableObject {
             if let date = time.getDate(), let start = time.getStartTime(), let end = time.getEndTime(){
                 printr("date from appointment:")
                 printr(date)
+                let targetDay = Calendar.current.component(.day, from: date)
                 var newStart = Calendar.current.date(
                     bySettingHour: start.get(.hour),
                     minute: start.get(.minute),
                     second: start.get(.second),
                     of: date)!
+                newStart = Calendar.current.date(bySetting: .day, value: targetDay, of: newStart)!
                 printr("not global newStart:")
                 printr(newStart)
                 newStart = newStart.toGlobalTime()
@@ -72,6 +74,7 @@ class appointmentSelector : ObservableObject {
                     minute: end.get(.minute),
                     second: end.get(.second),
                     of: date)!
+                newEnd = Calendar.current.date(bySetting: .day, value: targetDay, of: newEnd)!
                 printr("not global newEnd:")
                 printr(newEnd)
                 newEnd = newEnd.toGlobalTime()
