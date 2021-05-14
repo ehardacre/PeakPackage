@@ -61,6 +61,7 @@ extension Date {
         let timezone = TimeZone.current
         var seconds = -TimeInterval(timezone.secondsFromGMT(for: self))
         if timezone.isDaylightSavingTime(for: self) {
+            #warning("This doesn't make sense to me but maybe it works")
             seconds = seconds + 3600
         }
         return Date(timeInterval: seconds, since: self)
