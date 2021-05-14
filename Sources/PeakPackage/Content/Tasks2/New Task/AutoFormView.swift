@@ -165,8 +165,18 @@ struct AutoFormView: View {
     }
     
     func sendInAppointment(inputs: [String:String]){
-        printr("Submitting appointment")
-        printr(inputs)
+        var timeInputs = inputs["time"]?.components(separatedBy: "*") ?? []
+        if timeInputs.count == 3 {
+            var startTime = timeInputs[0]
+            var endTime = timeInputs[1]
+            var dateTime = timeInputs[3]
+            var description = inputs["Subject"] ?? ""
+            DatabaseDelegate.setAppointment(startTime: startTime, endTime: endTime, date: dateTime, description: description, completion: {
+                rex in
+                presentationMode.wrappedValue.dismiss()
+            })
+        }
+        
     }
     
     func sendInTask(inputs: [String:String]){

@@ -20,9 +20,13 @@ extension DatabaseDelegate {
         })
     }
     
-    static func setAppointment(completion: @escaping (Any) -> Void){
-        
-        completion("")
+    static func setAppointment(startTime: String, endTime: String, date: String, description: String, completion: @escaping (Any) -> Void){
+        var id = defaults.franchiseId() ?? "1"
+        let json = JsonFormat.submitAppointment(id: id, start: startTime, end: endTime, date: date, description: description).format()
+        DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
+            rex in
+            completion(rex)
+        })
     }
     
     static func setNotificationTokens(){

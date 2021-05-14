@@ -92,6 +92,11 @@ enum JsonKeys : String{
     case woo_updateLeadsState_key = "update_unspilt_leads_state_key"
     //new appointment key
     case unavailableTimeSlots_key = "getUnavailableTimeSlots"
+    case submitAppointment_key = "submitAppointment_id"
+    case submitAppointment_start = "submitAppointment_startTime"
+    case submitAppointment_end = "submitAppointment_endTime"
+    case submitAppointment_date = "submitAppointment_dateTime"
+    case submitAppointment_description = "submitAppointment_description"
     
     //MARK: N-HANCE CONNECT
     //keys for getting leads
@@ -166,6 +171,7 @@ public enum JsonFormat {
     case updateLeads_woo(id: String, state: String)
     //new appointments
     case getUnavailableAppoinmentSlots
+    case submitAppointment(id: String, start: String, end: String, date: String, description: String)
     
     
     //MARK: N-HANCE CONNECT
@@ -296,6 +302,12 @@ public enum JsonFormat {
         //new appointment stuff
         case .getUnavailableAppoinmentSlots:
             retVal = [JsonKeys.unavailableTimeSlots_key.rawValue: "true"]
+        case .submitAppointment(let id, let start, let end, let date, let description):
+            retVal = [JsonKeys.submitAppointment_key.rawValue: id,
+                      JsonKeys.submitAppointment_date.rawValue: date,
+                      JsonKeys.submitAppointment_start.rawValue: start,
+                      JsonKeys.submitAppointment_end.rawValue: end,
+                      JsonKeys.submitAppointment_description.rawValue: description]
             
             
         //MARK: N-HANCE CONNECT
