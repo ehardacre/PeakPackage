@@ -52,43 +52,24 @@ class appointmentSelector : ObservableObject {
     }
     
     func addUnavailableTimes(timeSlots: [appointmentTimeSlot], startTime: Date){
-        
+        var formatterOne = DateFormatter()
+        formatterOne.dateFormat = "HH:mm:ss"
+        var formatterTwo = DateFormatter()
+        formatterTwo.dateFormat = "yyyy-MM-dd"
+        var formatterThree = DateFormatter()
+        formatterThree.dateFormat = "yyyy-MM-dd HH:mm:ss"
         for time in timeSlots {
             if let date = time.getDate(), let start = time.getStartTime(), let end = time.getEndTime(){
-                printr("date from appointment:")
-                printr(date)
-                let targetDay = Calendar.current.component(.day, from: date)
-//                var newStart = Calendar.current.date(
-//                    bySettingHour: start.get(.hour),
-//                    minute: start.get(.minute),
-//                    second: start.get(.second),
-//                    of: date)!
-                var newStart = Calendar.current.date(
-                    bySettingHour: start.get(.hour),
-                    minute: start.get(.minute),
-                    second: start.get(.second),
-                    of: date,
-                    matchingPolicy: .previousTimePreservingSmallerComponents,
-                    repeatedTimePolicy: .first,
-                    direction: .backward)!
+                var baseDate = formatterTwo.string(from: date)
+                var newStartTime = formatterOne.string(from: start)
+                var newStart = formatterThree.date(from: "\(baseDate) \(newStartTime)")!
                 printr("not global newStart:")
                 printr(newStart)
                 newStart = newStart.toGlobalTime()
                 printr("global newStart:")
                 printr(newStart)
-//                var newEnd = Calendar.current.date(
-//                    bySettingHour: end.get(.hour),
-//                    minute: end.get(.minute),
-//                    second: end.get(.second),
-//                    of: date)!
-                var newEnd = Calendar.current.date(
-                    bySettingHour: end.get(.hour),
-                    minute: end.get(.minute),
-                    second: end.get(.second),
-                    of: date,
-                    matchingPolicy: .nextTimePreservingSmallerComponents,
-                    repeatedTimePolicy: .last,
-                    direction: .forward)!
+                var newEndTime = formatterOne.string(from: end)
+                var newEnd = formatterThree.date(from: "\(baseDate) \(newEndTime)")!
                 printr("not global newEnd:")
                 printr(newEnd)
                 newEnd = newEnd.toGlobalTime()
