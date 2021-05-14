@@ -173,6 +173,7 @@ struct AutoFormView: View {
             var description = inputs["Subject"] ?? ""
             DatabaseDelegate.setAppointment(startTime: startTime, endTime: endTime, date: dateTime, description: description, completion: {
                 rex in
+                taskManager.reloadAppointmentData()
                 presentationMode.wrappedValue.dismiss()
             })
         }

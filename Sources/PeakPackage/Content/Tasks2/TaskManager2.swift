@@ -246,6 +246,10 @@ public class TaskManager2 : Manager{
         })
     }
     
+    func reloadAppointmentData(){
+        loadUnavailableAppointmentTimes()
+    }
+    
 }
 
 extension TaskManager2 {
