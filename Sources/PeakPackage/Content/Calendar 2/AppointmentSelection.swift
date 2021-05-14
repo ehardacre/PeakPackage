@@ -54,10 +54,13 @@ class appointmentSelector : ObservableObject {
     func addUnavailableTimes(timeSlots: [appointmentTimeSlot], startTime: Date){
         var formatterOne = DateFormatter()
         formatterOne.dateFormat = "HH:mm:ss"
+        formatterOne.timeZone = TimeZone(abbreviation: "GMT")
         var formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "yyyy-MM-dd"
+        formatterTwo.timeZone = TimeZone(abbreviation: "GMT")
         var formatterThree = DateFormatter()
         formatterThree.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatterThree.timeZone = TimeZone(abbreviation: "GMT")
         for time in timeSlots {
             if let date = time.getDate(), let start = time.getStartTime(), let end = time.getEndTime(){
                 var baseDate = formatterTwo.string(from: date)
