@@ -66,24 +66,16 @@ class appointmentSelector : ObservableObject {
                 var baseDate = formatterTwo.string(from: date)
                 var newStartTime = formatterOne.string(from: start)
                 var newStartString = "\(baseDate) \(newStartTime)"
-                printr("newStart string:")
-                printr(newStartString)
                 var newStart = formatterThree.date(from: newStartString)!
-                printr("not global newStart:")
+                printr("newStart:")
                 printr(newStart)
-                newStart = newStart.toGlobalTime()
-                printr("global newStart:")
-                printr(newStart)
+                //newStart = newStart.toGlobalTime()
                 var newEndTime = formatterOne.string(from: end)
                 var newEndString = "\(baseDate) \(newEndTime)"
-                printr("newEnd string:")
-                printr(newEndString)
                 var newEnd = formatterThree.date(from: newEndString)!
                 printr("not global newEnd:")
                 printr(newEnd)
-                newEnd = newEnd.toGlobalTime()
-                printr("global newEnd:")
-                printr(newEnd)
+                //newEnd = newEnd.toGlobalTime()
                 let disStart = startTime.distance(to: newStart)/60
                 let disEnd = startTime.distance(to: newEnd)/60
                 let indStart = (Int(disStart)/(TaskManager2.timeSlotInterval/2))
