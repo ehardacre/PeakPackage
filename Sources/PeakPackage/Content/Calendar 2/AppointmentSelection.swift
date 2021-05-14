@@ -88,7 +88,7 @@ class appointmentSelector : ObservableObject {
                     of: date,
                     matchingPolicy: .nextTimePreservingSmallerComponents,
                     repeatedTimePolicy: .last,
-                    direction: .forward)
+                    direction: .forward)!
                 printr("not global newEnd:")
                 printr(newEnd)
                 newEnd = newEnd.toGlobalTime()
