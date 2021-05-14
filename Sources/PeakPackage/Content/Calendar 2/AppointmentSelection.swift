@@ -59,6 +59,7 @@ class appointmentSelector : ObservableObject {
                 let newEnd = Calendar.current.date(bySettingHour: end.get(.hour), minute: end.get(.minute), second: end.get(.second), of: date)!.toGlobalTime()
                 printr(startTime)
                 printr(newStart)
+                printr(newEnd)
                 let disStart = startTime.distance(to: newStart)/60
                 let disEnd = startTime.distance(to: newEnd)/60
                 let indStart = (Int(disStart)/(TaskManager2.timeSlotInterval/2))
