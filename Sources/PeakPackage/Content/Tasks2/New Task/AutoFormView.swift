@@ -169,7 +169,7 @@ struct AutoFormView: View {
         if timeInputs.count == 3 {
             var startTime = timeInputs[0]
             var endTime = timeInputs[1]
-            var dateTime = timeInputs[3]
+            var dateTime = timeInputs[2]
             var description = inputs["Subject"] ?? ""
             DatabaseDelegate.setAppointment(startTime: startTime, endTime: endTime, date: dateTime, description: description, completion: {
                 rex in
