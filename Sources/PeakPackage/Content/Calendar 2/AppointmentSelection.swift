@@ -55,19 +55,27 @@ class appointmentSelector : ObservableObject {
         
         for time in timeSlots {
             if let date = time.getDate(), let start = time.getStartTime(), let end = time.getEndTime(){
+                printr("date from appointment:")
                 printr(date)
-                let newStart = Calendar.current.date(
+                var newStart = Calendar.current.date(
                     bySettingHour: start.get(.hour),
                     minute: start.get(.minute),
                     second: start.get(.second),
-                    of: date)!.toGlobalTime()
-                let newEnd = Calendar.current.date(
+                    of: date)!
+                printr("not global newStart:")
+                printr(newStart)
+                newStart = newStart.toGlobalTime()
+                printr("global newStart:")
+                printr(newStart)
+                var newEnd = Calendar.current.date(
                     bySettingHour: end.get(.hour),
                     minute: end.get(.minute),
                     second: end.get(.second),
-                    of: date)!.toGlobalTime()
-                printr(startTime)
-                printr(newStart)
+                    of: date)!
+                printr("not global newEnd:")
+                printr(newEnd)
+                newEnd = newEnd.toGlobalTime()
+                printr("global newEnd:")
                 printr(newEnd)
                 let disStart = startTime.distance(to: newStart)/60
                 let disEnd = startTime.distance(to: newEnd)/60
