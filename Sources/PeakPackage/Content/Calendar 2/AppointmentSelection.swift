@@ -62,14 +62,20 @@ class appointmentSelector : ObservableObject {
             if let date = time.getDate(), let start = time.getStartTime(), let end = time.getEndTime(){
                 var baseDate = formatterTwo.string(from: date)
                 var newStartTime = formatterOne.string(from: start)
-                var newStart = formatterThree.date(from: "\(baseDate) \(newStartTime)")!
+                var newStartString = "\(baseDate) \(newStartTime)"
+                printr("newStart string:")
+                printr(newStartString)
+                var newStart = formatterThree.date(from: newStartString)!
                 printr("not global newStart:")
                 printr(newStart)
                 newStart = newStart.toGlobalTime()
                 printr("global newStart:")
                 printr(newStart)
                 var newEndTime = formatterOne.string(from: end)
-                var newEnd = formatterThree.date(from: "\(baseDate) \(newEndTime)")!
+                var newEndString = "\(baseDate) \(newEndTime)"
+                printr("newEnd string:")
+                printr(newEndString)
+                var newEnd = formatterThree.date(from: newEndString)!
                 printr("not global newEnd:")
                 printr(newEnd)
                 newEnd = newEnd.toGlobalTime()
