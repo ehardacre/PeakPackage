@@ -313,7 +313,6 @@ struct TimeInputCardView : View {
     }
     
     func parseInputDate() -> (String,String,String)? {
-        #warning("TODO: turn times to GMT for standardization")
         let timeformatter = DateFormatter()
         timeformatter.dateFormat = "HH:mm:ss"
         if inputStart == nil || inputEnd == nil {
@@ -321,8 +320,8 @@ struct TimeInputCardView : View {
         }
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy-MM-dd"
-        return (timeformatter.string(from: inputStart!),
-                timeformatter.string(from: inputEnd!),
+        return (timeformatter.string(from: inputStart!.toGlobalTime()),
+                timeformatter.string(from: inputEnd!.toGlobalTime()),
                 dateformatter.string(from: selectedDay))
     }
 }

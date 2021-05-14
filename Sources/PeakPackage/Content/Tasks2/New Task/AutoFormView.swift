@@ -165,7 +165,8 @@ struct AutoFormView: View {
     }
     
     func sendInAppointment(inputs: [String:String]){
-        printr("submitting appointment")
+        printr("Submitting appointment")
+        printr(inputs)
     }
     
     func sendInTask(inputs: [String:String]){
