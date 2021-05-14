@@ -58,23 +58,37 @@ class appointmentSelector : ObservableObject {
                 printr("date from appointment:")
                 printr(date)
                 let targetDay = Calendar.current.component(.day, from: date)
+//                var newStart = Calendar.current.date(
+//                    bySettingHour: start.get(.hour),
+//                    minute: start.get(.minute),
+//                    second: start.get(.second),
+//                    of: date)!
                 var newStart = Calendar.current.date(
                     bySettingHour: start.get(.hour),
                     minute: start.get(.minute),
                     second: start.get(.second),
-                    of: date)!
-                newStart = Calendar.current.date(bySetting: .day, value: targetDay, of: newStart)!
+                    of: date,
+                    matchingPolicy: .previousTimePreservingSmallerComponents,
+                    repeatedTimePolicy: .first,
+                    direction: .backward)!
                 printr("not global newStart:")
                 printr(newStart)
                 newStart = newStart.toGlobalTime()
                 printr("global newStart:")
                 printr(newStart)
+//                var newEnd = Calendar.current.date(
+//                    bySettingHour: end.get(.hour),
+//                    minute: end.get(.minute),
+//                    second: end.get(.second),
+//                    of: date)!
                 var newEnd = Calendar.current.date(
                     bySettingHour: end.get(.hour),
                     minute: end.get(.minute),
                     second: end.get(.second),
-                    of: date)!
-                newEnd = Calendar.current.date(bySetting: .day, value: targetDay, of: newEnd)!
+                    of: date,
+                    matchingPolicy: .nextTimePreservingSmallerComponents,
+                    repeatedTimePolicy: .last,
+                    direction: .forward)
                 printr("not global newEnd:")
                 printr(newEnd)
                 newEnd = newEnd.toGlobalTime()
