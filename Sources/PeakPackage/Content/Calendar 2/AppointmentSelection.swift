@@ -62,7 +62,9 @@ class appointmentSelector : ObservableObject {
                 let disStart = startTime.distance(to: newStart)/60
                 let disEnd = startTime.distance(to: newEnd)/60
                 let indStart = (Int(disStart)/(TaskManager2.timeSlotInterval/2)) - 1
+                printr(indStart)
                 let indEnd = (Int(disEnd)/(TaskManager2.timeSlotInterval/2)) - 1
+                printr(indEnd)
                 for i in indStart..<indEnd{
                     unavailableDates.append(i)
                 }
