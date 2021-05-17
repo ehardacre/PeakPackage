@@ -199,12 +199,6 @@ struct AppointmentCardView: View {
                             .foregroundColor(Color.darkAccent)
                     }
                     .frame(width: leftAreaWidth)
-                    HStack{
-                        Spacer()
-                        Text("\(duration) min")
-                            .Footnote()
-                    }
-                    .frame(width: leftAreaWidth)
                 }
             }
             VStack{
@@ -213,6 +207,11 @@ struct AppointmentCardView: View {
 //                        .CardTitle()
                     Text(getTaskType(from:content))
                         .CardTitle()
+                    Spacer()
+                }
+                HStack{
+                    Text("\(duration) min")
+                        .Footnote()
                     Spacer()
                 }
             }
