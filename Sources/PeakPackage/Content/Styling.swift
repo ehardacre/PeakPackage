@@ -55,7 +55,6 @@ extension Text {
         return self
             .font(.footnote)
             .foregroundColor(.darkAccent)
-            .opacity(0.5)
             .truncationMode(.tail)
             .lineLimit(1)
     }

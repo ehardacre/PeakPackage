@@ -180,12 +180,14 @@ struct AppointmentCardView: View {
     @State var onSelection : () -> Void = {return}
     @State var onDeselection : () -> Void = {return}
     
+    var leftAreaWidth : CGFloat = 100
+    
     var body: some View {
         HStack{
             ZStack{
                 Rectangle()
                     .fill(Color.lightAccent)
-                    .frame(width: 100)
+                    .frame(width: leftAreaWidth)
                 VStack{
                     HStack(spacing: 0){
                         Spacer()
@@ -196,9 +198,13 @@ struct AppointmentCardView: View {
                             .imageScale(.large)
                             .foregroundColor(Color.darkAccent)
                     }
-                    .frame(width: 100)
-                    Text("\(duration) min")
-                        .Footnote()
+                    .frame(width: leftAreaWidth)
+                    HStack{
+                        Spacer()
+                        Text("\(duration) min")
+                            .Footnote()
+                    }
+                    .frame(width: leftAreaWidth)
                 }
             }
             VStack{
