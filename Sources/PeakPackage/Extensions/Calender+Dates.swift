@@ -76,6 +76,15 @@ extension Date {
         return Date(timeInterval: seconds, since: self)
     }
     
+    func toLocalTime_DLS() -> Date {
+        let timezone = TimeZone.current
+        var seconds = TimeInterval(timezone.secondsFromGMT(for: self))
+        if timezone.isDaylightSavingTime(for: self) {
+            seconds = seconds + 3600
+        }
+        return Date(timeInterval: seconds, since: self)
+    }
+    
     /**
      # Data Base Format
         format a date for the correct format for the database
