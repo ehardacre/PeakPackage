@@ -164,3 +164,85 @@ struct ShortCardView: View {
         
     }
 }
+
+struct AppointmentCardView: View {
+    
+    @State var id : UUID
+    @ObservedObject var selectionManager : SelectionManager
+    @State var color : Color
+    @State var hour : String
+    @State var minute : String
+    @State var iconColor : Color = Color.darkAccent
+    @State var title : String
+    @State var sub : String
+    @State var content : String
+    @Binding var showMoreInfo : Bool
+    @State var onSelection : () -> Void = {return}
+    @State var onDeselection : () -> Void = {return}
+    
+    var body: some View {
+        HStack{
+            ZStack{
+                Rectangle()
+                    .fill(color)
+                    .frame(width: 100)
+                HStack{
+                    Image(systemName:"\(hour).square.fill")
+                        .imageScale(.large)
+                        .foregroundColor(iconColor)
+                    Image(systemName:"\(minute).square.fill")
+                        .imageScale(.large)
+                        .foregroundColor(iconColor)
+                }
+            }
+            VStack{
+                HStack{
+//                    Text(TaskManager2.parseRequest(content).first?.title ?? "Task")
+//                        .CardTitle()
+                    Text(getTaskType(from:content))
+                        .CardTitle()
+                    Spacer()
+                }
+            }
+            .padding(.horizontal, 10.0)
+        }
+        .background(Color.lightAccent)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10.0)
+                .stroke(
+                    (self.id == self.selectionManager.id) ?
+                            Color.main : Color.clear,
+                        lineWidth: (self.id == self.selectionManager.id) ?
+                            3 : 1)
+                .background(Color.clear)
+                .foregroundColor(Color.clear)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 10.0))
+        .onTapGesture(count: 1, perform: {
+            if self.id == self.selectionManager.id {
+                self.selectionManager.id = nil
+                onDeselection()
+            }else{
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.success)
+                self.selectionManager.id = self.id
+                self.showMoreInfo = true
+                onSelection()
+            }
+        })
+    }
+    
+    func getTaskType(from content: String) -> String{
+        
+        var parts = content.components(separatedBy: "]")
+        guard let titlesection = parts.first else {
+            return "Task"
+        }
+        var cleanedTitle = titlesection
+            .replacingOccurrences(of: "]", with: "")
+            .replacingOccurrences(of: "[", with: "")
+        cleanedTitle = cleanedTitle.components(separatedBy: "for").first ?? "Task"
+        return cleanedTitle
+        
+    }
+}
