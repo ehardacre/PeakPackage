@@ -126,7 +126,7 @@ struct ShortCardView: View {
         }
         .background(Color.lightAccent)
         .overlay(
-            RoundedRectangle(cornerRadius: 20.0)
+            RoundedRectangle(cornerRadius: 10.0)
                 .stroke(
                     (self.id == self.selectionManager.id) ?
                             Color.main : Color.clear,
@@ -135,7 +135,7 @@ struct ShortCardView: View {
                 .background(Color.clear)
                 .foregroundColor(Color.clear)
         )
-        .clipShape(RoundedRectangle(cornerRadius: 20.0))
+        .clipShape(RoundedRectangle(cornerRadius: 10.0))
         .onTapGesture(count: 1, perform: {
             if self.id == self.selectionManager.id {
                 self.selectionManager.id = nil

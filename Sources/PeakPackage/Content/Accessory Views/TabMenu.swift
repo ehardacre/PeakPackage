@@ -27,7 +27,7 @@ public struct TabMenu : View {
           tabs.calendar : "calendar",
           tabs.leads : "rectangle.stack.person.crop.fill",
           tabs.seo : "megaphone.fill",
-          tabs.tasks : "list.dash",
+          tabs.tasks : "calendar", //"list.dash"
           tabs.social : "photo.fill.on.rectangle.fill"]
     
     public var body : some View{
