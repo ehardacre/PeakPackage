@@ -65,6 +65,15 @@ extension Date {
 //        }
         return Date(timeInterval: seconds, since: self)
     }
+    
+    func toGlobalTime_DLS() -> Date {
+        let timezone = TimeZone.current
+        var seconds = -TimeInterval(timezone.secondsFromGMT(for: self))
+        if timezone.isDaylightSavingTime(for: self) {
+            seconds = seconds + 3600
+        }
+        return Date(timeInterval: seconds, since: self)
+    }
 
     // Convert UTC (or GMT) to local time
     func toLocalTime() -> Date {
