@@ -25,7 +25,6 @@ struct TaskListView2: View {
             AppointmentCardView(
                 id: UUID(),
                 selectionManager: selectionManager,
-                color: Color.mid,
                 hour: "11",
                 minute: "30",
                 title: "Requested",

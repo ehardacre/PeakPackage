@@ -169,7 +169,6 @@ struct AppointmentCardView: View {
     
     @State var id : UUID
     @ObservedObject var selectionManager : SelectionManager
-    @State var color : Color
     @State var hour : String
     @State var minute : String
     @State var iconColor : Color = Color.darkAccent
@@ -184,15 +183,17 @@ struct AppointmentCardView: View {
         HStack{
             ZStack{
                 Rectangle()
-                    .fill(color)
+                    .fill(Color.lightAccent)
                     .frame(width: 100)
                 HStack{
+                    Spacer()
                     Image(systemName:"\(hour).square.fill")
                         .imageScale(.large)
-                        .foregroundColor(iconColor)
+                        .foregroundColor(Color.mid)
                     Image(systemName:"\(minute).square.fill")
                         .imageScale(.large)
-                        .foregroundColor(iconColor)
+                        .foregroundColor(Color.mid)
+                    Spacer()
                 }
             }
             VStack{
