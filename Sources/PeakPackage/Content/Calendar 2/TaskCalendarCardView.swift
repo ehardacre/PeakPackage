@@ -185,7 +185,7 @@ struct AppointmentCardView: View {
                 Rectangle()
                     .fill(Color.lightAccent)
                     .frame(width: 100)
-                HStack{
+                HStack(spacing: 0){
                     Spacer()
                     Image(systemName:"\(hour).square.fill")
                         .imageScale(.large)
