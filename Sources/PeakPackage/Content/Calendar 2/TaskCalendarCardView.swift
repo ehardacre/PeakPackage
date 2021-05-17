@@ -195,6 +195,7 @@ struct AppointmentCardView: View {
                         .foregroundColor(Color.mid)
                     Spacer()
                 }
+                .frame(width: 100)
             }
             VStack{
                 HStack{
