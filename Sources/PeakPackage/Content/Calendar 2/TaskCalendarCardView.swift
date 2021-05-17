@@ -171,6 +171,7 @@ struct AppointmentCardView: View {
     @ObservedObject var selectionManager : SelectionManager
     @State var hour : String
     @State var minute : String
+    @State var duration : String
     @State var iconColor : Color = Color.darkAccent
     @State var title : String
     @State var sub : String
@@ -185,17 +186,20 @@ struct AppointmentCardView: View {
                 Rectangle()
                     .fill(Color.lightAccent)
                     .frame(width: 100)
-                HStack(spacing: 0){
-                    Spacer()
-                    Image(systemName:"\(hour).square.fill")
-                        .imageScale(.large)
-                        .foregroundColor(Color.mid)
-                    Image(systemName:"\(minute).square.fill")
-                        .imageScale(.large)
-                        .foregroundColor(Color.mid)
-                    Spacer()
+                VStack{
+                    HStack(spacing: 0){
+                        Spacer()
+                        Image(systemName:"\(hour).square.fill")
+                            .imageScale(.large)
+                            .foregroundColor(Color.darkAccent)
+                        Image(systemName:"\(minute).square.fill")
+                            .imageScale(.large)
+                            .foregroundColor(Color.darkAccent)
+                    }
+                    .frame(width: 100)
+                    Text("\(duration) min")
+                        .Footnote()
                 }
-                .frame(width: 100)
             }
             VStack{
                 HStack{

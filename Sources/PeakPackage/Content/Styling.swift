@@ -51,6 +51,15 @@ extension Text {
             .lineLimit(1)
     }
     
+    func Footnote() -> some View{
+        return self
+            .font(.footnote)
+            .foregroundColor(.darkAccent)
+            .opacity(0.5)
+            .truncationMode(.tail)
+            .lineLimit(1)
+    }
+    
     func CardTitle_light() -> some View{
         return self
             .font(.headline)

@@ -27,6 +27,7 @@ struct TaskListView2: View {
                 selectionManager: selectionManager,
                 hour: "11",
                 minute: "30",
+                duration: "15",
                 title: "Requested",
                 sub: "test",
                 content: "test",
