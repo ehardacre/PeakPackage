@@ -197,6 +197,7 @@ struct AppointmentCardView: View {
                         Image(systemName:"\(minute).square.fill")
                             .imageScale(.large)
                             .foregroundColor(Color.darkAccent)
+                        Spacer()
                     }
                     .frame(width: leftAreaWidth)
                 }
