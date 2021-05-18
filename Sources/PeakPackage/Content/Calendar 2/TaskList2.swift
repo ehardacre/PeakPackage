@@ -15,6 +15,7 @@ struct TaskListView2: View {
     @State var completeListOpen = false
     
     var taskManager : TaskManager2
+    @State var todaysAppointments : [Appointment] = []
     @State var completedTasks : [TaskCalendarCardView] = []
     @State var openTasks : [TaskCalendarCardView] = []
     
@@ -22,16 +23,7 @@ struct TaskListView2: View {
     
     var body: some View {
         List{
-            AppointmentCardView(
-                id: UUID(),
-                selectionManager: selectionManager,
-                hour: "11",
-                minute: "30",
-                duration: "15",
-                title: "Requested",
-                sub: "test",
-                content: "test",
-                showMoreInfo: $temp)
+            
             //COmpleted Tasks
             ForEach(completedTasks, id: \.id){
                 task in

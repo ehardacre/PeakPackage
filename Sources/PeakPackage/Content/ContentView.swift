@@ -200,8 +200,9 @@ public struct ContentView: View {
                         taskManager.loadTasks()
                         taskManager.loadForms()
                         taskManager.loadUnavailableAppointmentTimes()
-                        appointmentManager.loadAppointments()
-                        appointmentManager.loadTodaysVisits()
+                        taskManager.loadAppointments()
+                        //appointmentManager.loadAppointments()
+                        //appointmentManager.loadTodaysVisits()
                     }
                     seoManager.loadRankings()
                 }

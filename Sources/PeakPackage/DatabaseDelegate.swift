@@ -11,6 +11,14 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func getAppointments(completion: @escaping (Any) -> Void){
+        var id = defaults.franchiseId() ?? "1"
+        let json = JsonFormat.getAppointments(id: id).format()
+        DatabaseDelegate.performRequest(with: json, ret: returnType.appointment, completion: {
+            rex in
+            completion(rex)
+        })
+    }
     
     static func getUnavalableAppointments(completion: @escaping (Any) -> Void){
         let json = JsonFormat.getUnavailableAppoinmentSlots.format()
@@ -231,21 +239,21 @@ extension DatabaseDelegate {
         })
     }
     
-    static func getAppointments(completion: @escaping (Any) -> Void){
-        if defaults.getApplicationType() == .PeakClients(.any){
-            //format the json for the request
-            let json = JsonFormat.getAppointments(id: defaults.franchiseId()!).format()
-            //perform the database operation
-            DatabaseDelegate.performRequest(with: json, ret: returnType.visit, completion: {
-                 rex in
-                completion(rex)
-             })
-        }else if defaults.getApplicationType() == .NHanceConnect {
-            printr("App type is set to NHance Connect, there are no appointments for NHance Connect")
-        }else{
-            printr("Application Type not set, could not get appointments")
-        }
-    }
+//    static func getAppointments(completion: @escaping (Any) -> Void){
+//        if defaults.getApplicationType() == .PeakClients(.any){
+//            //format the json for the request
+//            let json = JsonFormat.getAppointments(id: defaults.franchiseId()!).format()
+//            //perform the database operation
+//            DatabaseDelegate.performRequest(with: json, ret: returnType.visit, completion: {
+//                 rex in
+//                completion(rex)
+//             })
+//        }else if defaults.getApplicationType() == .NHanceConnect {
+//            printr("App type is set to NHance Connect, there are no appointments for NHance Connect")
+//        }else{
+//            printr("Application Type not set, could not get appointments")
+//        }
+//    }
     
     static func getDashboardMessage(completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients(.any){
@@ -497,6 +505,8 @@ struct DatabaseDelegate {
             rex = try? JSONDecoder().decode([SearchRankingforTime].self, from: data)
         case returnType.appointmentTimeSlot:
             rex = try? JSONDecoder().decode([appointmentTimeSlot].self, from: data)
+        case returnType.appointment:
+            rex = try? JSONDecoder().decode([Appointment].self, from: data)
         default:
             rex = String.init(data: data, encoding: .ascii)!
         }

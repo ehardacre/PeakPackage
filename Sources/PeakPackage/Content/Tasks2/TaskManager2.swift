@@ -21,6 +21,7 @@ public class TaskManager2 : Manager{
     
     //@Published var myAppointments : Appointment
     @Published var unavailabaleTimeSlots : [appointmentTimeSlot] = []
+    @Published var appointments : [Appointment] = []
     static let timeSlotInterval = 30 
     
 
@@ -238,6 +239,13 @@ public class TaskManager2 : Manager{
     }
     
     // MARK: Appoinment Functions
+    
+    func loadAppointments(){
+        DatabaseDelegate.getAppointments(completion: {
+            rex in
+            self.appointments = rex as! [Appointment]
+        })
+    }
     
     func loadUnavailableAppointmentTimes(){
         DatabaseDelegate.getUnavalableAppointments(completion: {

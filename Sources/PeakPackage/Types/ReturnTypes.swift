@@ -213,6 +213,19 @@ class Appointment : Codable{
     var description : String
 }
 
+extension Appointment{
+    
+    //returns minute difference
+    func getDuration() -> Int{
+        var formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        let startDate = formatter.date(from: self.start)
+        let endDate = formatter.date(from: self.end)
+        return 0
+    }
+}
+
 
 /**
  # Return Type
@@ -233,4 +246,5 @@ enum returnType {
     case dashboardMessage
     case searchRank
     case appointmentTimeSlot
+    case appointment
 }

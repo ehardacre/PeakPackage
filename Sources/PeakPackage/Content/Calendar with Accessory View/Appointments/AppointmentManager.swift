@@ -30,13 +30,13 @@ public class AppointmentManager : Manager {
         if !appointments.isEmpty {
             return
         }
-        DatabaseDelegate.getAppointments(completion: {
-            rex in
-           
-           //convert the backend format to the front end format
-           self.appointments = (rex as! [BackendVisit]).map(self.makeFrontendVisit(visit:))
-           self.loadTodaysVisits()
-        })
+//        DatabaseDelegate.getAppointments(completion: {
+//            rex in
+//           
+//           //convert the backend format to the front end format
+//           self.appointments = (rex as! [BackendVisit]).map(self.makeFrontendVisit(visit:))
+//           self.loadTodaysVisits()
+//        })
      }
     
     func resetAppointments(){

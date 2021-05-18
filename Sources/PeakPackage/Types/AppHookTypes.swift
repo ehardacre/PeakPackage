@@ -97,6 +97,7 @@ enum JsonKeys : String{
     case submitAppointment_end = "submitAppointment_endTime"
     case submitAppointment_date = "submitAppointment_dateTime"
     case submitAppointment_description = "submitAppointment_description"
+    case getAppointments_id = "getAppointments_id"
     
     //MARK: N-HANCE CONNECT
     //keys for getting leads
@@ -151,7 +152,7 @@ public enum JsonFormat {
     case getUser(id: String)
     case setUser(id: String, address: String?, city: String?, state: String?, zip: String?, phone: String?, email: String?)
     //Oppointment Operations
-    case getAppointments(id: String)
+//    case getAppointments(id: String)
     case setAppointment(id: String, value: String, date: String, duration: String)
     //Task Operations
     case getTasks(id: String)
@@ -172,6 +173,7 @@ public enum JsonFormat {
     //new appointments
     case getUnavailableAppoinmentSlots
     case submitAppointment(id: String, start: String, end: String, date: String, description: String)
+    case getAppointments(id: String)
     
     
     //MARK: N-HANCE CONNECT
@@ -267,8 +269,8 @@ public enum JsonFormat {
             retVal = [JsonKeys.image_send_key.rawValue: imageData,
                       JsonKeys.image_send_task.rawValue: taskId]
             //get appointments for user id
-        case .getAppointments(let id):
-            retVal = [JsonKeys.appt_key.rawValue: id]
+//        case .getAppointments(let id):
+//            retVal = [JsonKeys.appt_key.rawValue: id]
             //create appointments for user id
         case .setAppointment(let id, let value, let date, let duration):
             retVal = [JsonKeys.appt_key.rawValue: id,
@@ -308,6 +310,8 @@ public enum JsonFormat {
                       JsonKeys.submitAppointment_start.rawValue: start,
                       JsonKeys.submitAppointment_end.rawValue: end,
                       JsonKeys.submitAppointment_description.rawValue: description]
+        case .getAppointments(let id):
+            retVal = [JsonKeys.getAppointments_id.rawValue: id]
             
             
         //MARK: N-HANCE CONNECT
