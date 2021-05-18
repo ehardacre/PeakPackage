@@ -24,6 +24,11 @@ struct TaskListView2: View {
     var body: some View {
         List{
             
+            ForEach(todaysAppointments, id: \.id){
+                app in
+                AppointmentCardView(id: UUID(), selectionManager: selectionManager, hour: "11", minute: "30", duration: "15", title: app.getName(), sub: app.getName(), content: app.getName(), showMoreInfo: $temp)
+            }
+            
             //COmpleted Tasks
             ForEach(completedTasks, id: \.id){
                 task in
@@ -57,6 +62,7 @@ struct TaskListView2: View {
                 selectionManager: selectionManager,
                 taskManager: taskManager)
             printr("completed: \(completedTasks.count), open: \(openTasks.count)")
+            self.todaysAppointments = taskManager.appointments
         })
         .onAppear{
             printr("posting for task loading")

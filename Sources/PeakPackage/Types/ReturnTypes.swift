@@ -208,6 +208,7 @@ extension appointmentTimeSlot{
 class Appointment : Codable{
     var id : String
     var date : String
+    var name : String
     var start : String
     var end : String
     var description : String
@@ -223,6 +224,14 @@ extension Appointment{
         let startDate = formatter.date(from: self.start)
         let endDate = formatter.date(from: self.end)
         return 0
+    }
+    
+    func getName() -> String{
+        if defaults.admin {
+            return name
+        } else {
+            return "Peak Studios"
+        }
     }
 }
 
