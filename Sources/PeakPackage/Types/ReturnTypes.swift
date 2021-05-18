@@ -241,10 +241,10 @@ extension Appointment{
         
         var formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "HH"
-        formatterTwo.timeZone = TimeZone(abbreviation: "GMT")
+        formatterTwo.timeZone = .current
         
         guard let startDate = formatter.date(from: self.start) else { return "" }
-        var startStr = formatterTwo.string(from: startDate.toLocalTime_DLS())
+        var startStr = formatterTwo.string(from: startDate)
         
         return startStr
     }
@@ -256,10 +256,10 @@ extension Appointment{
         
         var formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "mm"
-        formatterTwo.timeZone = TimeZone(abbreviation: "GMT")
+        formatterTwo.timeZone = .current
         
         guard let startDate = formatter.date(from: self.start) else { return "" }
-        var startStr = formatterTwo.string(from: startDate.toLocalTime_DLS())
+        var startStr = formatterTwo.string(from: startDate)
         
         return startStr
     }
