@@ -221,9 +221,9 @@ extension Appointment{
         var formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
-        let startDate = formatter.date(from: self.start)
-        let endDate = formatter.date(from: self.end)
-        return 0
+        guard let startDate = formatter.date(from: self.start) else { return 0 }
+        guard let endDate = formatter.date(from: self.end) else { return 0 }
+        return Int((startDate.distance(to: endDate) ?? 0)/60)
     }
     
     func getName() -> String{
@@ -232,6 +232,42 @@ extension Appointment{
         } else {
             return "Peak Studios"
         }
+    }
+    
+    func startHour() -> String {
+        var formatter = DateFormatter()
+        formatter.dateFormat = "HH"
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        guard let startDate = formatter.date(from: self.start) else { return "" }
+        let startStr = formatter.string(from: startDate) ?? ""
+        return startStr
+    }
+    
+    func startMinute() -> String {
+        var formatter = DateFormatter()
+        formatter.dateFormat = "mm"
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        guard let startDate = formatter.date(from: self.start) else { return "" }
+        let startStr = formatter.string(from: startDate) ?? ""
+        return startStr
+    }
+    
+    func getDate() -> Date{
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        guard let startDate = formatter.date(from: self.date) else {
+            return Calendar.current.date(bySetting: .year, value: 2018, of: Date())!
+        }
+        return startDate
+    }
+    
+    func convertToCalendarCard(with selectionManager: SelectionManager, and taskManager: TaskManager2) -> AppointmentCardView{
+        
+        return AppointmentCardView(id: UUID(),
+                            selectionManager: selectionManager,
+                            appointment: self)
+        
     }
 }
 

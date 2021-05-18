@@ -15,7 +15,7 @@ struct TaskListView2: View {
     @State var completeListOpen = false
     
     var taskManager : TaskManager2
-    @State var todaysAppointments : [Appointment] = []
+    @State var todaysAppointments : [AppointmentCardView] = []
     @State var completedTasks : [TaskCalendarCardView] = []
     @State var openTasks : [TaskCalendarCardView] = []
     
@@ -26,7 +26,7 @@ struct TaskListView2: View {
             
             ForEach(todaysAppointments, id: \.id){
                 app in
-                AppointmentCardView(id: UUID(), selectionManager: selectionManager, hour: "11", minute: "30", duration: "15", title: app.getName(), sub: app.getName(), content: app.getName(), showMoreInfo: $temp)
+                app
             }
             
             //COmpleted Tasks
@@ -62,7 +62,8 @@ struct TaskListView2: View {
                 selectionManager: selectionManager,
                 taskManager: taskManager)
             printr("completed: \(completedTasks.count), open: \(openTasks.count)")
-            self.todaysAppointments = taskManager.appointments
+            var newApps = taskManager.getAppointments(for: date)
+            self.todaysAppointments = taskManager.convertForCalendar(appointments: newApps, selectionManager: selectionManager, taskManager: taskManager)
         })
         .onAppear{
             printr("posting for task loading")

@@ -100,8 +100,6 @@ struct ShortCardView: View {
     @State var sub : String
     @State var content : String
     @Binding var showMoreInfo : Bool
-    @State var onSelection : () -> Void = {return}
-    @State var onDeselection : () -> Void = {return}
     
     var body: some View {
         HStack{
@@ -139,13 +137,11 @@ struct ShortCardView: View {
         .onTapGesture(count: 1, perform: {
             if self.id == self.selectionManager.id {
                 self.selectionManager.id = nil
-                onDeselection()
             }else{
                 let generator = UINotificationFeedbackGenerator()
                 generator.notificationOccurred(.success)
                 self.selectionManager.id = self.id
                 self.showMoreInfo = true
-                onSelection()
             }
         })
     }
@@ -169,16 +165,8 @@ struct AppointmentCardView: View {
     
     @State var id : UUID
     @ObservedObject var selectionManager : SelectionManager
-    @State var hour : String
-    @State var minute : String
-    @State var duration : String
-    @State var iconColor : Color = Color.darkAccent
-    @State var title : String
-    @State var sub : String
-    @State var content : String
-    @Binding var showMoreInfo : Bool
-    @State var onSelection : () -> Void = {return}
-    @State var onDeselection : () -> Void = {return}
+    @State var appointment : Appointment
+    @State var showMoreInfo : Bool = false
     
     var leftAreaWidth : CGFloat = 100
     
@@ -191,10 +179,10 @@ struct AppointmentCardView: View {
                 VStack{
                     HStack(spacing: 0){
                         Spacer()
-                        Image(systemName:"\(hour).square.fill")
+                        Image(systemName:"\(appointment.startHour()).square.fill")
                             .imageScale(.large)
                             .foregroundColor(Color.darkAccent)
-                        Image(systemName:"\(minute).square.fill")
+                        Image(systemName:"\(appointment.startMinute()).square.fill")
                             .imageScale(.large)
                             .foregroundColor(Color.darkAccent)
                         Spacer()
@@ -204,14 +192,12 @@ struct AppointmentCardView: View {
             }
             VStack{
                 HStack{
-//                    Text(TaskManager2.parseRequest(content).first?.title ?? "Task")
-//                        .CardTitle()
-                    Text(getTaskType(from:content))
+                    Text(appointment.getName())
                         .CardTitle()
                     Spacer()
                 }
                 HStack{
-                    Text("\(duration) min")
+                    Text("\(appointment.getDuration()) min")
                         .Footnote()
                     Spacer()
                 }
@@ -233,14 +219,17 @@ struct AppointmentCardView: View {
         .onTapGesture(count: 1, perform: {
             if self.id == self.selectionManager.id {
                 self.selectionManager.id = nil
-                onDeselection()
             }else{
                 let generator = UINotificationFeedbackGenerator()
                 generator.notificationOccurred(.success)
                 self.selectionManager.id = self.id
                 self.showMoreInfo = true
-                onSelection()
             }
+        })
+        .sheet(
+            isPresented: $showMoreInfo,
+            content: {
+                
         })
     }
     

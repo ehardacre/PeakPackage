@@ -219,6 +219,29 @@ public class TaskManager2 : Manager{
         return cards.reversed()
     }
     
+    func getAppointments(for date: Date) -> [Appointment]{
+        var appList : [Appointment] = []
+        for app in appointments {
+            var appDate = app.getDate()
+            var diff = Calendar.current.dateComponents([.day], from: appDate, to: date)
+            if diff.day == 0 {
+                appList.append(app)
+            }
+        }
+        return appList
+    }
+    
+    func convertForCalendar(appointments: [Appointment], selectionManager: SelectionManager, taskManager: TaskManager2) -> [AppointmentCardView]{
+        
+        var cards : [AppointmentCardView] = []
+        
+        for app in appointments {
+            cards.append(app.convertToCalendarCard(with: selectionManager, and: taskManager))
+        }
+        
+        return cards.reversed()
+    }
+    
     static func parseRequest(_ req: String) -> [TaskField]{
         
         var tempDetails : [TaskField] = []
