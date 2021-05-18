@@ -239,10 +239,10 @@ extension Appointment{
         formatter.dateFormat = "HH:mm:ss"
         
         var formatterTwo = DateFormatter()
-        formatterTwo.dateFormat = "mm"
+        formatterTwo.dateFormat = "HH"
         
         guard let startDate = formatter.date(from: self.start) else { return "" }
-        var startStr = formatterTwo.string(from: startDate)!
+        var startStr = formatterTwo.string(from: startDate)
         
         return startStr
     }
@@ -252,10 +252,10 @@ extension Appointment{
         formatter.dateFormat = "HH:mm:ss"
         
         var formatterTwo = DateFormatter()
-        formatterTwo.dateFormat = "HH"
+        formatterTwo.dateFormat = "mm"
         
         guard let startDate = formatter.date(from: self.start) else { return "" }
-        var startStr = formatterTwo.string(from: startDate)!
+        var startStr = formatterTwo.string(from: startDate)
         
         return startStr
     }
