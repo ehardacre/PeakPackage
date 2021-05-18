@@ -228,7 +228,7 @@ public class TaskManager2 : Manager{
                 appList.append(app)
             }
         }
-        return appList
+        return appList.sorted(by: {return $0.startHour() > $1.startHour()})
     }
     
     func convertForCalendar(appointments: [Appointment], selectionManager: SelectionManager, taskManager: TaskManager2) -> [AppointmentCardView]{
