@@ -93,6 +93,7 @@ enum JsonKeys : String{
     //new appointment key
     case unavailableTimeSlots_key = "getUnavailableTimeSlots"
     case submitAppointment_key = "submitAppointment_id"
+    case submitAppointment_name = "submitAppointment_name"
     case submitAppointment_start = "submitAppointment_startTime"
     case submitAppointment_end = "submitAppointment_endTime"
     case submitAppointment_date = "submitAppointment_dateTime"
@@ -172,7 +173,7 @@ public enum JsonFormat {
     case updateLeads_woo(id: String, state: String)
     //new appointments
     case getUnavailableAppoinmentSlots
-    case submitAppointment(id: String, start: String, end: String, date: String, description: String)
+    case submitAppointment(id: String, name: String, start: String, end: String, date: String, description: String)
     case getAppointments(id: String)
     
     
@@ -274,6 +275,7 @@ public enum JsonFormat {
             //create appointments for user id
         case .setAppointment(let id, let value, let date, let duration):
             retVal = [JsonKeys.appt_key.rawValue: id,
+                    
                     JsonKeys.appt_value.rawValue: value,
                     JsonKeys.appt_date.rawValue: date,
                     JsonKeys.appt_dur.rawValue: duration]
@@ -304,8 +306,9 @@ public enum JsonFormat {
         //new appointment stuff
         case .getUnavailableAppoinmentSlots:
             retVal = [JsonKeys.unavailableTimeSlots_key.rawValue: "true"]
-        case .submitAppointment(let id, let start, let end, let date, let description):
+        case .submitAppointment(let id, let name, let start, let end, let date, let description):
             retVal = [JsonKeys.submitAppointment_key.rawValue: id,
+                      JsonKeys.submitAppointment_name.rawValue: name,
                       JsonKeys.submitAppointment_date.rawValue: date,
                       JsonKeys.submitAppointment_start.rawValue: start,
                       JsonKeys.submitAppointment_end.rawValue: end,
