@@ -273,12 +273,6 @@ public enum JsonFormat {
 //        case .getAppointments(let id):
 //            retVal = [JsonKeys.appt_key.rawValue: id]
             //create appointments for user id
-        case .setAppointment(let id, let value, let date, let duration):
-            retVal = [JsonKeys.appt_key.rawValue: id,
-                    
-                    JsonKeys.appt_value.rawValue: value,
-                    JsonKeys.appt_date.rawValue: date,
-                    JsonKeys.appt_dur.rawValue: duration]
             //get the user information from id
         case .getUser(let id):
             retVal = [JsonKeys.userData_key.rawValue: id]

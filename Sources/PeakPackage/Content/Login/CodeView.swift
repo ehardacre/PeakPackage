@@ -127,9 +127,7 @@ struct CodeView: View {
                     codeInput == "63070" )
         {
             defaults.signIn()
-            if self.name != "" {
-                defaults.username(value: self.name)
-            }
+            defaults.username(value: self.name)
             defaults.franchiseId(value: self.franchise.franchiseId)
             defaults.franchiseName(value: self.franchise.franchiseTitle)
             defaults.setFranchiseURL(self.franchise.franchiseURL)

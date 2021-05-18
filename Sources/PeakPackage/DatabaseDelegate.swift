@@ -34,6 +34,8 @@ extension DatabaseDelegate {
         if let franName = defaults.franchiseName() {
             name = name + "(\(franName))"
         }
+        printr(name)
+        printr(id)
         let json = JsonFormat.submitAppointment(id: id, name: name, start: startTime, end: endTime, date: date, description: description).format()
         DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
             rex in
