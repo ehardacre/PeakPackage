@@ -236,14 +236,14 @@ extension Appointment{
     
     func startHour() -> String {
         var formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         
         var formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "HH"
         formatterTwo.timeZone = .current
         
-        guard let startDate = formatter.date(from: self.start) else { return "" }
+        guard let startDate = formatter.date(from: self.date + " " + self.start) else { return "" }
         var startStr = formatterTwo.string(from: startDate)
         
         return startStr
@@ -251,14 +251,14 @@ extension Appointment{
     
     func startMinute() -> String {
         var formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         
         var formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "mm"
         formatterTwo.timeZone = .current
         
-        guard let startDate = formatter.date(from: self.start) else { return "" }
+        guard let startDate = formatter.date(from: self.date + " " + self.start) else { return "" }
         var startStr = formatterTwo.string(from: startDate)
         
         return startStr
