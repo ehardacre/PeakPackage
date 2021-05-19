@@ -222,11 +222,10 @@ public class TaskManager2 : Manager{
     func getAppointments(for date: Date) -> [Appointment]{
         var appList : [Appointment] = []
         for app in appointments {
-            var appDate = app.getDate().toLocalTime()
-            var diff = Calendar.current.dateComponents([.day], from: appDate, to: date)
-            var weekdayOne = Calendar.current.dateComponents([.weekday], from: date)
-            var weekdayTwo = Calendar.current.dateComponents([.weekday], from: appDate)
-            if diff.day == 0 && weekdayOne == weekdayTwo{
+            var appDate = app.getDate()
+            #warning("For some reason I have to reverse a day for correct results 05/19/21")
+            var diff = Calendar.current.dateComponents([.day], from: appDate, to: date.advanced(by: -24*60*60))
+            if diff.day == 0 {
                 appList.append(app)
             }
         }
