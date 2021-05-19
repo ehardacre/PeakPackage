@@ -282,10 +282,14 @@ struct TimeInputCardView : View {
                 Text(timeText)
             })
             .defaultDateSelectButton()
+            Spacer()
             if Calendar.current.isDateInWeekend(selectedDay) {
                 Image(systemName: "xmark.square.fill")
                     .imageScale(.large)
                     .foregroundColor(Color.red)
+                    .onAppear{
+                        errorMessage = "We don't take calls on the weekends. Please select a different day."
+                    }
             }
             DatePicker("", selection: $selectedDay, in: Date(timeIntervalSinceNow: 24*60*60)..., displayedComponents: .date)
         }
