@@ -59,6 +59,12 @@ extension Text {
             .lineLimit(1)
     }
     
+    func ErrorText() -> some View{
+        return self
+            .font(.footnote)
+            .foregroundColor(.red)
+    }
+    
     func CardTitle_light() -> some View{
         return self
             .font(.headline)

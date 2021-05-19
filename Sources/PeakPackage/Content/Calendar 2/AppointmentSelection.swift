@@ -52,13 +52,6 @@ class appointmentSelector : ObservableObject {
     }
     
     func addUnavailableTimes(timeSlots: [appointmentTimeSlot], startTime: Date, endTime: Date){
-        unavailableDates = []
-        let weekday = Calendar.current.component(.weekday, from: startTime)
-        if weekday == 1 || weekday == 7 {
-            for i in 0..<Int((startTime.distance(to: endTime)/60/60)*4){
-                unavailableDates.append(i)
-            }
-        }
         var formatterOne = DateFormatter()
         formatterOne.dateFormat = "HH:mm:ss"
         formatterOne.timeZone = TimeZone(abbreviation: "GMT")

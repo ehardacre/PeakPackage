@@ -27,6 +27,8 @@ struct AutoFormView: View {
     @State var dismissFunction :  () -> Void = {return}
     @State var imagesToSubmit : [UIImage] = []
     let imageSendSemaphore = DispatchSemaphore(value: 1)
+    @State var showingError = false
+    @State var errorMessage = ""
     
     var body: some View {
         NavigationView{
@@ -51,8 +53,14 @@ struct AutoFormView: View {
                             .frame(height: 300)
                             .cornerRadius(20)
                     }
+                    if showingError {
+                        Text(errorMessage)
+                            .ErrorText()
+                    }
                     Button(action: {
                         //collect data from views
+                        showingError = false
+                        errorMessage = ""
                         loadedElementInputs.removeAll()
                         submittingTask = true
                         if defaults.admin {
@@ -108,12 +116,17 @@ struct AutoFormView: View {
                 semaphore.wait()
                 var data = obj.userInfo as! [String : Any]
                 
+                if data["error"] != nil {
+                    showingError = true
+                    errorMessage = data["error"] ?? "Unknown Error"
+                }
+                
                 if let id = data["id"] as? UUID,
                    let input = data["input"] as? [UIImage],
                    let key = data["key"] as? String{
                     loadedElementInputs.append(id)
                     inputList[key] = "\(input.count) images submitted"
-                    if inputEqualsFields(){
+                    if inputEqualsFields() && !showingError{
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
                         printr(inputList)
@@ -129,7 +142,7 @@ struct AutoFormView: View {
                     
                     loadedElementInputs.append(id)
                     inputList["time"] = "\(input.0)*\(input.1)*\(input.2)"
-                    if inputEqualsFields(){
+                    if inputEqualsFields() && !showingError{
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
                         printr(inputList)
@@ -144,7 +157,7 @@ struct AutoFormView: View {
                    let key = data["key"] as? String{
                     loadedElementInputs.append(id)
                     inputList[key] = input as! String
-                    if inputEqualsFields(){
+                    if inputEqualsFields() && !showingError{
                         descriptionText = "Submitting Task..."
                         printr("all fields collected")
                         printr(inputList)
@@ -180,6 +193,9 @@ struct AutoFormView: View {
     }
     
     func sendInTask(inputs: [String:String]){
+        if showingError {
+            return
+        }
         //format inputs into string
         var taskString = "[\(form.title):\(defaults.franchiseName() ?? "")]"
         for key in inputs.keys {

@@ -272,6 +272,7 @@ struct TimeInputCardView : View {
     @State var timeText = "Pick Time"
     @State var showWarning = false
     @State var pickingTime = false
+    @State var errorMessage : String? = nil
     
     var body : some View {
         HStack{
@@ -281,6 +282,11 @@ struct TimeInputCardView : View {
                 Text(timeText)
             })
             .defaultDateSelectButton()
+            if Calendar.current.isDateInWeekend(selectedDay) {
+                Image(systemName: "xmark.square.fill")
+                    .imageScale(.large)
+                    .foregroundColor(Color.red)
+            }
             DatePicker("", selection: $selectedDay, in: Date(timeIntervalSinceNow: 24*60*60)..., displayedComponents: .date)
         }
         .BasicContentCard()
@@ -291,7 +297,7 @@ struct TimeInputCardView : View {
                         NotificationCenter.default.post(
                             name: Notification.Name("ElementValue"),
                             object: nil,
-                            userInfo: ["input" :  parseInputDate(), "id" : id, "key" : title])
+                            userInfo: ["input" :  parseInputDate(), "id" : id, "key" : title, "error" : errorMessage])
                     }
                 }
             }
