@@ -31,9 +31,6 @@ extension DatabaseDelegate {
     static func setAppointment(startTime: String, endTime: String, date: String, description: String, completion: @escaping (Any) -> Void){
         var id = defaults.franchiseId() ?? "1"
         var name = defaults.getUsername() ?? "Owner"
-        if let franName = defaults.franchiseName() {
-            name = name + "(\(franName))"
-        }
         printr(name)
         printr(id)
         let json = JsonFormat.submitAppointment(id: id, name: name, start: startTime, end: endTime, date: date, description: description).format()

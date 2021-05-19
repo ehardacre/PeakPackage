@@ -51,7 +51,14 @@ class appointmentSelector : ObservableObject {
         
     }
     
-    func addUnavailableTimes(timeSlots: [appointmentTimeSlot], startTime: Date){
+    func addUnavailableTimes(timeSlots: [appointmentTimeSlot], startTime: Date, endTime: Date){
+        unavailableDates = []
+        let weekday = Calendar.current.component(.weekday, from: startTime)
+        if weekday == 1 || weekday == 7 {
+            for i in 0..<Int((startTime.distance(to: endTime)/60/60)*4){
+                unavailableDates.append(i)
+            }
+        }
         var formatterOne = DateFormatter()
         formatterOne.dateFormat = "HH:mm:ss"
         formatterOne.timeZone = TimeZone(abbreviation: "GMT")
@@ -121,7 +128,7 @@ struct AppointmentSelectionView: View {
             time = Calendar.current.date(byAdding: .minute, value: TaskManager2.timeSlotInterval/2, to: time) ?? time
         }
         timeformatter.dateFormat = "hh:mm"
-        selector.addUnavailableTimes(timeSlots: taskManager.unavailabaleTimeSlots, startTime: startTime)
+        selector.addUnavailableTimes(timeSlots: taskManager.unavailabaleTimeSlots, startTime: startTime, endTime: endTime)
         printr(taskManager.unavailabaleTimeSlots.map({return "\($0.start) to \($0.end) on \($0.date)"}))
         printr(taskManager.unavailabaleTimeSlots.map({return "\($0.getStartTime()) to \($0.getEndTime()) on \($0.getDate())"}))
     }

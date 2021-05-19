@@ -281,7 +281,7 @@ struct TimeInputCardView : View {
                 Text(timeText)
             })
             .defaultDateSelectButton()
-            DatePicker("", selection: $selectedDay, displayedComponents: .date)
+            DatePicker("", selection: $selectedDay, in: Date(timeIntervalSinceNow: 24*60*60)..., displayedComponents: .date)
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in

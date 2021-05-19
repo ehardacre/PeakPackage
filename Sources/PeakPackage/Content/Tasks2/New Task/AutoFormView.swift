@@ -35,7 +35,6 @@ struct AutoFormView: View {
                     Text(form.subtitle)
                         .Caption()
                         .fullWidth()
-                    
                     ForEach(form.elements, id: \.id){
                         element in
                         Text(element.label)
