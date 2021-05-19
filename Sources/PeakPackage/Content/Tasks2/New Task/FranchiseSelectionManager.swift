@@ -42,6 +42,15 @@ public class FranchiseSelectionManager : Manager {
                 object: nil))
     }
     
+    func getFranchiseName(for id: String?) -> String {
+        for fran in profiles{
+            if fran.franchiseId == id {
+                return fran.franchiseTitle
+            }
+        }
+        return "admin"
+    }
+    
     func isSelectedFranchise(id: String) -> Bool{
         return ids.contains(id)
     }

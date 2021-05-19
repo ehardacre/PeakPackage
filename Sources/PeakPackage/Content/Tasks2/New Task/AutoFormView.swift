@@ -202,7 +202,7 @@ struct AutoFormView: View {
             var dateTime = timeInputs[2]
             var description = inputs["Subject"] ?? ""
             var id = franchiseManager.ids.first
-            DatabaseDelegate.setAppointment(franchiseId: id, startTime: startTime, endTime: endTime, date: dateTime, description: description, completion: {
+            DatabaseDelegate.setAppointment(franchiseId: id, franchiseName: franchiseManager.getFranchiseName(for: id), startTime: startTime, endTime: endTime, date: dateTime, description: description, completion: {
                 rex in
                 taskManager.reloadAppointmentData()
                 presentationMode.wrappedValue.dismiss()
