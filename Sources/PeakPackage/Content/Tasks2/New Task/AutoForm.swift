@@ -289,12 +289,15 @@ struct TimeInputCardView : View {
                     .imageScale(.large)
                     .foregroundColor(Color.red)
                     .onAppear{
-                        errorMessage = "We don't take calls on the weekends. Please select a different day."
+                        errorMessage = "Peak Studios is open Monday thru Friday. Please select a valid day."
                     }
             }
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in
+            if inputStart == nil || inputEnd == nil{
+                errorMessage = "Please select a valid time slot."
+            }
             if let info = obj.userInfo{
                 if let collectedId = info["id"] as? UUID {
                     if collectedId == id {
