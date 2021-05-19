@@ -116,6 +116,7 @@ struct AutoFormView: View {
                 semaphore.wait()
                 var data = obj.userInfo as! [String : Any]
                 
+                //detect error from fields
                 if data["error"] != nil {
                     var tempError = (data["error"] as? String)
                     if tempError == nil {
@@ -124,6 +125,12 @@ struct AutoFormView: View {
                         showingError = true
                         errorMessage = (data["error"] as? String) ?? "Unknown Error"
                     }
+                }
+                
+                //detect error from franchise selection
+                if appointmentForm && franchiseManager.ids.count > 1 {
+                    showingError = true
+                    errorMessage = "Only one Franchise can be selected for an Appointment."
                 }
                 
                 if let id = data["id"] as? UUID,
@@ -194,7 +201,8 @@ struct AutoFormView: View {
             var endTime = timeInputs[1]
             var dateTime = timeInputs[2]
             var description = inputs["Subject"] ?? ""
-            DatabaseDelegate.setAppointment(startTime: startTime, endTime: endTime, date: dateTime, description: description, completion: {
+            var id = franchiseManager.ids.first
+            DatabaseDelegate.setAppointment(franchiseId: id, startTime: startTime, endTime: endTime, date: dateTime, description: description, completion: {
                 rex in
                 taskManager.reloadAppointmentData()
                 presentationMode.wrappedValue.dismiss()

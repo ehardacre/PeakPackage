@@ -28,8 +28,11 @@ extension DatabaseDelegate {
         })
     }
     
-    static func setAppointment(startTime: String, endTime: String, date: String, description: String, completion: @escaping (Any) -> Void){
+    static func setAppointment(franchiseId: String? = nil, startTime: String, endTime: String, date: String, description: String, completion: @escaping (Any) -> Void){
         var id = defaults.franchiseId() ?? "1"
+        if franchiseId != nil {
+            id = franchiseId!
+        }
         var name = defaults.getUsername() ?? "Owner"
         printr(name)
         printr(id)
