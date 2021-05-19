@@ -222,7 +222,7 @@ public class TaskManager2 : Manager{
     func getAppointments(for date: Date) -> [Appointment]{
         var appList : [Appointment] = []
         for app in appointments {
-            var appDate = app.getDate()
+            var appDate = app.getDate().toLocalTime()
             var diff = Calendar.current.dateComponents([.day], from: appDate, to: date)
             if diff.day == 0 {
                 appList.append(app)
