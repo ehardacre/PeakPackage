@@ -267,7 +267,7 @@ struct TimeInputCardView : View {
     @State var taskManager : TaskManager2
     @State var title : String
     @State var prompt : String
-    @State var selectedDay : Date = Date(timeIntervalSinceNow: 24*60*60)
+    @State var selectedDay : Date = Date()
     @State var inputStart : Date? = nil
     @State var inputEnd : Date? = nil
     @State var timeText = "Pick Time"
