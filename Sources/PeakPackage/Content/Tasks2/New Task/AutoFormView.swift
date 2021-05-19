@@ -118,7 +118,7 @@ struct AutoFormView: View {
                 
                 if data["error"] != nil {
                     showingError = true
-                    errorMessage = data["error"] ?? "Unknown Error"
+                    errorMessage = (data["error"] as! String?) ?? "Unknown Error"
                 }
                 
                 if let id = data["id"] as? UUID,
