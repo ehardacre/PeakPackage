@@ -262,11 +262,12 @@ struct DateInputCardView : View {
 
 struct TimeInputCardView : View {
     
+    private let dayTimeInterval : TimeInterval = 24*60*60
     var id : UUID
     @State var taskManager : TaskManager2
     @State var title : String
     @State var prompt : String
-    @State var selectedDay : Date = Date()
+    @State var selectedDay : Date = Date(timeIntervalSinceNow: 24*60*60)
     @State var inputStart : Date? = nil
     @State var inputEnd : Date? = nil
     @State var timeText = "Pick Time"
