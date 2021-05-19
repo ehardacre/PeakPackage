@@ -63,6 +63,7 @@ extension Text {
         return self
             .font(.footnote)
             .foregroundColor(.red)
+            .multilineTextAlignment(.center)
     }
     
     func CardTitle_light() -> some View{

@@ -283,6 +283,7 @@ struct TimeInputCardView : View {
             })
             .defaultDateSelectButton()
             Spacer()
+            DatePicker("", selection: $selectedDay, in: Date(timeIntervalSinceNow: 24*60*60)..., displayedComponents: .date)
             if Calendar.current.isDateInWeekend(selectedDay) {
                 Image(systemName: "xmark.square.fill")
                     .imageScale(.large)
@@ -291,7 +292,6 @@ struct TimeInputCardView : View {
                         errorMessage = "We don't take calls on the weekends. Please select a different day."
                     }
             }
-            DatePicker("", selection: $selectedDay, in: Date(timeIntervalSinceNow: 24*60*60)..., displayedComponents: .date)
         }
         .BasicContentCard()
         .onReceive(formPub, perform: { obj in

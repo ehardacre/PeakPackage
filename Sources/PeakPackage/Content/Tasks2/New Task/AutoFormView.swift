@@ -135,6 +135,8 @@ struct AutoFormView: View {
                         }else{
                             sendInTask(inputs: inputList)
                         }
+                    }else if showingError {
+                        submittingTask = false
                     }
                 }else if let id = data["id"] as? UUID,
                          let input = data["input"] as? (String, String, String),
@@ -151,6 +153,8 @@ struct AutoFormView: View {
                         }else{
                             sendInTask(inputs: inputList)
                         }
+                    }else if showingError {
+                        submittingTask = false
                     }
                 }else if let id = data["id"] as? UUID,
                    let input = data["input"] as? Any,
@@ -166,6 +170,8 @@ struct AutoFormView: View {
                         }else{
                             sendInTask(inputs: inputList)
                         }
+                    }else if showingError {
+                        submittingTask = false
                     }
                 }
                 semaphore.signal()
