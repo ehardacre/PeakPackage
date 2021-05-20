@@ -75,7 +75,7 @@ struct ScheduleShortView : View {
                 if lead == nil && appointment == nil {
                     Text("Nothing Scheduled")
                         .Caption()
-                        .padding(50)
+                        .padding(60)
                 }
             }
             Spacer()
