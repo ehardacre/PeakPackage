@@ -225,6 +225,12 @@ public class TaskManager2 : Manager{
             var appDate = app.getDate()
             #warning("This is broken I'm not sure why. It wasn't before.")
             var diff = Calendar.current.dateComponents([.day], from: appDate, to: date)
+            printr("date:")
+            printr(date)
+            printr("appDate:")
+            printr(appDate)
+            printr("Difference:")
+            printr(diff)
             if diff.day == 0 {
                 appList.append(app)
             }
