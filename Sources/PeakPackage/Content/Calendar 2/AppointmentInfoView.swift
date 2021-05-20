@@ -17,10 +17,14 @@ struct AppointmentInfoView : View {
         VStack{
             Text("\(appointment.startHour()):\(appointment.startMinute())-\(appointment.endHour()):\(appointment.endMinute())")
                 .CardTitle()
-            Text(appointment.getName())
-            Text(appointment.franchise)
             Divider()
+            Text(appointment.franchise)
+                .CardTitle()
+            Text("Scheduled by: "+appointment.getName())
+                .CardTitle()
             Text(appointment.description)
+                .Caption()
+            Spacer()
         }
     }
     
