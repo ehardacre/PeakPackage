@@ -223,7 +223,8 @@ public class TaskManager2 : Manager{
         var appList : [Appointment] = []
         for app in appointments {
             var appDate = app.getDate()
-            var diff = Calendar.current.dateComponents([.day], from: appDate, to: date.advanced(by: -12*60*60))
+            #warning("This is broken I'm not sure why. It wasn't before.")
+            var diff = Calendar.current.dateComponents([.day], from: appDate, to: date)
             if diff.day == 0 {
                 appList.append(app)
             }
