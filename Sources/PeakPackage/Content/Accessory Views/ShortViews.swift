@@ -63,6 +63,7 @@ struct ScheduleShortView : View {
                 
                 if appointment != nil {
                     AppointmentCardView(id: UUID(), selectionManager: SelectionManager(), taskManager: parent.taskManager, appointment: appointment!)
+                        .frame(height: 50)
                 }
                 
                 if lead != nil {
