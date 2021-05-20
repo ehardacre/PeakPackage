@@ -231,6 +231,9 @@ struct AppointmentCardView: View {
             isPresented: $showMoreInfo,
             content: {
             AppointmentInfoView(taskManager: taskManager, appointment: appointment)
+                .onDisappear{
+                    self.selectionManager.id = nil
+                }
         })
     }
     

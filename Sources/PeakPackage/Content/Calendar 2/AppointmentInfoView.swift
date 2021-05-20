@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AppointmentInfoView : View {
     
+    
     @State var taskManager : TaskManager2
     @State var appointment : Appointment
     
