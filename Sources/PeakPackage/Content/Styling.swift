@@ -51,6 +51,13 @@ extension Text {
             .lineLimit(1)
     }
     
+    func Description() -> some View{
+        return self
+            .font(.body)
+            .foregroundColor(.darkAccent)
+            .opacity(0.7)
+    }
+    
     func Footnote() -> some View{
         return self
             .font(.footnote)
