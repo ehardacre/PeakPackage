@@ -20,12 +20,14 @@ struct AppointmentInfoView : View {
             Divider()
             Text(appointment.franchise)
                 .CardTitle()
-            Text("Scheduled by: "+appointment.getName())
-                .CardTitle()
             Text(appointment.description)
-                .Caption()
             Spacer()
+            Text("Sheduled By: ")
+                .Caption()
+            Text(appointment.getName())
+                .CardTitle()
         }
+        .padding(30)
     }
     
 }
