@@ -231,7 +231,7 @@ public class TaskManager2 : Manager{
             printr(appDate)
             printr("Difference:")
             printr(diff)
-            if diff.hour < 9 || diff.hour > -9{ //nine or so hours from noon is the cut off
+            if diff.hour! < 9 || diff.hour! > -9{ //nine or so hours from noon is the cut off
                 appList.append(app)
             }
         }
