@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+let updatedAppointmentPub = NotificationCenter.default.publisher(for: Notification.Name("AppointmentsUpdated"))
 //This is a merged task manager and appointment manager
 public class TaskManager2 : Manager{
     
@@ -281,6 +282,7 @@ public class TaskManager2 : Manager{
         DatabaseDelegate.getAppointments(completion: {
             rex in
             self.appointments = rex as! [Appointment]
+            NotificationCenter.default.post(Notification(name: updatedAppointmentPub.name))
         })
     }
     

@@ -45,6 +45,12 @@ struct ScheduleShortView : View {
     @State var lead : Lead?
     @State var appointment : Appointment?
     
+    init(parent: ContentView){
+        self.parent = parent
+        _lead = .init(initialValue: parent.notificationManager.todaysScheduled().first)
+        _appointment = .init(initialValue: parent.taskManager.getAppointments(after: Date()).first)
+    }
+    
     var body : some View{
         HStack{
             Spacer()
@@ -55,14 +61,14 @@ struct ScheduleShortView : View {
                     .font(.system(.footnote))
                     .foregroundColor(Color.gray)
                 
-                if let appointment = parent.taskManager.getAppointments(after: Date()).first {
-                    AppointmentCardView(id: UUID(), selectionManager: SelectionManager(), taskManager: parent.taskManager, appointment: appointment)
+                if appointment != nil {
+                    AppointmentCardView(id: UUID(), selectionManager: SelectionManager(), taskManager: parent.taskManager, appointment: appointment!)
                 }
                 
-                if let lead = parent.notificationManager.todaysScheduled().first {
+                if lead != nil {
                     LeadCardView(selectionManager: SelectionManager(),
                                  notificationMan: parent.notificationManager,
-                                 lead: lead)
+                                 lead: lead!)
                 }
                 
                 if lead == nil && appointment == nil {
@@ -72,7 +78,10 @@ struct ScheduleShortView : View {
                 }
             }
             Spacer()
-        }
+        }.onReceive(updatedAppointmentPub, perform: {
+            _ in
+            appointment = parent.taskManager.getAppointments(after: Date()).first
+        })
     }
     
 }
