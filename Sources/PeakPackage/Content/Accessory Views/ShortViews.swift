@@ -63,7 +63,7 @@ struct ScheduleShortView : View {
                 
                 if appointment != nil {
                     AppointmentCardView(id: UUID(), selectionManager: SelectionManager(), taskManager: parent.taskManager, appointment: appointment!)
-                        .frame(height: 50)
+                        .frame(height: 60)
                 }
                 
                 if lead != nil {
@@ -75,7 +75,7 @@ struct ScheduleShortView : View {
                 if lead == nil && appointment == nil {
                     Text("Nothing Scheduled")
                         .Caption()
-                        .padding(60)
+                        .padding(50)
                 }
             }
             Spacer()
