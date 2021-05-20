@@ -80,6 +80,7 @@ struct ScheduleShortView : View {
             Spacer()
         }.onReceive(updatedAppointmentPub, perform: {
             _ in
+            printr("Appointment Updated", tag: printTags.error)
             appointment = parent.taskManager.getAppointments(after: Date()).first
         })
     }
