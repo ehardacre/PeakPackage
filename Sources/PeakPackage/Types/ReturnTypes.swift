@@ -208,6 +208,7 @@ extension appointmentTimeSlot{
 class Appointment : Codable{
     var id : String
     var date : String
+    var franchise: String
     var name : String
     var start : String
     var end : String
@@ -264,6 +265,36 @@ extension Appointment{
         return startStr
     }
     
+    func endHour() -> String {
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        
+        var formatterTwo = DateFormatter()
+        formatterTwo.dateFormat = "HH"
+        formatterTwo.timeZone = .current
+        
+        guard let endDate = formatter.date(from: self.date + " " + self.end) else { return "" }
+        var endStr = formatterTwo.string(from: endDate)
+        
+        return endStr
+    }
+    
+    func endMinute() -> String {
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        
+        var formatterTwo = DateFormatter()
+        formatterTwo.dateFormat = "mm"
+        formatterTwo.timeZone = .current
+        
+        guard let endDate = formatter.date(from: self.date + " " + self.end) else { return "" }
+        var endStr = formatterTwo.string(from: endDate)
+        
+        return endStr
+    }
+    
     func getDate() -> Date{
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -277,8 +308,9 @@ extension Appointment{
     func convertToCalendarCard(with selectionManager: SelectionManager, and taskManager: TaskManager2) -> AppointmentCardView{
         
         return AppointmentCardView(id: UUID(),
-                            selectionManager: selectionManager,
-                            appointment: self)
+                                   selectionManager: selectionManager,
+                                   taskManager: taskManager,
+                                   appointment: self)
         
     }
 }

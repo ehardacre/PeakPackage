@@ -165,6 +165,7 @@ struct AppointmentCardView: View {
     
     @State var id : UUID
     @ObservedObject var selectionManager : SelectionManager
+    @State var taskManager : TaskManager2
     @State var appointment : Appointment
     @State var showMoreInfo : Bool = false
     
@@ -229,7 +230,7 @@ struct AppointmentCardView: View {
         .sheet(
             isPresented: $showMoreInfo,
             content: {
-                
+            AppointmentInfoView(taskManager: taskManager, appointment: appointment)
         })
     }
     
