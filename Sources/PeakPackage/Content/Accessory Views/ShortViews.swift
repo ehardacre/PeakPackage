@@ -38,6 +38,40 @@ struct AnalyticsShortView : View {
     }
 }
 
+struct ScheduleShortView : View {
+    
+    var parent : ContentView
+    
+    @State var lead : Lead?
+    @State var appointment : Appointment?
+    
+    var body : some View{
+        VStack{
+            Text("Schedule")
+                .bold()
+            Text("Upcoming Leads and Calls")
+                .font(.system(.footnote))
+                .foregroundColor(Color.gray)
+            
+            if let appointment = parent.taskManager.getAppointments(after: Date()).first {
+                AppointmentCardView(id: UUID(), selectionManager: SelectionManager(), taskManager: parent.taskManager, appointment: appointment)
+            }
+            
+            if let lead = parent.notificationManager.todaysScheduled().first {
+                LeadCardView(selectionManager: SelectionManager(),
+                             notificationMan: parent.notificationManager,
+                             lead: lead)
+            }
+            
+            if lead == nil && appointment == nil {
+                Text("Nothing Scheduled")
+                    .Caption()
+            }
+        }
+    }
+    
+}
+
 //MARK: Leads Short View
 struct LeadsShortView : View {
     

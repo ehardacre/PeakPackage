@@ -83,7 +83,7 @@ public struct DashboardView: View {
             List{
                 DashboardMessageShortView(manager: manager)
                 Divider()
-                LeadsShortView(parent: parent)
+                ScheduleShortView(parent: parent)
                     .listRowBackground(Color.clear)
                 Divider()
                 AnalyticsShortView(parent: parent)

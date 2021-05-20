@@ -305,6 +305,18 @@ extension Appointment{
         return startDate
     }
     
+    func getDateWithEndHour() -> Date{
+        var hours = TimeInterval(endHour().digits.integer!*60*60)
+        var minutes = TimeInterval(endMinute().digits.integer!*60)
+        return getDate().advanced(by: hours+minutes)
+    }
+    
+    func getDateWithStartHour() -> Date{
+        var hours = TimeInterval(startHour().digits.integer!*60*60)
+        var minutes = TimeInterval(startMinute().digits.integer!*60)
+        return getDate().advanced(by: hours+minutes)
+    }
+    
     func convertToCalendarCard(with selectionManager: SelectionManager, and taskManager: TaskManager2) -> AppointmentCardView{
         
         return AppointmentCardView(id: UUID(),

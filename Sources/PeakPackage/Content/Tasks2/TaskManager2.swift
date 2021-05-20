@@ -225,13 +225,20 @@ public class TaskManager2 : Manager{
             var appDate = app.getDate().advanced(by: 12*60*60)
             //addDate needs to be advanced so it doesn't lie exactly on midnight
             var diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
-            printr("date:")
-            printr(date)
-            printr("appDate:")
-            printr(appDate)
-            printr("Difference:")
-            printr(diff)
             if diff.hour! < 9 && diff.hour! > -9{ //nine or so hours from noon is the cut off
+                appList.append(app)
+            }
+        }
+        return appList.sorted(by: {return $0.startHour() > $1.startHour()})
+    }
+    
+    func getAppointments(after date: Date) -> [Appointment]{
+        var appList : [Appointment] = []
+        for app in appointments {
+            var appDate = app.getDateWithEndHour()
+            //addDate needs to be advanced so it doesn't lie exactly on midnight
+            var diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
+            if diff.hour! <= 0 && diff.hour! > -12{ //nine or so hours from noon is the cut off
                 appList.append(app)
             }
         }
