@@ -21,6 +21,8 @@ struct AppointmentInfoView : View {
             Text(appointment.franchise)
                 .CardTitle()
             Text(appointment.description)
+                .Caption()
+                .padding(50)
             Spacer()
             Text("Sheduled By: ")
                 .Caption()
