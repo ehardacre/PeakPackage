@@ -238,6 +238,7 @@ public class TaskManager2 : Manager{
         for app in appointments {
             var appDate = app.getDateWithEndHour()
             //addDate needs to be advanced so it doesn't lie exactly on midnight
+            #warning("This seems to be broken")
             var diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
             if diff.hour! <= 0 && diff.hour! > -12{ //nine or so hours from noon is the cut off
                 appList.append(app)

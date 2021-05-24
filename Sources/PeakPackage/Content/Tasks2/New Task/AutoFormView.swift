@@ -244,8 +244,10 @@ struct AutoFormView: View {
     
     func inputEqualsFields() -> Bool{
         if loadedElementInputs.count != elementIDs.count{
+            printr("input not equal to fields")
             return false
         }
+        printr("input is equal to fields")
         for id in elementIDs {
             if !loadedElementInputs.contains(id){
                 return false

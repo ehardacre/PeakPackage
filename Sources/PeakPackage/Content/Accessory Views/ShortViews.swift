@@ -48,7 +48,7 @@ struct ScheduleShortView : View {
     init(parent: ContentView){
         self.parent = parent
         _lead = .init(initialValue: parent.notificationManager.todaysScheduled().first)
-        _appointment = .init(initialValue: parent.taskManager.getAppointments(after: Date()).last)
+        _appointment = .init(initialValue: parent.taskManager.getAppointments(after: Date()))
     }
     
     var body : some View{
