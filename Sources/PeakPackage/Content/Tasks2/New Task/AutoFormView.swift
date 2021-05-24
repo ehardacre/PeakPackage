@@ -70,6 +70,9 @@ struct AutoFormView: View {
                         for id in elementIDs {
                             NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": id])
                         }
+                        if elementIDs.count == 0 {
+                            sendInTask(inputs: [:])
+                        }
                         
                     }, label: {
                         HStack{
