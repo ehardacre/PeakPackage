@@ -327,19 +327,23 @@ extension DatabaseDelegate {
     static func sendTask(ids: [String], taskInfo: String, completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients(.any){
             if defaults.admin {
-                for id in ids {
+                var tempIds = ids
+                if ids.count == 0 {
+                    let i = defaults.franchiseId() ?? "1"
+                    tempIds = [i]
+                }
+                for id in tempIds {
                     let json = JsonFormat.setTask(id: id, value: taskInfo).format()
                     DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                         rex in
-                        printr("dbdelegate task submit")
                         completion(rex) //rex is the task ID
                     })
                 }
+                
             }else{
                 let json = JsonFormat.setTask(id: defaults.franchiseId()!, value: taskInfo).format()
                 DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                     rex in
-                    
                     completion(rex) //rex is the task ID
                 })
             }
