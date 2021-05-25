@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 let updatedAppointmentPub = NotificationCenter.default.publisher(for: Notification.Name("AppointmentsUpdated"))
+let updatedTasksPub = NotificationCenter.default.publisher(for: Notification.Name("TasksUpdated"))
 //This is a merged task manager and appointment manager
 public class TaskManager2 : Manager{
     
@@ -63,6 +64,7 @@ public class TaskManager2 : Manager{
             rex in
             self.tasks = self.removeAppts(tasks: rex as! [Task])
             self.sortTasks()
+            NotificationCenter.default.post(Notification(name: updatedTasksPub.name))
         })
     }
     

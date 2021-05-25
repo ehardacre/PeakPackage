@@ -11,6 +11,7 @@ import SwiftUI
 struct TaskListView2: View {
     
     @ObservedObject var selectionManager = SelectionManager()
+    @State var calSelectionManager : CalendarSelectionManager
     
     @State var completeListOpen = false
     
@@ -62,6 +63,11 @@ struct TaskListView2: View {
                 taskManager: taskManager)
             let newApps = taskManager.getAppointments(for: date)
             self.todaysAppointments = taskManager.convertForCalendar(appointments: newApps, selectionManager: selectionManager, taskManager: taskManager)
+        })
+        .onReceive(updatedTasksPub, perform: {
+            note in
+            let date = calSelectionManager.selection ?? Date()
+            NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange"),object: date))
         })
         .onAppear{
             NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange"),object: nil))

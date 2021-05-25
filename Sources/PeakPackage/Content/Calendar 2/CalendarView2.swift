@@ -49,7 +49,7 @@ struct CalendarView2: View {
                 .opacity(calendarShowing ? 1 : 0)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
-                byDateTaskView(taskManager: taskManager)
+                byDateTaskView(taskManager: taskManager, calSelectionManager: selectionMan)
                     .padding(0)
                 
             }
@@ -61,13 +61,12 @@ struct CalendarView2: View {
 struct byDateTaskView : View {
     
     @State var taskManager : TaskManager2
+    @State var calSelectionManager : CalendarSelectionManager
     
     var body : some View {
         VStack{
-            
-            TaskListView2(taskManager: taskManager)
+            TaskListView2(calSelectionManager: calSelectionManager, taskManager: taskManager)
                 .cornerRadius(20)
-            
             Spacer()
         }
         .background(Color.lightAccent)
