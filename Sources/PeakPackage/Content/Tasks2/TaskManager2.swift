@@ -60,6 +60,8 @@ public class TaskManager2 : Manager{
     }
     
     func reloadTasks(){
+        completedTasks = []
+        openTasks = []
         DatabaseDelegate.getTasks(completion: {
             rex in
             self.tasks = self.removeAppts(tasks: rex as! [Task])
