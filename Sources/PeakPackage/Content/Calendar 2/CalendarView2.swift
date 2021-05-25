@@ -38,19 +38,19 @@ struct CalendarView2: View {
                 
                 TabView(selection: $selectedMonth) {
                     MonthView2(selectionMan: selectionMan, month: .last)
+                        .tabItem({Text("last")})
                         .tag(0)
                     MonthView2(selectionMan: selectionMan, month: .current)
+                        .tabItem({Text("this")})
                         .tag(1)
                     MonthView2(selectionMan: selectionMan, month: .next)
+                        .tabItem({Text("next")})
                         .tag(2)
                 }
                 .padding(0)
                 .frame(width: geo.size.width, height: calendarShowing ? geo.size.height/2 : 0)
                 .opacity(calendarShowing ? 1 : 0)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .onAppear{
-                    selectedMonth = 2
-                }
                 
                 byDateTaskView(taskManager: taskManager)
                     .padding(0)
