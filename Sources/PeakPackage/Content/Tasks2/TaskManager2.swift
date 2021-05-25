@@ -240,7 +240,7 @@ public class TaskManager2 : Manager{
             let diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
             printr(appDate)
             printr(diff)
-            if diff.hour! <= 0 && diff.hour! > -12{ //nine or so hours from noon is the cut off
+            if diff.hour! < 12 && diff.hour! >= 0{ //nine or so hours from noon is the cut off
                 appList.append(app)
             }
         }
