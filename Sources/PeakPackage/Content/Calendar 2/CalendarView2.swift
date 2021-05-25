@@ -21,7 +21,7 @@ class CalendarSelectionManager : ObservableObject{
 struct CalendarView2: View {
     
     @State var taskManager : TaskManager2
-    @State var selectedMonth = 1
+    @State var selectedMonth = 2
     @State var selectionMan = CalendarSelectionManager()
     @State var calendarShowing = false
     
@@ -38,13 +38,10 @@ struct CalendarView2: View {
                 
                 TabView(selection: $selectedMonth) {
                     MonthView2(selectionMan: selectionMan, month: .last)
-                        .tabItem({Text("last")})
                         .tag(0)
                     MonthView2(selectionMan: selectionMan, month: .current)
-                        .tabItem({Text("this")})
                         .tag(1)
                     MonthView2(selectionMan: selectionMan, month: .next)
-                        .tabItem({Text("next")})
                         .tag(2)
                 }
                 .padding(0)
