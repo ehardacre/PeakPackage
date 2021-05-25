@@ -72,9 +72,6 @@ struct AutoFormView: View {
                         }
                         if elementIDs.count == 0 {
                             sendInTask(inputs: [:])
-                            if !showingError{
-                                submittingTask = false
-                            }
                         }
                         
                     }, label: {
@@ -224,8 +221,12 @@ struct AutoFormView: View {
             taskString += "[\(key):\(inputs[key] ?? "")]"
         }
         
+        printr("sending in task")
+        
         DatabaseDelegate.sendTask(ids: franchiseManager.ids, taskInfo: taskString, completion: {
             rex in
+            
+            printr("task sent in")
             
             imageSendSemaphore.wait()
             let id = rex as! String
@@ -238,6 +239,7 @@ struct AutoFormView: View {
                 })
                 
             }else{
+                printr("dismissing view")
                 submittingTask = false
                 presentationMode.wrappedValue.dismiss()
             }
