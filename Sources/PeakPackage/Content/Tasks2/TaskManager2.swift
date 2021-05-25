@@ -238,14 +238,11 @@ public class TaskManager2 : Manager{
             //addDate needs to be advanced so it doesn't lie exactly on midnight
             #warning("TODO: this seems to be broken")
             let diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
-            printr(appDate)
-            printr(diff)
             if diff.hour! < 12 && diff.hour! >= 0{ //nine or so hours from noon is the cut off
                 appList.append(app)
             }
         }
-        printr(appList)
-        return appList.sorted(by: {return $0.startHour() > $1.startHour()})
+        return appList.sorted(by: {return $0.startHour() > $1.startHour()}).reversed()
     }
     
     func getNextAppointment() -> Appointment?{
