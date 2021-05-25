@@ -72,6 +72,9 @@ struct AutoFormView: View {
                         }
                         if elementIDs.count == 0 {
                             sendInTask(inputs: [:])
+                            if !showingError{
+                                submittingTask = false
+                            }
                         }
                         
                     }, label: {
