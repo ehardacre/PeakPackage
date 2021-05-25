@@ -311,7 +311,10 @@ extension DatabaseDelegate {
     
     static func updateTask(taskId: String, taskStatus: TaskStatus, completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients(.any){
-            let json = JsonFormat.updateTaskStatus(taskId: taskId, status: taskStatus.rawValue).format()
+            var dateformatter = DateFormatter()
+            dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let date = dateformatter.string(from: Date())
+            let json = JsonFormat.updateTaskStatus(taskId: taskId, status: taskStatus.rawValue, date: date).format()
             DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                 _ in
                 completion("done")

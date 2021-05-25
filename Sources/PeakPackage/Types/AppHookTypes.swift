@@ -61,6 +61,7 @@ enum JsonKeys : String{
     case tasks_value = "request"
     case tasks_update_key = "task_update"
     case tasks_update_status = "task_update_status"
+    case tasks_update_date = "task_update_date"
     //keys for changing and getting user data
     case userData_key = "user"
     case newAddress_key = "street_address_1" //these are the keys used in wp_usermeta
@@ -150,7 +151,7 @@ public enum JsonFormat {
     //Task Operations
     case getTasks(id: String)
     case setTask(id: String, value: String)
-    case updateTaskStatus(taskId: String, status: String)
+    case updateTaskStatus(taskId: String, status: String, date: String)
     case sendImagesforTask(taskId: String, imageData: String)
     //id is the id of the form we're trying to get
     case getDynamicForm(id: String)
@@ -250,9 +251,10 @@ public enum JsonFormat {
             //create task for id
         case .setTask(let id, let value):
             retVal = [JsonKeys.tasks_key.rawValue: id, JsonKeys.tasks_value.rawValue: value]
-        case .updateTaskStatus(let taskId, let status):
+        case .updateTaskStatus(let taskId, let status, let date):
             retVal = [JsonKeys.tasks_update_key.rawValue: taskId,
-                      JsonKeys.tasks_update_status.rawValue: status]
+                      JsonKeys.tasks_update_status.rawValue: status,
+                      JsonKeys.tasks_update_date.rawValue: date]
         case .sendImagesforTask(let taskId, let imageData):
             retVal = [JsonKeys.image_send_key.rawValue: imageData,
                       JsonKeys.image_send_task.rawValue: taskId]

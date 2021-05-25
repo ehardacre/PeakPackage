@@ -27,10 +27,20 @@ struct TaskInfoView: View {
     var body: some View {
         VStack{
             Group{
-                Text(task.type == "user_requested" ?
-                        "Requested" : "Complimentary")
-                    .CardTitle()
-                    .padding(.top, 20)
+                if taskState == 0 { // not completed
+                    Text(task.type == "user_requested" ?
+                            "Requested" : "Complimentary")
+                        .CardTitle()
+                        .padding(.top, 20)
+                }else if taskState == 2 { //completed
+                    Text("Completed")
+                        .CardTitle()
+                        .padding(.top, 20)
+                } else{ //in progress
+                    Text("Started")
+                        .CardTitle()
+                        .padding(.top, 20)
+                }
                 Text(TaskManager2.cleanDate(task.date))
                     .Caption()
                 Divider()
