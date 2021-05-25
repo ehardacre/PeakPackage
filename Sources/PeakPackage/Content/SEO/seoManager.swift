@@ -44,7 +44,6 @@ struct viewableSearchResult{
 }
 
 public class SEOManager : Manager {
-    #warning("TODO change terms based on app type")
     static var terms : [String] {
         return getSearchTerms()
     }
@@ -113,7 +112,6 @@ public class SEOManager : Manager {
                     self.weekbyweek = rankList
                     self.calculateChange()
                     if self.rankings.count == 0{
-                        printr("there's nothing in the database, scrape the web")
                         DispatchQueue.global().async {
                             self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
                             self.sortRankings()
@@ -236,14 +234,13 @@ public class SEOManager : Manager {
     static private func findRankings(for terms: [String]) -> [scrapedSearchResult]{
         var searchArray : [scrapedSearchResult] = []
         let baseURL = "https://www.google.com/search?q="
-        var searchterms = terms.map(
+        let searchterms = terms.map(
             {$0.replacingOccurrences(of: " ", with: "+")}
         )
         for term in searchterms{
             let url_str = baseURL + term
             guard let url = URL(string: url_str) else { continue }
             let body = parseHTML(url: url).lowercased()
-            printr("looking for \(subject) in search for \(term)")
             searchArray.append(getSearchPosition(
                                 of: subject,
                                 in: body,
@@ -297,7 +294,6 @@ public class SEOManager : Manager {
             for: "near * more places",
                 in: html).first {
             let mapsLinks = mapSection.components(separatedBy: "call")
-            //printr("found \(mapsLinks.count) maps links")
             for index in 0..<mapsLinks.count{
                 let result = mapsLinks[index]
                 if result.contains(str){
@@ -305,7 +301,7 @@ public class SEOManager : Manager {
                 }
             }
         }else{
-            //printr("no maps links found")
+            //
         }
         return scrapedSearchResult(
             term: tempterm,

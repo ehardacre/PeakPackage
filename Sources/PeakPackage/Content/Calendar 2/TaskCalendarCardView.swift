@@ -148,7 +148,7 @@ struct ShortCardView: View {
     
     func getTaskType(from content: String) -> String{
         
-        var parts = content.components(separatedBy: "]")
+        let parts = content.components(separatedBy: "]")
         guard let titlesection = parts.first else {
             return "Task"
         }
@@ -239,7 +239,7 @@ struct AppointmentCardView: View {
     
     func getTaskType(from content: String) -> String{
         
-        var parts = content.components(separatedBy: "]")
+        let parts = content.components(separatedBy: "]")
         guard let titlesection = parts.first else {
             return "Task"
         }

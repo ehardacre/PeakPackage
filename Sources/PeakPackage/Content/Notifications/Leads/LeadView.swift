@@ -160,7 +160,7 @@ extension LeadCardView {
     
     func cleanNote(in lead : Lead) -> Lead{
         var tempLead = lead
-        var note = lead.notification_value.note ?? ""
+        let note = lead.notification_value.note ?? ""
         let regex = try! NSRegularExpression(
             pattern: "Photos:.* Customer Message:")
         let range = NSMakeRange(0, note.count)
@@ -185,14 +185,13 @@ extension LeadCardView {
         return tempLead
     }
     
-    #warning("TODO change backend so that all dates get returned in the same format")
     func formatDate(_ str_date: String) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat =
             defaults.getApplicationType() == .NHanceConnect ?
             "yyyy-MM-dd'T'HH:mm:ss" : "yyyy-MM-dd HH:mm:ss"
-        var date = dateFormatter.date(from:str_date)!
-        var dateString = date.dayOfWeekWithMonthAndDay
+        let date = dateFormatter.date(from:str_date)!
+        let dateString = date.dayOfWeekWithMonthAndDay
         return dateString
     }
     
@@ -201,8 +200,8 @@ extension LeadCardView {
         dateFormatter.dateFormat =
             defaults.getApplicationType() == .NHanceConnect ?
             "yyyy-MM-dd'T'HH:mm:ss" : "yyyy-MM-dd HH:mm:ss"
-        var date = dateFormatter.date(from:str_date)!
-        var dateString = date.timeOnlyWithPadding
+        let date = dateFormatter.date(from:str_date)!
+        let dateString = date.timeOnlyWithPadding
         return dateString
     }
 }

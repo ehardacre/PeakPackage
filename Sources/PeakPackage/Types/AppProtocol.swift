@@ -51,7 +51,6 @@ open class AppLayout {
     }
     open func DashboardView(manager: Manager?, @ViewBuilder content: @escaping () -> AnyView) -> AnyView? {
         if manager == nil {
-            printr("Dashboard manager nil")
             return nil
         }else{
             DashboardView_exists = true

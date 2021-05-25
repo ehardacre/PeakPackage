@@ -30,11 +30,9 @@ open class ViewRouter: ObservableObject {
     @Published open var currentPage: LoginPages = LoginPages.noPage
     {
         didSet {
-            //
-            printr("changed currentPage")
+           //
         }
         willSet(newVal) {
-            printr("changing currentPage")
             goTo(page: newVal)
         }
     }
@@ -69,12 +67,10 @@ open class ViewRouter: ObservableObject {
         //Make sure that all of the necessary login information has been collected
         do{
             if page == LoginPages.content {
-                printr("going to content")
                 if !defaults.allSet(){
                     throw DataError.nilDefaults
                 }
             }
-            printr("changing page")
             //transition and set previous page for back button
             previousPages.push(currentPage)
             //currentPage = page

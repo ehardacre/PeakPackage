@@ -145,10 +145,10 @@ struct AnalyticsInfoView : View {
                                 for (key,value)
                                 in (dataSource?.now?.ppc?.totals ?? [:])
                                 {
-                                    var previous =
+                                    let previous =
                                         dataSource?.previous?.ppc?.totals?[key]
                                         ?? "0"
-                                    var comparison =
+                                    let comparison =
                                         ComparisonObject(key: key,
                                                          value: value,
                                                          previous: previous)
@@ -158,10 +158,10 @@ struct AnalyticsInfoView : View {
                                 for (key,value)
                                 in (dataSource?.now?.page?.totals ?? [:])
                                 {
-                                    var previous =
+                                    let previous =
                                         dataSource?.previous?.page?.totals?[key]
                                         ?? "0"
-                                    var comparison =
+                                    let comparison =
                                         ComparisonObject(key: key,
                                                          value: value,
                                                          previous: previous)
@@ -185,8 +185,6 @@ struct AnalyticsInfoView : View {
     //sort the analytics so that the visitors section appears first
     func sortDisplayAnalytics() -> [ComparisonObject]{
         var temp : [ComparisonObject] = []
-        printr("Values!!")
-        printr(values)
         for val in values{
             if (val.key ?? "").contains("Visitors") {
                 temp.insert(val, at: 0)
@@ -214,7 +212,7 @@ struct AnalyticsInfoView : View {
         
         var recapString = "This \(timePeriod) your site has had "
         var first = true
-        var data = ppc ?
+        let data = ppc ?
             dataSource?.now?.ppc?.totals :
             dataSource?.now?.page?.totals
         
@@ -226,16 +224,16 @@ struct AnalyticsInfoView : View {
             }else{
                 first = false
             }
-            var previous = (ppc ?
+            let previous = (ppc ?
                                 dataSource?.previous?.ppc?.totals?[key] :
                                 dataSource?.previous?.page?.totals?[key]) ?? "0"
-            var comparison = ComparisonObject(key: key,
+            let comparison = ComparisonObject(key: key,
                                               value: value,
                                               previous: previous)
             //add strings to the recap
             recapString += "\(value) in the category "
             recapString += "\(key) (\(comparison.delta ?? "0%") "
-            recapString += "from last \(timePeriod)'s \(previous ?? "0")) "
+            recapString += "from last \(timePeriod)'s \(previous)) "
         }
         return Text(recapString).font(.footnote)
     }
@@ -267,7 +265,7 @@ struct ComparisonObject{
         if prevNum == 0{
             return nil
         }
-        var valueChange = Float(valNum - prevNum) / Float(prevNum) * 100
+        let valueChange = Float(valNum - prevNum) / Float(prevNum) * 100
         var valueChangeStr = (valueChange > 0 ? "+" : "") + String(valueChange)
         return valueChangeStr.withDecimalPrecision(1) + "%"
     }

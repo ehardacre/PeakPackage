@@ -25,10 +25,6 @@ public struct MotherView: View{
             }else if viewRouter.currentPage == LoginPages.standardLogin{
                 //go to standard login
                 LoginView(viewRouter: viewRouter)
-            }else{
-                Text("").onAppear{
-                    printr(InternalError.viewLoading.rawValue, tag: printTags.error)
-                }
             }
         }
     }

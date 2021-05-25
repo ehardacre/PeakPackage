@@ -74,13 +74,11 @@ enum AutoFormInputType{
                             title: label,
                             prompt: prompt,
                             choices: options))
-        case .Image:
+        default: //.Image
             return AnyView(ImageInputCardView(
                             id: id,
                             title: label,
                             prompt: prompt))
-        default:
-            return AnyView(EmptyView())
         }
     }
     
@@ -98,10 +96,8 @@ enum AutoFormInputType{
             return "Date"
         case .Time:
             return "Time"
-        case .Image:
+        default: //.Image
             return "Image"
-        default:
-            return ""
         }
     }
     
@@ -119,10 +115,8 @@ enum AutoFormInputType{
             return "4"
         case .Time:
             return "7"
-        case .Image:
-            return "5"
         default:
-            return ""
+            return "5"
         }
     }
     
@@ -140,10 +134,8 @@ enum AutoFormInputType{
             return "calendar"
         case .Time:
             return "clock.fill"
-        case .Image:
-            return "photo"
         default:
-            return ""
+            return "photo"
         }
     }
     

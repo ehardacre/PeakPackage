@@ -96,7 +96,6 @@ struct NewFormView : View {
         }
         .stackOnlyNavigationView()
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ElementValue")), perform: { obj in
-            printr("element value returned")
             DispatchQueue.global().async {
                 semaphore.wait()
                 let data = obj.userInfo as! [String : Any]
@@ -105,7 +104,6 @@ struct NewFormView : View {
                          let _ = data["key"] as? String{
                     finalElements.append(input)
                     if loadedAllInputs {
-                        printr("all elements found")
                         let form = AutoForm(
                             visibility: picked == 0 ? "admin" : nil,
                             title: title,
@@ -127,19 +125,21 @@ struct NewFormView : View {
         }
     
     func submit(form: AutoForm) {
-        printr(form)
         DatabaseDelegate.submitNewFormType(form: form, completion: {
             _ in
-            printr("done adding form")
             allforms.append(form)
             showing = false
         })
     }
     
     func gatherInformation(){
-        printr("sending out notification for info")
         if elements.count == 0 {
-            #warning("show error for adding no option")
+            let form = AutoForm(
+                visibility: picked == 0 ? "admin" : nil,
+                title: title,
+                subtitle: subtitle,
+                elements: [])
+            submit(form: form)
         }else{
             for el in elements {
                 NotificationCenter.default.post(name: Notification.Name("FormSubmit"), object: nil, userInfo: ["id": el.id])
@@ -214,13 +214,13 @@ struct NewFormElement : View {
     
     func asAutoFormElement() -> AutoFormElement{
         if input == positionOfMultichoice{
-            printr("returning multiview")
+            
             return AutoFormElement(
                 label: title,
                 prompt: subtitle,
                 input: AutoFormInputType.Multichoice(options: optionsForMultiview))
         }else{
-            printr("returning not multiview")
+           
             return AutoFormElement(
                 label: title,
                 prompt: subtitle,

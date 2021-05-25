@@ -131,26 +131,26 @@ struct CallCalendarView: View {
       submits an appointment to the database
      */
     func makeAppointment(date: Date, duration: String, reason: String){
-        
-        //picker view has already been shown
-        self.showPick = false
-        
-        //format the date for the database
-        let formattedDate = date.databaseFormat()
-        
-        //get the user id
-        let id = defaults.franchiseId()!
-        
-        //TODO: database requests done differently now
-        
-        //create the json object for a new appointment
-        let json = JsonFormat.setAppointment(id: id, value: reason, date: formattedDate, duration: duration).format()
-        
-        //perform the request
-        DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {
-            rex in
-            //self.parent.appointmentManager.resetAppointments()
-        })
+//
+//        //picker view has already been shown
+//        self.showPick = false
+//
+//        //format the date for the database
+//        let formattedDate = date.databaseFormat()
+//
+//        //get the user id
+//        let id = defaults.franchiseId()!
+//
+//        //TODO: database requests done differently now
+//        
+//        //create the json object for a new appointment
+//        let json = JsonFormat.setAppointment(id: id, value: reason, date: formattedDate, duration: duration).format()
+//
+//        //perform the request
+//        DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {
+//            rex in
+//            //self.parent.appointmentManager.resetAppointments()
+//        })
     }
     
 }

@@ -12,7 +12,7 @@ import SwiftUI
 extension DatabaseDelegate {
     
     static func getAppointments(completion: @escaping (Any) -> Void){
-        var id = defaults.franchiseId() ?? "1"
+        let id = defaults.franchiseId() ?? "1"
         let json = JsonFormat.getAppointments(id: id).format()
         DatabaseDelegate.performRequest(with: json, ret: returnType.appointment, completion: {
             rex in
@@ -33,9 +33,7 @@ extension DatabaseDelegate {
         if franchiseId != nil {
             id = franchiseId!
         }
-        var name = defaults.getUsername() ?? "Owner"
-        printr(name)
-        printr(id)
+        let name = defaults.getUsername() ?? "Owner"
         let json = JsonFormat.submitAppointment(id: id, franchise: franchiseName ?? "", name: name, start: startTime, end: endTime, date: date, description: description).format()
         DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
             rex in
@@ -110,7 +108,7 @@ extension DatabaseDelegate {
             let json = JsonFormat.sendImagesforTask(taskId: taskId, imageData: imageStr).format()
             DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                 _ in
-                printr("image uploaded")
+                //
             })
         }
     }
@@ -213,7 +211,7 @@ extension DatabaseDelegate {
         
         DatabaseDelegate.performSEORequest(with: json, ret: returnType.string){
             rex in
-            printr("seo rankings set")
+            //
         }
     }
     
@@ -233,10 +231,8 @@ extension DatabaseDelegate {
             json = JsonFormat.getWeekAnalytics(url: url).format()
         case .Month:
             json = JsonFormat.getMonthAnalytics(url: url).format()
-        case .Year:
+        default: // .Year
             json = JsonFormat.getYearAnalytics(url: url).format()
-        default:
-            printr("called for analytics without specifying type")
         }
         
         DatabaseDelegate.performRequest(with: json, ret: returnType.analytics, completion: {
@@ -245,21 +241,6 @@ extension DatabaseDelegate {
         })
     }
     
-//    static func getAppointments(completion: @escaping (Any) -> Void){
-//        if defaults.getApplicationType() == .PeakClients(.any){
-//            //format the json for the request
-//            let json = JsonFormat.getAppointments(id: defaults.franchiseId()!).format()
-//            //perform the database operation
-//            DatabaseDelegate.performRequest(with: json, ret: returnType.visit, completion: {
-//                 rex in
-//                completion(rex)
-//             })
-//        }else if defaults.getApplicationType() == .NHanceConnect {
-//            printr("App type is set to NHance Connect, there are no appointments for NHance Connect")
-//        }else{
-//            printr("Application Type not set, could not get appointments")
-//        }
-//    }
     
     static func getDashboardMessage(completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients(.any){
@@ -273,14 +254,11 @@ extension DatabaseDelegate {
             if defaults.admin && !defaults.urlChanged{
                 url = ""
             }
-            printr("db del getting dashboard message", tag: printTags.error)
             let json = JsonFormat.getDashboardMessage(url: url).format()
             DatabaseDelegate.performRequest(with: json, ret: returnType.dashboardMessage, completion: {
                 rex in
                 completion(rex)
             })
-        }else{
-            printr("Application Type not set, could not get dashboard message")
         }
     }
     
@@ -374,14 +352,14 @@ extension DatabaseDelegate {
                     completion(rex)
             })
         }else if defaults.getApplicationType() == .NHanceConnect {
-            printr("NHance Connect App does not use tasks")
+            //NHance Connect App does not use tasks
         }else{
-            printr("Application Type not set, could not get Tasks")
+            //Application Type not set, could not get Tasks
         }
     }
     
     static func getRatings(completion: @escaping (Any) -> Void){
-        printr("ratings not set up yet")
+        //ratings not set up yet
     }
     
 }
@@ -425,7 +403,7 @@ struct DatabaseDelegate {
         //MARK: performRequest
         
         //if there is a replacement url
-        var tempurl : String? = replacementURL != nil ? replacementURL : str_url
+        let tempurl : String? = replacementURL != nil ? replacementURL : str_url
         
         //check that url isn't nil
         if tempurl == nil {
@@ -434,7 +412,6 @@ struct DatabaseDelegate {
         
         //convert string to URL. Doesn't need error handling because it's constant
         guard let url = URL(string: tempurl!) else {
-            printr("The URL was unable to be cast into a correct URL. Please make sure that you provided a valid URL to the Database Delegate", tag: printTags.error)
             return
         }
         //http request
@@ -444,7 +421,7 @@ struct DatabaseDelegate {
         //convert dictionary input to json data
         let json: [String: Any] = with
         request.httpBody = try? JSONSerialization.data(withJSONObject: json)
-        printr(json)
+        //printr(json)
 
         //open URL session with the request
         URLSession.shared.dataTask(with: request) { data, response, dberror in
@@ -454,7 +431,7 @@ struct DatabaseDelegate {
                 //check for no data response
                 guard let d = data else { throw DataError.nilResponse }
                 //data base responses can be filtered for with ^
-                printr(String.init(data: d, encoding: .ascii) ?? DataError.badFormat.rawValue, tag: printTags.database )
+                //printr(String.init(data: d, encoding: .ascii) ?? DataError.badFormat.rawValue, tag: printTags.database )
                 //Convert data to readable response
                 let rex = try objectFrom(data: d, type: ret)
                 

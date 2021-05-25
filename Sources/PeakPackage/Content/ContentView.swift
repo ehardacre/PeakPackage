@@ -51,7 +51,6 @@ public struct ContentView: View {
     @StateObject var notificationManager : NotificationManager
     @StateObject var dashboardManager : DashboardManager
     @StateObject var taskManager : TaskManager2
-    @StateObject var appointmentManager : AppointmentManager
     @StateObject var seoManager : SEOManager
     @StateObject var profileManager : ProfileManager
     @StateObject var socialManager : SocialManager
@@ -61,7 +60,6 @@ public struct ContentView: View {
                 _ notifications : NotificationManager,
                 _ dashboard : DashboardManager,
                 _ task : TaskManager2,
-                _ appointments : AppointmentManager,
                 _ seo : SEOManager,
                 _ profile : ProfileManager,
                 _ social : SocialManager) {
@@ -71,7 +69,6 @@ public struct ContentView: View {
         _notificationManager = StateObject(wrappedValue: notifications)
         _dashboardManager = StateObject(wrappedValue: dashboard)
         _taskManager = StateObject(wrappedValue: task)
-        _appointmentManager = StateObject(wrappedValue: appointments)
         _seoManager = StateObject(wrappedValue: seo)
         _profileManager = StateObject(wrappedValue: profile)
         _socialManager = StateObject(wrappedValue: social)
@@ -135,12 +132,7 @@ public struct ContentView: View {
                             Content_Leads_singlePageSectioned(
                                 manager: notificationManager)
                         }
-                    }else if tab == tabs.calendar{
-                        Content_Calendar(
-                            manager: appointmentManager)
                     }else if tab == tabs.tasks{
-                        //Content_Tasks2(
-                            //manager: taskManager)
                         Content_TaskCalendar(manager: taskManager)
                     }else if tab == tabs.dashboard{
                         Content_Dashboard(
@@ -166,8 +158,6 @@ public struct ContentView: View {
                 .onAppear{
                     if defaults.getNotificationToken() != nil{
                         DatabaseDelegate.setNotificationTokens()
-                    }else{
-                        printr("Notification Token Nil")
                     }
                     NotificationCenter.default.post(
                         Notification(
@@ -179,8 +169,7 @@ public struct ContentView: View {
                         for: Notification.Name(rawValue: "profileChanged"))
                 ){
                     note in
-                    var notecount = UserDefaults.standard.integer(forKey: "notificationcount") ?? 0
-                    printr(notecount, tag: printTags.error)
+                    _ = UserDefaults.standard.integer(forKey: "notificationcount") 
                     if note.object == nil ||
                         note.object as? Int == 1 ||
                         defaults.franchiseName() ?? "" == "admin"{

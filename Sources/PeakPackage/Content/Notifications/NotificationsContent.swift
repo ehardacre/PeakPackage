@@ -228,9 +228,5 @@ struct LeadsView_single : View {
             }
         }
         .stackOnlyNavigationView()
-        .pullToRefresh(isShowing: $refreshing){
-            notificationMan.loadNotifications()
-            self.refreshing = false
-        }
     }
 }

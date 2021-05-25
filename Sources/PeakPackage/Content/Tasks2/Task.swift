@@ -110,7 +110,7 @@ extension Task {
         if end != nil && start != nil {
             
             request = String(request[(start ?? request.startIndex) ... (end ?? request.endIndex)])
-            request
+            request = request
                 .replacingOccurrences(of: "]", with: "")
                 .replacingOccurrences(of: "[", with: "")
             let info = request.split(separator: ":")
@@ -136,7 +136,7 @@ extension Task {
             taskManager: taskManager,
             task: self,
             type: type,
-            date: TaskManager.cleanDate(self.date),
+            date: TaskManager2.cleanDate(self.date),
             content: request )
         
     }
@@ -157,7 +157,7 @@ extension Task {
         if end != nil && start != nil {
             
             request = String(request[(start ?? request.startIndex) ... (end ?? request.endIndex)])
-            request
+            request = request
                 .replacingOccurrences(of: "]", with: "")
                 .replacingOccurrences(of: "[", with: "")
             let info = request.split(separator: ":")
@@ -176,23 +176,6 @@ extension Task {
         
         request = request + " for " + franchise
         
-//        //the first item is the information about task in franchise
-//        let split = request.firstIndex(of: ":") ?? nil
-//        let end = request.firstIndex(of: "]") ?? nil
-//        var start = request.startIndex
-//        if split != nil && end != nil{
-//            start = request.index(after: split!)
-//            request = String(request[ start...split! ])
-//        }
-//        request = request.replacingOccurrences(of: ":", with: "")
-//
-//        //franchise
-//        var franchise = defaults.franchiseName()
-//        if defaults.admin && end != nil && split != nil{
-//            franchise = String(request[ split!...end! ])
-//        }
-//        franchise = franchise?.replacingOccurrences(of: "]", with: "")
-        
         let type = self.getType()
         //create the card view
         return TaskCardView2(
@@ -200,7 +183,7 @@ extension Task {
             taskManager: taskManager,
             task: self,
             type: type,
-            date: TaskManager.cleanDate(self.date),
+            date: TaskManager2.cleanDate(self.date),
             content: request )
     }
     

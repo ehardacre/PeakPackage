@@ -11,7 +11,6 @@ import Introspect
 
 struct ProfileView: View {
     
-    #warning("TODO move all values into a single object")
     @State var address = ""
     @State var prev_address = ""
     @State var city = ""
@@ -142,7 +141,6 @@ struct ProfileView: View {
                 self.email != self.prev_email ?
                 self.email : nil)
             .format()
-        #warning("TODO move to dbdelegate file")
         DatabaseDelegate.performRequest(
             with: json,
             ret: returnType.string,
@@ -159,7 +157,6 @@ struct ProfileView: View {
         let id = defaults.franchiseId();
         if id != nil{
             let json = JsonFormat.getUser(id: id!).format()
-            #warning("TODO move to dbdelegate file")
             DatabaseDelegate.performRequest(
                 with: json,
                 ret: returnType.user,

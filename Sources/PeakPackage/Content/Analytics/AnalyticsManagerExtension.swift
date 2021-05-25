@@ -139,7 +139,6 @@ enum AnalyticsType {
     #Expected Length
      used for the graphs, describes how many days the data is supposed to represent
      */
-    #warning("TODO improve by returning the actual days of the month instead of 31")
     func expectedLenght() -> Int{
         
         switch self {

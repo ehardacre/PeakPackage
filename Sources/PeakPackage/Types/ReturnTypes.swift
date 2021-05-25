@@ -96,63 +96,6 @@ struct DashboardMessage: Codable{
 //an order from woocommerce has the same fields as Lead
 typealias Order = Lead
 
-//MARK: AutoServeForms
-#warning("DEPRECATED - TODO: remove")
-
-enum AutoServeType{
-   
-    case textInput(placeHolder: String)
-    case title(_ title: String, subtitle: String = "")
-    case datePicker(start: Date, end: Date)
-    case incrementPicker(min: Int, max: Int, interval: Int, units: String)
-    case datetimePicker(start: Date, end: Date)
-    case imagePicker
-    case multichoice(choices: [String])
-    case submitButton
-    
-}
-
-class Form_Type : Codable {
-    var name : String
-    var id : String
-}
-
-class Form_Element : Codable, Identifiable {
-    
-    var title : String?
-    var subtitle : String?
-    var placeholder : String?
-    var start : String?
-    var end : String?
-    var choices : String?
-    var image : String?
-    
-    var optional : String
-    
-    func convertToHashable() -> AutoServeType_hash {
-        
-        if title != nil && subtitle != nil {
-            return AutoServeType_hash(type: .title(title!, subtitle: subtitle!))
-        }
-        else if placeholder != nil {
-            return AutoServeType_hash(type: .textInput(placeHolder: placeholder!))
-        }
-        else if start != nil && end != nil {
-            return AutoServeType_hash(type: .datePicker(start: Date.fromDatabaseFormat(start!), end: Date.fromDatabaseFormat(end!)))
-        }
-        else if choices != nil {
-            let choiceList = choices!.components(separatedBy: ",")
-            return AutoServeType_hash(type: .multichoice(choices: choiceList))
-        }
-        else if image != nil {
-            return AutoServeType_hash(type: .imagePicker)
-        }
-        
-        return AutoServeType_hash(type: .title("Error", subtitle: "This form type is not supported yet. Please reach out to the Peak Studios team to let us know"))
-        
-    }
-}
-
 class SearchRankingforTime : Codable{
 
     var week : String
@@ -176,31 +119,26 @@ class appointmentTimeSlot : Codable{
 
 extension appointmentTimeSlot{
     func getDate() -> Date? {
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.date(from: self.date)
-        #warning("TODO: sometimes this might need to be adjusted")
     }
     
     func getStartTime() -> Date? {
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         let retDate = formatter.date(from: self.start)
-        printr(retDate)
         let locDate = retDate?.toLocalTime()
-        printr(locDate)
         return locDate
     }
     
     func getEndTime() -> Date? {
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         let retDate = formatter.date(from: self.end)
-        printr(retDate)
         let locDate = retDate?.toLocalTime()
-        printr(locDate)
         return locDate
     }
 }
@@ -219,12 +157,12 @@ extension Appointment{
     
     //returns minute difference
     func getDuration() -> Int{
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         guard let startDate = formatter.date(from: self.start) else { return 0 }
         guard let endDate = formatter.date(from: self.end) else { return 0 }
-        return Int((startDate.distance(to: endDate) ?? 0)/60)
+        return Int((startDate.distance(to: endDate))/60)
     }
     
     func getName() -> String{
@@ -236,67 +174,67 @@ extension Appointment{
     }
     
     func startHour() -> String {
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         
-        var formatterTwo = DateFormatter()
+        let formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "HH"
         formatterTwo.timeZone = .current
         
         guard let startDate = formatter.date(from: self.date + " " + self.start) else { return "" }
-        var startStr = formatterTwo.string(from: startDate)
+        let startStr = formatterTwo.string(from: startDate)
         
         return startStr
     }
     
     func startMinute() -> String {
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         
-        var formatterTwo = DateFormatter()
+        let formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "mm"
         formatterTwo.timeZone = .current
         
         guard let startDate = formatter.date(from: self.date + " " + self.start) else { return "" }
-        var startStr = formatterTwo.string(from: startDate)
+        let startStr = formatterTwo.string(from: startDate)
         
         return startStr
     }
     
     func endHour() -> String {
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         
-        var formatterTwo = DateFormatter()
+        let formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "HH"
         formatterTwo.timeZone = .current
         
         guard let endDate = formatter.date(from: self.date + " " + self.end) else { return "" }
-        var endStr = formatterTwo.string(from: endDate)
+        let endStr = formatterTwo.string(from: endDate)
         
         return endStr
     }
     
     func endMinute() -> String {
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         
-        var formatterTwo = DateFormatter()
+        let formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "mm"
         formatterTwo.timeZone = .current
         
         guard let endDate = formatter.date(from: self.date + " " + self.end) else { return "" }
-        var endStr = formatterTwo.string(from: endDate)
+        let endStr = formatterTwo.string(from: endDate)
         
         return endStr
     }
     
     func getDate() -> Date{
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.timeZone = TimeZone(abbreviation: "GMT")
         guard let startDate = formatter.date(from: self.date) else {
@@ -306,14 +244,14 @@ extension Appointment{
     }
     
     func getDateWithEndHour() -> Date{
-        var hours = TimeInterval(endHour().digits.integer!*60*60)
-        var minutes = TimeInterval(endMinute().digits.integer!*60)
+        let hours = TimeInterval(endHour().digits.integer!*60*60)
+        let minutes = TimeInterval(endMinute().digits.integer!*60)
         return getDate().advanced(by: hours+minutes)
     }
     
     func getDateWithStartHour() -> Date{
-        var hours = TimeInterval(startHour().digits.integer!*60*60)
-        var minutes = TimeInterval(startMinute().digits.integer!*60)
+        let hours = TimeInterval(startHour().digits.integer!*60*60)
+        let minutes = TimeInterval(startMinute().digits.integer!*60)
         return getDate().advanced(by: hours+minutes)
     }
     

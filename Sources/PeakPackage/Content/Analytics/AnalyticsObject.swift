@@ -119,7 +119,7 @@ struct GooglePageAnalytics: Codable , AnalyticsDataSource{
     ///get the totals data from the analytics object
     func getTotals() -> [String: String] {
         var newTotals : [String: String] = [:]
-        var totals = totalsForAllResults
+        let totals = totalsForAllResults
         newTotals[AnalyticsManager.visitors_key] = totals?.gasessions
         newTotals[AnalyticsManager.totalEvents_key] = totals?.gasessionsWithEvent
         return newTotals
@@ -140,10 +140,6 @@ struct GooglePPCAnalytics: Codable, AnalyticsDataSource{
     var totalsForAllResults : GA_TotalsForAllResults_PPC?
     var rows : [[String]]?
     
-    #warning("""
-        TODO essentially the same as the function for Page Analytics
-        maybe there is some way to combine them without losing flexibility
-        """)
     ///given the type, returns a dictionary that can be easily graphed
     ///given a type returns a dictionary that can be easily graphed
     func getGraphableData(for type: AnalyticsType) -> [(String,Int)]{

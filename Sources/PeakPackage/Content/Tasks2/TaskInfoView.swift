@@ -48,7 +48,6 @@ struct TaskInfoView: View {
             Spacer()
             TaskStateManagerView(selection: $taskState)
                 .onAppear{
-                    printr(task.request)
                     switch task.status{
                     case "2": //open
                         taskState = 0

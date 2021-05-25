@@ -33,8 +33,6 @@ enum markupType{
             return AnyView(Text(text).markupBody())
         }
         
-        return AnyView(EmptyView())
-        
     }
     
     static func regex() -> String{
@@ -98,7 +96,7 @@ struct MarkUpView : View {
                     let end = text.index(text.startIndex, offsetBy: match.range.upperBound)
                     let range = start ..< end
                     let detail = text[range]
-                let element = markupElement(type: .title, text: String(detail))
+                _ = markupElement(type: .title, text: String(detail))
             }
         }catch{
             

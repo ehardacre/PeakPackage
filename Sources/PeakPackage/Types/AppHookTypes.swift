@@ -69,12 +69,6 @@ enum JsonKeys : String{
     case newZip_key = "zip_code" // do not change
     case newPhone_key = "phone_number" // do not change
     case newEmail_key = "public_franchise_email" // do not change
-    //keys for getting and setting appointments
-    #warning("DEPRECATED")
-    case appt_key = "appointments" //this is where the user id will be stored
-    case appt_value = "appointment_reason"
-    case appt_date = "appointment_date"
-    case appt_dur = "appointment_duration"
     //the key for getting the dynamic form
     case form_key = "dynamicform_key"
     case form_type_key = "dynamicform_type_key"
@@ -153,15 +147,10 @@ public enum JsonFormat {
     //profile operations
     case getUser(id: String)
     case setUser(id: String, address: String?, city: String?, state: String?, zip: String?, phone: String?, email: String?)
-    //Oppointment Operations
-//    case getAppointments(id: String)
-    case setAppointment(id: String, value: String, date: String, duration: String)
     //Task Operations
     case getTasks(id: String)
     case setTask(id: String, value: String)
     case updateTaskStatus(taskId: String, status: String)
-    #warning("DEPRECATED")
-    case setTaskWithImage(id: String, value: String, image: String)
     case sendImagesforTask(taskId: String, imageData: String)
     //id is the id of the form we're trying to get
     case getDynamicForm(id: String)
@@ -264,17 +253,9 @@ public enum JsonFormat {
         case .updateTaskStatus(let taskId, let status):
             retVal = [JsonKeys.tasks_update_key.rawValue: taskId,
                       JsonKeys.tasks_update_status.rawValue: status]
-            #warning("DEPRECATED")
-        case .setTaskWithImage(let id, let value, let image):
-            retVal = [JsonKeys.tasks_key.rawValue: id, JsonKeys.tasks_value.rawValue: value, JsonKeys.image_send_key.rawValue: image]
         case .sendImagesforTask(let taskId, let imageData):
             retVal = [JsonKeys.image_send_key.rawValue: imageData,
                       JsonKeys.image_send_task.rawValue: taskId]
-            //get appointments for user id
-//        case .getAppointments(let id):
-//            retVal = [JsonKeys.appt_key.rawValue: id]
-            //create appointments for user id
-            //get the user information from id
         case .getUser(let id):
             retVal = [JsonKeys.userData_key.rawValue: id]
             //update user information
@@ -326,7 +307,6 @@ public enum JsonFormat {
             //should never run
         default:
             printr(InternalError.nilContent.rawValue, tag: printTags.error)
-            
         }
         
         return retVal.merging(adminExt, uniquingKeysWith: {(current, _) in current})

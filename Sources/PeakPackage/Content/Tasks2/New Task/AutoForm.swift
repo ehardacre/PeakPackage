@@ -217,9 +217,9 @@ struct MultiInputCardView : View {
     static func makeChoiceList(text: String) -> [String]{
         var start = text.firstIndex(of: "(") ?? text.startIndex
         start = text.index(after: start)
-        var end = text.lastIndex(of: ")") ?? text.endIndex
-        var listString = String(text[start..<end])
-        var list = listString.components(separatedBy: ",")
+        let end = text.lastIndex(of: ")") ?? text.endIndex
+        let listString = String(text[start..<end])
+        let list = listString.components(separatedBy: ",")
         return list
     }
 
@@ -305,7 +305,10 @@ struct TimeInputCardView : View {
                         NotificationCenter.default.post(
                             name: Notification.Name("ElementValue"),
                             object: nil,
-                            userInfo: ["input" :  parseInputDate(), "id" : id, "key" : title, "error" : errorMessage])
+                            userInfo: ["input" :  parseInputDate() as Any,
+                                       "id" : id as Any,
+                                       "key" : title as Any,
+                                       "error" : errorMessage as Any])
                     }
                 }
             }

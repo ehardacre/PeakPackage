@@ -8,7 +8,7 @@
 #if os(iOS)
 import UIKit
 
-public protocol BarChartView2Delegate: class {
+public protocol BarChartView2Delegate: AnyObject {
     func didSelect(dataElement: BarChartView2.DataSet.DataElement, dataSet: BarChartView2.DataSet)
 }
 

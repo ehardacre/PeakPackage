@@ -65,30 +65,13 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotification
     
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-//        if let aps = userInfo["aps"] as? NSDictionary {
-//            if let alert = aps["alert"] as? NSDictionary {
-//                if let message = alert["message"] as? NSString {
-//                    if message.contains("seoRanking"){
-//                        SEOManager.scrapeRankings()
-//                        printr("scraping for Rankings...")
-//                    }
-//                }
-//            } else if let alert = aps["getRankings"] as? NSString {
-//                //run the curl function
-//            }
-//        }
-        
-        printr(userInfo)
-        
         if let payload = userInfo["message"] as? NSString{
             if payload.contains("seoRanking"){
-                var count = UserDefaults.standard.integer(forKey: "notificationcount") ?? 0
+                let count = UserDefaults.standard.integer(forKey: "notificationcount")
                 UserDefaults.standard.set(count + 1, forKey: "notificationcount")
-                SEOManager.scrapeRankings(forDatabase: true)
-                printr("scraping for Rankings...")
+                _ = SEOManager.scrapeRankings(forDatabase: true)
             }
         }
-        //NotificationCenter.default.post(name: Notification.Name("NotificationRecieved"), object: nil)
         
     }
     
@@ -168,7 +151,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotification
       let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
       let token = tokenParts.joined()
       defaults.setNotificationToken(token)
-      printr("Device Token: \(token)")
     }
 
     public func application(

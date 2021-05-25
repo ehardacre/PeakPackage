@@ -71,7 +71,7 @@ public class NotificationManager : Manager {
         dateFormatter.dateFormat = defaults.getApplicationType() == .NHanceConnect ? "yyyy-MM-dd'T'HH:mm:ss" : "yyyy-MM-dd HH:mm:ss"
         var date = dateFormatter.date(from:str_date)!
         date = date.toLocalTime()
-        var dateString = date.dayOfWeekWithMonthAndDay
+        let dateString = date.dayOfWeekWithMonthAndDay
         return dateString
     }
     
@@ -82,12 +82,11 @@ public class NotificationManager : Manager {
             "yyyy-MM-dd'T'HH:mm:ss" : "yyyy-MM-dd HH:mm:ss"
         var date = dateFormatter.date(from:str_date)!
         date = date.toLocalTime()
-        var dateString = date.timeOnlyWithPadding
+        let dateString = date.timeOnlyWithPadding
         return dateString
     }
     
     func loadNotifications(){
-        printr("reloading leads")
         loaded = false
         loading = [false,false,false]
         if defaults.getApplicationType() == .NHanceConnect{

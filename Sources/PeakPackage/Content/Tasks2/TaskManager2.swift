@@ -185,10 +185,9 @@ public class TaskManager2 : Manager{
     //gets open tasks after a given date
     func getOpenTasks(for date: Date) -> [Task]{
         var tasklist : [Task] = []
-        printr("in open tasks: \(openTasks.count)")
         for task in openTasks {
-            var taskdate = TaskManager2.stringDateToDate(task.date)
-            var diff = Calendar.current.dateComponents([.day], from: taskdate, to: date)
+            let taskdate = TaskManager2.stringDateToDate(task.date)
+            let diff = Calendar.current.dateComponents([.day], from: taskdate, to: date)
             if diff.day ?? -1 >= 0 {
                 tasklist.append(task)
             }
@@ -198,10 +197,9 @@ public class TaskManager2 : Manager{
     
     func getCompleteTasks(for date: Date) -> [Task]{
         var tasklist : [Task] = []
-        printr("in completed tasks: \(completedTasks.count)")
         for task in completedTasks {
-            var taskdate = TaskManager2.stringDateToDate(task.date)
-            var diff = Calendar.current.dateComponents([.day], from: taskdate, to: date)
+            let taskdate = TaskManager2.stringDateToDate(task.date)
+            let diff = Calendar.current.dateComponents([.day], from: taskdate, to: date)
             if diff.day == 0 {
                 tasklist.append(task)
             }
@@ -223,9 +221,9 @@ public class TaskManager2 : Manager{
     func getAppointments(for date: Date) -> [Appointment]{
         var appList : [Appointment] = []
         for app in appointments {
-            var appDate = app.getDate().advanced(by: 12*60*60)
+            let appDate = app.getDate().advanced(by: 12*60*60)
             //addDate needs to be advanced so it doesn't lie exactly on midnight
-            var diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
+            let diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
             if diff.hour! < 9 && diff.hour! > -9{ //nine or so hours from noon is the cut off
                 appList.append(app)
             }
@@ -236,15 +234,22 @@ public class TaskManager2 : Manager{
     func getAppointments(after date: Date) -> [Appointment]{
         var appList : [Appointment] = []
         for app in appointments {
-            var appDate = app.getDateWithEndHour()
+            let appDate = app.getDateWithEndHour()
             //addDate needs to be advanced so it doesn't lie exactly on midnight
-            #warning("This seems to be broken")
-            var diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
+            #warning("TODO: this seems to be broken")
+            let diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
+            printr(appDate)
+            printr(diff)
             if diff.hour! <= 0 && diff.hour! > -12{ //nine or so hours from noon is the cut off
                 appList.append(app)
             }
         }
+        printr(appList)
         return appList.sorted(by: {return $0.startHour() > $1.startHour()})
+    }
+    
+    func getNextAppointment() -> Appointment?{
+        return getAppointments(after: Date()).first
     }
     
     func convertForCalendar(appointments: [Appointment], selectionManager: SelectionManager, taskManager: TaskManager2) -> [AppointmentCardView]{
@@ -262,12 +267,12 @@ public class TaskManager2 : Manager{
         
         var tempDetails : [TaskField] = []
         
-        var parts = req.components(separatedBy: "[")
+        let parts = req.components(separatedBy: "[")
         for part in parts{
-            var stripped = part
+            let stripped = part
                 .replacingOccurrences(of: "]", with: "")
                 .replacingOccurrences(of: "[", with: "")
-            var keyval = stripped.split(separator: ":")
+            let keyval = stripped.split(separator: ":")
             if keyval.count > 1 {
                 let field = TaskField(title: String(keyval[0]), value: String(keyval[1]))
                 tempDetails.append(field)

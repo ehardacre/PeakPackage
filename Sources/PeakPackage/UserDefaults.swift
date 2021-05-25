@@ -320,7 +320,6 @@ struct defaults {
         let domain = Bundle.main.bundleIdentifier!
         UserDefaults.standard.removePersistentDomain(forName: domain)
         UserDefaults.standard.synchronize()
-        printr("Logging Out...")
         exit(0)
     }
 

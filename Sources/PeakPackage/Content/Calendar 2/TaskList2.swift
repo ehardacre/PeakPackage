@@ -49,24 +49,21 @@ struct TaskListView2: View {
         }
         .CleanList(rowH: 80)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { note in
-            var date = (note.object as? Date) ?? Date()
-            printr("recieved post for task loading")
-            var newCompleted = taskManager.getCompleteTasks(for: date)
+            let date = (note.object as? Date) ?? Date()
+            let newCompleted = taskManager.getCompleteTasks(for: date)
             self.completedTasks = taskManager.convertForCalendar(
                 tasks: newCompleted,
                 selectionManager: selectionManager,
                 taskManager: taskManager)
-            var newOpen = taskManager.getOpenTasks(for: date)
+            let newOpen = taskManager.getOpenTasks(for: date)
             self.openTasks = taskManager.convertForCalendar(
                 tasks: newOpen,
                 selectionManager: selectionManager,
                 taskManager: taskManager)
-            printr("completed: \(completedTasks.count), open: \(openTasks.count)")
-            var newApps = taskManager.getAppointments(for: date)
+            let newApps = taskManager.getAppointments(for: date)
             self.todaysAppointments = taskManager.convertForCalendar(appointments: newApps, selectionManager: selectionManager, taskManager: taskManager)
         })
         .onAppear{
-            printr("posting for task loading")
             NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange"),object: nil))
         }
     }

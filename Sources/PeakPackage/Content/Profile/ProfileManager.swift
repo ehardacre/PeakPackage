@@ -38,7 +38,6 @@ public class ProfileManager : Manager {
             id = newID
             defaults.setTempFranchise(newURL,newName,newID)
         }
-        printr("profile changed")
         NotificationCenter.default.post(
             Notification(
                 name: Notification.Name("profileChanged"),

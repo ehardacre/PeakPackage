@@ -117,11 +117,11 @@ struct AutoFormView: View {
             
             DispatchQueue.global().async {
                 semaphore.wait()
-                var data = obj.userInfo as! [String : Any]
+                let data = obj.userInfo as! [String : Any]
                 
                 //detect error from fields
                 if data["error"] != nil {
-                    var tempError = (data["error"] as? String)
+                    let tempError = (data["error"] as? String)
                     if tempError == nil {
                         showingError = false
                     }else{
@@ -143,8 +143,7 @@ struct AutoFormView: View {
                     inputList[key] = "\(input.count) images submitted"
                     if inputEqualsFields() && !showingError{
                         descriptionText = "Submitting Task..."
-                        printr("all fields collected")
-                        printr(inputList)
+                        
                         if appointmentForm {
                             sendInAppointment(inputs: inputList)
                         }else{
@@ -155,14 +154,13 @@ struct AutoFormView: View {
                     }
                 }else if let id = data["id"] as? UUID,
                          let input = data["input"] as? (String, String, String),
-                         let key = data ["key"] as? String{
+                         let _ = data ["key"] as? String{
                     
                     loadedElementInputs.append(id)
                     inputList["time"] = "\(input.0)*\(input.1)*\(input.2)"
                     if inputEqualsFields() && !showingError{
                         descriptionText = "Submitting Task..."
-                        printr("all fields collected")
-                        printr(inputList)
+                        
                         if appointmentForm {
                             sendInAppointment(inputs: inputList)
                         }else{
@@ -172,14 +170,13 @@ struct AutoFormView: View {
                         submittingTask = false
                     }
                 }else if let id = data["id"] as? UUID,
-                   let input = data["input"] as? Any,
+                   let input = data["input"],
                    let key = data["key"] as? String{
                     loadedElementInputs.append(id)
                     inputList[key] = input as? String
                     if inputEqualsFields() && !showingError{
                         descriptionText = "Submitting Task..."
-                        printr("all fields collected")
-                        printr(inputList)
+                        
                         if appointmentForm {
                             sendInAppointment(inputs: inputList)
                         }else{
@@ -198,13 +195,13 @@ struct AutoFormView: View {
     }
     
     func sendInAppointment(inputs: [String:String]){
-        var timeInputs = inputs["time"]?.components(separatedBy: "*") ?? []
+        let timeInputs = inputs["time"]?.components(separatedBy: "*") ?? []
         if timeInputs.count == 3 {
-            var startTime = timeInputs[0]
-            var endTime = timeInputs[1]
-            var dateTime = timeInputs[2]
-            var description = inputs["Subject"] ?? ""
-            var id = franchiseManager.ids.first
+            let startTime = timeInputs[0]
+            let endTime = timeInputs[1]
+            let dateTime = timeInputs[2]
+            let description = inputs["Subject"] ?? ""
+            let id = franchiseManager.ids.first
             DatabaseDelegate.setAppointment(franchiseId: id, franchiseName: franchiseManager.getFranchiseName(for: id), startTime: startTime, endTime: endTime, date: dateTime, description: description, completion: {
                 rex in
                 taskManager.reloadAppointmentData()
@@ -247,10 +244,8 @@ struct AutoFormView: View {
     
     func inputEqualsFields() -> Bool{
         if loadedElementInputs.count != elementIDs.count{
-            printr("input not equal to fields")
             return false
         }
-        printr("input is equal to fields")
         for id in elementIDs {
             if !loadedElementInputs.contains(id){
                 return false

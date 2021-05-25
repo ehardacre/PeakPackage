@@ -52,32 +52,30 @@ class appointmentSelector : ObservableObject {
     }
     
     func addUnavailableTimes(timeSlots: [appointmentTimeSlot], startTime: Date, endTime: Date){
-        var formatterOne = DateFormatter()
+        let formatterOne = DateFormatter()
         formatterOne.dateFormat = "HH:mm:ss"
         formatterOne.timeZone = TimeZone(abbreviation: "GMT")
-        var formatterTwo = DateFormatter()
+        let formatterTwo = DateFormatter()
         formatterTwo.dateFormat = "yyyy-MM-dd"
         formatterTwo.timeZone = TimeZone(abbreviation: "GMT")
-        var formatterThree = DateFormatter()
+        let formatterThree = DateFormatter()
         formatterThree.dateFormat = "yyyy-MM-dd HH:mm:ss"
         formatterThree.timeZone = TimeZone(abbreviation: "GMT")
         for time in timeSlots {
             if let date = time.getDate(), let start = time.getStartTime(), let end = time.getEndTime(){
-                var baseDate = formatterTwo.string(from: date)
-                var newStartTime = formatterOne.string(from: start)
-                var newStartString = "\(baseDate) \(newStartTime)"
+                let baseDate = formatterTwo.string(from: date)
+                let newStartTime = formatterOne.string(from: start)
+                let newStartString = "\(baseDate) \(newStartTime)"
                 var newStart = formatterThree.date(from: newStartString)!
                 newStart = newStart.toGlobalTime()
-                var newEndTime = formatterOne.string(from: end)
-                var newEndString = "\(baseDate) \(newEndTime)"
+                let newEndTime = formatterOne.string(from: end)
+                let newEndString = "\(baseDate) \(newEndTime)"
                 var newEnd = formatterThree.date(from: newEndString)!
                 newEnd = newEnd.toGlobalTime()
                 let disStart = startTime.distance(to: newStart)/60
                 let disEnd = startTime.distance(to: newEnd)/60
                 let indStart = (Int(disStart)/(TaskManager2.timeSlotInterval/2)) + 4
-                printr(indStart)
                 let indEnd = (Int(disEnd)/(TaskManager2.timeSlotInterval/2)) + 4
-                printr(indEnd)
                 for i in indStart..<indEnd{
                     unavailableDates.append(i)
                 }
@@ -122,8 +120,6 @@ struct AppointmentSelectionView: View {
         }
         timeformatter.dateFormat = "hh:mm"
         selector.addUnavailableTimes(timeSlots: taskManager.unavailabaleTimeSlots, startTime: startTime, endTime: endTime)
-        printr(taskManager.unavailabaleTimeSlots.map({return "\($0.start) to \($0.end) on \($0.date)"}))
-        printr(taskManager.unavailabaleTimeSlots.map({return "\($0.getStartTime()) to \($0.getEndTime()) on \($0.getDate())"}))
     }
     
     var body: some View {
@@ -217,7 +213,7 @@ struct AppointmentSelectionView: View {
                 Spacer()
                 Button(action: {
                     if selector.datesSelected.count > 0 {
-                        var range = selector.addSelection(nil, from: timeIntervalList)
+                        let range = selector.addSelection(nil, from: timeIntervalList)
                         inputStartTime = range?.start
                         inputEndTime = range?.end
                         timeText = confirmationText
