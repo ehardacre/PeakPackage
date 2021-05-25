@@ -48,6 +48,9 @@ struct CalendarView2: View {
                 .frame(width: geo.size.width, height: calendarShowing ? geo.size.height/2 : 0)
                 .opacity(calendarShowing ? 1 : 0)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .onAppear{
+                    selectedMonth = 2
+                }
                 
                 byDateTaskView(taskManager: taskManager)
                     .padding(0)
