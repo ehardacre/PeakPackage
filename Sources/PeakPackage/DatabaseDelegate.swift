@@ -311,7 +311,7 @@ extension DatabaseDelegate {
     
     static func updateTask(taskId: String, taskStatus: TaskStatus, completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients(.any){
-            var dateformatter = DateFormatter()
+            let dateformatter = DateFormatter()
             dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date = dateformatter.string(from: Date())
             let json = JsonFormat.updateTaskStatus(taskId: taskId, status: taskStatus.rawValue, date: date).format()
@@ -331,6 +331,7 @@ extension DatabaseDelegate {
                     let json = JsonFormat.setTask(id: id, value: taskInfo).format()
                     DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                         rex in
+                        printr("dbdelegate task submit")
                         completion(rex) //rex is the task ID
                     })
                 }
@@ -338,6 +339,7 @@ extension DatabaseDelegate {
                 let json = JsonFormat.setTask(id: defaults.franchiseId()!, value: taskInfo).format()
                 DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                     rex in
+                    
                     completion(rex) //rex is the task ID
                 })
             }
