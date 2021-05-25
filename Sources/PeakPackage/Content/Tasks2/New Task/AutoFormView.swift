@@ -221,12 +221,8 @@ struct AutoFormView: View {
             taskString += "[\(key):\(inputs[key] ?? "")]"
         }
         
-        printr("sending in task")
-        
         DatabaseDelegate.sendTask(ids: franchiseManager.ids, taskInfo: taskString, completion: {
             rex in
-            
-            printr("task sent in")
             
             imageSendSemaphore.wait()
             let id = rex as! String
@@ -234,17 +230,19 @@ struct AutoFormView: View {
                 
                 DatabaseDelegate.sendImages(images: imagesToSubmit, taskId: id, completion: {
                     _ in
+                    taskManager.reloadTasks()
                     submittingTask = false
                     presentationMode.wrappedValue.dismiss()
                 })
                 
             }else{
-                printr("dismissing view")
+                taskManager.reloadTasks()
                 submittingTask = false
                 presentationMode.wrappedValue.dismiss()
             }
             imageSendSemaphore.signal()
         })
+        
     }
     
     func inputEqualsFields() -> Bool{
