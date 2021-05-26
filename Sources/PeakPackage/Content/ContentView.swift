@@ -186,10 +186,10 @@ public struct ContentView: View {
                     analyticsManager.loadAnalytics(for: .Year)
                     notificationManager.loadNotifications()
                     if defaults.getApplicationType() == .PeakClients(.any){
-                        taskManager.loadTasks()
+                        taskManager.reloadTasks()
                         taskManager.loadForms()
                         taskManager.loadUnavailableAppointmentTimes()
-                        taskManager.loadAppointments()
+                        taskManager.reloadAppointmentData()
                         //appointmentManager.loadAppointments()
                         //appointmentManager.loadTodaysVisits()
                     }
