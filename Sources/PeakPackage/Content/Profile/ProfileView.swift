@@ -37,10 +37,15 @@ struct ProfileView: View {
                         Button(action: {
                             DatabaseDelegate.testNotification()
                         }, label: {
-                            Text("Test Notifications")
-                                .ButtonText()
+                            HStack{
+                                Image(systemName: "note.text")
+                                    .foregroundColor(Color.darkAccent)
+                                Text("Test Notifications")
+                                    .ButtonText()
+                            }
                         })
                         .RoundRectButton()
+                        Divider()
                         SwitchProfileView(
                             profiles: manager.profiles,
                             profileManager: manager)
