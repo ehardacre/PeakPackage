@@ -334,16 +334,21 @@ extension DatabaseDelegate {
         }
     }
     
-    static func sendTask(ids: [String], taskInfo: String, completion: @escaping (Any) -> Void){
+    //order of ids and name have to be equal
+    static func sendTask(manager: FranchiseSelectionManager, formName: String, taskInfo: String, completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients(.any){
             if defaults.admin {
-                var tempIds = ids
-                if ids.count == 0 {
-                    let i = defaults.franchiseId() ?? "1"
-                    tempIds = [i]
+                var tempIds = manager.ids
+                var tempNames = manager.ids.map({manager.getFranchiseName(for: $0)})
+                if tempIds.count == 0 {
+                    tempIds = [defaults.franchiseId() ?? "1"]
+                    tempNames = [defaults.franchiseName() ?? "admin"]
                 }
-                for id in tempIds {
-                    let json = JsonFormat.setTask(id: id, value: taskInfo).format()
+                for index in 0..<tempIds.count {
+                    let id = tempIds[index]
+                    let name = tempNames[index]
+                    let taskString = "[\(formName):\(name)]" + taskInfo
+                    let json = JsonFormat.setTask(id: id, value: taskString).format()
                     DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                         rex in
                         completion(rex) //rex is the task ID

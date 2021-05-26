@@ -216,12 +216,12 @@ struct AutoFormView: View {
             return
         }
         //format inputs into string
-        var taskString = "[\(form.title):\(defaults.franchiseName() ?? "")]"
+        var taskString = ""//"[\(form.title):\(defaults.franchiseName() ?? "")]"
         for key in inputs.keys {
             taskString += "[\(key):\(inputs[key] ?? "")]"
         }
         
-        DatabaseDelegate.sendTask(ids: franchiseManager.ids, taskInfo: taskString, completion: {
+        DatabaseDelegate.sendTask(manager: franchiseManager, formName: form.title, taskInfo: taskString, completion: {
             rex in
             
             imageSendSemaphore.wait()
