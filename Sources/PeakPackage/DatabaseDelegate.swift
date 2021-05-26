@@ -12,7 +12,9 @@ import SwiftUI
 extension DatabaseDelegate {
     
     static func testNotification() {
-        let json = JsonFormat.testNotifications.format()
+        let token = defaults.getNotificationToken() ?? "no token"
+        printr(token)
+        let json = JsonFormat.testNotifications(notificationToken: token).format()
         DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
             rex in
             printr(rex)

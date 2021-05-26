@@ -144,7 +144,7 @@ public enum JsonFormat {
     case getForms(visability: String)
     case submitForm(title: String, subtitle: String, visability: String)
     case submitFormElement(formID: String, label: String, prompt: String, input: String)
-    case testNotifications
+    case testNotifications(notificationToken: String)
     
     
     //MARK: PEAK CLIENTS
@@ -241,8 +241,8 @@ public enum JsonFormat {
                       JsonKeys.submit_form_element_label.rawValue: label,
                       JsonKeys.submit_form_element_prompt.rawValue: prompt,
                       JsonKeys.submit_form_element_input.rawValue: input]
-        case .testNotifications:
-            retVal = [JsonKeys.notification_test_key.rawValue: ""]
+        case .testNotifications(let token):
+            retVal = [JsonKeys.notification_test_key.rawValue: token]
         
         
         //MARK: PEAK CLIENTS
