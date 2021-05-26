@@ -34,6 +34,13 @@ struct ProfileView: View {
             NavigationView{
                 List{
                     if defaults.admin {
+                        Button(action: {
+                            DatabaseDelegate.testNotification()
+                        }, label: {
+                            Text("Test Notifications")
+                                .ButtonText()
+                        })
+                        .RoundRectButton()
                         SwitchProfileView(
                             profiles: manager.profiles,
                             profileManager: manager)

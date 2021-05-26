@@ -242,7 +242,6 @@ public class TaskManager2 : Manager{
             //addDate needs to be advanced so it doesn't lie exactly on midnight
             let diff = Calendar.current.dateComponents([.hour], from: appDate, to: date)
             let comp = Calendar.current.compare(appDate, to: date, toGranularity: .minute)
-            #warning("TODO: this if statement is broken")
             if diff.hour! < 12 && diff.hour! >= 0 && comp == .orderedAscending{ //nine or so hours from noon is the cut off
                 appList.append(app)
             }

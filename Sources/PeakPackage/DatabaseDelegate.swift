@@ -11,6 +11,14 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func testNotification() {
+        let json = JsonFormat.testNotifications.format()
+        DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
+            rex in
+            printr(rex)
+        })
+    }
+    
     static func getAppointments(completion: @escaping (Any) -> Void){
         let id = defaults.franchiseId() ?? "1"
         let json = JsonFormat.getAppointments(id: id).format()

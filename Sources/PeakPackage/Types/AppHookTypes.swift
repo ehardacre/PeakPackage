@@ -51,6 +51,8 @@ enum JsonKeys : String{
     case submit_form_element_label = "new_form_element_label"
     case submit_form_element_prompt = "new_form_element_prompt"
     case submit_form_element_input = "new_form_element_input"
+    ///notification test
+    case notification_test_key = "testnotificationKey"
     
     //MARK: PEAK CLIENTS
     //keys for recieving calls from the app
@@ -142,6 +144,7 @@ public enum JsonFormat {
     case getForms(visability: String)
     case submitForm(title: String, subtitle: String, visability: String)
     case submitFormElement(formID: String, label: String, prompt: String, input: String)
+    case testNotifications
     
     
     //MARK: PEAK CLIENTS
@@ -238,6 +241,8 @@ public enum JsonFormat {
                       JsonKeys.submit_form_element_label.rawValue: label,
                       JsonKeys.submit_form_element_prompt.rawValue: prompt,
                       JsonKeys.submit_form_element_input.rawValue: input]
+        case .testNotifications:
+            retVal = [JsonKeys.notification_test_key.rawValue: ""]
         
         
         //MARK: PEAK CLIENTS
