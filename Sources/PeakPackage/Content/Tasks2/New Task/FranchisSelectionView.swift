@@ -15,6 +15,8 @@ struct FranchiseSelectionView: View {
     @State var searchedProfiles : [Franchise] = []
     @State var searching = false
     
+    @State var tempTabs = ["Social Posts","Ads Budget"]
+    
     var body: some View {
         VStack{
             Text("Select Franchises For Task")
@@ -40,6 +42,25 @@ struct FranchiseSelectionView: View {
                 }
             }
             .padding(.top, -15)
+            
+            LazyVGrid(columns: [GridItem(),GridItem(),GridItem()]){
+                ForEach(tempTabs, id:\.self){
+                    tab in
+                    Button(action: {
+                        
+                    }, label: {
+                        HStack{
+                            Spacer()
+                            Text(tab)
+                                .padding(10)
+                                .foregroundColor(Color.main)
+                            Spacer()
+                        }
+                        
+                    })
+                    .background(Capsule().strokeBorder(Color.main, lineWidth: 2.0))
+                }
+            }
         }
     }
 }
