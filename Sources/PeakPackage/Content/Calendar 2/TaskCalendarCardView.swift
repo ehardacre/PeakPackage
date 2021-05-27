@@ -113,14 +113,18 @@ struct ShortCardView: View {
             }
             VStack{
                 HStack{
-//                    Text(TaskManager2.parseRequest(content).first?.title ?? "Task")
-//                        .CardTitle()
                     Text(getTaskType(from:content))
                         .CardTitle()
                     Spacer()
                 }
+                HStack{
+                    Text(getFranchise(from:content))
+                        .Footnote()
+                    Spacer()
+                }
             }
             .padding(.horizontal, 10.0)
+            
         }
         .background(Color.lightAccent)
         .overlay(
@@ -158,6 +162,19 @@ struct ShortCardView: View {
         cleanedTitle = cleanedTitle.components(separatedBy: "for").first ?? "Task"
         return cleanedTitle
         
+    }
+    
+    func getFranchise(from content: String) -> String{
+        
+        let parts = content.components(separatedBy: "]")
+        guard let titlesection = parts.first else {
+            return ""
+        }
+        var cleanedTitle = titlesection
+            .replacingOccurrences(of: "]", with: "")
+            .replacingOccurrences(of: "[", with: "")
+        cleanedTitle = cleanedTitle.components(separatedBy: "for").last ?? ""
+        return cleanedTitle
     }
 }
 
