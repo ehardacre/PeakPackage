@@ -41,7 +41,7 @@ struct FranchiseSelectionView: View {
             }
             .padding(.top, -15)
             
-            TagView(tagManager: profileManager.tagManager, tags: profileManager.tagManager.tags)
+            TagView(manager: profileManager.tagManager, tags: profileManager.tagManager.tags)
            
         }
     }
