@@ -33,25 +33,15 @@ struct Tag {
     var franchiseList : String
     
     var display : some View {
-        ZStack{
-            if selectionManager.id == id {
-                Capsule().background(Color.main)
-            }else{
-                Capsule().strokeBorder(Color.darkAccent, lineWidth: 2)
-            }
-            HStack{
-                Text(name)
-                    .foregroundColor(selectionManager.id == id ? Color.darkAccent : Color.lightAccent)
-                    .padding(.horizontal)
-            }
-            .onTapGesture {
-                if selectionManager.id == id {
-                    selectionManager.id = nil
-                }else{
-                    selectionManager.id = id
-                }
-            }
+    
+        HStack{
+            Text(name)
+                .foregroundColor(Color.darkAccent)
+                .padding(.horizontal,10)
         }
+        .padding(.vertical,0)
+        .background(Capsule().strokeBorder(Color.darkAccent, lineWidth: 2))
+        
     }
     
     func getFranchiseIds() -> [String]{
