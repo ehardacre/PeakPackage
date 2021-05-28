@@ -54,7 +54,7 @@ struct TagView : View {
     @State var tags: [Tag]
 
     var body : some View {
-        ScrollView(.horizontal){
+        ScrollView(.horizontal,showsIndicators: false){
             HStack{
                 ForEach(tags, id: \.id){
                     tag in
