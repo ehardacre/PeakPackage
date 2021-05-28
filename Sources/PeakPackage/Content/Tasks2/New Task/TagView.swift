@@ -16,6 +16,7 @@ class TagManager : Manager {
     @State var tempTabs = ["Hootsuite","Google Ads","Chem-Drys","NHance"]
     
     func loadTags(){
+        printr("loading tags")
         for tabName in tempTabs {
             var newTab = Tag(selectionManager: selectionManager, name: tabName, franchiseList: "")
             tags.append(newTab)
@@ -38,6 +39,9 @@ struct Tag {
                 .padding()
         })
         .background(Capsule().strokeBorder(Color.darkAccent, lineWidth: 2))
+        .onAppear{
+            printr("showing button")
+        }
     }
     
     func getFranchiseIds() -> [String]{
@@ -53,6 +57,7 @@ struct TagView : View {
     init(tagManager : TagManager) {
         _tagManager = .init(initialValue: tagManager)
         tags = tagManager.tags
+        printr(tags)
     }
 
     var body : some View {
