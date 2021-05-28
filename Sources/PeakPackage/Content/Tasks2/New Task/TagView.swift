@@ -68,6 +68,8 @@ struct TagView : View {
                     tag.display
                 }
             }
+        }.onAppear{
+            printr("tag scroll view with \(tags.count)")
         }
         
     }
