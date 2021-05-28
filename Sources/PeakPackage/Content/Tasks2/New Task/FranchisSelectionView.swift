@@ -20,6 +20,9 @@ struct FranchiseSelectionView: View {
             Text("Select Franchises For Task")
                 .bold()
                 .foregroundColor(Color.darkAccent)
+            
+            TagView(manager: profileManager.tagManager, tags: profileManager.tagManager.tags)
+            
             ProfileSearchBar(
                 searching: $searching,
                 mainList: $profiles,
@@ -40,8 +43,6 @@ struct FranchiseSelectionView: View {
                 }
             }
             .padding(.top, -15)
-            
-            TagView(manager: profileManager.tagManager, tags: profileManager.tagManager.tags)
            
         }
     }
