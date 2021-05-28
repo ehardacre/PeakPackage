@@ -37,9 +37,8 @@ struct Tag {
         HStack{
             Text(name)
                 .foregroundColor(Color.darkAccent)
-                .padding(.horizontal,10)
         }
-        .padding(.vertical,0)
+        .padding(5)
         .background(Capsule().strokeBorder(Color.darkAccent, lineWidth: 2))
         
     }
