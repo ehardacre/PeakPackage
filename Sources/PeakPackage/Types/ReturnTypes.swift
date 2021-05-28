@@ -265,6 +265,13 @@ extension Appointment{
     }
 }
 
+class franchiseGroupTag : Codable {
+    
+    var name : String
+    var franchiseList : String
+    
+}
+
 
 /**
  # Return Type
@@ -286,4 +293,5 @@ enum returnType {
     case searchRank
     case appointmentTimeSlot
     case appointment
+    case grouptag
 }

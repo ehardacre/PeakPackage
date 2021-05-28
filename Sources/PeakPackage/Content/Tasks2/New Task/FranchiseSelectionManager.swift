@@ -11,11 +11,13 @@ public class FranchiseSelectionManager : Manager {
     
     @Published var profiles : [Franchise] = []
     @Published var ids : [String] = []
+    @Published var tagManager = TagManager()
     
     public override init() {
         
         super.init()
         loadProfiles()
+        tagManager.loadTags()
         
     }
     
