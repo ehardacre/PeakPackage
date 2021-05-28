@@ -51,14 +51,8 @@ struct Tag {
 
 struct TagView : View {
     
-    @State var tagManager : TagManager
-    @State var tags: [Tag] = []
-    
-    init(tagManager : TagManager) {
-        _tagManager = .init(initialValue: tagManager)
-        tags = tagManager.tags
-        printr(tags)
-    }
+    @State var manager : TagManager
+    @State var tags: [Tag]
 
     var body : some View {
         ScrollView(.horizontal){
@@ -68,11 +62,7 @@ struct TagView : View {
                     tag.display
                 }
             }
-        }.onAppear{
-            printr("tag scroll view with \(tags.count)")
         }
-        
     }
-    
 }
 
