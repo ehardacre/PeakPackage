@@ -23,6 +23,8 @@ struct FranchiseSelectionView: View {
             
             TagView(manager: profileManager.tagManager, tags: profileManager.tagManager.tags)
             
+            Divider()
+            
             ProfileSearchBar(
                 searching: $searching,
                 mainList: $profiles,

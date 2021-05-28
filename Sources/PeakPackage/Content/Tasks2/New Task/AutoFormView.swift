@@ -50,7 +50,7 @@ struct AutoFormView: View {
                     }
                     if defaults.admin && profilesLoaded{
                         FranchiseSelectionView(profiles: franchiseManager.profiles, profileManager: franchiseManager)
-                            .frame(height: 300)
+                            .frame(height: 400)
                             .cornerRadius(20)
                     }
                     if showingError {
