@@ -33,14 +33,24 @@ struct Tag {
     var franchiseList : String
     
     var display : some View {
-        Button(action: {}, label: {
-            Text(name)
-                .foregroundColor(Color.darkAccent)
-                .padding()
-        })
-        .background(Capsule().strokeBorder(Color.darkAccent, lineWidth: 2))
-        .onAppear{
-            printr("showing button")
+        ZStack{
+            if selectionManager.id == id {
+                Capsule().background(Color.main)
+            }else{
+                Capsule().strokeBorder(Color.darkAccent, lineWidth: 2)
+            }
+            HStack{
+                Text(name)
+                    .foregroundColor(selectionManager.id == id ? Color.darkAccent : Color.lightAccent)
+                    .padding(.horizontal)
+            }
+            .onTapGesture {
+                if selectionManager.id == id {
+                    selectionManager.id = nil
+                }else{
+                    selectionManager.id = id
+                }
+            }
         }
     }
     
