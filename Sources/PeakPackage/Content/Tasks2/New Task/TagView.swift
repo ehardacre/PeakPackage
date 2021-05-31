@@ -50,6 +50,7 @@ struct Tag : View {
     }
     
     func getFranchiseIds() -> [String]{
+        printr("getting franchise ids")
         return franchiseList.components(separatedBy: ",")
     }
 }
@@ -67,6 +68,7 @@ struct TagView : View {
                     tag in
                     tag
                         .onTapGesture {
+                            printr("tapped")
                             for id in tag.getFranchiseIds(){
                                 printr(id)
                                 franchiseSelectionManager.selectFranchise(id: id)
