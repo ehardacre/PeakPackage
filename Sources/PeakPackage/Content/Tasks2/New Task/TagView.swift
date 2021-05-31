@@ -16,11 +16,11 @@ class TagManager : Manager {
     @State var tempTabs = ["Hootsuite","Google Ads","Chem-Drys","NHance"]
     
     func loadTags(){
-        printr("loading tags")
-        for tabName in tempTabs {
-            let newTab = Tag(name: tabName, franchiseList: "1")
-            tags.append(newTab)
-        }
+        DatabaseDelegate.getFranchiseGroupTags(completion: {
+            rex in
+            var dbtags = rex as! [franchiseGroupTag]
+            tags = dbtags.map({$0.toTagforView()})
+        })
     }
     
 }

@@ -267,8 +267,16 @@ extension Appointment{
 
 class franchiseGroupTag : Codable {
     
-    var name : String
-    var franchiseList : String
+    var groupName : String
+    var ids : String
+    
+}
+
+extension franchiseGroupTag {
+    
+    func toTagforView() -> Tag {
+        return Tag(name: groupName, franchiseList: ids)
+    }
     
 }
 

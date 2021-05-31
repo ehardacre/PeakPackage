@@ -11,6 +11,14 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func getFranchiseGroupTags(completion: @escaping (Any) -> Void){
+        let json = JsonFormat.getFranchiseGroupTags.format()
+        DatabaseDelegate.performRequest(with: json, ret: .grouptag, completion: {
+            rex in
+            completion(rex)
+        })
+    }
+    
     static func testNotification() {
         let token = defaults.getNotificationToken() ?? "no token"
         printr(token)
@@ -514,6 +522,8 @@ struct DatabaseDelegate {
             rex = try? JSONDecoder().decode([appointmentTimeSlot].self, from: data)
         case returnType.appointment:
             rex = try? JSONDecoder().decode([Appointment].self, from: data)
+        case returnType.grouptag:
+            rex = try? JSONDecoder().decode([franchiseGroupTag].self, from: data)
         default:
             rex = String.init(data: data, encoding: .ascii)!
         }

@@ -97,6 +97,8 @@ enum JsonKeys : String{
     case submitAppointment_date = "submitAppointment_dateTime"
     case submitAppointment_description = "submitAppointment_description"
     case getAppointments_id = "getAppointments_id"
+    //franchise group tags
+    case get_franchise_group_tags = "getFranchiseGroupTags"
     
     //MARK: N-HANCE CONNECT
     //keys for getting leads
@@ -107,7 +109,6 @@ enum JsonKeys : String{
     case decline_lead_key = "delete_account_id"
     //getting the list of profiles
     case get_profiles_key = "franchise_ids_and_urls"
-    
     
 }
 
@@ -179,6 +180,7 @@ public enum JsonFormat {
     case getLeads_nhance(type: String, id: String)
     //get the list of profiles
     case getProfiles
+    case getFranchiseGroupTags
     
     
 
@@ -299,6 +301,8 @@ public enum JsonFormat {
                       JsonKeys.submitAppointment_description.rawValue: description]
         case .getAppointments(let id):
             retVal = [JsonKeys.getAppointments_id.rawValue: id]
+        case .getFranchiseGroupTags:
+            retVal = [JsonKeys.get_franchise_group_tags.rawValue: "get"]
             
             
         //MARK: N-HANCE CONNECT
