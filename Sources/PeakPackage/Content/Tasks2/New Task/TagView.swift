@@ -44,14 +44,12 @@ struct Tag : View {
         .background(selected ? Color.main : Color.clear)
         .clipShape(Capsule())
         .highPriorityGesture(TapGesture().onEnded({
-            printr("tapping within tag")
             selected.toggle()
         }))
         
     }
     
     func getFranchiseIds() -> [String]{
-        printr("getting franchise ids")
         return franchiseList.components(separatedBy: ",")
     }
 }
@@ -69,7 +67,9 @@ struct TagView : View {
                     tag in
                     tag.simultaneousGesture(TapGesture().onEnded({
                         _ in
-                        printr("tapping tag")
+                        for id in tag.getFranchiseIds() {
+                            printr(id)
+                        }
                     }))
                 }
             }
