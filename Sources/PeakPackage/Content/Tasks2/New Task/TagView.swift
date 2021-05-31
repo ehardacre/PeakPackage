@@ -28,7 +28,7 @@ class TagManager : Manager {
 struct Tag {
     
     var id = UUID()
-    @State var selectionManager : SelectionManager
+    @ObservedObject var selectionManager : SelectionManager
     var name : String
     var franchiseList : String
     
