@@ -36,12 +36,10 @@ struct Tag {
     
         HStack{
             Text(name)
+                .bold()
                 .foregroundColor(selected ? Color.lightAccent : Color.darkAccent)
         }
         .padding(5)
-        .background(selected ? Color.main : Color.clear)
-        .background(selected ? Capsule().strokeBorder(Color.clear, lineWidth: 2) : Capsule().strokeBorder(Color.darkAccent, lineWidth: 2))
-        .clipShape(Capsule())
         .onTapGesture {
             selected.toggle()
         }
