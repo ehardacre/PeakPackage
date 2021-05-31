@@ -45,7 +45,6 @@ struct Tag : View {
         .clipShape(Capsule())
         .onTapGesture {
             selected.toggle()
-            onSelectionFunc()
         }
         
     }
