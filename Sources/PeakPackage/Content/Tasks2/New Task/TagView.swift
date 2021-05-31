@@ -40,6 +40,7 @@ struct Tag : View {
                 .foregroundColor(selected ? Color.lightAccent : Color.darkAccent)
         }
         .padding(5)
+        .background(Capsule().stroke(selected ? Color.clear : Color.darkAccent, lineWidth: 2))
         .background(selected ? Color.main : Color.lightAccent)
         .clipShape(Capsule())
         .onTapGesture {
