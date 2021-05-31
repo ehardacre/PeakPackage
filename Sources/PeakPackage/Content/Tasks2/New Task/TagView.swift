@@ -18,7 +18,7 @@ class TagManager : Manager {
     func loadTags(){
         printr("loading tags")
         for tabName in tempTabs {
-            var newTab = Tag(selectionManager: selectionManager, name: tabName, franchiseList: "")
+            let newTab = Tag(selectionManager: selectionManager, name: tabName, franchiseList: "")
             tags.append(newTab)
         }
     }
@@ -40,6 +40,9 @@ struct Tag {
         }
         .padding(5)
         .background(Capsule().strokeBorder(Color.darkAccent, lineWidth: 2))
+        .onTapGesture {
+            printr(id)
+        }
         
     }
     
