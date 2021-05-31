@@ -19,7 +19,7 @@ class TagManager : Manager {
         DatabaseDelegate.getFranchiseGroupTags(completion: {
             rex in
             var dbtags = rex as! [franchiseGroupTag]
-            tags = dbtags.map({$0.toTagforView()})
+            self.tags = dbtags.map({$0.toTagforView()})
         })
     }
     
