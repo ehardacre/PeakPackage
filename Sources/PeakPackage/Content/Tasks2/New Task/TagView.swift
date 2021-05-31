@@ -18,7 +18,7 @@ class TagManager : Manager {
     func loadTags(){
         printr("loading tags")
         for tabName in tempTabs {
-            let newTab = Tag(selectionManager: selectionManager, name: tabName, franchiseList: "")
+            let newTab = Tag(name: tabName, franchiseList: "")
             tags.append(newTab)
         }
     }
@@ -28,22 +28,22 @@ class TagManager : Manager {
 struct Tag {
     
     var id = UUID()
-    @ObservedObject var selectionManager : SelectionManager
     var name : String
     var franchiseList : String
+    @State var selected = false
     
     var display : some View {
     
         HStack{
             Text(name)
-                .foregroundColor(selectionManager.id == id ? Color.lightAccent : Color.darkAccent)
+                .foregroundColor(selected ? Color.lightAccent : Color.darkAccent)
         }
         .padding(5)
-        .background(selectionManager.id == id ? Color.main : Color.clear)
-        .background(selectionManager.id == id ? Capsule().strokeBorder(Color.clear, lineWidth: 2) : Capsule().strokeBorder(Color.darkAccent, lineWidth: 2))
+        .background(selected ? Color.main : Color.clear)
+        .background(selected ? Capsule().strokeBorder(Color.clear, lineWidth: 2) : Capsule().strokeBorder(Color.darkAccent, lineWidth: 2))
         .clipShape(Capsule())
         .onTapGesture {
-            selectionManager.id = id
+            selected.toggle()
         }
         
     }
