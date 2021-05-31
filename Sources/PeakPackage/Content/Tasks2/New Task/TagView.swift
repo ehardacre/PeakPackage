@@ -39,8 +39,9 @@ struct Tag : View {
                 .bold()
                 .foregroundColor(selected ? Color.lightAccent : Color.darkAccent)
         }
-        .background(selected ? Color.main : Color.lightAccent)
         .padding(5)
+        .background(selected ? Color.main : Color.lightAccent)
+        .clipShape(Capsule())
         .onTapGesture {
             selected.toggle()
         }
