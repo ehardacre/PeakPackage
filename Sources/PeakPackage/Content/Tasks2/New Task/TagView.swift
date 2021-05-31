@@ -39,8 +39,9 @@ struct Tag {
                 .foregroundColor(selectionManager.id == id ? Color.lightAccent : Color.darkAccent)
         }
         .padding(5)
+        .background(selectionManager.id == id ? Color.main : Color.clear)
         .background(selectionManager.id == id ? Capsule().strokeBorder(Color.clear, lineWidth: 2) : Capsule().strokeBorder(Color.darkAccent, lineWidth: 2))
-        .background(selectionManager.id == id ? Capsule().background(Color.main) : Capsule().background(Color.clear))
+        .clipShape(Capsule())
         .onTapGesture {
             selectionManager.id = id
         }
