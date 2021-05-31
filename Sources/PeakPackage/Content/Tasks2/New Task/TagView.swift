@@ -67,7 +67,7 @@ struct TagView : View {
             HStack{
                 ForEach(tags, id: \.id){
                     tag in
-                    tag.highPriorityGesture(TapGesture().onEnded({
+                    tag.simultaneousGesture(TapGesture().onEnded({
                         _ in
                         printr("tapping tag")
                     }))
