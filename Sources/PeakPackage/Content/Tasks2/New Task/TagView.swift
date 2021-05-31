@@ -18,7 +18,7 @@ class TagManager : Manager {
     func loadTags(){
         printr("loading tags")
         for tabName in tempTabs {
-            let newTab = Tag(name: tabName, franchiseList: "")
+            let newTab = Tag(name: tabName, franchiseList: "1")
             tags.append(newTab)
         }
     }
@@ -57,6 +57,7 @@ struct Tag : View {
 struct TagView : View {
     
     @State var manager : TagManager
+    @State var franchiseSelectionManager : FranchiseSelectionManager
     @State var tags: [Tag]
 
     var body : some View {
@@ -65,6 +66,11 @@ struct TagView : View {
                 ForEach(tags, id: \.id){
                     tag in
                     tag
+                        .onTapGesture {
+                            for id in tag.getFranchiseIds(){
+                                franchiseSelectionManager.selectFranchise(id: id)
+                            }
+                        }
                 }
             }
         }

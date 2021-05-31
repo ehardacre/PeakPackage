@@ -21,7 +21,7 @@ struct FranchiseSelectionView: View {
                 .bold()
                 .foregroundColor(Color.darkAccent)
             
-            TagView(manager: profileManager.tagManager, tags: profileManager.tagManager.tags)
+            TagView(manager: profileManager.tagManager, franchiseSelectionManager: profileManager, tags: profileManager.tagManager.tags)
             
             Divider()
             
