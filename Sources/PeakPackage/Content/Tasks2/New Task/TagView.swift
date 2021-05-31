@@ -41,6 +41,7 @@ struct Tag {
         }
         .padding(5)
         .onTapGesture {
+            printr(id)
             selected.toggle()
         }
         
