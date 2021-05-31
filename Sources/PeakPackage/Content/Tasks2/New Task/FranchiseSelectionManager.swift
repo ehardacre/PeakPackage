@@ -31,6 +31,7 @@ public class FranchiseSelectionManager : Manager {
     }
     
     func selectFranchise(id: String){
+        printr("selected")
         if isSelectedFranchise(id: id) {
             if let index = ids.firstIndex(of: id) {
                 ids.remove(at: index)
