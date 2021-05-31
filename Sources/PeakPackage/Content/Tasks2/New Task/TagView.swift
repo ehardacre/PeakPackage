@@ -18,7 +18,7 @@ class TagManager : Manager {
     func loadTags(){
         printr("loading tags")
         for tabName in tempTabs {
-            let newTab = Tag(name: tabName, franchiseList: "1,2,3")
+            let newTab = Tag(name: tabName, franchiseList: "1")
             tags.append(newTab)
         }
     }
@@ -68,7 +68,7 @@ struct TagView : View {
                     tag.simultaneousGesture(TapGesture().onEnded({
                         _ in
                         for id in tag.getFranchiseIds() {
-                            printr(id)
+                            franchiseSelectionManager.selectFranchise(id: id)
                         }
                     }))
                 }
