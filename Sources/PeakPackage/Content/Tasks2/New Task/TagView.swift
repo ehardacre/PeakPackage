@@ -25,23 +25,23 @@ class TagManager : Manager {
     
 }
 
-struct Tag {
+struct Tag : View {
     
     var id = UUID()
     var name : String
     var franchiseList : String
     @State var selected = false
     
-    var display : some View {
+    var body : some View {
     
         HStack{
             Text(name)
                 .bold()
                 .foregroundColor(selected ? Color.lightAccent : Color.darkAccent)
         }
+        .background(selected ? Color.main : Color.lightAccent)
         .padding(5)
         .onTapGesture {
-            printr(id)
             selected.toggle()
         }
         
@@ -62,7 +62,7 @@ struct TagView : View {
             HStack{
                 ForEach(tags, id: \.id){
                     tag in
-                    tag.display
+                    tag
                 }
             }
         }
