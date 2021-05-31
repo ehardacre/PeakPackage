@@ -43,9 +43,9 @@ struct Tag : View {
         .background(Capsule().stroke(selected ? Color.clear : Color.darkAccent, lineWidth: 4))
         .background(selected ? Color.main : Color.clear)
         .clipShape(Capsule())
-        .onTapGesture {
+        .simultaneousGesture(TapGesture().onEnded({
             selected.toggle()
-        }
+        }))
         
     }
     
