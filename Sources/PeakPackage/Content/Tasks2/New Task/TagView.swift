@@ -45,6 +45,7 @@ struct Tag : View {
         .clipShape(Capsule())
         .onTapGesture {
             selected.toggle()
+            onSelectionFunc()
         }
         
     }
@@ -66,14 +67,12 @@ struct TagView : View {
             HStack{
                 ForEach(tags, id: \.id){
                     tag in
-                    tag
-                        .onTapGesture {
-                            printr("tapped")
-                            for id in tag.getFranchiseIds(){
-                                printr(id)
-                                franchiseSelectionManager.selectFranchise(id: id)
-                            }
-                        }
+                    VStack{
+                        tag
+                    }
+                    .onTapGesture {
+                        printr("tapping the tag")
+                    }
                 }
             }
         }
