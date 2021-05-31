@@ -43,10 +43,14 @@ struct Tag : View {
         .background(Capsule().stroke(selected ? Color.clear : Color.darkAccent, lineWidth: 4))
         .background(selected ? Color.main : Color.clear)
         .clipShape(Capsule())
-        .simultaneousGesture(TapGesture().onEnded({
-            selected.toggle()
-        }))
+//        .simultaneousGesture(TapGesture().onEnded({
+//            selected.toggle()
+//        }))
         
+    }
+    
+    func select() {
+        selected.toggle()
     }
     
     func getFranchiseIds() -> [String]{
@@ -68,6 +72,7 @@ struct TagView : View {
                     tag in
                     tag.highPriorityGesture(TapGesture().onEnded({
                         _ in
+                        tag.select()
                         printr("tapping tag")
                     }))
                 }
