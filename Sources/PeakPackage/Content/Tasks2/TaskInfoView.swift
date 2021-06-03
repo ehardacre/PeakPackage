@@ -58,34 +58,36 @@ struct TaskInfoView: View {
                     .padding(.bottom, 10)
             }
             Spacer()
-            TaskAssignmentView(selection: $taskAssignment)
-                .onDisappear{
-                    if taskAssignment != prevTaskAssignment {
-                        #warning("TODO: update task assignment")
+            if defaults.admin {
+                TaskAssignmentView(selection: $taskAssignment)
+                    .onDisappear{
+                        if taskAssignment != prevTaskAssignment {
+                            #warning("TODO: update task assignment")
+                        }
                     }
+                TaskStateManagerView(selection: $taskState)
+                    .onAppear{
+                        switch task.status{
+                        case "2": //open
+                            taskState = 0
+                            prevTaskState = 0
+                        case "5": //complete
+                            taskState = 2
+                            prevTaskState = 2
+                        default:
+                            taskState = 1
+                            prevTaskState = 1
+                        }
                 }
-            TaskStateManagerView(selection: $taskState)
-                .onAppear{
-                    switch task.status{
-                    case "2": //open
-                        taskState = 0
-                        prevTaskState = 0
-                    case "5": //complete
-                        taskState = 2
-                        prevTaskState = 2
-                    default:
-                        taskState = 1
-                        prevTaskState = 1
+                    .onDisappear{
+                        if taskState != prevTaskState {
+                            DatabaseDelegate.updateTask(taskId: task.taskId, taskStatus: taskStatuses[taskState], completion: {
+                                _ in
+                                manager.reloadTasks()
+                            })
+                        }
                     }
             }
-                .onDisappear{
-                    if taskState != prevTaskState {
-                        DatabaseDelegate.updateTask(taskId: task.taskId, taskStatus: taskStatuses[taskState], completion: {
-                            _ in
-                            manager.reloadTasks()
-                        })
-                    }
-                }
         }
     }
 }
