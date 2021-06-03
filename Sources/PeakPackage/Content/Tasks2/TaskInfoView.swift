@@ -15,7 +15,9 @@ struct TaskInfoView: View {
     var task : Task
     var infos : [TaskField]
     @State var taskState = 0
+    @State var taskAssignment = 0
     @State var prevTaskState = 0
+    @State var prevTaskAssignment = 0
     let taskStatuses = [TaskStatus.open, TaskStatus.inProgress, TaskStatus.complete]
     
     init(manager: TaskManager2, task: Task) {
@@ -56,6 +58,12 @@ struct TaskInfoView: View {
                     .padding(.bottom, 10)
             }
             Spacer()
+            TaskAssignmentView(selection: $taskAssignment)
+                .onDisappear{
+                    if taskAssignment != prevTaskAssignment {
+                        #warning("TODO: update task assignment")
+                    }
+                }
             TaskStateManagerView(selection: $taskState)
                 .onAppear{
                     switch task.status{
