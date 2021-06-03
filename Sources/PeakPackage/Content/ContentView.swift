@@ -178,25 +178,33 @@ public struct ContentView: View {
                         profileChanged = true
                         profileName = defaults.franchiseName() ?? ""
                     }
-                    dashboardManager.loadMessage()
-                    profileManager.loadProfiles()
-                    analyticsManager.loadAnalytics(for: .Day)
-                    analyticsManager.loadAnalytics(for: .Week)
-                    analyticsManager.loadAnalytics(for: .Month)
-                    analyticsManager.loadAnalytics(for: .Year)
-                    notificationManager.loadNotifications()
-                    if defaults.getApplicationType() == .PeakClients(.any){
-                        taskManager.reloadTasks()
-                        taskManager.loadForms()
-                        taskManager.loadUnavailableAppointmentTimes()
-                        taskManager.reloadAppointmentData()
-                    }
-                    seoManager.loadRankings()
+                    reloadAllDatafromManagers()
                 }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                        reloadAllDatafromManagers()
+                    }
+            
         }
         .background(Color.black
                         .opacity(0.05)
                         .edgesIgnoringSafeArea(.top))
+    }
+    
+    func reloadAllDatafromManagers() {
+        dashboardManager.loadMessage()
+        profileManager.loadProfiles()
+        analyticsManager.loadAnalytics(for: .Day)
+        analyticsManager.loadAnalytics(for: .Week)
+        analyticsManager.loadAnalytics(for: .Month)
+        analyticsManager.loadAnalytics(for: .Year)
+        notificationManager.loadNotifications()
+        if defaults.getApplicationType() == .PeakClients(.any){
+            taskManager.reloadTasks()
+            taskManager.loadForms()
+            taskManager.loadUnavailableAppointmentTimes()
+            taskManager.reloadAppointmentData()
+        }
+        seoManager.loadRankings()
     }
 }
 
