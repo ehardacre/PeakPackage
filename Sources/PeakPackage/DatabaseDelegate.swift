@@ -340,7 +340,7 @@ extension DatabaseDelegate {
             let dateformatter = DateFormatter()
             dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date = dateformatter.string(from: Date())
-            let json = JsonFormat.updateTaskStatus(taskId: taskId, status: taskStatus.rawValue, date: date).format()
+            let json = JsonFormat.updateTaskStatus(taskId: taskId, status: taskStatus.rawValue, assignment: taskAssignment, date: date).format()
             DatabaseDelegate.performRequest(with: json, ret: .string, completion: {
                 _ in
                 completion("done")
