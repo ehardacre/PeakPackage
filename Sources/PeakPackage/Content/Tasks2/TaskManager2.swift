@@ -16,6 +16,7 @@ public class TaskManager2 : Manager{
     static var taskTypes = [TaskStatus.open , TaskStatus.complete]
     static var adminTaskTypes = ["Open Tasks", "Complete"]
     
+    @Published var adminUsers = [adminProfiles]()
     @Published var tasks = [Task]()
     @Published var completedTasks = [Task]()
     @Published var openTasks = [Task]()
@@ -57,6 +58,10 @@ public class TaskManager2 : Manager{
                 self.tasks = self.removeAppts(tasks: rex as! [Task])
                 self.sortTasks()
             })
+        DatabaseDelegate.getAdminProfiles(completion: {
+            rex in
+            self.adminUsers = rex as! [adminProfiles]
+        })
     }
     
     func reloadTasks(){
@@ -317,7 +322,8 @@ extension TaskManager2 {
                 request: "Complete Task #\(i) : ",
                 date: "2021-04-01 12:00:00",
                 status: "5",
-                type: "user_requested")
+                type: "user_requested",
+                assignment: "1001")
             temp.append(task)
         }
         return temp
@@ -331,7 +337,8 @@ extension TaskManager2 {
                 request: "Open Task #\(i) : ",
                 date: "2021-04-01 12:00:00",
                 status: "2",
-                type: "user_requested")
+                type: "user_requested",
+                assignment: "1001")
             temp.append(task)
         }
         return temp

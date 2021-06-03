@@ -64,6 +64,7 @@ enum JsonKeys : String{
     case tasks_update_key = "task_update"
     case tasks_update_status = "task_update_status"
     case tasks_update_date = "task_update_date"
+    case tasks_update_assignment = "task_update_assignment"
     //keys for changing and getting user data
     case userData_key = "user"
     case newAddress_key = "street_address_1" //these are the keys used in wp_usermeta
@@ -99,6 +100,8 @@ enum JsonKeys : String{
     case getAppointments_id = "getAppointments_id"
     //franchise group tags
     case get_franchise_group_tags = "getFranchiseGroupTags"
+    case get_admin_profiles = "getadminprofiles"
+
     
     //MARK: N-HANCE CONNECT
     //keys for getting leads
@@ -147,7 +150,6 @@ public enum JsonFormat {
     case submitFormElement(formID: String, label: String, prompt: String, input: String)
     case testNotifications(notificationToken: String)
     
-    
     //MARK: PEAK CLIENTS
     //profile operations
     case getUser(id: String)
@@ -155,7 +157,7 @@ public enum JsonFormat {
     //Task Operations
     case getTasks(id: String)
     case setTask(id: String, value: String)
-    case updateTaskStatus(taskId: String, status: String, date: String)
+    case updateTaskStatus(taskId: String, status: String, assignment: String, date: String)
     case sendImagesforTask(taskId: String, imageData: String)
     //id is the id of the form we're trying to get
     case getDynamicForm(id: String)
@@ -170,7 +172,7 @@ public enum JsonFormat {
     case getUnavailableAppoinmentSlots
     case submitAppointment(id: String, franchise: String, name: String, start: String, end: String, date: String, description: String)
     case getAppointments(id: String)
-    
+    case getAdminProfiles
     
     //MARK: N-HANCE CONNECT
     //accept and decline leads through on-trac
@@ -258,10 +260,11 @@ public enum JsonFormat {
             //create task for id
         case .setTask(let id, let value):
             retVal = [JsonKeys.tasks_key.rawValue: id, JsonKeys.tasks_value.rawValue: value]
-        case .updateTaskStatus(let taskId, let status, let date):
+        case .updateTaskStatus(let taskId, let status, let assignment, let date):
             retVal = [JsonKeys.tasks_update_key.rawValue: taskId,
                       JsonKeys.tasks_update_status.rawValue: status,
-                      JsonKeys.tasks_update_date.rawValue: date]
+                      JsonKeys.tasks_update_date.rawValue: date,
+                      JsonKeys.tasks_update_assignment.rawValue: assignment]
         case .sendImagesforTask(let taskId, let imageData):
             retVal = [JsonKeys.image_send_key.rawValue: imageData,
                       JsonKeys.image_send_task.rawValue: taskId]
@@ -303,7 +306,8 @@ public enum JsonFormat {
             retVal = [JsonKeys.getAppointments_id.rawValue: id]
         case .getFranchiseGroupTags:
             retVal = [JsonKeys.get_franchise_group_tags.rawValue: "get"]
-            
+        case.getAdminProfiles:
+            retVal = [JsonKeys.get_admin_profiles.rawValue: "get"]
             
         //MARK: N-HANCE CONNECT
         case .acceptLead(let franchiseId, let leadId):

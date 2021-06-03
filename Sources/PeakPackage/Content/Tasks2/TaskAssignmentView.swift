@@ -11,7 +11,8 @@ import SwiftUI
 struct TaskAssignmentView: View {
     
     @Binding var selection : Int
-    let pickerOptions = ["Quince","Tom","Ethan"]
+    @State var users : [adminProfiles]
+    //let pickerOptions = ["Quince","Tom","Ethan"]
     
     var body: some View {
         Picker(
@@ -19,9 +20,9 @@ struct TaskAssignmentView: View {
             label: Text(""),
             content: {
             //display each of the duration choices
-            ForEach(0 ..< pickerOptions.count){
+            ForEach(0 ..< users.count){
                 i in
-                Text(self.pickerOptions[i])
+                Text(self.users[i].name)
                     .foregroundColor(Color.darkAccent)
             }
         })

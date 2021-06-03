@@ -11,6 +11,14 @@ import SwiftUI
 
 extension DatabaseDelegate {
     
+    static func getAdminProfiles(completion: @escaping (Any) -> Void){
+        let json = JsonFormat.getAdminProfiles.format()
+        DatabaseDelegate.performRequest(with: json, ret: .adminProfileList, completion: {
+            rex in
+            completion(rex)
+        })
+    }
+    
     static func getFranchiseGroupTags(completion: @escaping (Any) -> Void){
         let json = JsonFormat.getFranchiseGroupTags.format()
         DatabaseDelegate.performRequest(with: json, ret: .grouptag, completion: {
@@ -327,7 +335,7 @@ extension DatabaseDelegate {
         
     }
     
-    static func updateTask(taskId: String, taskStatus: TaskStatus, completion: @escaping (Any) -> Void){
+    static func updateTask(taskId: String, taskStatus: TaskStatus, taskAssignment: String, completion: @escaping (Any) -> Void){
         if defaults.getApplicationType() == .PeakClients(.any){
             let dateformatter = DateFormatter()
             dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -524,6 +532,8 @@ struct DatabaseDelegate {
             rex = try? JSONDecoder().decode([Appointment].self, from: data)
         case returnType.grouptag:
             rex = try? JSONDecoder().decode([franchiseGroupTag].self, from: data)
+        case returnType.adminProfileList:
+            rex = try? JSONDecoder().decode([adminProfiles].self, from: data)
         default:
             rex = String.init(data: data, encoding: .ascii)!
         }

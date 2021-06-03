@@ -24,6 +24,7 @@ struct Task: Codable{
     var date: String
     var status: String
     var type: String
+    var assignment : String
 }
 
 extension Task {
@@ -32,12 +33,14 @@ extension Task {
         request: String,
         date: String,
         status: String,
-        type: String){
+        type: String,
+        assignment: String){
         self.taskId = id
         self.request = request
         self.date = date
         self.status = status
         self.type = type
+        self.assignment = assignment
     }
 }
 

@@ -59,10 +59,21 @@ struct TaskInfoView: View {
             }
             Spacer()
             if defaults.admin {
-                TaskAssignmentView(selection: $taskAssignment)
+                TaskAssignmentView(selection: $taskAssignment, users: manager.adminUsers)
+                    .onAppear{
+                        for i in 0..<manager.adminUsers.count {
+                            if manager.adminUsers[i].id == task.assignment{
+                                taskAssignment = i
+                                prevTaskAssignment = i
+                            }
+                        }
+                    }
                     .onDisappear{
                         if taskAssignment != prevTaskAssignment {
-                            #warning("TODO: update task assignment")
+                            DatabaseDelegate.updateTask(taskId: task.taskId, taskStatus: taskStatuses[taskState], taskAssignment: String(taskAssignment), completion: {
+                                _ in
+                                manager.reloadTasks()
+                            })
                         }
                     }
                 TaskStateManagerView(selection: $taskState)
@@ -81,7 +92,7 @@ struct TaskInfoView: View {
                 }
                     .onDisappear{
                         if taskState != prevTaskState {
-                            DatabaseDelegate.updateTask(taskId: task.taskId, taskStatus: taskStatuses[taskState], completion: {
+                            DatabaseDelegate.updateTask(taskId: task.taskId, taskStatus: taskStatuses[taskState], taskAssignment: String(taskAssignment), completion: {
                                 _ in
                                 manager.reloadTasks()
                             })
@@ -89,11 +100,5 @@ struct TaskInfoView: View {
                     }
             }
         }
-    }
-}
-
-struct TaskInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskInfoView(manager: TaskManager2(), task: Task(id: "1", request: "(Service Page Addition for admin) Details include [Service Title: Test Service] [Custom Content: Testing new Teams update]", date: "2021-03-23 12:00:00", status: "open", type: "user_requested"))
     }
 }

@@ -280,6 +280,13 @@ extension franchiseGroupTag {
     
 }
 
+class adminProfiles : Codable {
+    
+    var id : String
+    var name : String
+    
+}
+
 
 /**
  # Return Type
@@ -302,4 +309,5 @@ enum returnType {
     case appointmentTimeSlot
     case appointment
     case grouptag
+    case adminProfileList
 }
