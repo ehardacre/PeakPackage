@@ -33,7 +33,6 @@ struct UserType: Codable{
  # Franchise
  This holds the relevant information about a franchise such as it's Id and name
  
- TODO: is this even used? seems redundant with UserType
  */
 struct Franchise: Codable{
     var franchiseId: String
