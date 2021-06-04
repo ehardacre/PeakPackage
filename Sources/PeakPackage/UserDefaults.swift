@@ -254,7 +254,9 @@ struct defaults {
     
     static func franchiseId(value: String){
         UserDefaults.standard.set(value, forKey: franchise_key)
+        printr("znt franchise id: \(value)")
         if value == admin_id || (value.integer ?? 1001) > 1000 && application == .PeakClients(.any) {
+            printr("setting admin to true")
             application = .PeakClients(.admin)
             admin = true
         }else if value == woocommerce_id && application == .PeakClients(.any) {
