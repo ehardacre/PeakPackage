@@ -223,7 +223,7 @@ extension DatabaseDelegate {
     static func setSEORankings(keyword: String, mapRanking: Int, organicRanking: Int, latitude: Double, longitude: Double){
         
         if defaults.getApplicationType() == .NHanceConnect{
-            let json = JsonFormat.setSEORank(keyword: keyword, latitude: latitude!, longitude: longitude!, organicRank: organicRanking, mapsRank: mapRanking).format()
+            let json = JsonFormat.setSEORank(keyword: keyword, latitude: latitude, longitude: longitude, organicRank: organicRanking, mapsRank: mapRanking).format()
             DatabaseDelegate.performRequest(with: json, ret: .string, completion: { _ in
                 //SEO Rank Submitted
             })

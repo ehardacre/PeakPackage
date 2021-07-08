@@ -239,8 +239,8 @@ public class SEOManager : Manager {
                 keyword: result.term,
                 mapRanking: result.map_ranking ?? 0,
                 organicRanking: result.organic_ranking ?? 0,
-                latitude: latitude,
-                longitude: longitude)
+                latitude: latitude!,
+                longitude: longitude!)
         }
     }
     
