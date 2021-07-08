@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import SwiftSoup
+import CoreLocation
 
 struct scrapedSearchResult{
     var term : String
@@ -216,18 +217,30 @@ public class SEOManager : Manager {
     
     static func scrapeRankings(forDatabase: Bool = false) -> [scrapedSearchResult]{
         let list = findRankings(for: terms)
-        if forDatabase{
-            setRankings(for: list)
-        }
+        //if for database.. kinda outdated with the new way we're doing things
+        setRankings(for: list)
         return list
     }
     
     static func setRankings(for results: [scrapedSearchResult]){
+        let location = CLLocationManager().location?.coordinate
+        var latitude = location?.latitude
+        var longitude = location?.longitude
+        printr("latitude, longitude")
+        printr("\(latitude), \(longitude)")
+        //round to appropriate decimal place for db
+        if latitude == nil || longitude == nil {
+            return
+        }
+        latitude = round(latitude! * 10) / 10
+        longitude = round(longitude! * 10) / 10
         for result in results{
             DatabaseDelegate.setSEORankings(
                 keyword: result.term,
-                mapRanking: result.map_ranking,
-                organicRanking: result.organic_ranking)
+                mapRanking: result.map_ranking ?? 0,
+                organicRanking: result.organic_ranking ?? 0,
+                latitude: latitude,
+                longitude: longitude)
         }
     }
     

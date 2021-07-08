@@ -112,7 +112,12 @@ enum JsonKeys : String{
     case decline_lead_key = "delete_account_id"
     //getting the list of profiles
     case get_profiles_key = "franchise_ids_and_urls"
-    
+    //submitting SEO rankings
+    case set_seo_keyword_key = "setSEOKeyword"
+    case set_seo_latitude_key = "setSEOLatitude"
+    case set_seo_longitude_key = "setSEOLongitude"
+    case set_seo_mapsRank_key = "setSEOMapsRank"
+    case set_seo_organicRank_key = "setSEOOrganicRank"
 }
 
 //MARK: JSON Format
@@ -183,6 +188,8 @@ public enum JsonFormat {
     //get the list of profiles
     case getProfiles
     case getFranchiseGroupTags
+    //set the SEO rankings
+    case setSEORank(keyword: String, latitude: Double, longitude: Double, organicRank: Int, mapsRank: Int)
     
     
 
@@ -316,9 +323,14 @@ public enum JsonFormat {
             retVal = [JsonKeys.leadsFranchise_key.rawValue: franchiseId, JsonKeys.decline_lead_key.rawValue: accountId]
         case .getLeads_nhance(let type, let id):
             retVal = [JsonKeys.leadsType_key.rawValue: type, JsonKeys.leadsFranchise_key.rawValue: id]
-        case.getProfiles:
+        case .getProfiles:
             retVal = [JsonKeys.get_profiles_key.rawValue : "get"]
-            
+        case .setSEORank(let keyword, let latitude, let longitude, let organicRank, let mapsRank):
+            retVal = [JsonKeys.set_seo_keyword_key.rawValue : keyword,
+                      JsonKeys.set_seo_latitude_key.rawValue : latitude,
+                      JsonKeys.set_seo_longitude_key.rawValue: longitude,
+                      JsonKeys.set_seo_organicRank_key.rawValue: organicRank,
+                      JsonKeys.set_seo_mapsRank_key.rawValue: mapsRank]
             //should never run
         default:
             printr(InternalError.nilContent.rawValue, tag: printTags.error)

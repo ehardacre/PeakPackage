@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import CoreLocation
 
 extension DatabaseDelegate {
     
@@ -205,39 +206,49 @@ extension DatabaseDelegate {
     }
     
     static func getSEORankings(completion: @escaping (Any) -> Void){
-        var url = defaults.franchiseURL() ?? ""
-        if defaults.getApplicationType() == .NHanceConnect{
-            url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
-        }
-        
-        let json = JsonFormat.getSEORankings(url: url).format()
-        
-        DatabaseDelegate.performSEORequest(with: json, ret: .searchRank){
-            rex in
-            completion(rex)
-        }
+        //TODO: changed the way SEO stored 07/07/2021
+//        var url = defaults.franchiseURL() ?? ""
+//        if defaults.getApplicationType() == .NHanceConnect{
+//            url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
+//        }
+//
+//        let json = JsonFormat.getSEORankings(url: url).format()
+//
+//        DatabaseDelegate.performSEORequest(with: json, ret: .searchRank){
+//            rex in
+//            completion(rex)
+//        }
     }
     
-    static func setSEORankings(keyword: String, mapRanking: Int?, organicRanking: Int?){
-        var site = ""
-        var url = defaults.franchiseURL() ?? ""
-        if defaults.admin {
-            url = "admin test"
-        }else if defaults.getApplicationType() == .NHanceConnect{
-            site = "nhance"
-            url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
-        }else if defaults.getApplicationType() == .PeakClients(.admin){
-            site = "peak"
-        }else if defaults.getApplicationType() == .PeakClients(.chemdry){
-            site = "peakchem"
-        }else if defaults.getApplicationType() == .ChemDryConnect{
-            site = "chemdry"
-        }
-        let json = JsonFormat.setSEORankings(url: url, keyword: keyword, mapRanking: String.fromInt(mapRanking)!, organicRanking: String.fromInt(organicRanking)!, site: site).format()
+    static func setSEORankings(keyword: String, mapRanking: Int, organicRanking: Int, latitude: Double, longitude: Double){
         
-        DatabaseDelegate.performSEORequest(with: json, ret: returnType.string){
-            rex in
-            //
+        if defaults.getApplicationType() == .NHanceConnect{
+            let json = JsonFormat.setSEORank(keyword: keyword, latitude: latitude!, longitude: longitude!, organicRank: organicRanking, mapsRank: mapRanking).format()
+            DatabaseDelegate.performRequest(with: json, ret: .string, completion: { _ in
+                //SEO Rank Submitted
+            })
+        }else{
+            //TODO: changed the way SEO is stored on 07/07/2021
+            var site = ""
+            var url = defaults.franchiseURL() ?? ""
+            if defaults.admin {
+                url = "admin test"
+            }else if defaults.getApplicationType() == .NHanceConnect{
+                site = "nhance"
+                url = url.replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "https:www.nhance.com", with: "")
+            }else if defaults.getApplicationType() == .PeakClients(.admin){
+                site = "peak"
+            }else if defaults.getApplicationType() == .PeakClients(.chemdry){
+                site = "peakchem"
+            }else if defaults.getApplicationType() == .ChemDryConnect{
+                site = "chemdry"
+            }
+            let json = JsonFormat.setSEORankings(url: url, keyword: keyword, mapRanking: String.fromInt(mapRanking)!, organicRanking: String.fromInt(organicRanking)!, site: site).format()
+            
+            DatabaseDelegate.performSEORequest(with: json, ret: returnType.string){
+                rex in
+                //
+            }
         }
     }
     

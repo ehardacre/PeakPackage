@@ -96,7 +96,6 @@ struct DashboardMessage: Codable{
 typealias Order = Lead
 
 class SearchRankingforTime : Codable{
-
     var week : String
     var list : [SearchRanking]
 }
