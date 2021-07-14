@@ -106,6 +106,7 @@ public class SEOManager : Manager {
     }
     
     func loadRankings(){
+        printr("loading SEO Rankings")
             DatabaseDelegate.getSEORankings(
                 completion: {
                 rex in
@@ -114,6 +115,7 @@ public class SEOManager : Manager {
                     self.calculateChange()
                     if self.rankings.count == 0{
                         DispatchQueue.global().async {
+                            printr("scraping rankings")
                             self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
                             self.sortRankings()
                             DispatchQueue.main.async {
@@ -121,6 +123,7 @@ public class SEOManager : Manager {
                             }
                         }
                     }else{
+                        printr("not scraping rankings")
                         self.sortRankings()
                     }
             })

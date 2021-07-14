@@ -548,7 +548,7 @@ struct DatabaseDelegate {
             rex = String.init(data: data, encoding: .ascii)!
         }
         
-        printr(String.init(data: data, encoding: .ascii)!)
+        //printr(String.init(data: data, encoding: .ascii)!)
         //rex cannot be nil from the data base
         guard rex != nil else { throw DataError.nilResponse }
         return rex!
