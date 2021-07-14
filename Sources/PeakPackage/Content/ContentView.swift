@@ -191,6 +191,7 @@ public struct ContentView: View {
     }
     
     func reloadAllDatafromManagers() {
+        printr("reloadAllDatafromManagers")
         dashboardManager.loadMessage()
         profileManager.loadProfiles()
         analyticsManager.loadAnalytics(for: .Day)
