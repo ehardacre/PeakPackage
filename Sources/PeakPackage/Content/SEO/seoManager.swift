@@ -107,26 +107,31 @@ public class SEOManager : Manager {
     
     func loadRankings(){
         printr("loading SEO Rankings")
-            DatabaseDelegate.getSEORankings(
-                completion: {
-                rex in
-                    let rankList = rex as! [SearchRankingforTime]
-                    self.weekbyweek = rankList
-                    self.calculateChange()
-                    if self.rankings.count == 0{
-                        DispatchQueue.global().async {
-                            printr("scraping rankings")
-                            self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
-                            self.sortRankings()
-                            DispatchQueue.main.async {
-                                NotificationCenter.default.post(name: Notification.Name("SEORankingsDoneScraping"), object: nil)
-                            }
-                        }
-                    }else{
-                        printr("not scraping rankings")
-                        self.sortRankings()
-                    }
-            })
+//            DatabaseDelegate.getSEORankings(
+//                completion: {
+//                rex in
+//                    let rankList = rex as! [SearchRankingforTime]
+//                    self.weekbyweek = rankList
+//                    self.calculateChange()
+//                    if self.rankings.count == 0{
+//                        DispatchQueue.global().async {
+//                            printr("scraping rankings")
+//                            self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
+//                            self.sortRankings()
+//                            DispatchQueue.main.async {
+//                                NotificationCenter.default.post(name: Notification.Name("SEORankingsDoneScraping"), object: nil)
+//                            }
+//                        }
+//                    }else{
+//                        printr("not scraping rankings")
+//                        self.sortRankings()
+//                    }
+//            })
+        printr("scraping rankings")
+        self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
+        self.sortRankings()
+        NotificationCenter.default.post(name: Notification.Name("SEORankingsDoneScraping"), object: nil)
+        
     }
     
     func sortRankings(){
