@@ -80,6 +80,8 @@ struct seoCardView: View {
                                     .background((organicUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
                                     .edgesIgnoringSafeArea(.bottom)
                                     
+                                    Spacer()
+                                    
                                     //TODO: bring back when maps ranking is implementmed
 //                                    HStack{
 //                                        Spacer()
