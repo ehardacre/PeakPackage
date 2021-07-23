@@ -80,32 +80,32 @@ struct seoCardView: View {
                                     .background((organicUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
                                     .edgesIgnoringSafeArea(.bottom)
                                     
-                                    
-                                    HStack{
-                                        Spacer()
-                                        if rank.change_maps == nil {
-                                            Image(systemName: noChange)
-                                                .imageScale(.large)
-                                                .foregroundColor(Color.darkAccent)
-                                                .opacity(0.2)
-                                        } else if rank.change_maps! {
-                                            Image(systemName: upSymbol)
-                                                .imageScale(.large)
-                                                .foregroundColor(Color.green)
-                                        } else {
-                                            Image(systemName: downSymbol)
-                                                .imageScale(.large)
-                                                .foregroundColor(Color.red)
-                                        }
-                                        Text(rank.maps_rank == "-1" ? "-" : rank.maps_rank)
-                                            .font(.footnote)
-                                            .bold()
-                                            .foregroundColor(Color.darkAccent)
-                                        Text("Maps Rank")
-                                            .font(.footnote)
-                                            .foregroundColor(Color.darkAccent)
-                                        Spacer()
-                                    }
+                                    //TODO: bring back when maps ranking is implementmed
+//                                    HStack{
+//                                        Spacer()
+//                                        if rank.change_maps == nil {
+//                                            Image(systemName: noChange)
+//                                                .imageScale(.large)
+//                                                .foregroundColor(Color.darkAccent)
+//                                                .opacity(0.2)
+//                                        } else if rank.change_maps! {
+//                                            Image(systemName: upSymbol)
+//                                                .imageScale(.large)
+//                                                .foregroundColor(Color.green)
+//                                        } else {
+//                                            Image(systemName: downSymbol)
+//                                                .imageScale(.large)
+//                                                .foregroundColor(Color.red)
+//                                        }
+//                                        Text(rank.maps_rank == "-1" ? "-" : rank.maps_rank)
+//                                            .font(.footnote)
+//                                            .bold()
+//                                            .foregroundColor(Color.darkAccent)
+//                                        Text("Maps Rank")
+//                                            .font(.footnote)
+//                                            .foregroundColor(Color.darkAccent)
+//                                        Spacer()
+//                                    }
 //                                    .background((mapsUp ? Color.main : Color.lightAccent).frame(width: smallGeo.size.width/2 ,height: smallGeo.size.height/2))
                                     .edgesIgnoringSafeArea(.bottom)
                                 }
