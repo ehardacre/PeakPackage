@@ -231,12 +231,12 @@ public class SEOManager : Manager {
     }
     
     static func setRankings(for results: [scrapedSearchResult]){
-        let location = CLLocationManager().location?
-        let coordinate = location.coordinate
+        let location = CLLocationManager().location
+        let coordinate = location?.coordinate
         printr(location)
         printr(coordinate)
-        var latitude = location?.latitude
-        var longitude = location?.longitude
+        var latitude = coordinate?.latitude
+        var longitude = coordinate?.longitude
         printr("latitude, longitude")
         printr("\(latitude), \(longitude)")
         //round to appropriate decimal place for db
