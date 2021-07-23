@@ -231,7 +231,10 @@ public class SEOManager : Manager {
     }
     
     static func setRankings(for results: [scrapedSearchResult]){
-        let location = CLLocationManager().location?.coordinate
+        let location = CLLocationManager().location?
+        let coordinate = location.coordinate
+        printr(location)
+        printr(coordinate)
         var latitude = location?.latitude
         var longitude = location?.longitude
         printr("latitude, longitude")
