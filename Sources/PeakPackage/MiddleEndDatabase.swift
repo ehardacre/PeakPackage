@@ -22,8 +22,11 @@ struct MiddleEndDatabase {
     static func getDashboardMessage() -> DashboardMessage?{
         var decodedObj : DashboardMessage? = nil
         do {
-            let decoded = UserDefaults.standard.value(forKey: "dashboardMessage") as! Data
-            decodedObj = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded) as? DashboardMessage
+            let decoded = UserDefaults.standard.value(forKey: "dashboardMessage") as? Data
+            if decoded == nil {
+                return nil
+            }
+            decodedObj = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded!) as? DashboardMessage
         } catch {
             printr("Could not decode dashboardMessage")
         }
