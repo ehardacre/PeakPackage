@@ -134,7 +134,7 @@ public class DashboardManager : Manager {
             rex in
             let mes = rex as! DashboardMessage
             self.message = mes
-            LocalNotificationManager.sendNotification(type: .loaded, subject: LocalNoteSubjects.dashboardMessage)
+            LocalNotificationManager.sendNotification(type: .loaded, subject: LocalNoteSubjects.dashboardMessage.rawValue)
            // NotificationCenter.default.post(Notification(name: Notification.Name("dashboardMessageLoaded")))
             MiddleEndDatabase.setDashboardMessage(message: mes)
         }

@@ -159,7 +159,7 @@ public struct ContentView: View {
                     if defaults.getNotificationToken() != nil{
                         DatabaseDelegate.setNotificationTokens()
                     }
-                    LocalNotificationManager.postNamefor(type: .changed, subject: LocalNoteSubjects.profile)
+                    LocalNotificationManager.sendNotification(type: .changed, subject: LocalNoteSubjects.profile.rawValue)
 //                    NotificationCenter.default.post(
 //                        Notification(
 //                            name: Notification.Name("profileChanged"),
@@ -167,7 +167,7 @@ public struct ContentView: View {
                 }
                 .onReceive(
                     NotificationCenter.default.publisher(
-                        for: LocalNotificationManager.postNamefor(type: .changed, subject: LocalNoteSubjects.profile))
+                        for: LocalNotificationManager.postNamefor(type: .changed, subject: LocalNoteSubjects.profile.rawValue))
                 ){
                     note in
                     _ = UserDefaults.standard.integer(forKey: "notificationcount") 
