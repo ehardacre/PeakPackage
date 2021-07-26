@@ -65,7 +65,7 @@ struct seoView: View {
             .navigationTitle("SEO Rankings")
         }
         .stackOnlyNavigationView()
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("SEORankingsDoneScraping")), perform: { _ in
+        .onReceive(NotificationCenter.default.publisher(for: LocalNotificationManager.postNamefor(type: .loaded, subject: LocalNoteSubjects.SEORanks)), perform: { _ in
             loaded = true
         })
     }

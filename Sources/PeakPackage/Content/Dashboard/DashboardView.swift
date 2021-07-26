@@ -129,12 +129,14 @@ public class DashboardManager : Manager {
     public override init(){}
     
     public func loadMessage(){
-        message = nil
+        message = MiddleEndDatabase.getDashboardMessage()
         DatabaseDelegate.getDashboardMessage(){
             rex in
             let mes = rex as! DashboardMessage
             self.message = mes
-            NotificationCenter.default.post(Notification(name: Notification.Name("dashboardMessageLoaded")))
+            LocalNotificationManager.sendNotification(type: .loaded, subject: LocalNoteSubjects.dashboardMessage)
+           // NotificationCenter.default.post(Notification(name: Notification.Name("dashboardMessageLoaded")))
+            MiddleEndDatabase.setDashboardMessage(message: mes)
         }
     }
 }

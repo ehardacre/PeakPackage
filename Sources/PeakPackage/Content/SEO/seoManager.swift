@@ -130,7 +130,8 @@ public class SEOManager : Manager {
         printr("scraping rankings")
         self.rankings = SEOManager.scrapeRankings().map({$0.toViewable()})
         self.sortRankings()
-        NotificationCenter.default.post(name: Notification.Name("SEORankingsDoneScraping"), object: nil)
+        LocalNotificationManager.sendNotification(type: .loaded, subject: LocalNoteSubjects.SEORanks)
+        //NotificationCenter.default.post(name: Notification.Name("SEORankingsDoneScraping"), object: nil)
         
     }
     

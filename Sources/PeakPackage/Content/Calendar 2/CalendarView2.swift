@@ -14,7 +14,8 @@ class CalendarSelectionManager : ObservableObject{
     
     func selectDate(_ date: Date?){
         selection = date
-        NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange"),object: date))
+        LocalNotificationManager.sendNotification(type: .changed, subject: "DateSelection",object: date)
+        //NotificationCenter.default.post(Notification(name: Notification.Name("DateSelectionChange"),object: date))
     }
 }
 
@@ -124,7 +125,7 @@ struct TaskCalendarHeader : View {
             
         }
         .padding(20)
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "DateSelectionChange")), perform: { _ in
+        .onReceive(NotificationCenter.default.publisher(for: LocalNotificationManager.postNamefor(type: .changed, subject: "DateSelection")), perform: { _ in
             if selectionMan.selection == nil {
                 text = "today"
             }else{

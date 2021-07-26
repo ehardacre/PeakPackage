@@ -159,14 +159,15 @@ public struct ContentView: View {
                     if defaults.getNotificationToken() != nil{
                         DatabaseDelegate.setNotificationTokens()
                     }
-                    NotificationCenter.default.post(
-                        Notification(
-                            name: Notification.Name("profileChanged"),
-                            object: nil))
+                    LocalNotificationManager.postNamefor(type: .changed, subject: LocalNoteSubjects.profile)
+//                    NotificationCenter.default.post(
+//                        Notification(
+//                            name: Notification.Name("profileChanged"),
+//                            object: nil))
                 }
                 .onReceive(
                     NotificationCenter.default.publisher(
-                        for: Notification.Name(rawValue: "profileChanged"))
+                        for: LocalNotificationManager.postNamefor(type: .changed, subject: LocalNoteSubjects.profile))
                 ){
                     note in
                     _ = UserDefaults.standard.integer(forKey: "notificationcount") 

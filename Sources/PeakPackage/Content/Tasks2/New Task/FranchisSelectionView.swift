@@ -74,7 +74,7 @@ struct profileRow_Task: View {
         })
         .onReceive(
             NotificationCenter.default.publisher(
-                for: Notification.Name(rawValue: "franchiseForTaskUpdated"))
+                for: LocalNotificationManager.postNamefor(type: .changed, subject: "FranchiseForTask"))
         ){
             _ in
             if manager.isSelectedFranchise(id: franchise.franchiseId){

@@ -189,7 +189,7 @@ struct AutoFormView: View {
                 semaphore.signal()
             }
         })
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("FranchiseListLoaded")), perform: { note in
+        .onReceive(NotificationCenter.default.publisher(for: LocalNotificationManager.postNamefor(type: .loaded, subject: "FranchiseList")), perform: { note in
             profilesLoaded = true
         })
     }
