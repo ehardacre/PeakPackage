@@ -22,7 +22,7 @@ struct MiddleEndDatabase {
     static func getDashboardMessage() -> DashboardMessage?{
         var decodedObj : DashboardMessage? = nil
         do {
-            let decoded = UserDefaults.standard.value(forKey: "dashboardMessage") as? Data
+            let decoded = UserDefaults.standard.object(forKey: "dashboardMessage") as? Data
             if decoded == nil {
                 return nil
             }
