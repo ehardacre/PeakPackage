@@ -11,26 +11,21 @@ import SwiftUI
 struct MiddleEndDatabase {
     
     static func setDashboardMessage(message: DashboardMessage){
-        do {
-            let encodedData = try NSKeyedArchiver.archivedData(withRootObject: message, requiringSecureCoding: false)
-            UserDefaults.standard.setValue(encodedData, forKey: "dashboardMessage")
-        } catch {
-            //do nothing
-            printr("Could not encode dashboardMessage")
-        }
+        do{
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(message)
+            UserDefaults.standard.set(data, forKey: "dashboardMessage")
+        } catch { printr("unable to encode dashboard message") }
     }
     static func getDashboardMessage() -> DashboardMessage?{
-        var decodedObj : DashboardMessage? = nil
-        do {
-            let decoded = UserDefaults.standard.object(forKey: "dashboardMessage") as? Data
-            if decoded == nil {
-                return nil
-            }
-            decodedObj = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded!) as? DashboardMessage
-        } catch {
-            printr("Could not decode dashboardMessage")
+        if let data = UserDefaults.standard.data(forKey: "dashboardMessage"){
+            do{
+                let decoder = JSONDecoder()
+                let object = try decoder.decode(DashboardMessage.self, from: data)
+                return object
+            }catch{ printr("unable to decode dashboard message") }
         }
-        return decodedObj
+        return nil
     }
     
     static func setDashboardAnalytics(analytics: Analytics){
