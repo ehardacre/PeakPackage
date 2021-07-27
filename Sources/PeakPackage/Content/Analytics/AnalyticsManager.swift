@@ -54,6 +54,7 @@ public class AnalyticsManager : Manager {
     
     ///the only call you need to make to load analytics
     func loadAnalytics(for type: AnalyticsType_general) {
+        loadTempFromMidEnd(for: type)
         self.loading = true
         DatabaseDelegate.getAnalytics(for: type, completion: {
             rex in
@@ -64,12 +65,22 @@ public class AnalyticsManager : Manager {
         })
     }
     
+    private func loadTempFromMidEnd(for type: AnalyticsType_general){
+        switch type {
+        case .Day:
+            todayData = MiddleEndDatabase.getDashboardAnalytics()?.data
+        default:
+            return
+        }
+    }
+    
     ///separates the analytics objects into thisWeek, thisMosnth and Last Month
     private func separateAnalytics(analytics: [Analytics]){
         for lit in analytics {
             switch lit.title{
             case "Today" :
                 todayData = lit.data
+                MiddleEndDatabase.setDashboardAnalytics(analytics: lit)
                 today.page?.totals = todayData?.page?.getTotals() ?? [:]
             case "ThisWeek" :
                 thisWeekData = lit.data

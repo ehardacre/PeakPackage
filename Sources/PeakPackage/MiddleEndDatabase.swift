@@ -29,15 +29,21 @@ struct MiddleEndDatabase {
     }
     
     static func setDashboardAnalytics(analytics: Analytics){
-        UserDefaults.standard.setValue(analytics, forKey: "dashboardAnalytics")
+        do{
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(analytics)
+            UserDefaults.standard.set(data, forKey: "dashboardAnalytics")
+        }catch{ printr("unable to encode dashboard analytics") }
     }
     
     static func getDashboardAnalytics() -> Analytics? {
-        return UserDefaults.standard.value(forKey: "dashboardAnalytics") as? Analytics
+        if let data = UserDefaults.standard.data(forKey: "dashboardAnalytics"){
+            do{
+                let decoder = JSONDecoder()
+                let object = try decoder.decode(Analytics.self, from: data)
+                return object
+            }catch{ printr("unable to decode dashboard analytics") }
+        }
+        return nil
     }
-    
-    static func getDashboardMessage() -> DashboardMessage {
-        return DashboardMessage(dashMessageTitle: "Default", dashMessageBody: "this is the last message that was loaded", dashMessageLink: "")
-    }
-    
 }
