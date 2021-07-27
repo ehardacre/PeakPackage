@@ -51,7 +51,7 @@ struct DayView2 : View {
                 selected = false
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: LocalNotificationManager.postNamefor(type: .changed, subject: "DateSelection")), perform: { _ in
+        .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.changedDate.postName()), perform: { _ in
             if selectionMan.selection == day {
                 selected = true
             }else{

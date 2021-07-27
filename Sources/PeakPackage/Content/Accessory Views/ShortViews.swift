@@ -129,7 +129,7 @@ struct LeadsShortView : View {
         }
         .onReceive(
             NotificationCenter.default.publisher(
-                for: Notification.Name(rawValue: "database")),
+                for: LocalNotificationTypes.database.postName()),
                 perform: {
                     note in
             
@@ -230,7 +230,7 @@ struct DashboardAnalytics: View {
         .cornerRadius(20)
         .onReceive(
             NotificationCenter.default.publisher(
-                for: Notification.Name(rawValue: "database")),
+                for: LocalNotificationTypes.database.postName()),
             perform: {
                 note in
         

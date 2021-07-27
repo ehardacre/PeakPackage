@@ -39,11 +39,9 @@ public class ProfileManager : Manager {
             defaults.setTempFranchise(newURL,newName,newID)
         }
         
-        LocalNotificationManager.sendNotification(type: .changed, subject: LocalNoteSubjects.profile.rawValue, object: id)
-        
-//        NotificationCenter.default.post(
-//            Notification(
-//                name: Notification.Name("profileChanged"),
-//                object: id))
+        NotificationCenter.default.post(
+            Notification(
+                name: LocalNotificationTypes.changedProfile.postName(),
+                object: id))
     }
 }

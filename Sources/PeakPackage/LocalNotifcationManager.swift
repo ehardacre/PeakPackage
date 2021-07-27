@@ -8,26 +8,21 @@
 import Foundation
 import SwiftUI
 
-enum LocalNoteType : String{
-    case loaded = "loaded"
-    case changed = "changed"
-    case failed = "failed"
-}
-
-enum LocalNoteSubjects : String{
-    case dashboardMessage = "DashboardMessage"
-    case dashboardAnalytics = "DashboardAnalytics"
-    case SEORanks = "SEORanks"
-    case profile = "Profile"
-}
-
-struct LocalNotificationManager {
+enum LocalNotificationTypes : String {
+    //database
+    case database = "loadedDatabase"
+    //loaded
+    case loadedDashboardMessage = "loadedDashboardMessage"
+    case loadedDashboardAnalytics = "loadedDashboardAnalytics"
+    case loadedFranchiseList = "loadedFranchiseList"
+    case loadedSEORanks = "loadedSEORanks"
+    case loadedSEOScrape = "scrapedSEORanks"
+    //changed
+    case changedDate = "changedDate"
+    case changedProfile = "changedProfile"
+    case changedFranchiseForTask = "changedFranchiseForTask"
     
-    static func postNamefor(type: LocalNoteType, subject: String) -> Notification.Name{
-        return Notification.Name(type.rawValue + subject)
-    }
-    
-    static func sendNotification(type: LocalNoteType, subject: String, object: Any? = nil){
-        NotificationCenter.default.post(Notification(name: postNamefor(type: type, subject: subject),object: object))
+    func postName() -> Notification.Name{
+        return Notification.Name(self.rawValue)
     }
 }

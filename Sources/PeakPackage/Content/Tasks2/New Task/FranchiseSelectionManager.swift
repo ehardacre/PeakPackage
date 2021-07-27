@@ -26,8 +26,7 @@ public class FranchiseSelectionManager : Manager {
             completion: {
             rex in
             self.profiles = rex as! [Franchise]
-                LocalNotificationManager.sendNotification(type: .loaded, subject: "FranchiseList", object: rex)
-                //NotificationCenter.default.post(name: Notification.Name("FranchiseListLoaded"), object: rex, userInfo: nil)
+                NotificationCenter.default.post(name: Notification.Name(LocalNotificationTypes.loadedFranchiseList.rawValue), object: rex, userInfo: nil)
         })
     }
     
@@ -40,12 +39,10 @@ public class FranchiseSelectionManager : Manager {
         }else{
             ids.append(id)
         }
-        
-        LocalNotificationManager.sendNotification(type: .changed, subject: "FranchiseForTask")
-//        NotificationCenter.default.post(
-//            Notification(
-//                name: Notification.Name("franchiseForTaskUpdated"),
-//                object: nil))
+        NotificationCenter.default.post(
+            Notification(
+                name: LocalNotificationTypes.changedFranchiseForTask.postName(),
+                object: nil))
     }
     
     func getFranchiseName(for id: String?) -> String {

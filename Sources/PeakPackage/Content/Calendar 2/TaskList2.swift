@@ -49,7 +49,7 @@ struct TaskListView2: View {
             }
         }
         .CleanList(rowH: 80)
-        .onReceive(NotificationCenter.default.publisher(for: LocalNotificationManager.postNamefor(type: .changed, subject: "DateSelection")), perform: { note in
+        .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.changedDate.postName()), perform: { note in
             let date = (note.object as? Date) ?? Date()
             let newCompleted = taskManager.getCompleteTasks(for: date)
             self.completedTasks = taskManager.convertForCalendar(
@@ -67,10 +67,10 @@ struct TaskListView2: View {
         .onReceive(updatedTasksPub, perform: {
             note in
             let date = calSelectionManager.selection ?? Date()
-            LocalNotificationManager.sendNotification(type: .changed, subject: "DateSelection", object: date)
+            NotificationCenter.default.post(name: LocalNotificationTypes.changedDate.postName(), object: date)
         })
         .onAppear{
-            LocalNotificationManager.sendNotification(type: .changed, subject: "DateSelection", object: nil)
+            NotificationCenter.default.post(name: LocalNotificationTypes.changedDate.postName(), object: nil)
         }
     }
 }

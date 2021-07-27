@@ -487,7 +487,7 @@ struct DatabaseDelegate {
                 let rex = try objectFrom(data: d, type: ret)
                 
                 //send a notification that a database process has finished
-                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "database"), object: rex))
+                NotificationCenter.default.post(Notification(name: LocalNotificationTypes.database.postName(), object: rex))
                 //run the completion function
                 DispatchQueue.main.async {
                     completion(rex)

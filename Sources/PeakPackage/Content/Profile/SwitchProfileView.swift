@@ -70,7 +70,7 @@ struct profileRow: View {
         })
         .onReceive(
             NotificationCenter.default.publisher(
-                for: LocalNotificationManager.postNamefor(type: .changed, subject: LocalNoteSubjects.profile.rawValue))
+                for: LocalNotificationTypes.changedProfile.postName())
         ){
             note in
             let profile = note.object as! String?

@@ -134,8 +134,7 @@ public class DashboardManager : Manager {
             rex in
             let mes = rex as! DashboardMessage
             self.message = mes
-            LocalNotificationManager.sendNotification(type: .loaded, subject: LocalNoteSubjects.dashboardMessage.rawValue)
-           // NotificationCenter.default.post(Notification(name: Notification.Name("dashboardMessageLoaded")))
+            NotificationCenter.default.post(Notification(name: LocalNotificationTypes.loadedDashboardMessage.postName()))
             MiddleEndDatabase.setDashboardMessage(message: mes)
         }
     }
@@ -190,7 +189,7 @@ public struct DashboardMessageShortView : View{
         })
         .onReceive(
             NotificationCenter.default.publisher(
-                for: Notification.Name(rawValue: "database")),
+                for: LocalNotificationTypes.database.postName()),
             perform: {
                 note in
                 if let message = note.object as? DashboardMessage {
