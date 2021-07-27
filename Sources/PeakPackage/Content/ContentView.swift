@@ -192,20 +192,22 @@ public struct ContentView: View {
     
     func reloadAllDatafromManagers() {
         printr("reloadAllDatafromManagers")
-        dashboardManager.loadMessage()
-        profileManager.loadProfiles()
-        analyticsManager.loadAnalytics(for: .Day)
-        analyticsManager.loadAnalytics(for: .Week)
-        analyticsManager.loadAnalytics(for: .Month)
-        analyticsManager.loadAnalytics(for: .Year)
-        notificationManager.loadNotifications()
-        if defaults.getApplicationType() == .PeakClients(.any){
-            taskManager.reloadTasks()
-            taskManager.loadForms()
-            taskManager.loadUnavailableAppointmentTimes()
-            taskManager.reloadAppointmentData()
+        DispatchQueue.global().async {
+            dashboardManager.loadMessage()
+            profileManager.loadProfiles()
+            analyticsManager.loadAnalytics(for: .Day)
+            analyticsManager.loadAnalytics(for: .Week)
+            analyticsManager.loadAnalytics(for: .Month)
+            analyticsManager.loadAnalytics(for: .Year)
+            notificationManager.loadNotifications()
+            if defaults.getApplicationType() == .PeakClients(.any){
+                taskManager.reloadTasks()
+                taskManager.loadForms()
+                taskManager.loadUnavailableAppointmentTimes()
+                taskManager.reloadAppointmentData()
+            }
+            seoManager.loadRankings()
         }
-        seoManager.loadRankings()
     }
 }
 
