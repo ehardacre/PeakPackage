@@ -55,7 +55,7 @@ public class AnalyticsManager : Manager {
     ///the only call you need to make to load analytics
     func loadAnalytics(for type: AnalyticsType_general) {
         loadTempFromMidEnd(for: type)
-        self.loading = true
+        self.loading = false
         DatabaseDelegate.getAnalytics(for: type, completion: {
             rex in
             let analytics = rex as! [Analytics]
