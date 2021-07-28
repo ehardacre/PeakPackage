@@ -33,6 +33,8 @@ public class LeadManager : Manager {
     @Published var completed_orders = [Order]()
     @Published var loaded = false
     
+    @Published var leadSources : [String : Int] = [:]
+    
     var loading = [false, false, false]
     
     public override init() {
@@ -90,31 +92,31 @@ public class LeadManager : Manager {
         loaded = false
         loading = [false,false,false]
         if defaults.getApplicationType() == .NHanceConnect{
-            DatabaseDelegate.getOpenLeads(
-                completion: {
-                    rex in
-                    let leads = rex as! [Lead]
-                    self.open_leads = leads
-                    self.newNotifications = leads.count
-                    self.loading[0] = true
-                    self.loaded = self.checkForLoading()
-            })
-            DatabaseDelegate.getAcceptedLeads(
-                completion: {
-                    rex in
-                    let leads = rex as! [Lead]
-                    self.accepted_leads = leads
-                    self.loading[1] = true
-                    self.loaded = self.checkForLoading()
-            })
-            DatabaseDelegate.getScheduledLeads(
-                completion: {
-                    rex in
-                    let leads = rex as! [Lead]
-                    self.scheduled_leads = leads
-                    self.loading[2] = true
-                    self.loaded = self.checkForLoading()
-            })
+//            DatabaseDelegate.getOpenLeads(
+//                completion: {
+//                    rex in
+//                    let leads = rex as! [Lead]
+//                    self.open_leads = leads
+//                    self.newNotifications = leads.count
+//                    self.loading[0] = true
+//                    self.loaded = self.checkForLoading()
+//            })
+//            DatabaseDelegate.getAcceptedLeads(
+//                completion: {
+//                    rex in
+//                    let leads = rex as! [Lead]
+//                    self.accepted_leads = leads
+//                    self.loading[1] = true
+//                    self.loaded = self.checkForLoading()
+//            })
+//            DatabaseDelegate.getScheduledLeads(
+//                completion: {
+//                    rex in
+//                    let leads = rex as! [Lead]
+//                    self.scheduled_leads = leads
+//                    self.loading[2] = true
+//                    self.loaded = self.checkForLoading()
+//            })
             getLeadStatistics()
         }else if defaults.getApplicationType() == .PeakClients(.any){
             DatabaseDelegate.getPeakLeads(
@@ -133,8 +135,16 @@ public class LeadManager : Manager {
     func getLeadSources(){
         DatabaseDelegate.getLeadSources(completion: {
             rex in
-            #warning("TODO")
+            var leadSources = rex as! [leadSource]
+            countLeadSources(lead: leadSources)
         })
+    }
+    
+    func countLeadSources(leads: [leadSource]){
+        var counts: [String: Int] = [:]
+        leads.forEach { counts[$0, default: 0] += 1 }
+        leadSources = counts
+        printr(leadSources)
     }
     
     func sortLeads(){

@@ -301,10 +301,8 @@ extension DatabaseDelegate {
     
     static func getLeadSources(completion: @escaping (Any) -> Void){
         let json = JsonFormat.getLeadSources(id: defaults.franchiseId()!).format()
-        DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {
+        DatabaseDelegate.performRequest(with: json, ret: returnType.leadSourceList, completion: {
             rex in
-            printr("Lead sources")
-            printr(rex)
             completion(rex)
         })
     }
@@ -554,6 +552,8 @@ struct DatabaseDelegate {
             rex = try? JSONDecoder().decode([franchiseGroupTag].self, from: data)
         case returnType.adminProfileList:
             rex = try? JSONDecoder().decode([adminProfiles].self, from: data)
+        case returnType.leadSourceList:
+            rex = try? JSONDecoder().decode([leadSource].self, from: data)
         default:
             rex = String.init(data: data, encoding: .ascii)!
         }

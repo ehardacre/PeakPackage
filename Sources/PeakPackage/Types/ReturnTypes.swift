@@ -285,6 +285,13 @@ class adminProfiles : Codable {
     
 }
 
+class leadSource : Codable {
+    
+    var id : String
+    var source : String
+    
+}
+
 
 /**
  # Return Type
@@ -308,4 +315,5 @@ enum returnType {
     case appointment
     case grouptag
     case adminProfileList
+    case leadSourceList
 }
