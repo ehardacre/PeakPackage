@@ -136,13 +136,13 @@ public class LeadManager : Manager {
         DatabaseDelegate.getLeadSources(completion: {
             rex in
             var leadSources = rex as! [leadSource]
-            countLeadSources(lead: leadSources)
+            self.countLeadSources(leads: leadSources)
         })
     }
     
     func countLeadSources(leads: [leadSource]){
         var counts: [String: Int] = [:]
-        leads.forEach { counts[$0, default: 0] += 1 }
+        leads.forEach { counts[$0.source, default: 0] += 1 }
         leadSources = counts
         printr(leadSources)
     }
