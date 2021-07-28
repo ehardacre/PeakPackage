@@ -268,7 +268,7 @@ public class SEOManager : Manager {
             let url_str = baseURL + term
             guard let url = URL(string: url_str) else { continue }
             let body = parseHTML(url: url).lowercased()
-            printr("%%%"+body)
+            //printr("%%%"+body)
             searchArray.append(getSearchPosition(
                                 of: subject,
                                 in: body,
