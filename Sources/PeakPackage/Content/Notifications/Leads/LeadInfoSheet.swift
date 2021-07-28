@@ -23,7 +23,7 @@ struct LeadInfoSheet: View {
     @State var showFullScreenImage = false
     
     var lead : Lead
-    var notificationMan : NotificationManager
+    var notificationMan : LeadManager
     var phoneNumber : String?
     var email : String?
     var address : String?

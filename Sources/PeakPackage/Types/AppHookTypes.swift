@@ -110,6 +110,8 @@ enum JsonKeys : String{
     //accept and decline on-trac leads
     case accept_lead_key = "accept_weblead_id"
     case decline_lead_key = "delete_account_id"
+    //get lead sources
+    case leadsource_id_key = "leadsource_id"
     //getting the list of profiles
     case get_profiles_key = "franchise_ids_and_urls"
     //submitting SEO rankings
@@ -185,6 +187,7 @@ public enum JsonFormat {
     case declineLead(franchiseId: String, accountId: String)
     //get leads from on-trac
     case getLeads_nhance(type: String, id: String)
+    case getLeadSources(id: String)
     //get the list of profiles
     case getProfiles
     case getFranchiseGroupTags
@@ -331,6 +334,8 @@ public enum JsonFormat {
                       JsonKeys.set_seo_longitude_key.rawValue: longitude,
                       JsonKeys.set_seo_organicRank_key.rawValue: organicRank,
                       JsonKeys.set_seo_mapsRank_key.rawValue: mapsRank]
+        case .getLeadSources(let id):
+            retVal = [JsonKeys.leadsource_id_key.rawValue : id]
             //should never run
         default:
             printr(InternalError.nilContent.rawValue, tag: printTags.error)

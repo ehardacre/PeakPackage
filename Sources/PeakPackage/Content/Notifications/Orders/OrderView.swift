@@ -12,7 +12,7 @@ import SwiftUI
 struct OrderCardView: View {
     
     @ObservedObject var selectionManager : SelectionManager
-    @ObservedObject var notificationMan : NotificationManager
+    @ObservedObject var notificationMan : LeadManager
     @State var showMoreInfo = false
     
     //needs an id as an identifier for list

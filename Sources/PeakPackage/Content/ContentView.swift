@@ -48,7 +48,7 @@ public struct ContentView: View {
     
     //data managers
     @StateObject var analyticsManager : AnalyticsManager
-    @StateObject var notificationManager : NotificationManager
+    @StateObject var notificationManager : LeadManager
     @StateObject var dashboardManager : DashboardManager
     @StateObject var taskManager : TaskManager2
     @StateObject var seoManager : SEOManager
@@ -57,7 +57,7 @@ public struct ContentView: View {
     
     public init(tabs : [tabs],
                 _ analytics : AnalyticsManager,
-                _ notifications : NotificationManager,
+                _ notifications : LeadManager,
                 _ dashboard : DashboardManager,
                 _ task : TaskManager2,
                 _ seo : SEOManager,

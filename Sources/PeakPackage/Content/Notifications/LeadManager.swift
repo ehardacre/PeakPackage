@@ -11,7 +11,7 @@ import SwiftUI
 import UIKit
 import UserNotifications
 
-public class NotificationManager : Manager {
+public class LeadManager : Manager {
     
     static let pages = ["Open", "Accepted", "Scheduled"]
 
@@ -115,6 +115,7 @@ public class NotificationManager : Manager {
                     self.loading[2] = true
                     self.loaded = self.checkForLoading()
             })
+            getLeadStatistics()
         }else if defaults.getApplicationType() == .PeakClients(.any){
             DatabaseDelegate.getPeakLeads(
                 completion:{
@@ -123,6 +124,17 @@ public class NotificationManager : Manager {
                 self.sortLeads()
             })
         }
+    }
+    
+    func getLeadStatistics(){
+        getLeadSources()
+    }
+    
+    func getLeadSources(){
+        DatabaseDelegate.getLeadSources(completion: {
+            rex in
+            #warning("TODO")
+        })
     }
     
     func sortLeads(){

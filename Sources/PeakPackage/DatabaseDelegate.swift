@@ -299,6 +299,16 @@ extension DatabaseDelegate {
         }
     }
     
+    static func getLeadSources(completion: @escaping (Any) -> Void){
+        let json = JsonFormat.getLeadSources(id: defaults.franchiseId()!).format()
+        DatabaseDelegate.performRequest(with: json, ret: returnType.string, completion: {
+            rex in
+            printr("Lead sources")
+            printr(rex)
+            completion(rex)
+        })
+    }
+    
     static func getOpenLeads(completion: @escaping (Any) -> Void){
         let json_new = JsonFormat.getLeads_nhance(type: "open", id: defaults.franchiseId()!).format()
         DatabaseDelegate.performRequest(with: json_new, ret: returnType.leads, completion: { rex in

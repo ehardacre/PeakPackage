@@ -24,7 +24,7 @@ struct LeadCardView: View {
     var id = UUID()
     
     @ObservedObject var selectionManager : SelectionManager
-    @ObservedObject var notificationMan : NotificationManager
+    @ObservedObject var notificationMan : LeadManager
     @State var phoneNumber = ""
     @State var email = ""
     var lead : Lead
