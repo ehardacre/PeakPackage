@@ -73,9 +73,6 @@ struct ScheduleShortView : View {
                     
                         if parent.notificationManager.sortedLeadSources.count > 0{
                             HStack{
-                                Text("1")
-                                    .bold()
-                                    .foregroundColor(Color.darkAccent)
                                 Text(parent.notificationManager.sortedLeadSources[0].source)
                                     .bold()
                                     .foregroundColor(Color.darkAccent)
@@ -96,9 +93,6 @@ struct ScheduleShortView : View {
                         
                         if parent.notificationManager.sortedLeadSources.count > 1{
                             HStack{
-                                Text("2")
-                                    .bold()
-                                    .foregroundColor(Color.darkAccent)
                                 Text(parent.notificationManager.sortedLeadSources[1].source)
                                     .bold()
                                     .foregroundColor(Color.darkAccent)
@@ -124,6 +118,7 @@ struct ScheduleShortView : View {
                     }
                     
                 }
+                
                     
                 
 //                if appointment != nil {
@@ -145,6 +140,7 @@ struct ScheduleShortView : View {
             }
             Spacer()
         }
+        .padding(20)
         .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.loadedLeadSources.postName()), perform: {
             _ in
             loadingLeadSources = false
