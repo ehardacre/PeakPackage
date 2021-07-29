@@ -249,14 +249,14 @@ struct LeadsStatsView : View {
                                 .foregroundColor(Color.main)
                             Spacer()
                             Text("\(source.count)")
-                                .foregroundColor(Color.lightAccent)
+                                .foregroundColor(Color.darkAccent)
                                 .bold()
                             Text("(\(source.percent)%)")
-                                .foregroundColor(Color.lightAccent)
+                                .foregroundColor(Color.darkAccent)
                                 .font(.caption)
                         }
                         .padding(10)
-                        .background(Color.darkAccent.opacity(0.2))
+                        .background(Color.lightAccent)
                         .cornerRadius(10)
                     }
                 }
@@ -265,13 +265,19 @@ struct LeadsStatsView : View {
                 .padding(0.0)
                 .navigationTitle(Text("Lead Statistics"))
             }else{
-                ProgressView()
+                ProgressView().onAppear{
+                    if notificationMan.sortedLeadSources.count > 0 {
+                        leadSourceList = notificationMan.sortedLeadSources
+                        loaded = true
+                    }
+                }
             }
         }
         .stackOnlyNavigationView()
         .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.loadedLeadSources.postName()), perform: {
             _ in
             leadSourceList = notificationMan.sortedLeadSources
+            loaded = true
         })
     }
 }

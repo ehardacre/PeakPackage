@@ -80,14 +80,14 @@ struct ScheduleShortView : View {
                                     .foregroundColor(Color.main)
                                 Spacer()
                                 Text("\(parent.notificationManager.sortedLeadSources[0].count)")
-                                    .foregroundColor(Color.lightAccent)
+                                    .foregroundColor(Color.darkAccent)
                                     .bold()
                                 Text("(\(parent.notificationManager.sortedLeadSources[0].percent)%)")
-                                    .foregroundColor(Color.lightAccent)
+                                    .foregroundColor(Color.darkAccent)
                                     .font(.caption)
                             }
                             .padding(10)
-                            .background(Color.darkAccent.opacity(0.2))
+                            .background(Color.lightAccent)
                             .cornerRadius(10)
                         }else{
                             Text("No lead sources recorded yet.")
@@ -100,14 +100,14 @@ struct ScheduleShortView : View {
                                     .foregroundColor(Color.main)
                                 Spacer()
                                 Text("\(parent.notificationManager.sortedLeadSources[1].count)")
-                                    .foregroundColor(Color.lightAccent)
+                                    .foregroundColor(Color.darkAccent)
                                     .bold()
                                 Text("(\(parent.notificationManager.sortedLeadSources[1].percent)%)")
-                                    .foregroundColor(Color.lightAccent)
+                                    .foregroundColor(Color.darkAccent)
                                     .font(.caption)
                             }
                             .padding(10)
-                            .background(Color.darkAccent.opacity(0.2))
+                            .background(Color.lightAccent)
                             .cornerRadius(10)
                         }
                         
