@@ -150,6 +150,7 @@ public class LeadManager : Manager {
         }
         sortedLeadSources = sortedLeadSources.sorted(by: { $0.count > $1.count })
         leadSources = counts
+        NotificationCenter.default.post(name: LocalNotificationTypes.loadedLeadSources.postName(), object: nil)
         printr(leadSources)
         printr(sortedLeadSources)
     }

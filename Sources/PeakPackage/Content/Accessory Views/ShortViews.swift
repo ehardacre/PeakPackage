@@ -44,6 +44,7 @@ struct ScheduleShortView : View {
     
     @State var lead : Lead?
     @State var appointment : Appointment?
+    @State var loadingLeadSources = true
     
     init(parent: ContentView){
         self.parent = parent
@@ -62,39 +63,45 @@ struct ScheduleShortView : View {
                     .foregroundColor(Color.gray)
                 
                 VStack{
+                    if loadingLeadSources {
+                        Text("Loading...")
+                    }else{
                     
-                    if parent.notificationManager.sortedLeadSources.count > 0{
-                        HStack{
-                            Text("1")
-                                .bold()
-                                .foregroundColor(Color.darkAccent)
-                            Text(parent.notificationManager.sortedLeadSources[0].source)
-                                .bold()
-                                .foregroundColor(Color.darkAccent)
-                            Spacer()
-                            Text("\(parent.notificationManager.sortedLeadSources[0].count)")
-                                .foregroundColor(Color.darkAccent)
+                        if parent.notificationManager.sortedLeadSources.count > 0{
+                            HStack{
+                                Text("1")
+                                    .bold()
+                                    .foregroundColor(Color.darkAccent)
+                                Text(parent.notificationManager.sortedLeadSources[0].source)
+                                    .bold()
+                                    .foregroundColor(Color.darkAccent)
+                                Spacer()
+                                Text("\(parent.notificationManager.sortedLeadSources[0].count)")
+                                    .foregroundColor(Color.darkAccent)
+                            }
+                            .background(Color.darkAccent.opacity(0.2))
+                            .padding(10)
+                            .cornerRadius(10)
+                        }else{
+                            Text("No lead sources recorded yet.")
                         }
-                        .background(Color.darkAccent.opacity(0.2))
-                        .padding(10)
-                        .cornerRadius(10)
-                    }
-                    
-                    if parent.notificationManager.sortedLeadSources.count > 1{
-                        HStack{
-                            Text("2")
-                                .bold()
-                                .foregroundColor(Color.darkAccent)
-                            Text(parent.notificationManager.sortedLeadSources[1].source)
-                                .bold()
-                                .foregroundColor(Color.darkAccent)
-                            Spacer()
-                            Text("\(parent.notificationManager.sortedLeadSources[1].count)")
-                                .foregroundColor(Color.darkAccent)
+                        
+                        if parent.notificationManager.sortedLeadSources.count > 1{
+                            HStack{
+                                Text("2")
+                                    .bold()
+                                    .foregroundColor(Color.darkAccent)
+                                Text(parent.notificationManager.sortedLeadSources[1].source)
+                                    .bold()
+                                    .foregroundColor(Color.darkAccent)
+                                Spacer()
+                                Text("\(parent.notificationManager.sortedLeadSources[1].count)")
+                                    .foregroundColor(Color.darkAccent)
+                            }
+                            .background(Color.darkAccent.opacity(0.2))
+                            .padding(10)
+                            .cornerRadius(10)
                         }
-                        .background(Color.darkAccent.opacity(0.2))
-                        .padding(10)
-                        .cornerRadius(10)
                     }
                 }
                     
@@ -117,7 +124,12 @@ struct ScheduleShortView : View {
 //                }
             }
             Spacer()
-        }.onReceive(updatedAppointmentPub, perform: {
+        }
+        .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.loadedLeadSources.postName()), perform: {
+            _ in
+            loadingLeadSources = false
+        })
+        .onReceive(updatedAppointmentPub, perform: {
             _ in
             appointment = parent.taskManager.getNextAppointment()
         })

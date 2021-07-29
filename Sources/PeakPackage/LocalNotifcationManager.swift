@@ -17,6 +17,7 @@ enum LocalNotificationTypes : String {
     case loadedFranchiseList = "loadedFranchiseList"
     case loadedSEORanks = "loadedSEORanks"
     case loadedSEOScrape = "scrapedSEORanks"
+    case loadedLeadSources = "loadedLeadSources"
     //changed
     case changedDate = "changedDate"
     case changedProfile = "changedProfile"
