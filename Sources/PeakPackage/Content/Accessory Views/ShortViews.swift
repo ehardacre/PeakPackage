@@ -65,7 +65,7 @@ struct ScheduleShortView : View {
                 VStack{
                     if loadingLeadSources {
                         Text("Loading...")
-                            .padding(30)
+                            .padding(40)
                             .font(.caption)
                             .onAppear{
                             if parent.notificationManager.sortedLeadSources.count > 0 {
@@ -73,18 +73,17 @@ struct ScheduleShortView : View {
                             }
                         }
                     }else{
-                    
                         if parent.notificationManager.sortedLeadSources.count > 0{
                             HStack{
                                 Text(parent.notificationManager.sortedLeadSources[0].source)
                                     .bold()
-                                    .foregroundColor(Color.darkAccent)
+                                    .foregroundColor(Color.main)
                                 Spacer()
                                 Text("\(parent.notificationManager.sortedLeadSources[0].count)")
-                                    .foregroundColor(Color.darkAccent)
+                                    .foregroundColor(Color.lightAccent)
                                     .bold()
                                 Text("(\(parent.notificationManager.sortedLeadSources[0].percent)%)")
-                                    .foregroundColor(Color.darkAccent)
+                                    .foregroundColor(Color.lightAccent)
                                     .font(.caption)
                             }
                             .padding(10)
@@ -98,13 +97,13 @@ struct ScheduleShortView : View {
                             HStack{
                                 Text(parent.notificationManager.sortedLeadSources[1].source)
                                     .bold()
-                                    .foregroundColor(Color.darkAccent)
+                                    .foregroundColor(Color.main)
                                 Spacer()
                                 Text("\(parent.notificationManager.sortedLeadSources[1].count)")
-                                    .foregroundColor(Color.darkAccent)
+                                    .foregroundColor(Color.lightAccent)
                                     .bold()
                                 Text("(\(parent.notificationManager.sortedLeadSources[1].percent)%)")
-                                    .foregroundColor(Color.darkAccent)
+                                    .foregroundColor(Color.lightAccent)
                                     .font(.caption)
                             }
                             .padding(10)

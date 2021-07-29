@@ -18,45 +18,46 @@ public struct Content_Leads_multiPage: PublicFacingContent {
     }
     
     public var body: some View {
-        ZStack{
-            switch leadsIndex {
-            case 0:
-            LeadsView_single(
-                notificationMan: manager as! LeadManager,
-                selectionManager: selectionMan,
-                title: "Open Leads",
-                list: (manager as! LeadManager).open_leads,
-                loaded: (manager as! LeadManager).loaded)
-            
-            case 1:
-            LeadsView_single(
-                notificationMan: manager as! LeadManager,
-                selectionManager: selectionMan,
-                title: "Accepted",
-                list: (manager as! LeadManager).accepted_leads,
-                loaded: (manager as! LeadManager).loaded)
-
-            case 2:
-            LeadsView_single(
-                notificationMan: manager as! LeadManager,
-                selectionManager: selectionMan,
-                title: "Scheduled",
-                list: (manager as! LeadManager).scheduled_leads,
-                loaded: (manager as! LeadManager).loaded)
-            default:
-                EmptyView()
-            }
-            VStack{
-                Spacer()
-                if defaults.getApplicationType() == .NHanceConnect{
-                    PageControl(
-                        index: $leadsIndex,
-                        maxIndex: LeadManager.pages.count - 1,
-                        pageNames: LeadManager.pages,
-                        dividers: true)
-                }
-            }
-        }
+        LeadsStatsView(notificationMan: manager as! LeadManager)
+//        ZStack{
+//            switch leadsIndex {
+//            case 0:
+//            LeadsView_single(
+//                notificationMan: manager as! LeadManager,
+//                selectionManager: selectionMan,
+//                title: "Open Leads",
+//                list: (manager as! LeadManager).open_leads,
+//                loaded: (manager as! LeadManager).loaded)
+//
+//            case 1:
+//            LeadsView_single(
+//                notificationMan: manager as! LeadManager,
+//                selectionManager: selectionMan,
+//                title: "Accepted",
+//                list: (manager as! LeadManager).accepted_leads,
+//                loaded: (manager as! LeadManager).loaded)
+//
+//            case 2:
+//            LeadsView_single(
+//                notificationMan: manager as! LeadManager,
+//                selectionManager: selectionMan,
+//                title: "Scheduled",
+//                list: (manager as! LeadManager).scheduled_leads,
+//                loaded: (manager as! LeadManager).loaded)
+//            default:
+//                EmptyView()
+//            }
+//            VStack{
+//                Spacer()
+//                if defaults.getApplicationType() == .NHanceConnect{
+//                    PageControl(
+//                        index: $leadsIndex,
+//                        maxIndex: LeadManager.pages.count - 1,
+//                        pageNames: LeadManager.pages,
+//                        dividers: true)
+//                }
+//            }
+//        }
     }
 }
 
@@ -228,5 +229,49 @@ struct LeadsView_single : View {
             }
         }
         .stackOnlyNavigationView()
+    }
+}
+
+struct LeadsStatsView : View {
+    
+    @State var notificationMan : LeadManager
+    @State var leadSourceList : [leadSourceListElement] = []
+    @State var loaded : Bool = false
+    
+    var body: some View {
+        NavigationView{
+            if loaded {
+                List{
+                    ForEach(leadSourceList, id: \.id){ source in
+                        HStack{
+                            Text(source.source)
+                                .bold()
+                                .foregroundColor(Color.main)
+                            Spacer()
+                            Text("\(source.count)")
+                                .foregroundColor(Color.lightAccent)
+                                .bold()
+                            Text("(\(source.percent)%)")
+                                .foregroundColor(Color.lightAccent)
+                                .font(.caption)
+                        }
+                        .padding(10)
+                        .background(Color.darkAccent.opacity(0.2))
+                        .cornerRadius(10)
+                    }
+                }
+                .listRowBackground(Color.clear)
+                .listStyle(SidebarListStyle())
+                .padding(0.0)
+                .navigationTitle(Text("Lead Statistics"))
+            }else{
+                ProgressView()
+            }
+        }
+        .stackOnlyNavigationView()
+        .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.loadedLeadSources.postName()), perform: {
+            _ in
+            leadSourceList = notificationMan.sortedLeadSources
+        })
     }
 }

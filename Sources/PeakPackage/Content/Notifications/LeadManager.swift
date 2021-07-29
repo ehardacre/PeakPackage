@@ -11,6 +11,13 @@ import SwiftUI
 import UIKit
 import UserNotifications
 
+public struct leadSourceListElement {
+    let id = UUID()
+    var source : String
+    var count : Int
+    var percent : Int
+}
+
 public class LeadManager : Manager {
     
     static let pages = ["Open", "Accepted", "Scheduled"]
@@ -34,7 +41,7 @@ public class LeadManager : Manager {
     @Published var loaded = false
     
     @Published var leadSources : [String : Int] = [:]
-    @Published var sortedLeadSources : [(source: String, count: Int, percent: Int)] = []
+    @Published var sortedLeadSources : [leadSourceListElement] = []
     
     var loading = [false, false, false]
     
@@ -148,7 +155,8 @@ public class LeadManager : Manager {
         for (source, count) in counts {
             let percent = Int(Double(count) / Double(leads.count) * 100)
             let src_editted = source.replacingOccurrences(of: "ORG_", with: "").replacingOccurrences(of: "l.", with: "").split(separator: "|")[0]
-            sortedLeadSources.append((source: String(src_editted), count: count, percent: percent))
+            var listElement = leadSourceListElement(source: String(src_editted), count: count, percent: percent)
+            sortedLeadSources.append(listElement)
         }
         sortedLeadSources = sortedLeadSources.sorted(by: { $0.count > $1.count })
         leadSources = counts
