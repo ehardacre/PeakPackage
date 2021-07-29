@@ -64,7 +64,9 @@ struct ScheduleShortView : View {
                 
                 VStack{
                     if loadingLeadSources {
-                        Text("Loading...").onAppear{
+                        Text("Loading...")
+                            .font(.caption)
+                            .onAppear{
                             if parent.notificationManager.sortedLeadSources.count > 0 {
                                 loadingLeadSources = false
                             }
@@ -138,9 +140,9 @@ struct ScheduleShortView : View {
 //                        .padding(50)
 //                }
             }
+            .padding(20)
             Spacer()
         }
-        .padding(20)
         .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.loadedLeadSources.postName()), perform: {
             _ in
             loadingLeadSources = false
