@@ -79,9 +79,9 @@ struct ScheduleShortView : View {
                                 Text("\(parent.notificationManager.sortedLeadSources[0].count)")
                                     .foregroundColor(Color.darkAccent)
                             }
-                            .background(Color.darkAccent.opacity(0.2))
                             .padding(10)
                             .cornerRadius(10)
+                            .background(Color.darkAccent.opacity(0.2))
                         }else{
                             Text("No lead sources recorded yet.")
                         }
@@ -98,9 +98,9 @@ struct ScheduleShortView : View {
                                 Text("\(parent.notificationManager.sortedLeadSources[1].count)")
                                     .foregroundColor(Color.darkAccent)
                             }
-                            .background(Color.darkAccent.opacity(0.2))
                             .padding(10)
                             .cornerRadius(10)
+                            .background(Color.darkAccent.opacity(0.2))
                         }
                     }
                 }
