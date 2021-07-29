@@ -147,7 +147,8 @@ public class LeadManager : Manager {
         leads.forEach { counts[$0.source, default: 0] += 1 }
         for (source, count) in counts {
             let percent = Int(Double(count) / Double(leads.count) * 100)
-            sortedLeadSources.append((source: source, count: count, percent: percent))
+            let src_editted = source.replacingOccurrences(of: "ORG_", with: "").split(separator: "|")[0]
+            sortedLeadSources.append((source: src_editted, count: count, percent: percent))
         }
         sortedLeadSources = sortedLeadSources.sorted(by: { $0.count > $1.count })
         leadSources = counts
