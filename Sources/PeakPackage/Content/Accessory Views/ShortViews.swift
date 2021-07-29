@@ -58,7 +58,7 @@ struct ScheduleShortView : View {
             VStack{
                 Text("Lead Sources")
                     .bold()
-                    .padding(.top, 20)
+                    .padding(.top, 30)
                 Text("Your Top Lead Sources")
                     .font(.system(.footnote))
                     .foregroundColor(Color.gray)
@@ -143,7 +143,7 @@ struct ScheduleShortView : View {
             }
             Spacer()
         }
-        .padding(.bottom, 20)
+        .padding(.bottom, 30)
         .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.loadedLeadSources.postName()), perform: {
             _ in
             loadingLeadSources = false
