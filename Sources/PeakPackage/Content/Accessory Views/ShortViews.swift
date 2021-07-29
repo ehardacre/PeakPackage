@@ -63,32 +63,40 @@ struct ScheduleShortView : View {
                 
                 VStack{
                     
-                    HStack{
-                        Text("1")
-                            .bold()
-                            .foregroundColor(Color.darkAccent)
-                        Text("Google")
-                            .bold()
-                            .foregroundColor(Color.darkAccent)
-                        Spacer()
-                        Text("50%")
-                            .foregroundColor(Color.darkAccent)
+                    if parent.notificationManager.sortedLeadSources.count > 0{
+                        HStack{
+                            Text("1")
+                                .bold()
+                                .foregroundColor(Color.darkAccent)
+                            Text(parent.notificationManager.sortedLeadSources[0].source)
+                                .bold()
+                                .foregroundColor(Color.darkAccent)
+                            Spacer()
+                            Text("\(parent.notificationManager.sortedLeadSources[0].count)")
+                                .foregroundColor(Color.darkAccent)
+                        }
+                        .background(Color.darkAccent.opacity(0.2))
+                        .padding(10)
+                        .cornerRadius(10)
                     }
-                    .background(Color.darkAccent.opacity(0.3))
-                    
-                    HStack{
-                        Text("2")
-                            .bold()
-                            .foregroundColor(Color.darkAccent)
-                        Text("Google")
-                            .bold()
-                            .foregroundColor(Color.darkAccent)
-                        Spacer()
-                        Text("50%")
-                            .foregroundColor(Color.darkAccent)
+                    if parent.notificationManager.sortedLeadSources.count > 1{
+                        HStack{
+                            Text("2")
+                                .bold()
+                                .foregroundColor(Color.darkAccent)
+                            Text(parent.notificationManager.sortedLeadSources[1].source)
+                                .bold()
+                                .foregroundColor(Color.darkAccent)
+                            Spacer()
+                            Text("\(parent.notificationManager.sortedLeadSources[1].count)")
+                                .foregroundColor(Color.darkAccent)
+                        }
+                        .background(Color.darkAccent.opacity(0.2))
+                        .padding(10)
+                        .cornerRadius(10)
                     }
-                    .background(Color.darkAccent.opacity(0.3))
                 }
+                    
                 
 //                if appointment != nil {
 //                    AppointmentCardView(id: UUID(), selectionManager: SelectionManager(), taskManager: parent.taskManager, appointment: appointment!)
