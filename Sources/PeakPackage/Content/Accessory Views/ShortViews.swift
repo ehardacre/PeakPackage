@@ -55,28 +55,57 @@ struct ScheduleShortView : View {
         HStack{
             Spacer()
             VStack{
-                Text("Schedule")
+                Text("Lead Sources")
                     .bold()
-                Text("Upcoming Leads and Calls")
+                Text("Your Top Lead Sources")
                     .font(.system(.footnote))
                     .foregroundColor(Color.gray)
                 
-                if appointment != nil {
-                    AppointmentCardView(id: UUID(), selectionManager: SelectionManager(), taskManager: parent.taskManager, appointment: appointment!)
-                        .frame(height: 60)
+                VStack{
+                    
+                    HStack{
+                        Text("1")
+                            .bold()
+                            .foregroundColor(Color.darkAccent)
+                        Text("Google")
+                            .bold()
+                            .foregroundColor(Color.darkAccent)
+                        Spacer()
+                        Text("50%")
+                            .foregroundColor(Color.darkAccent)
+                    }
+                    .background(Color.darkAccent.opacity(0.3))
+                    
+                    HStack{
+                        Text("2")
+                            .bold()
+                            .foregroundColor(Color.darkAccent)
+                        Text("Google")
+                            .bold()
+                            .foregroundColor(Color.darkAccent)
+                        Spacer()
+                        Text("50%")
+                            .foregroundColor(Color.darkAccent)
+                    }
+                    .background(Color.darkAccent.opacity(0.3))
                 }
                 
-                if lead != nil {
-                    LeadCardView(selectionManager: SelectionManager(),
-                                 notificationMan: parent.notificationManager,
-                                 lead: lead!)
-                }
-                
-                if lead == nil && appointment == nil {
-                    Text("Nothing Scheduled")
-                        .Caption()
-                        .padding(50)
-                }
+//                if appointment != nil {
+//                    AppointmentCardView(id: UUID(), selectionManager: SelectionManager(), taskManager: parent.taskManager, appointment: appointment!)
+//                        .frame(height: 60)
+//                }
+//
+//                if lead != nil {
+//                    LeadCardView(selectionManager: SelectionManager(),
+//                                 notificationMan: parent.notificationManager,
+//                                 lead: lead!)
+//                }
+//
+//                if lead == nil && appointment == nil {
+//                    Text("Nothing Scheduled")
+//                        .Caption()
+//                        .padding(50)
+//                }
             }
             Spacer()
         }.onReceive(updatedAppointmentPub, perform: {
@@ -105,42 +134,25 @@ struct LeadsShortView : View {
                     .font(.system(.footnote))
                     .foregroundColor(Color.gray)
                 
-                VStack{
-                    
-                    HStack{
-                        Text("Google")
-                            .bold()
-                            .foregroundColor(Color.darkAccent)
-                        Spacer()
-                        Text("50%")
-                            .foregroundColor(Color.darkAccent)
-                    }
-                    .background(Color.darkAccent.opacity(0.3))
-                    
-                    HStack{
-                        
-                    }
+                if let
+                    lead = parent.notificationManager.todaysScheduled().first {
+                    LeadCardView(selectionManager: SelectionManager(),
+                                 notificationMan: parent.notificationManager,
+                                 lead: lead)
+                    //see more tasks
+                    Button(action: {
+                        self.parent.tab = tabs.leads
+                    }, label: {
+                        Text("See More")
+                            .foregroundColor(Color.main)
+                    })
+                    .padding(.top,100)
+                }else{
+                    Text("No Scheduled Jobs Today.")
+                        .foregroundColor(.darkAccent)
+                        .font(.body)
+                        .padding(50)
                 }
-                
-//                if let
-//                    lead = parent.notificationManager.todaysScheduled().first {
-//                    LeadCardView(selectionManager: SelectionManager(),
-//                                 notificationMan: parent.notificationManager,
-//                                 lead: lead)
-//                    //see more tasks
-//                    Button(action: {
-//                        self.parent.tab = tabs.leads
-//                    }, label: {
-//                        Text("See More")
-//                            .foregroundColor(Color.main)
-//                    })
-//                    .padding(.top,100)
-//                }else{
-//                    Text("No Scheduled Jobs Today.")
-//                        .foregroundColor(.darkAccent)
-//                        .font(.body)
-//                        .padding(50)
-//                }
             }
             Spacer()
         }

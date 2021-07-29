@@ -148,7 +148,7 @@ public class LeadManager : Manager {
         for (source, count) in counts {
             sortedLeadSources.append((source: source, count: count))
         }
-        sortedLeadSources = sortedLeadSources.sorted(by: { $0.count < $1.count })
+        sortedLeadSources = sortedLeadSources.sorted(by: { $0.count > $1.count })
         leadSources = counts
         printr(leadSources)
         printr(sortedLeadSources)
