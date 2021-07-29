@@ -99,31 +99,48 @@ struct LeadsShortView : View {
             Spacer()
             VStack(alignment: .center){
                 
-                Text("Scheduling")
+                Text("Lead Sources")
                     .bold()
-                Text("Upcoming Schedule")
+                Text("Top lead sources")
                     .font(.system(.footnote))
                     .foregroundColor(Color.gray)
                 
-                if let
-                    lead = parent.notificationManager.todaysScheduled().first {
-                    LeadCardView(selectionManager: SelectionManager(),
-                                 notificationMan: parent.notificationManager,
-                                 lead: lead)
-                    //see more tasks
-                    Button(action: {
-                        self.parent.tab = tabs.leads
-                    }, label: {
-                        Text("See More")
-                            .foregroundColor(Color.main)
-                    })
-                    .padding(.top,100)
-                }else{
-                    Text("No Scheduled Jobs Today.")
-                        .foregroundColor(.darkAccent)
-                        .font(.body)
-                        .padding(50)
+                VStack{
+                    
+                    HStack{
+                        Text("Google")
+                            .bold()
+                            .foregroundColor(Color.darkAccent)
+                        Spacer()
+                        Text("50%")
+                            .foregroundColor(Color.darkAccent)
+                    }
+                    .background(Color.darkAccent.opacity(0.3))
+                    
+                    HStack{
+                        
+                    }
                 }
+                
+//                if let
+//                    lead = parent.notificationManager.todaysScheduled().first {
+//                    LeadCardView(selectionManager: SelectionManager(),
+//                                 notificationMan: parent.notificationManager,
+//                                 lead: lead)
+//                    //see more tasks
+//                    Button(action: {
+//                        self.parent.tab = tabs.leads
+//                    }, label: {
+//                        Text("See More")
+//                            .foregroundColor(Color.main)
+//                    })
+//                    .padding(.top,100)
+//                }else{
+//                    Text("No Scheduled Jobs Today.")
+//                        .foregroundColor(.darkAccent)
+//                        .font(.body)
+//                        .padding(50)
+//                }
             }
             Spacer()
         }

@@ -34,6 +34,7 @@ public class LeadManager : Manager {
     @Published var loaded = false
     
     @Published var leadSources : [String : Int] = [:]
+    @Published var sortedLeadSources : [(source: String, count: Int)] = []
     
     var loading = [false, false, false]
     
@@ -142,9 +143,15 @@ public class LeadManager : Manager {
     
     func countLeadSources(leads: [leadSource]){
         var counts: [String: Int] = [:]
+        sortedLeadSources = []
         leads.forEach { counts[$0.source, default: 0] += 1 }
+        for (source, count) in counts {
+            sortedLeadSources.append((source: source, count: count))
+        }
+        sortedLeadSources = sortedLeadSources.sorted(by: { $0.count > $1.count })
         leadSources = counts
         printr(leadSources)
+        printr(sortedLeadSources)
     }
     
     func sortLeads(){
