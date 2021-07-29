@@ -80,8 +80,8 @@ struct ScheduleShortView : View {
                                     .foregroundColor(Color.darkAccent)
                             }
                             .padding(10)
-                            .cornerRadius(10)
                             .background(Color.darkAccent.opacity(0.2))
+                            .cornerRadius(10)
                         }else{
                             Text("No lead sources recorded yet.")
                         }
@@ -99,10 +99,18 @@ struct ScheduleShortView : View {
                                     .foregroundColor(Color.darkAccent)
                             }
                             .padding(10)
-                            .cornerRadius(10)
                             .background(Color.darkAccent.opacity(0.2))
+                            .cornerRadius(10)
                         }
+                        
+                        Button(action: {
+                            self.parent.tab = tabs.leads
+                        }, label: {
+                            Text("See More")
+                                .foregroundColor(Color.main)
+                        })
                     }
+                    
                 }
                     
                 
