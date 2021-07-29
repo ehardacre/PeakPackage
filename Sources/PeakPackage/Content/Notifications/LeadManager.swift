@@ -34,7 +34,7 @@ public class LeadManager : Manager {
     @Published var loaded = false
     
     @Published var leadSources : [String : Int] = [:]
-    @Published var sortedLeadSources : [(source: String, count: Int)] = []
+    @Published var sortedLeadSources : [(source: String, count: Int, percent: Int)] = []
     
     var loading = [false, false, false]
     
@@ -146,7 +146,8 @@ public class LeadManager : Manager {
         sortedLeadSources = []
         leads.forEach { counts[$0.source, default: 0] += 1 }
         for (source, count) in counts {
-            sortedLeadSources.append((source: source, count: count))
+            let percent = Int(Double(count) / Double(leads.count) * 100)
+            sortedLeadSources.append((source: source, count: count, percent: percent))
         }
         sortedLeadSources = sortedLeadSources.sorted(by: { $0.count > $1.count })
         leadSources = counts

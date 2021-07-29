@@ -76,7 +76,7 @@ struct ScheduleShortView : View {
                                     .bold()
                                     .foregroundColor(Color.darkAccent)
                                 Spacer()
-                                Text("\(parent.notificationManager.sortedLeadSources[0].count)")
+                                Text("\(parent.notificationManager.sortedLeadSources[0].count)(\(parent.notificationManager.sortedLeadSources[0].percent)%)")
                                     .foregroundColor(Color.darkAccent)
                             }
                             .padding(10)
@@ -95,7 +95,7 @@ struct ScheduleShortView : View {
                                     .bold()
                                     .foregroundColor(Color.darkAccent)
                                 Spacer()
-                                Text("\(parent.notificationManager.sortedLeadSources[1].count)")
+                                Text("\(parent.notificationManager.sortedLeadSources[1].count)(\(parent.notificationManager.sortedLeadSources[1].percent)%)")
                                     .foregroundColor(Color.darkAccent)
                             }
                             .padding(10)
