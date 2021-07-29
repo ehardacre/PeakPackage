@@ -79,6 +79,7 @@ struct ScheduleShortView : View {
                         .padding(10)
                         .cornerRadius(10)
                     }
+                    
                     if parent.notificationManager.sortedLeadSources.count > 1{
                         HStack{
                             Text("2")
