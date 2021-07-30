@@ -91,6 +91,8 @@ struct ScheduleShortView : View {
                             .cornerRadius(10)
                         }else{
                             Text("No lead sources recorded yet.")
+                                .font(.caption)
+                                .padding(10)
                         }
                         
                         if parent.notificationManager.sortedLeadSources.count > 1{
