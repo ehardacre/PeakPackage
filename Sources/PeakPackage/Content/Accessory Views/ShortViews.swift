@@ -144,6 +144,7 @@ struct ScheduleShortView : View {
         }
         .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.loadedLeadSources.postName()), perform: {
             _ in
+            loadingLeadSources = true
             loadingLeadSources = false
         })
         .onReceive(updatedAppointmentPub, perform: {
