@@ -242,6 +242,8 @@ struct LeadsStatsView : View {
         NavigationView{
             if loaded {
                 List{
+                    Text("To view specific leads, download the OnTrac App.")
+                        .font(.caption)
                     ForEach(leadSourceList, id: \.id){ source in
                         HStack{
                             Text(source.source)
