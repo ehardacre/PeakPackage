@@ -244,6 +244,7 @@ struct LeadsStatsView : View {
                 List{
                     Text("To view specific leads, download the OnTrac App.")
                         .font(.caption)
+                        .opacity(0.6)
                     ForEach(leadSourceList, id: \.id){ source in
                         HStack{
                             Text(source.source)
