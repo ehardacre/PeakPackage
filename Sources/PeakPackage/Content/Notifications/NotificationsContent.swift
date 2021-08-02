@@ -237,11 +237,11 @@ struct LeadsStatsView : View {
     @State var notificationMan : LeadManager
     @State var leadSourceList : [leadSourceListElement] = []
     @State var loaded : Bool = false
-    @State var colors : [Color] = [Color(red: 77, green: 157, blue: 224, opacity: 1.0),
-                                      Color(red: 225, green: 85, blue: 84, opacity: 1.0),
-                                      Color(red: 225, green: 188, blue: 41, opacity: 1.0),
-                                      Color(red: 59, green: 178, blue: 115, opacity: 1.0),
-                                      Color(red: 119, green: 104, blue: 174, opacity: 1.0)]
+    @State var colors : [Color] = [Color(red: 77/255, green: 157/255, blue: 224/255, opacity: 1.0),
+                                      Color(red: 225/255, green: 85/255, blue: 84/255, opacity: 1.0),
+                                      Color(red: 225/255, green: 188/255, blue: 41/255, opacity: 1.0),
+                                      Color(red: 59/255, green: 178/255, blue: 115/255, opacity: 1.0),
+                                      Color(red: 119/255, green: 104/255, blue: 174/255, opacity: 1.0)]
     
     var body: some View {
         NavigationView{
