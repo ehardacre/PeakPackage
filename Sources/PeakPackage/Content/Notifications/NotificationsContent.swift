@@ -257,12 +257,12 @@ struct LeadsStatsView : View {
                                 Rectangle()
                                     .frame(width: 10, height: 10)
                                     .cornerRadius(3)
-                                    .background(colors[index])
+                                    .foregroundColor(colors[index])
                             }else{
                                 Rectangle()
                                     .frame(width: 10, height: 10)
                                     .cornerRadius(3)
-                                    .background(colors.last)
+                                    .foregroundColor(colors.last)
                             }
                             Text(leadSourceList[index].source)
                                 .bold()
