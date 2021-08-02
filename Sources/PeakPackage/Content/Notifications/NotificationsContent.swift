@@ -237,6 +237,11 @@ struct LeadsStatsView : View {
     @State var notificationMan : LeadManager
     @State var leadSourceList : [leadSourceListElement] = []
     @State var loaded : Bool = false
+    @State var colors : [Color] = [Color(red: 77, green: 157, blue: 224, opacity: 1.0),
+                                      Color(red: 225, green: 85, blue: 84, opacity: 1.0),
+                                      Color(red: 225, green: 188, blue: 41, opacity: 1.0),
+                                      Color(red: 59, green: 178, blue: 115, opacity: 1.0),
+                                      Color(red: 119, green: 104, blue: 174, opacity: 1.0)]
     
     var body: some View {
         NavigationView{
@@ -245,16 +250,28 @@ struct LeadsStatsView : View {
                     Text("To view specific leads, download the OnTrac App.")
                         .font(.caption)
                         .opacity(0.6)
-                    ForEach(leadSourceList, id: \.id){ source in
+                    PieChartView(values: getValuesFromLeadSources(), colors: colors, backgroundColor: Color.lightAccent)
+                    ForEach(0..<leadSourceList.count){ index in
                         HStack{
-                            Text(source.source)
+                            if index < colors.count {
+                                Rectangle()
+                                    .frame(width: 10, height: 10)
+                                    .cornerRadius(3)
+                                    .background(colors[index])
+                            }else{
+                                Rectangle()
+                                    .frame(width: 10, height: 10)
+                                    .cornerRadius(3)
+                                    .background(colors.last)
+                            }
+                            Text(leadSourceList[index].source)
                                 .bold()
                                 .foregroundColor(Color.main)
                             Spacer()
-                            Text("\(source.count)")
+                            Text("\(leadSourceList[index].count)")
                                 .foregroundColor(Color.darkAccent)
                                 .bold()
-                            Text("(\(source.percent)%)")
+                            Text("(\(leadSourceList[index].percent)%)")
                                 .foregroundColor(Color.darkAccent)
                                 .font(.caption)
                         }
@@ -282,5 +299,13 @@ struct LeadsStatsView : View {
             leadSourceList = notificationMan.sortedLeadSources
             loaded = true
         })
+    }
+    
+    func getValuesFromLeadSources() -> [Double]{
+        var list : [Double] = []
+        for source in leadSourceList{
+            list.append(Double(source.count))
+        }
+        return list
     }
 }

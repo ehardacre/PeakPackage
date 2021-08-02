@@ -58,12 +58,6 @@ struct PieSliceData {
 struct PieChartView: View {
     public let values: [Double]
     public var colors: [Color]
-//        [Color(.RGBColorSpace, red: 77, green: 157, blue: 224, opacity: 1.0),
-//                                  Color(Color.RGBColorSpace, red: 225, green: 85, blue: 84, opacity: 1.0),
-//                                  Color(Color.RGBColorSpace, red: 225, green: 188, blue: 41, opacity: 1.0),
-//                                  Color(Color.RGBColorSpace, red: 59, green: 178, blue: 115, opacity: 1.0),
-//                                  Color(Color.RGBColorSpace, red: 119, green: 104, blue: 174, opacity: 1.0)]
-    public let names: [String]
     
     public var backgroundColor: Color
     public var innerRadiusFraction: CGFloat = 0.6
@@ -72,18 +66,18 @@ struct PieChartView: View {
         let sum = values.reduce(0, +)
         var endDeg: Double = 0
         var tempSlices: [PieSliceData] = []
-//        var tempValues: [Double] = []
-//        var tempNames:
-//
-//        for (i, value) in values.sorted().reversed().enumerated() {
-//            if i <= colors.count {
-//                tempValues.append(value)
-//            }else{
-//                tempValues[colors.count] = tempValues[colors.count] + value
-//            }
-//        }
         
-        for (i, value) in values.enumerated() {
+        var tempValues: [Double] = []
+
+        for (i, value) in values.sorted().reversed().enumerated() {
+            if i <= colors.count {
+                tempValues.append(value)
+            }else{
+                tempValues[colors.count] = tempValues[colors.count] + value
+            }
+        }
+        
+        for (i, value) in tempValues.enumerated() {
             let degrees: Double = value * 360 / sum
             tempSlices.append(PieSliceData(startAngle: Angle(degrees: endDeg), endAngle: Angle(degrees: endDeg + degrees), text: String(format: "%.0f%%", value * 100 / sum), color: self.colors[i]))
             endDeg += degrees
