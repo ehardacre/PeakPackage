@@ -250,8 +250,12 @@ struct LeadsStatsView : View {
                     Text("To view specific leads, download the OnTrac App.")
                         .font(.caption)
                         .opacity(0.6)
-                    PieChartView(values: getValuesFromLeadSources(), colors: colors, backgroundColor: Color.lightAccent)
-                        .frame(width: 200, height: 200)
+                    HStack{
+                        PieChartView(values: getValuesFromLeadSources(), colors: colors, backgroundColor: Color.lightAccent)
+                            .frame(width: 200, height: 200)
+                    }
+                    .frame(height: 200)
+                    .background(Color.lightAccent)
                     ForEach(0..<leadSourceList.count){ index in
                         HStack{
                             if index < colors.count {
