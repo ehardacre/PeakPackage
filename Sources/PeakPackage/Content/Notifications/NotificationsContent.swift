@@ -251,6 +251,7 @@ struct LeadsStatsView : View {
                         .font(.caption)
                         .opacity(0.6)
                     PieChartView(values: getValuesFromLeadSources(), colors: colors, backgroundColor: Color.lightAccent)
+                        .frame(width: 200, height: 200)
                     ForEach(0..<leadSourceList.count){ index in
                         HStack{
                             if index < colors.count {
