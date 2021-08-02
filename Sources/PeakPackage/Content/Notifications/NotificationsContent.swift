@@ -301,7 +301,8 @@ struct LeadsStatsView : View {
         })
     }
     
-    func getValuesFromLeadSources() -> [Double]{
+    func getValuesFromLeadSources() -> [Double]{p
+        printr(leadSourceList)
         var list : [Double] = []
         for source in leadSourceList{
             list.append(Double(source.count))
