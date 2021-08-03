@@ -78,8 +78,14 @@ struct PieChartView: View {
         }
         
         for (i, value) in tempValues.enumerated() {
+            var color = Color.init(white: 1.0, opacity: 1.0)
+            if i >= colors.count{
+                color = colors.last ?? Color.init(white: 1.0, opacity: 1.0)
+            }else{
+                color = colors[i]
+            }
             let degrees: Double = value * 360 / sum
-            tempSlices.append(PieSliceData(startAngle: Angle(degrees: endDeg), endAngle: Angle(degrees: endDeg + degrees), text: String(format: "%.0f%%", value * 100 / sum), color: self.colors[i]))
+            tempSlices.append(PieSliceData(startAngle: Angle(degrees: endDeg), endAngle: Angle(degrees: endDeg + degrees), text: String(format: "%.0f%%", value * 100 / sum), color: color))
             endDeg += degrees
         }
         return tempSlices
@@ -113,9 +119,8 @@ struct PieChartView: View {
         }
     }
     
-    func getTotals() -> Double{
+    func getTotals() -> Int{
         let reduction = values.reduce(0, +)
-        printr(reduction)
-        return reduction
+        return Int(reduction)
     }
 }

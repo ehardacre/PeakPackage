@@ -252,7 +252,7 @@ struct LeadsStatsView : View {
                         .opacity(0.6)
                     HStack{
                         PieChartView(values: getValuesFromLeadSources(), colors: colors, backgroundColor: Color.lightAccent)
-                            .frame(width: 200, height: 200)
+                            .frame(width: 300, height: 300)
                     }
                     .frame(height: 200)
                     .background(Color.lightAccent)
