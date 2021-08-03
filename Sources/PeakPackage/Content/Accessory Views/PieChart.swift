@@ -121,7 +121,7 @@ struct PieChartView: View {
                     .frame(width: geometry.size.width, height: geometry.size.width)
                     
                     Circle()
-                        .fill(Color.mid)
+                        .fill(Color.lightAccent)
                         .frame(width: geometry.size.width * innerRadiusFraction, height: geometry.size.width * innerRadiusFraction)
                     
                     VStack {
