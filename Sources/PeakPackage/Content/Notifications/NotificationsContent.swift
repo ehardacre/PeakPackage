@@ -258,7 +258,7 @@ struct LeadsStatsView : View {
                         Spacer()
                     }
                     .frame(height: 350)
-                    .background(Color.lightAccent)
+                    .background(Color.clear)
                     ForEach(0..<leadSourceList.count){ index in
                         HStack{
                             if index < colors.count {
