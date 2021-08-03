@@ -112,7 +112,7 @@ struct PieChartView: View {
         }
     }
     
-    func getTotals() -> Int{
+    func getTotals() -> Double{
         let reduction = values.reduce(0, +)
         printr(reduction)
         return reduction
