@@ -102,7 +102,7 @@ struct PieChartView: View {
                         Text("Total")
                             .font(.title)
                             .foregroundColor(Color.gray)
-                        Text(String(values.reduce(0, +)))
+                        Text(String(getTotals()))
                             .font(.title)
                     }
                 }
@@ -110,5 +110,11 @@ struct PieChartView: View {
             .background(self.backgroundColor)
             .foregroundColor(Color.white)
         }
+    }
+    
+    func getTotals() -> Int{
+        let reduction = values.reduce(0, +)
+        printr(reduction)
+        return reduction
     }
 }
