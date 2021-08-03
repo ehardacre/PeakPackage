@@ -260,32 +260,36 @@ struct LeadsStatsView : View {
                     .frame(height: 350)
                     .background(Color.clear)
                     ForEach(0..<leadSourceList.count){ index in
-                        HStack{
-                            if index < colors.count {
-                                Rectangle()
-                                    .frame(width: 10, height: 10)
-                                    .cornerRadius(3)
-                                    .foregroundColor(colors[index])
-                            }else{
-                                Rectangle()
-                                    .frame(width: 10, height: 10)
-                                    .cornerRadius(3)
-                                    .foregroundColor(colors.last)
+                        if index >= leadSourceList.count{
+                            //out of bounds
+                        }else{
+                            HStack{
+                                if index < colors.count {
+                                    Rectangle()
+                                        .frame(width: 10, height: 10)
+                                        .cornerRadius(3)
+                                        .foregroundColor(colors[index])
+                                }else{
+                                    Rectangle()
+                                        .frame(width: 10, height: 10)
+                                        .cornerRadius(3)
+                                        .foregroundColor(colors.last)
+                                }
+                                Text(leadSourceList[index].source)
+                                    .bold()
+                                    .foregroundColor(Color.darkAccent)
+                                Spacer()
+                                Text("\(leadSourceList[index].count)")
+                                    .foregroundColor(Color.darkAccent)
+                                    .bold()
+                                Text("(\(leadSourceList[index].percent)%)")
+                                    .foregroundColor(Color.darkAccent)
+                                    .font(.caption)
                             }
-                            Text(leadSourceList[index].source)
-                                .bold()
-                                .foregroundColor(Color.darkAccent)
-                            Spacer()
-                            Text("\(leadSourceList[index].count)")
-                                .foregroundColor(Color.darkAccent)
-                                .bold()
-                            Text("(\(leadSourceList[index].percent)%)")
-                                .foregroundColor(Color.darkAccent)
-                                .font(.caption)
+                            .padding(10)
+                            .background(Color.lightAccent)
+                            .cornerRadius(10)
                         }
-                        .padding(10)
-                        .background(Color.lightAccent)
-                        .cornerRadius(10)
                     }
                 }
                 .listRowBackground(Color.clear)
