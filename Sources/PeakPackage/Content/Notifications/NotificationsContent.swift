@@ -252,8 +252,10 @@ struct LeadsStatsView : View {
                         .font(.caption)
                         .opacity(0.6)
                     HStack{
+                        Spacer()
                         PieChartView(presliceData: sliceDataFromLeadSources(), backgroundColor: Color.lightAccent)
                             .frame(width: 300, height: 300)
+                        Spacer()
                     }
                     .frame(height: 200)
                     .background(Color.lightAccent)
@@ -302,6 +304,7 @@ struct LeadsStatsView : View {
         .stackOnlyNavigationView()
         .onReceive(NotificationCenter.default.publisher(for: LocalNotificationTypes.loadedLeadSources.postName()), perform: {
             _ in
+            loaded = false
             leadSourceList = notificationMan.sortedLeadSources
             loaded = true
         })

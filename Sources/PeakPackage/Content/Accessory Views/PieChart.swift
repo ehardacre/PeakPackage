@@ -134,8 +134,8 @@ struct PieChartView: View {
                     }
                 }
             }
-            .background(Color.mid)
-            .foregroundColor(Color.mid)
+            .background(Color.clear)
+            .foregroundColor(Color.clear)
         }
     }
 
