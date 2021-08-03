@@ -116,7 +116,11 @@ struct PieChartView: View {
             VStack{
                 ZStack{
                     ForEach(0..<self.slices.count){ i in
-                        PieSliceView(pieSliceData: self.slices[i])
+                        if i >= self.slices.count {
+                            //out of ranges
+                        }else{
+                            PieSliceView(pieSliceData: self.slices[i])
+                        }
                     }
                     .frame(width: geometry.size.width, height: geometry.size.width)
                     
