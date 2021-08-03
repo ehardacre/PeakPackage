@@ -55,37 +55,55 @@ struct PieSliceData {
         var color: Color
 }
 
+struct PrePieSliceData {
+    var name: String
+    var value: Double
+    var color: Color
+}
+
+struct PrePieSliceList {
+    var list : [PrePieSliceData]
+    func compiledList(count: Int) -> [PrePieSliceData] {
+        var temp : [PrePieSliceData] = []
+        var otherTotal = 0.0
+        for i in 0..<list.count {
+            var element = list[i]
+            if i >= count {
+                //other
+                otherTotal += element.value
+            }else{
+                //not other
+                temp.append(list[i])
+            }
+        }
+        temp.append(PrePieSliceData(name: "Other", value: otherTotal, color: Color.darkAccent))
+        return temp
+    }
+    
+    
+    func getTotal() -> Double{
+        return list.map({return $0.value}).reduce(0, { x, y in
+            x + y
+        })
+    }
+}
+
 struct PieChartView: View {
-    public let values: [Double]
-    public var colors: [Color]
+    public var presliceData : PrePieSliceList
+    public var itemCount : Int = 5
     
     public var backgroundColor: Color
     public var innerRadiusFraction: CGFloat = 0.6
     
     var slices: [PieSliceData] {
-        let sum = values.reduce(0, +)
+        let sum = presliceData.getTotal()
+        let compiledList = presliceData.compiledList(count: itemCount)
         var endDeg: Double = 0
         var tempSlices: [PieSliceData] = []
         
-        var tempValues: [Double] = []
-
-        for (i, value) in values.sorted().reversed().enumerated() {
-            if i <= colors.count {
-                tempValues.append(value)
-            }else{
-                tempValues[colors.count] = tempValues[colors.count] + value
-            }
-        }
-        
-        for (i, value) in tempValues.enumerated() {
-            var color = Color.init(white: 1.0, opacity: 1.0)
-            if i >= colors.count{
-                color = colors.last ?? Color.init(white: 1.0, opacity: 1.0)
-            }else{
-                color = colors[i]
-            }
-            let degrees: Double = value * 360 / sum
-            tempSlices.append(PieSliceData(startAngle: Angle(degrees: endDeg), endAngle: Angle(degrees: endDeg + degrees), text: String(format: "%.0f%%", value * 100 / sum), color: color))
+        for (i, element) in compiledList.enumerated() {
+            let degrees: Double = element.value * 360 / sum
+            tempSlices.append(PieSliceData(startAngle: Angle(degrees: endDeg), endAngle: Angle(degrees: endDeg + degrees), text: String(format: "%.0f%%", element.value * 100 / sum), color: element.color))
             endDeg += degrees
         }
         return tempSlices
@@ -95,7 +113,7 @@ struct PieChartView: View {
         GeometryReader { geometry in
             VStack{
                 ZStack{
-                    ForEach(0..<self.values.count){ i in
+                    ForEach(0..<self.slices.count){ i in
                         PieSliceView(pieSliceData: self.slices[i])
                     }
                     .frame(width: geometry.size.width, height: geometry.size.width)
@@ -108,7 +126,7 @@ struct PieChartView: View {
                         Text("Total")
                             .font(.title3)
                             .foregroundColor(Color.darkAccent)
-                        Text(String(getTotals()))
+                        Text(String(Int(presliceData.getTotal())))
                             .font(.title2)
                             .foregroundColor(Color.main)
                     }
@@ -118,9 +136,5 @@ struct PieChartView: View {
             .foregroundColor(Color.mid)
         }
     }
-    
-    func getTotals() -> Int{
-        let reduction = values.reduce(0, +)
-        return Int(reduction)
-    }
+
 }

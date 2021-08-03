@@ -243,6 +243,7 @@ struct LeadsStatsView : View {
                                       Color(red: Double(59)/Double(255), green: Double(178)/Double(255), blue: Double(115)/Double(255)),
                                       Color(red: Double(119)/Double(255), green: Double(104)/Double(255), blue: Double(174)/Double(255))]
     
+    
     var body: some View {
         NavigationView{
             if loaded {
@@ -251,7 +252,7 @@ struct LeadsStatsView : View {
                         .font(.caption)
                         .opacity(0.6)
                     HStack{
-                        PieChartView(values: getValuesFromLeadSources(), colors: colors, backgroundColor: Color.lightAccent)
+                        PieChartView(presliceData: sliceDataFromLeadSources(), backgroundColor: Color.lightAccent)
                             .frame(width: 300, height: 300)
                     }
                     .frame(height: 200)
@@ -313,5 +314,14 @@ struct LeadsStatsView : View {
             list.append(Double(source.count))
         }
         return list
+    }
+    
+    func sliceDataFromLeadSources() -> PrePieSliceList{
+        var tempSliceData : [PrePieSliceData] = []
+        for (i,source) in leadSourceList.enumerated(){
+            var sliceData = PrePieSliceData(name: source.source, value: Double(source.count), color: colors[i%colors.count])
+            tempSliceData.append(sliceData)
+        }
+        return PrePieSliceList(list: tempSliceData)
     }
 }
