@@ -76,7 +76,9 @@ struct PrePieSliceList {
                 temp.append(list[i])
             }
         }
-        temp.append(PrePieSliceData(name: "Other", value: otherTotal, color: Color.darkAccent))
+        if otherTotal > 0.0 {
+            temp.append(PrePieSliceData(name: "Other", value: otherTotal, color: Color.darkAccent))
+        }
         return temp
     }
     
