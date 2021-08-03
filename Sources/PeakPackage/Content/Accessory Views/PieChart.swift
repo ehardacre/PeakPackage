@@ -95,20 +95,21 @@ struct PieChartView: View {
                     .frame(width: geometry.size.width, height: geometry.size.width)
                     
                     Circle()
-                        .fill(self.backgroundColor)
+                        .fill(Color.mid)
                         .frame(width: geometry.size.width * innerRadiusFraction, height: geometry.size.width * innerRadiusFraction)
                     
                     VStack {
                         Text("Total")
-                            .font(.title)
-                            .foregroundColor(Color.gray)
+                            .font(.title3)
+                            .foregroundColor(Color.mid)
                         Text(String(getTotals()))
-                            .font(.title)
+                            .font(.title2)
+                            .foregroundColor(Color.main)
                     }
                 }
             }
-            .background(self.backgroundColor)
-            .foregroundColor(Color.white)
+            .background(Color.mid)
+            .foregroundColor(Color.mid)
         }
     }
     
