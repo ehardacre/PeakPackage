@@ -101,7 +101,7 @@ struct PieChartView: View {
                     VStack {
                         Text("Total")
                             .font(.title3)
-                            .foregroundColor(Color.mid)
+                            .foregroundColor(Color.darkAccent)
                         Text(String(getTotals()))
                             .font(.title2)
                             .foregroundColor(Color.main)
