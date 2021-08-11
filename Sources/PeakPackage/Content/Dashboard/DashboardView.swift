@@ -93,17 +93,31 @@ public struct DashboardView: View {
             .listStyle(SidebarListStyle())
             .navigationBarTitle("Dashboard")
             .navigationBarItems(trailing:
-            Button(action:{
-                if defaults.admin{
-                    self.showProfile = true
+                HStack{
+                    Button(action:{
+                        if defaults.admin{
+                            //self.showProfile = true
+                        }
+                    }){
+                        if defaults.admin{
+                            Image(systemName: "person.3.fill")
+                                .imageScale(.large)
+                                .foregroundColor(.darkAccent)
+                        }
+                    }
+                    Button(action:{
+                        if defaults.admin{
+                            self.showProfile = true
+                        }
+                    }){
+                        if defaults.admin{
+                            Image(systemName: "person.crop.circle")
+                                .imageScale(.large)
+                                .foregroundColor(.darkAccent)
+                        }
+                    }
                 }
-            }){
-                if defaults.admin{
-                    Image(systemName: "person.crop.circle")
-                        .imageScale(.large)
-                        .foregroundColor(.darkAccent)
-                }
-            })
+            )
         }
         .background(Color.clear)
         .stackOnlyNavigationView()
