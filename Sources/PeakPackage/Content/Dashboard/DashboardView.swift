@@ -123,6 +123,15 @@ public struct DashboardView: View {
         }
         .background(Color.clear)
         .stackOnlyNavigationView()
+        .onReceive(
+            NotificationCenter.default.publisher(
+                for: LocalNotificationTypes.changedProfile.postName())
+        ){
+            note in
+            if note.object == nil {
+               allSelected = false
+            }
+        }
         .sheet(isPresented: $showProfile){
             ProfileView(showing: $showProfile, manager: parent.profileManager)
                 .introspectViewController{
