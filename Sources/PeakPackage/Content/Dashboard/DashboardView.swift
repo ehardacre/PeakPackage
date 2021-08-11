@@ -77,6 +77,7 @@ public struct DashboardView: View {
     @State var manager: DashboardManager
     @State var parent: ContentView
     @State var showProfile = false
+    @State var allSelected = false
     
     public var body: some View {
         NavigationView{
@@ -96,11 +97,11 @@ public struct DashboardView: View {
                 HStack{
                     Button(action:{
                         if defaults.admin{
-                            //self.showProfile = true
+                            self.allSelected.toggle()
                         }
                     }){
                         if defaults.admin{
-                            Image(systemName: "person.3.fill")
+                            Image(systemName: allSelected ? "person.3.fill" : "person.3")
                                 .imageScale(.large)
                                 .foregroundColor(.darkAccent)
                         }
