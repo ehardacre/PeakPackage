@@ -82,6 +82,10 @@ struct PrePieSliceList {
         return temp
     }
     
+    func compileList(count: Int) -> PrePieSliceList {
+        return PrePieSliceList(list: self.compiledList(count: count))
+    }
+    
     
     func getTotal() -> Double{
         return list.map({return $0.value}).reduce(0, { x, y in

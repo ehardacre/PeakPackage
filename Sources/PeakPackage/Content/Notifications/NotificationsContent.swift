@@ -253,7 +253,7 @@ struct LeadsStatsView : View {
                         .opacity(0.6)
                     HStack{
                         Spacer()
-                        PieChartView(presliceData: sliceDataFromLeadSources().compiledList(count: 5), itemCount: 5, backgroundColor: Color.lightAccent)
+                        PieChartView(presliceData: sliceDataFromLeadSources().compileList(count: 5), itemCount: 5, backgroundColor: Color.lightAccent)
                             .frame(width: 300, height: 300)
                         Spacer()
                     }
