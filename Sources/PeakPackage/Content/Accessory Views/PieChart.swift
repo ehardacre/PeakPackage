@@ -68,7 +68,7 @@ struct PrePieSliceList {
         var otherTotal = 0.0
         for i in 0..<list.count {
             var element = list[i]
-            if i >= count {
+            if i >= count - 1{
                 //other
                 otherTotal += element.value
             }else{
