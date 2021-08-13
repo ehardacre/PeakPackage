@@ -98,7 +98,7 @@ public struct DashboardView: View {
                     Button(action:{
                         if defaults.admin{
                             self.allSelected.toggle()
-                            parent.profileManager.changeFranchise(to: "1", newURL: "", newName: "All Franchises")
+                            parent.profileManager.changeFranchise(to: "-1", newURL: "", newName: "All Franchises")
                         }
                     }){
                         if defaults.admin{
