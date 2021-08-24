@@ -67,9 +67,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotification
         
         if let payload = userInfo["message"] as? NSString{
             if payload.contains("seoRanking"){
-                let count = UserDefaults.standard.integer(forKey: "notificationcount")
-                UserDefaults.standard.set(count + 1, forKey: "notificationcount")
-                _ = SEOManager.scrapeRankings(forDatabase: true)
+                //_ = SEOManager.scrapeRankings()
             }
         }
         

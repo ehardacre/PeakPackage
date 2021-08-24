@@ -224,7 +224,7 @@ public class SEOManager : Manager {
         }
     }
     
-    static func scrapeRankings(forDatabase: Bool = false) -> [scrapedSearchResult]{
+    static func scrapeRankings() -> [scrapedSearchResult]{
         let list = findRankings(for: terms)
         //if for database.. kinda outdated with the new way we're doing things
         setRankings(for: list)
